@@ -73,6 +73,7 @@ for (@ARGV)	{
 		print "                        (program will look here for strip definitions, previous\n";
 		print "                        HTML files, etc. and save new files here)\n";
 		print "      --list            list available strips\n";
+		print "  -v  --version         Prints version number\n";
 		print "\nBugs and comments to amedico\@calug.net\n";
 		exit;
 	} elsif ($_ =~ m/^--list$/o) {
@@ -100,6 +101,9 @@ $_, $defs{$_}{'name'}
 		$options{'output_file'} = $1;
 	} elsif ($_ =~ m/^(--new|-n)$/o) {
 		$options{'new'} = 1;
+	} elsif ($_ =~ m/^(--version|-v)$/o) {
+		print "dailystrips version $version\n";
+		exit;
 	} elsif ($_ =~ m/^--defs=(.*)$/o or $_ =~ m/^--basedir=(.*)$/o) {
 		# nothing done here - just prevent an "unknown option error (all the more reason to switch to Getopts)
 	} elsif ($_ =~ m/^($known_strips|all)$/io) {
