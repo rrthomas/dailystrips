@@ -6,6 +6,14 @@ group andrews
 	include wizardofid garfield adamathome
 end	
 
+group michael
+	desc Michael's Favorite Strips
+	include liberty foxtrot boondocks doonesbury zits dilbert babyblues 
+	include robotman bc blondie calvinandhobbes funkywinkerbean 
+	include zippythecolorpinhead peanuts adamathome forbetter bizarro
+	include userfriendly geech shoe wizardofid 
+end	
+
 # Class definitions
 class ucomics-srch
 	homepage http://www.ucomics.com/$strip/view$1.htm
@@ -44,6 +52,12 @@ class unitedmedia-srch-wash
 	searchpattern (/wash/$strip/archive/images/(.*?)\.(gif|jpg))
 	matchpart 1
 	baseurl http://www.unitedmedia.com
+end
+
+class sfgate-gen-zippycolor
+	homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/%1.dtl
+	type generate
+	imageurl http://pst.rbma.com/content/%2
 end
 
 class sfgate-gen
@@ -291,6 +305,115 @@ strip userfriendly
 	searchpage http://ars.userfriendly.org/cartoons/?id=%Y%m%d&mode=classic
 	searchpattern <img(.*?)alt="Cartoon for(.*?)src="(.*?)"
 	matchpart 3
+end
+
+strip exploitnow
+        name Exploitation Now
+        homepage http://www.exploitationnow.com/
+        type search
+        searchpattern <IMG(.*?)SRC="(/comics/rb\d+.jpg)"
+        matchpart 2
+        baseurl http://www.exploitationnow.com/
+        updated semidaily
+end
+
+strip coolcat
+        name Cool Cat Studio
+        homepage http://www.coolcatstudio.com/
+        type search
+        searchpattern <IMG(.*?)SRC="(/comics/ccs\d+.jpg)"
+        matchpart 2
+        baseurl http://www.coolcatstudio.com/
+        updated semidaily
+end
+
+strip classm
+        name The Class Menagerie
+        homepage http://www.theclassm.com/
+        type search
+        searchpattern <IMG(.*?)SRC="(/comics/cm\d+.gif)"
+        matchpart 2
+        baseurl http://www.theclassm.com/
+        updated semidaily
+end
+
+strip bruno
+        name The Bruno Daily times
+        homepage http://www.brunostrip.com/bruno.html
+        type generate
+        imageurl http://www.brunostrip.com/2001pics/2001%m%d.gif
+        updated semidaily
+end
+
+strip thinhline
+       name The Thin H Line
+       homepage http://thinhline.com/
+       type search
+       searchpattern <IMG SRC = "(image.cgi\?thl\d+a\.gif)"
+       matchpart 1
+       baseurl http://thinhline.com/
+       updated weekly
+end
+
+strip nukees
+        name Nukees
+        homepage http://www.nukees.com
+        type search
+        searchpattern <IMG(.*?)SRC="(/comics/\d+.gif)"
+        matchpart 2
+        baseurl http://www.nukees.com/
+        updated semidaily
+end
+
+strip joeaverage
+        name Joe Average
+        homepage http://www.joeaverage.org
+        type search
+        searchpattern <IMG(.*?)SRC="(/comics/\d+.gif)"
+        matchpart 2
+        baseurl http://www.joeaverage.org/
+        updated semidaily
+end
+
+strip hotzp
+        name Bad Boys of Computer Science
+        homepage http://hotzp.com/badboys/
+        type generate
+        imageurl http://hotzp.com/badboys/new.jpg
+end
+
+strip flem
+	  name FLEM! Comics
+	  homepage http://impure.org/flem/
+	  type generate
+	  imageurl http://impure.org/flem/new.gif
+end
+
+strip angst
+        name Angst Technology
+        homepage http://www.inktank.com/
+        type generate
+        imageurl http://www.inktank.com/images/cartoons/%m-%d-%y.gif
+end
+
+strip zapiro
+        name Zapiro
+        homepage http://www.mg.co.za/mg/zapiro/
+        type search
+        searchpattern (/mg/zapiro/(.*?)\.(gif|jpg))(.*?)ALT="cartoon"
+        matchpart 1
+        updated semidaily
+        baseurl http://www.mg.co.za
+end
+
+strip madameve
+        name Madam and Eve
+        homepage http://www.mg.co.za/mg/m&e/today.htm
+        type search
+        searchpattern <IMG SRC="((.*?)\.gif)(.*)ALT="cartoon"
+        matchpart 1
+        updated semidaily
+        baseurl http://www.mg.co.za/mg/m&e/
 end
 
 # ucomics.com strips
@@ -976,6 +1099,13 @@ strip willynethel
         name Willy 'n' Ethel
         useclass sfgate-gen
         $1 Willy_n_Ethel
+end
+
+strip zippythecolorpinhead
+        name Zippy the Pinhead (in color)
+        useclass sfgate-gen-zippycolor
+        %1 Zippy_the_Color_Pinhead
+        %2 Zippy_the_Pinhead
 end
 
 strip zippythepinhead
