@@ -293,8 +293,8 @@ strip goats
 	name Goats
 	homepage http://www.goats.com/
 	type search
-	searchpattern <IMG.+?SRC="(/comix/\d+/goats\d+.gif)"
-	baseurl http://www.goats.com/
+	searchpattern <IMG.+?SRC="(/comix/\d+/goats\d+.+?)"
+	baseurl $homepage
 	provides latest
 end
 
