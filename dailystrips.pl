@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@calug.net>
 # Created:          23 Nov 2000, 23:33
-# Last Modified:    26 Feb 2001, 19:02
+# Last Modified:    26 Feb 2001, 19:25
 # Current Revision: 1.0.10
 #
 
@@ -134,12 +134,12 @@ $_, $val
 		$options{'no_index'} = 1;
 	} elsif ($_ =~ m/^--noenvproxy$/o) {
 		$options{'no_env_proxy'} = 1;
-	} elsif ($_ =~ m/^--proxy=/o) {
-		unless ($_ =~ m/^--proxy=((.*?):(.*?))$/o) {die "Error: invalid proxy server\n"}
-		$options{'http_proxy'} = $1;
-	} elsif ($_ =~ m/^--proxyauth=/o) {
-		unless ($_ =~ m/^--proxy=((.*?):(.*?))$/o) {die "Error: incorrectly formatted proxy username/password\n"}
+	} elsif ($_ =~ m/^--proxyauth/o) {
+		unless ($_ =~ m/^--proxyauth=((.*?):(.*?))$/o) {die "Error: incorrectly formatted proxy username/password\n"}
 		$options{'http_proxy_auth'} = $1;
+	} elsif ($_ =~ m/^--proxy/o) {
+		unless ($_ =~ m/^--proxy=((.*?):(.*?))$/o) {die "Error: incorrectly formatted proxy server\n"}
+		$options{'http_proxy'} = $1;
 	} else {
 		die "Unknown option: $_\n";
 	}
@@ -388,7 +388,7 @@ sub http_get {
 	# could do without 'if defined..' if not running under -w -- maybe
 	if (defined $options{'http_proxy'}) {
 		$ua->proxy('http', $options{'http_proxy'});
-		if (defined $options{'http_proxy_auth'}) { $headers->authorization_basic($options{'http_proxy_auth'}) }
+		if (defined $options{'http_proxy_auth'}) { $headers->authorization_basic(split(/:/, $options{'http_proxy_auth'})) }
 	}
 	
 	my $response = $ua->request($request);
