@@ -1,3 +1,7 @@
+1.0.22
+  12 Jan 2002
+  Added 'Off the Mark'
+
 1.0.21
   28 Oct 2001
   Fixed --nostale option - code was there, but attempting to use it would result

@@ -949,6 +949,15 @@ strip bigones
         imageurl $homepage/comics/big%Y%m%d.gif
 end
 
+strip offthemark
+	name Off the Mark
+	homepage http://www.offthemark.com/
+	type search
+	provides latest
+	searchpage $homepage/daily.asp
+	searchpattern <img.+?src="(http://www.offthemark.com/rotate/\d+.gif)"
+end
+
 # ucomics.com strips
 strip adamathome
 	name Adam@home
