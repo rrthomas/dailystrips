@@ -1,6 +1,15 @@
 This is mostly my rambling, but feel free to implement anything you want to
 tackle..
 
+1.0.9
+  24 Feb 2001
+  Now that a group capability has been added to the definition file, it appears
+  necessary to support some sort of 'local' or personal definition file, in
+  addition to the distributed one. If only a single file was supported, anyone
+  with custom groups would have to copy/paste them from the old file into the
+  new whenever they upgraded the definition file. I'd do this now, but it's 3AM
+  and I need the sleep.
+
 1.0.6
   02 Feb 2001
   Since the program is starting to get rather large and handles so many

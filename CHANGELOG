@@ -1,4 +1,11 @@
 1.0.9
+  24 Feb 2001
+  Added groups support - define multiple strips as one keyword
+
+  Minor code enhancements
+
+  Fixed jokesonyou definition
+
   21 Feb 2001
   Added Peanuts and everything except Yak's Corner from comicspage.com
   (strip count is now 206)

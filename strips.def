@@ -1,3 +1,11 @@
+# Strip Groups
+group andrews
+	desc Andrew's Favorite Strips
+	include userfriendly dilbert sinfest foxtrot badtech
+	include pennyarcade joyoftech thefifthwave robotman bc
+	include wizardofid garfield adamathome
+end	
+
 # Class definitions
 class ucomics-srch
 	homepage http://www.ucomics.com/%strip/view%1.htm
@@ -121,7 +129,7 @@ strip jokesonyou
 	name The Joke's on You
 	homepage http://www.thefunnypages.com/
 	type search
-	searchpattern <img(.*?)src="(http://www.thefunnypages.com/archives/(.*?).gif"(.*?)border="2"(.*?)>
+	searchpattern <img(.*?)src="(http://www.thefunnypages.com/archives/(.*?).gif)"(.*?)border="2"(.*?)>
 	matchpart 3
 	#updated daily or not? - check - seems to be, but check weekend
 end
@@ -525,7 +533,7 @@ strip buckets
 end
 
 strip bullsnbears
-	name Bull\$ 'N' Bear\$
+	name Bull$ 'N' Bear$
 	useclass unitedmedia-srch-comics
 end
 

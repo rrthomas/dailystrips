@@ -23,7 +23,8 @@ Installation:
 Usage:
 	'./dailystrips.pl [stripname(s)]' will print to STDOUT an HTML page with image
 links to the latest strip. These links are to the strip's webserver.
-dailystrips.pl --help lists all available options
+dailystrips.pl --help lists all available options. --list shows the available
+strips and groups (specify strips as listed, preceede groups with an '@' symbol)
 
 Adding new strips:
 	The strips.defs file should be relatively self-explanatory. (see README.DEFS

@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@calug.net>
 # Created:          23 Nov 2000, 23:33
-# Last Modified:    21 Feb 2001, 15:18
+# Last Modified:    24 Feb 2001, 03:11
 # Current Revision: 1.0.9
 #
 
@@ -20,7 +20,7 @@ use LWP::UserAgent;
 use POSIX qw(strftime);
 
 my (%options, $version, @localtime_today, @localtime_yesterday, $long_date, $short_date, $short_date_yesterday, @get, @strips, %defs,
-    $known_strips);
+    $known_strips, %groups, $known_groups, $val);
 
 $version = "1.0.9";
 
@@ -45,6 +45,7 @@ for (@ARGV)	{
 #get strip definitions (do it now because info is used below)
 &get_defs;
 $known_strips = join('|', sort keys %defs);
+$known_groups = join('|', sort keys %groups);
 
 for (@ARGV)	{
 	if ($_ eq "" or $_ =~ m/^(--help|-h)$/o) {
@@ -80,15 +81,19 @@ for (@ARGV)	{
 		print "\nBugs and comments to amedico\@calug.net\n";
 		exit;
 	} elsif ($_ =~ m/^--list$/o) {
-		print "Available strips:\n";
-		
-		# Excuse the lack of indentation.. Perl won't allow it for FORMATs
-				
 format =
 @<<<<<<<<<<<<<<<<<<<< 	@<<<<<<<<<<<<<<<<<<<<<<<<<<
-$_, $defs{$_}{'name'}
+$_, $val
 .
+		print "Available strips:\n";
 		for (split(/\|/, $known_strips)) {
+			$val = $defs{$_}{'name'};
+			write;
+		}
+		
+		print "\nAvailable groups:\n";
+		for (split(/\|/, $known_groups)) {
+			$val = $groups{$_}{'desc'};
 			write;
 		}
 		exit;
@@ -111,12 +116,12 @@ $_, $defs{$_}{'name'}
 		# nothing done here - just prevent an "unknown option error (all the more reason to switch to Getopts)
 	} elsif ($_ =~ m/^($known_strips|all)$/io) {
 		if ($_ eq "all") {
-			for (split(/\|/, $known_strips)) {
-				push (@get, $_);
-			}
+			push (@get, split(/\|/, $known_strips));
 		} else {
 			push(@get, $_);
 		}
+	} elsif ($_ =~ m/^@($known_groups)$/io) {
+		push(@get, split(/;/, $groups{$1}{'strips'}));
 	} elsif ($_ =~ m/^(--local|-l)$/o) {
 		$options{'local_mode'} = 1;
 	} elsif ($_ =~ m/^--noindex$/o) {
@@ -128,7 +133,11 @@ $_, $defs{$_}{'name'}
 		$options{'http_proxy'} = $1;
 	} else {
 		die "Unknown option: $_\n";
-	}}
+	}
+}
+
+# Un-needed vars
+undef $known_strips; undef $known_groups; undef $val;
 
 unless (@get) {
 	die "Error: no strip specified (--list to list available strips)\n";
@@ -224,6 +233,7 @@ unless (defined $options{'quiet'}) { print STDERR "Retrieving URLS..." }
 for (@get) {
 	&get_strip($_);
 }
+#undef @get;
 unless (defined $options{'quiet'}) { print STDERR "done\n" }
 
 
@@ -263,7 +273,6 @@ for (@strips) {
 			$img_addr =~ m/http:\/\/(.*)\/(.*)\.(.*)$/o;
 			if (defined $3) { $ext = ".$3" } else { $ext = ""}
 			
-			#print STDERR "DEBUG: extenstion is: $ext\n";
 			if (defined $options{'dailydir'}) {
 				$local_name_yesterday = "$short_date_yesterday/$strip-$short_date_yesterday$ext";
 				$local_name = "$short_date/$strip-$short_date$ext";
@@ -386,8 +395,6 @@ sub get_strip {
 	my ($strip) = @_;
 	my ($page, $addr);
 	
-	#print STDERR "DEBUG: starting to generate info for strip $strip\n";
-	
 	if ($defs{$strip}{'type'} eq "search") {
 		$page = &http_get($defs{$strip}{'searchpage'});
 
@@ -396,7 +403,6 @@ sub get_strip {
 		} else {
 			$page =~ m/$defs{$strip}{'searchpattern'}/i;
 			
-			#print STDERR "DEBUG: checking matches: 1: $1, 2: $2, 3: $3, 4: $4, 5: $5\n";
 			if (${$defs{$strip}{'matchpart'}} eq "") {
 				$addr = "unavail-nomatch";
 			} else {
@@ -411,13 +417,11 @@ sub get_strip {
 	
 	unless ($addr =~ m/^http:\/\//io || $addr =~ m/^unavail/io) { $addr = "http://" . $addr }
 	
-	#print STDERR "DEBUG: finished generating info for strip $strip\n";
-	
 	push(@strips,"$defs{$strip}{'name'};$defs{$strip}{'homepage'};$addr;$defs{$strip}{'updated'};$defs{$strip}{'referer'}")
 }
 
 sub get_defs {
-	my ($strip, $class, $sectype, %classes);
+	my ($strip, $class, $sectype, %classes, $group);
 	my $line = 1;
 	
 	open(DEFS, "<$options{'defs_file'}") or die "Error: could not open strip definitions file\n";
@@ -442,116 +446,24 @@ sub get_defs {
 				$class = $1;
 				$sectype = "class";
 			}
-
-		}
-		elsif ($sectype eq "class") {
-			if ($_ =~ m/^homepage\s+(.+)$/io) {
-				my $val = $1;
-				$classes{$class}{'homepage'} = $val;
-			}
-			elsif ($_ =~ m/^type\s+(.+)$/io)
+			elsif ($_ =~ m/^group\s+(.*)$/io)
 			{
-				my $val = $1;
-				unless ($val =~ m/^(search|generate)$/io) { die "Error: invalid type at $options{'defs_file'} line $line\n" }
-				$classes{$class}{'type'} = $val;
+				$group = $1;
+				$sectype = "group";
 			}
-			elsif ($_ =~ m/^searchpage\s+(.+)$/io)
+			elsif ($_ =~ m/^(.*)/io)
 			{
-				my $val = $1;
-				$classes{$class}{'searchpage'} = $val;
-			}
-			elsif ($_ =~ m/^searchpattern\s+(.+)$/io)
-			{
-				$classes{$class}{'searchpattern'} = $1;
-			}
-			elsif ($_ =~ m/^matchpart\s+(.+)$/o)
-			{
-				my $val = $1;
-				unless ($val =~ m/^\d+$/io) { die "Error: invalid matchpart at $options{'defs_file'} line $line\n" }
-				$classes{$class}{'matchpart'} = $val;
-			}
-			elsif ($_ =~ m/^baseurl\s+(.+)$/io)
-			{
-				my $val = $1;
-				$classes{$class}{'baseurl'} = $val;
-			}
-			elsif ($_ =~ m/^imageurl\s+(.+)$/io)
-			{
-				my $val = $1;
-				$classes{$class}{'imageurl'} = $val;
-			}
-			elsif ($_ =~ m/^referer\s+(.+)$/io)
-			{
-				$classes{$class}{'referer'} = $1;
-			}
-			elsif ($_ =~ m/^updated\s+(.+)$/io)
-			{
-				$classes{$class}{'updated'} = $1;
+				die "Unknown keyword '$1' at $options{'defs_file'} line $line\n";
 			}
 		}
-		elsif ($sectype eq "strip") {
-			if ($_ =~ m/^name\s+(.+)$/io)
-			{
-				$defs{$strip}{'name'} = $1;
-			}
-			elsif ($_ =~ m/^useclass\s+(.+)$/io)
-			{
-				$defs{$strip}{'useclass'} = $1;
-			}
-			elsif ($_ =~ m/^homepage\s+(.+)$/io) {
-				my $val = $1;
-				$defs{$strip}{'homepage'} = $val;
-			}
-			elsif ($_ =~ m/^type\s+(.+)$/io)
-			{
-				my $val = $1;
-				unless ($val =~ m/^(search|generate)$/io) { die "Error: invalid type at $options{'defs_file'} line $line\n" }
-				$defs{$strip}{'type'} = $val;
-			}
-			elsif ($_ =~ m/^searchpage\s+(.+)$/io)
-			{
-				my $val = $1;
-				$defs{$strip}{'searchpage'} = $val;
-			}
-			elsif ($_ =~ m/^searchpattern\s+(.+)$/io)
-			{
-				$defs{$strip}{'searchpattern'} = $1;
-			}
-			elsif ($_ =~ m/^matchpart\s+(.+)$/o)
-			{
-				my $val = $1;
-				unless ($val =~ m/^\d+$/io) { die "Error: invalid matchpart at $options{'defs_file'} line $line\n" }
-				$defs{$strip}{'matchpart'} = $val;
-			}
-			elsif ($_ =~ m/^baseurl\s+(.+)$/io)
-			{
-				my $val = $1;
-				$defs{$strip}{'baseurl'} = $val;
-			}
-			elsif ($_ =~ m/^imageurl\s+(.+)$/io)
-			{
-				my $val = $1;
-				$defs{$strip}{'imageurl'} = $val;
-			}
-			elsif ($_ =~ m/^updated\s+(.+)$/io)
-			{
-				$defs{$strip}{'updated'} = $1;
-			}
-			elsif ($_ =~ m/^referer\s+(.+)$/io)
-			{
-				$defs{$strip}{'referer'} = $1;
-			}
-			elsif ($_ =~ m/^(\%[0-9])\s+(.+)$/io)
-			{
-				$defs{$strip}{$1} = $2;
-			}
-		}
-			
-		if ($_ =~ m/^end$/io)
+		elsif ($_ =~ m/^end$/io)
 		{
-			if ($sectype eq "class") { undef $class }
-						
-			if ($sectype eq "strip") {
+			if ($sectype eq "class")
+			{
+				undef $class
+			}		
+			elsif ($sectype eq "strip")
+			{
 				if (defined $defs{$strip}{'useclass'}) {
 					my $using_class = $defs{$strip}{'useclass'};
 					
@@ -614,16 +526,158 @@ sub get_defs {
 				#	foreach my $key (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
 				#		print STDERR "DEBUG: $strip:$key=$defs{$strip}{$key}\n";
 				#	}
-				#	#print STDERR "DEBUG: $strip:$key=$defs{$strip}{'homepage'}\n";
+				#	print STDERR "DEBUG: $strip:name=$defs{$strip}{'name'}\n";
 				#}
 			
 				undef $strip;
 			}
+			elsif ($sectype eq "group")
+			{
+				chop $groups{$group}{'strips'};
+				
+				unless (defined $groups{$group}{'desc'}) { $groups{$group}{'desc'} = "[No description]"}
+				
+				undef $group;
+			}
 			
 			undef $sectype;
 		}
+		elsif ($sectype eq "class") {
+			if ($_ =~ m/^homepage\s+(.+)$/io) {
+				my $val = $1;
+				$classes{$class}{'homepage'} = $val;
+			}
+			elsif ($_ =~ m/^type\s+(.+)$/io)
+			{
+				my $val = $1;
+				unless ($val =~ m/^(search|generate)$/io) { die "Error: invalid type at $options{'defs_file'} line $line\n" }
+				$classes{$class}{'type'} = $val;
+			}
+			elsif ($_ =~ m/^searchpage\s+(.+)$/io)
+			{
+				my $val = $1;
+				$classes{$class}{'searchpage'} = $val;
+			}
+			elsif ($_ =~ m/^searchpattern\s+(.+)$/io)
+			{
+				$classes{$class}{'searchpattern'} = $1;
+			}
+			elsif ($_ =~ m/^matchpart\s+(.+)$/o)
+			{
+				my $val = $1;
+				unless ($val =~ m/^\d+$/io) { die "Error: invalid matchpart at $options{'defs_file'} line $line\n" }
+				$classes{$class}{'matchpart'} = $val;
+			}
+			elsif ($_ =~ m/^baseurl\s+(.+)$/io)
+			{
+				my $val = $1;
+				$classes{$class}{'baseurl'} = $val;
+			}
+			elsif ($_ =~ m/^imageurl\s+(.+)$/io)
+			{
+				my $val = $1;
+				$classes{$class}{'imageurl'} = $val;
+			}
+			elsif ($_ =~ m/^referer\s+(.+)$/io)
+			{
+				$classes{$class}{'referer'} = $1;
+			}
+			elsif ($_ =~ m/^updated\s+(.+)$/io)
+			{
+				$classes{$class}{'updated'} = $1;
+			}
+			elsif ($_ =~ m/^(.+)(\s+?)/io)
+			{
+				die "Unknown keyword '$1' at $options{'defs_file'} line $line\n";
+			}
+		}
+		elsif ($sectype eq "strip") {
+			if ($_ =~ m/^name\s+(.+)$/io)
+			{
+				$defs{$strip}{'name'} = $1;
+			}
+			elsif ($_ =~ m/^useclass\s+(.+)$/io)
+			{
+				$defs{$strip}{'useclass'} = $1;
+			}
+			elsif ($_ =~ m/^homepage\s+(.+)$/io) {
+				my $val = $1;
+				$defs{$strip}{'homepage'} = $val;
+			}
+			elsif ($_ =~ m/^type\s+(.+)$/io)
+			{
+				my $val = $1;
+				unless ($val =~ m/^(search|generate)$/io) { die "Error: invalid type at $options{'defs_file'} line $line\n" }
+				$defs{$strip}{'type'} = $val;
+			}
+			elsif ($_ =~ m/^searchpage\s+(.+)$/io)
+			{
+				my $val = $1;
+				$defs{$strip}{'searchpage'} = $val;
+			}
+			elsif ($_ =~ m/^searchpattern\s+(.+)$/io)
+			{
+				$defs{$strip}{'searchpattern'} = $1;
+			}
+			elsif ($_ =~ m/^matchpart\s+(.+)$/o)
+			{
+				my $val = $1;
+				unless ($val =~ m/^\d+$/io) { die "Error: invalid matchpart at $options{'defs_file'} line $line\n" }
+				$defs{$strip}{'matchpart'} = $val;
+			}
+			elsif ($_ =~ m/^baseurl\s+(.+)$/io)
+			{
+				my $val = $1;
+				$defs{$strip}{'baseurl'} = $val;
+			}
+			elsif ($_ =~ m/^imageurl\s+(.+)$/io)
+			{
+				my $val = $1;
+				$defs{$strip}{'imageurl'} = $val;
+			}
+			elsif ($_ =~ m/^updated\s+(.+)$/io)
+			{
+				$defs{$strip}{'updated'} = $1;
+			}
+			elsif ($_ =~ m/^referer\s+(.+)$/io)
+			{
+				$defs{$strip}{'referer'} = $1;
+			}
+			elsif ($_ =~ m/^(\%[0-9])\s+(.+)$/io)
+			{
+				$defs{$strip}{$1} = $2;
+			}
+			elsif ($_ =~ m/^(.+)(\s+?)/io)
+			{
+				die "Unknown keyword '$1' at $options{'defs_file'} line $line\n";
+			}
+		} elsif ($sectype eq "group") {
+			if ($_ =~ m/^desc\s+(.+)$/io)
+			{
+				$groups{$group}{'desc'} = $1;
+			}
+			elsif ($_ =~ m/^include\s+(.+)$/io)
+			{
+				$groups{$group}{'strips'} .= join(';', split(/\s+/, $1)) . ";";
+			}
+			elsif ($_ =~ m/^(.+)(\s+?)/io)
+			{
+				die "Unknown keyword '$1' at $options{'defs_file'} line $line\n";
+			}
+		}
+			
+		
 		
 		$line++;
+	}
+	
+	# Post-processing validation
+	for $group (keys %groups) {
+		for ( split(/;/, $groups{$group}{'strips'}) ) {
+			unless (defined $defs{$_}) {
+				die "Error: group $group includes non-existant strip $_\n";
+			}
+		}
 	}
 	
 }
