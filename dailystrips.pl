@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@calug.net>
 # Created:          23 Nov 2000, 23:33
-# Last Modified:    18 Feb 2001, 10:22
-# Current Revision: 1.0.7
+# Last Modified:    20 Feb 2001, 10:25
+# Current Revision: 1.0.8
 #
 
 # Set up
@@ -22,7 +22,7 @@ use POSIX qw(strftime);
 my (%options, $version, @localtime_today, @localtime_yesterday, $long_date, $short_date, $short_date_yesterday, @get, @strips, %defs,
     $known_strips);
 
-$version = "1.0.7";
+$version = "1.0.8";
 
 $options{'defs_file'} = "strips.def";
 
@@ -52,28 +52,31 @@ for (@ARGV)	{
 		print "'all' may be used to retrieve all known strips,\n";
 		print "or use option --list to list available strips\n";
 		print "\nOptions:\n";
-		print "  -q  --quiet           turns off progress messages\n";		
-		print "      --output=FILE     outputs HTML to FILE instead of STDOUT\n";
-		print "                        (does not apply to local mode\n";
-		print "  -l  --local           outputs HTML to file and saves strips locally\n";
-		print "      --noindex         disables symlinking current page to index.html\n";
-		print "                        (local mode only)\n";
-		print "  -a  --archive         generates archive.html as a list of all days,\n";
-		print "                        (local mode only)\n";
-		print "  -d  --dailydir        creates a separate directory for each day's files\n";
-		print "                        (local mode only)\n";
-		print "  -s  --save            if it appears that a particular strip has been\n";
-		print "                        downloaded, does not attempt to re-download it\n";
-		print "                        (local mode only)\n";
-		print "  -n  --new             if today's file and yesterday's file for a strip are the\n";
-		print "                        same, does not symlink to save space\n";
-		print "                        (local mode only, required on non-*NIX platforms\n";
-		print "      --defs=FILE       use alternate strips definition file\n";
-		print "      --basedir=DIR     work in specified directory instead of current directory\n";
-		print "                        (program will look here for strip definitions, previous\n";
-		print "                        HTML files, etc. and save new files here)\n";
-		print "      --list            list available strips\n";
-		print "  -v  --version         Prints version number\n";
+		print "  -q  --quiet            turns off progress messages\n";		
+		print "      --output=FILE      outputs HTML to FILE instead of STDOUT\n";
+		print "                         (does not apply to local mode\n";
+		print "  -l  --local            outputs HTML to file and saves strips locally\n";
+		print "      --noindex          disables symlinking current page to index.html\n";
+		print "                         (local mode only)\n";
+		print "  -a  --archive          generates archive.html as a list of all days,\n";
+		print "                         (local mode only)\n";
+		print "  -d  --dailydir         creates a separate directory for each day's files\n";
+		print "                         (local mode only)\n";
+		print "  -s  --save             if it appears that a particular strip has been\n";
+		print "                         downloaded, does not attempt to re-download it\n";
+		print "                         (local mode only)\n";
+		print "  -n  --new              if today's file and yesterday's file for a strip are the\n";
+		print "                         same, does not symlink to save space\n";
+		print "                         (local mode only, required on non-*NIX platforms\n";
+		print "      --defs=FILE        use alternate strips definition file\n";
+		print "      --basedir=DIR      work in specified directory instead of current directory\n";
+		print "                         (program will look here for strip definitions, previous\n";
+		print "                         HTML files, etc. and save new files here)\n";
+		print "      --list             list available strips\n";
+		print "      --proxy=host:port  Uses specified HTTP proxy server (overrides environment\n";
+		print "                         proxy,if set)\n";
+		print "      --noenvproxy       Ignores the http_proxy environment variable, if set\n";
+		print "  -v  --version          Prints version number\n";
 		print "\nBugs and comments to amedico\@calug.net\n";
 		exit;
 	} elsif ($_ =~ m/^--list$/o) {
@@ -118,6 +121,12 @@ $_, $defs{$_}{'name'}
 		$options{'local_mode'} = 1;
 	} elsif ($_ =~ m/^--noindex$/o) {
 		$options{'no_index'} = 1;
+	} elsif ($_ =~ m/^--noenvproxy$/o) {
+		$options{'no_env_proxy'} = 1;
+	} elsif ($_ =~ m/^--proxy=/o) {
+		unless ($_ =~ m/^--proxy=((.*?):(.*?))$/o) {die "Invalid proxy server\n"}
+		$options{'http_proxy'} = $1;
+		print STDERR "DEBUG: proxy is now $options{'http_proxy'}\n";
 	} else {
 		die "Unknown option: $_\n";
 	}
@@ -126,6 +135,20 @@ $_, $defs{$_}{'name'}
 unless (@get) {
 	die "Error: no strip specified (--list to list available strips)\n";
 }
+
+
+#Set proxy
+if (!defined $options{'no_env_proxy'} && !defined $options{'http_proxy'} ) {
+	if (defined $ENV{'http_proxy'} ) {
+		my $env_proxy = $ENV{'http_proxy'};
+		$options{'http_proxy'} = $env_proxy;
+		print STDERR "\nDEBUG: setting proxy to $env_proxy from env\n";
+	}
+}
+if (defined $options{'http_proxy'}) {
+	unless ($options{'http_proxy'} =~ m/^http:\/\//io) {$options{'http_proxy'} = "http://" . $options{'http_proxy'}}
+}
+print STDERR "\nDEBUG: proxy is, finally, $options{'http_proxy'}\n";
 
 if (defined $options{'local_mode'}) {
 	unless (defined $options{'quiet'}) { print STDERR "Operating in local mode\n" }
@@ -343,15 +366,16 @@ sub http_get {
 	my $request = HTTP::Request->new('GET', $url);
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("dailystrips $version: " . $ua->agent());
-	#$ua->env_proxy();
-
+	
+	if (defined $options{'http_proxy'}) { $ua->proxy('http', $options{'http_proxy'}) }
+	
 	my $response = $ua->request($request);
 	(my $status = $response->status_line()) =~ s/^(\d+)/$1:/;
 
 	if ($response->is_error()) {
 		return "ERROR: $status";
 	} else {
-		return $response ->content;
+		return $response->content;
 	}
 }
 
