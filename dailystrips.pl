@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    31 July 2001 01:31 EST
-# Current Revision: 1.0.16-pre6
+# Last Modified:    31 July 2001 02:21 EST
+# Current Revision: 1.0.16
 #
 
 
@@ -27,7 +27,7 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-$version = "1.0.16-pre6";
+$version = "1.0.16";
 
 $time_today = time;
 

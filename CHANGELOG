@@ -37,7 +37,12 @@
 
   Implemented necessary changes for Win32 (Tom Klinger)
 
+  Implemented preliminary Avantgo support
+
   Misc code tweaks
+
+  31 July 2001
+  Updated several unitedmedia.com strips to use the class again
 
 1.0.15
   13 July 2001

@@ -8,6 +8,10 @@ tackle..
 
   Package as an RPM
 
+  Fully test Win32 changes
+
+  Implement symlinking when using avantgo option
+
 1.0.9
   24 Feb 2001
   Now that a group capability has been added to the definition file, it appears
