@@ -5108,6 +5108,7 @@ end
 
 strip daybyday
 	name Day by Day
+	artist Chris Muir
 	homepage http://www.daybydaycartoon.com/
 	type generate
 	imageurl http://www.daybydaycartoon.com/Cartoons/%m-%d-%Y.gif
