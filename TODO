@@ -1,6 +1,11 @@
 This is mostly my rambling, but feel free to implement anything you want to
 tackle..
 
+1.0.16
+  27 July 2001
+  Write a test script to verify that everything works as it should to cut down
+  on releases of code with easily detectable bugs
+
 1.0.9
   24 Feb 2001
   Now that a group capability has been added to the definition file, it appears
