@@ -19,6 +19,7 @@
 
   Changed method of operation for search mode to be more flexible
 
+  Fixed a bug in groups support (Pat Lashley)
 1.0.17
   1 August 2001
   Small fix to Avantgo table generation
