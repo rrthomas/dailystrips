@@ -25,13 +25,15 @@ Create a cron script like the following and put it in  /etc/cron.daily
 
 #!/bin/sh
 echo "dailystrips running:"
-su user -c "./dailystrips.pl --basedir /home/user/dailystrips --local all"
+su user -c "./dailystrips.pl --basedir=/home/user/dailystrips --local all"
 
 Of course, change /home/user/dailystrips to the exact  directory  that
 you created.  Also, change "su user.." to reflect an appropriate login
 (your own is  best if you created a  directory in your home directory)
-Don't forget to make dailystrips.pl  and the cron script executable by
-the necessary users.
+You should also change the "all"  to reflect just  the strips you want
+to see - the full 136 strips would take a rather long time to download
+even with a fast connection. Finally, don't forget to make dailystrips.pl
+and the cron script executable by the necessary users.
 
 By default, the program calls the output file 'dailystrips-YYYY.MM.DD'
 and creates 'index.html' as a symlink to this, so that you can make a
