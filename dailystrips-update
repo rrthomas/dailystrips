@@ -8,7 +8,7 @@
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          29 May 2003, 10:07 EDT
 # Last Modified:    29 May 2003, 17:03 EDT
-# Current Revision: 1.0.0pre1
+# Current Revision: 1.0.0
 #
 
 
@@ -26,8 +26,8 @@ use File::Copy;
 # Variables
 my (%options, $version, $dailystrips_version);
 
-$version = "1.0.0pre1";
-$dailystrips_version = "1.0.27";
+$version = "1.0.0";
+$dailystrips_version = "1.0.28";
 
 # Get options
 GetOptions(\%options, 'quiet|q','verbose','proxy=s',
