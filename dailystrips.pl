@@ -143,7 +143,7 @@ if ($options{'date'}) {
 
 # setup time variables (needed during defs parsing)
 @localtime_today = localtime $time_today;
-$long_date = strftime("\%A, \%B \%-e, \%Y", @localtime_today);
+$long_date = strftime("\%A, \%B \%e, \%Y", @localtime_today);
 $short_date = strftime("\%Y.\%m.\%d", @localtime_today);
 @localtime_yesterday = localtime($time_today - ( 24 * 60 * 60 ));
 $short_date_yesterday = strftime("\%Y.\%m.\%d", @localtime_yesterday);
