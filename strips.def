@@ -317,7 +317,7 @@ strip joyoftech
 	name The Joy of Tech
 	homepage http://www.joyoftech.com/joyoftech/
 	type search
-	searchpattern <IMG.+?src="(joyimages/.+?\d+\..+?)\"
+	searchpattern <img.+?src="(joyimages/.+?\d+.+?)"
 	baseurl http://www.joyoftech.com/joyoftech/
 	provides latest
 end
