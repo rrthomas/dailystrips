@@ -2056,12 +2056,12 @@ strip 9to5
 end
 
 #seems gone - 2002-01-02
-#strip bottomliners
-#	name Bottom Liners
-#	useclass comicspage-panels-srch
-#	$1 bottomliners
-#	$2 bls
-#end
+strip bottomliners
+	name Bottom Liners
+	useclass comicspage-panels-srch
+	$1 bottomliners
+	$2 bls
+end
 
 strip computoon
 	name Compu-toon
