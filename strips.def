@@ -182,7 +182,7 @@ strip joyoftech
 	name The Joy of Tech
 	homepage http://www.joyoftech.com/joyoftech/
 	type search
-	searchpattern <IMG(.*?)src="(joyimages/\d+\.gif)\"(.*?)>
+	searchpattern <IMG(.+)src="(joyimages/\d+\.(gif|jpg))\"(.*?)>
 	matchpart 2
 	baseurl http://www.joyoftech.com/joyoftech/
 	updated semidaily
