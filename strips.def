@@ -2861,10 +2861,11 @@ end
 
 strip scarygoround
       name Scary Go Round
-      artist John A
-      homepage http://bobbins.clango.org/cgi-bin/pngtokeenlite.cgi
+      artist John Allison
+      homepage http://scarygoround.com/
       type search
-      searchpattern <IMG.+?ALT="Today's Comics".+?SRC="(http://bobbins.clango.org/.+?)"
+      searchpattern <img src="(strips/\d+.+?)"
+      baseurl $homepage
       provides latest
 end
 
