@@ -1179,6 +1179,14 @@ strip fans
 	provides latest
 end
 
+strip spooner
+        name Spooner
+        homepage http://www.hookedoncomics.com/
+        type generate
+        imageurl http://www.hookedoncomics.com/comics/Sp%Y%m%d.gif
+        provides any
+end
+
 # ucomics.com strips
 strip adamathome
 	name Adam@home
