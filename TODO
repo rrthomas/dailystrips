@@ -1,0 +1,49 @@
+This is mostly my rambling, but feel free to implement anything you want to
+tackle..
+
+1.0.6
+  02 Feb 2001
+  Since the program is starting to get rather large and handles so many
+  different options, it looks like it may be a good idea to split it up into
+  several smaller programs programs to each handle a specific task. I'll be
+  starting a developmemt branch shortly to get started on this.
+
+  31 Jan 2001
+  Look into using the getopts perl module for getting command-line parameters.
+
+1.0.4
+  26 Jan 2001
+  Revise definitions file parsing code (functional but messy..)
+
+  Implement an option to remove files older than a set number of days (for
+  example, anything more than a week old). This would conserve disk space when
+  downloading a large number of strips daily.
+
+  Add a 'group' section to strips.def where you can specify an alias (such as
+  "tech") that would stand for several strips (such as "userfriendly",
+  "joyoftech", and "badtech")
+
+1.0.1
+  22 Jan 2001
+  Test on Win32 & MacOS
+
+1.0.0:
+  20 Jan 2001
+  Need to detect failure to download images (for local mode, to avoid 'broken'
+  images) - DONE in 1.0.1
+
+  It would be nice to detect duplicate images when in local mode and just
+  symlink to the previous file (to save disk space). This applies to semi-
+  daily strips only. - DONE in 1.0.5
+
+  Idea: expand to modes of operation other than just generating an HTML
+  page, such as emailing the strips (either as attachments (hard) or
+  as an HTML page with links to copies on the server)
+
+  Another mode: CGI (possible methods: download on demand, once per day; or
+  always re-download on demand (for high-bandwidth users only))
+
+  Change wget to use LWP (for portability) - DONE in 1.0.1
+
+  Change `date +%..` to use Perl builtin (for portability) - DONE in 1.0.1
+
