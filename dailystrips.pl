@@ -5,9 +5,9 @@
 #
 # Name:             dailystrips.pl
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
-# Author:           Andrew Medico <amedico@calug.net>
+# Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33
-# Last Modified:    15 May 2001, 18:58
+# Last Modified:    04 June 2001 18:46
 # Current Revision: 1.0.13
 #
 
@@ -67,7 +67,7 @@ Options:
       --nospaces             Removes spaces from image filenames (local mode only)
   -v  --version              Prints version number
 
-Bugs and comments to amedico\@calug.net
+Bugs and comments to amedico\@amedico.dhs.org
 END_HELP
 		exit;
 	}
@@ -326,7 +326,7 @@ print <<END_HEADER;
 <table border=\"0\">
 END_HEADER
 
-#"#kwrite's syntax higlighting is buggy..
+#"#kwrite's syntax higlighting is bit off.. this preserves my sanity
 
 if ($options{'local_mode'} and !$options{'quiet'}) {
 	if ($options{'verbose'}) {
@@ -439,7 +439,7 @@ for (@strips) {
 	</tr>
 END_STRIP
 }
-#"#kwrite's syntax highlighting is buggy..
+#"#kwrite's syntax highlighting is buggy.. this preserves my sanity
 if ($options{'local_mode'} and !$options{'quiet'}) {
 	if ($options{'verbose'}) {
 		print STDERR "\nDownloading strip files: done\n"
@@ -462,7 +462,7 @@ print <<END_FOOTER;
 </html>
 END_FOOTER
 
-#"// # kwrite's syntax highlighting is a bit off.. this fixes things
+#"// # kwrite's syntax highlighting is a bit off.. this preserves my sanity
 
 sub http_get {
 	my ($url, $referer) = @_;
@@ -592,18 +592,20 @@ sub get_defs {
 					}
 				}
 				
+				#other vars in definition
 				for (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
-					#other vars in definition
-					# could do without 'if defined..' if not running under -w
 					if ($defs{$strip}{$_}) {$defs{$strip}{$_} =~ s/\$(name|homepage|searchpage|searchpattern|imageurl|baseurl|referer)/$defs{$strip}{$1}/g}
 				}			
-				
+		
+				#dates		
 				for (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
-					#dates
-					# could do without 'if defined..' if not running under -w
 					if ($defs{$strip}{$_}) { $defs{$strip}{$_} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge }
 				}
 				
+				# <code:> stuff
+				for (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
+					if ($defs{$strip}{$_}) { $defs{$strip}{$_} =~ s/<code:(.*?)(?<!\\)>/&my_eval($1)/ge }
+				}
 				
 				#sanity check vars
 				for (qw(name homepage type)) {
@@ -781,4 +783,12 @@ sub get_defs {
 		}
 	}
 	
+}
+
+sub my_eval {
+	my ($code) = @_;
+	
+	$code =~ s/\\\>/\>/g;
+	
+	return eval $code;
 }
