@@ -4142,12 +4142,12 @@ strip building12
 	provides latest
 end
 
-strip sarahanddavid
-	name Sarah And David
+strip saraanddavid
+	name Sara And David
 	artist Alex Aberle
 	homepage http://www.sara-and-david.com/comic.php?comic=latest
 	type search
-	searchpattern (comics/\d+\.jpg)
+	searchpattern (comics/\d+\.(jpg|gif))
 	baseurl http://www.sara-and-david.com/
 	provides latest
 end
