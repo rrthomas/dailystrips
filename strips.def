@@ -605,7 +605,7 @@ strip dieselsweeties
 	name Diesel Sweeties
 	homepage http://www.dieselsweeties.com/
 	type search
-	searchpattern <img.+?src="(http://www.metalsteve.com/strips/sw\d+\..+?)"
+	searchpattern <img.+?src="(http://images.clango.org/strips/sw\d+\..+?)"
 	provides latest
 end
 
