@@ -1,3 +1,28 @@
+1.0.15
+  13 July 2001
+  Major change: now installs to system directories instead of one dir.
+  This involves:
+    -installer script install.pl
+    -strips.def goes in /usr/share/dailystrips
+    -docs go in /usr/doc/dailystrips-VERSION
+    -script goes in /usr/bin
+   Personal installations are described in the INSTALL file.
+
+   A --useragent option has been added to specify the User-Agent: header.
+
+   Added new strip: jerkcity
+
+   Other small code fixes
+
+   15 Jul 2001
+   Proxy authentication changed. Please notify if any problems arise.
+
+   Added 'prefetch' keyword to definition file (see README.DEFS for more)
+
+   SF Gate strips seem to be working again
+
+   Other small code fixes
+
 1.0.14
   12 July 2001
   Now uses the strips.def file located in the same directory as the script,
