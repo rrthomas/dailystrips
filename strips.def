@@ -262,7 +262,7 @@ strip pennyarcade
 	homepage http://www.penny-arcade.com/
 	type search
 	searchpage http://www.penny-arcade.com/view.php3
-	searchpattern <img.+?src="(images/\d{4}/\d{8}l.jpg)"></td>
+	searchpattern <img.+?src="(images/\d{4}/\d{8}l\..{3})"></td>
 	#searchpattern <IMG.+?src="(images/200.+?\.gif)"></TD>
 	baseurl http://www.penny-arcade.com/
 	provides latest
@@ -488,7 +488,7 @@ strip dorktower
 	#searchpattern <img.+?src="(comics/dorktower/Dorktower\d+..+?)"
 	#searchpattern <img.+?src="(comics/backups/.+?)"
 	#searchpattern <img.+?src="(/(comics/(backups|gamespy|interactiveweek|dorktower)/.+?)"
-	searchpattern <img.+?src="(/images/comics/.+?\..+?)"
+	searchpattern <img.+?src="(/?images/comics/.+?\..+?)"
 	baseurl $homepage
 	provides latest
 end
@@ -912,8 +912,9 @@ strip sexylosers
 	name Sexy Losers
 	homepage http://sexylosers.keenspace.com/
 	type search
-	searchpattern <IMG.+?SRC.+?=.+?"(http://sexylosers.keenspace.com/)?(images/sl\d+\.jpg)"
-	matchpart 2
+	searchpattern <IMG.+?SRC.*?=.*?"(http://sexylosers\.(keenspace\.)?com/)?(images/sl\d+\.jpg)"
+	#searchpattern <IMG.+?SRC="http://sexylosers=com/(images/sl\d+\.jpg)"
+	matchpart 3
 	provides latest
 	baseurl $homepage
 end
