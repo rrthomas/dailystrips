@@ -8,8 +8,8 @@
 #                   that are older than a specified number of days
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          12 Feb 2002, 21:44 EST
-# Last Modified:
-# Current Revision: 1.0.0
+# Last Modified:    21 Jun 2002, 03:28 EDT
+# Current Revision: 1.0.1
 #
 
 
@@ -24,13 +24,13 @@ use Getopt::Long;
 # Variables
 my (%options, $version, $time_today, @files);
 
-$version = "1.0.0";
+$version = "1.0.1";
 
 $time_today = time;
 
 
 # Get options
-GetOptions(\%options, 'quiet|q','verbose|v','test|t','dir=s','version|v','help|h')
+GetOptions(\%options, 'quiet|q','verbose|v','test|t','dir=s','archive|a','version|v','help|h')
 	or exit 1;
 
 
@@ -46,6 +46,7 @@ Options:
   -t  --test                 Do not acutally remove files
   -d  --dir DIR              Work in specified directory instead of current
                              directory
+  -a  --archive              Update archive.html file
   -V  --version              Print version number
   -h  --help                 Print this help
 
@@ -55,7 +56,7 @@ Bugs and comments to dailystrips\@amedico.dhs.org\n";
 }
 
 if ($options{'version'}) {
-		print "dailystrips version $version\n";
+		print "dailystrips-clean version $version\n";
 		exit;
 }
 
@@ -105,7 +106,6 @@ for (0 .. $options{'days'} - 1) {
 	@files = grep(!/$save_day/, @files);	
 }
 
-
 # remove anything that's still on the list
 for (@files) {
 	if ($options{'verbose'}) {
@@ -133,5 +133,40 @@ for (@files) {
 		else {
 			unlink($_) or warn "Could not remove file $_: $!\n";
 		}
+	}
+}
+
+if ($options{'archive'})
+{
+	if (open(ARCHIVE,"<$options{'dir'}archive.html"))
+	{
+		my $oldest = strftime("\%Y.\%m.\%d", localtime ($time_today - (86400 * ($options{'days'}-1))));
+		my $out;
+		
+		while(<ARCHIVE>)
+		{
+			if (/(\d{4}\.\d{2}\.\d{2})/)
+			{
+				if ($1 lt $oldest)
+				{
+					$_ = "";
+				}
+			}
+			$out .= $_;
+		}
+		
+		close(ARCHIVE);
+		if (open(ARCHIVE,">$options{'dir'}archive.html"))
+		{
+			print ARCHIVE $out;
+		}
+		else
+		{
+			warn "Error: cannot update archive.html - could not write file: $!\n";
+		}		
+	}
+	else
+	{
+		warn "Error: cannot update archive.html - could not read file: $!\n";
 	}
 }

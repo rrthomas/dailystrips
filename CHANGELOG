@@ -13,8 +13,10 @@
   Added "Perscheids Abgruende", "Harm Bengen's Alltagsskizzen", "Weyershausen",
   "Touche" (Soeren Gerlach)
 
-  Added Drawing a Crowd, I Need Help, On the Fast Track, Pibgorn, Safe Havens,
-  and Working Daze (Ted Richards)
+  Added "Drawing a Crowd", "I Need Help", "On the Fast Track", "Pibgorn",
+  "Safe Havens", and "Working Daze" (Ted Richards)
+
+  dailystrips-clean can now remove obsolete entries from the archive.html file
 
 1.0.24
   24 Apr 2002
