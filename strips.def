@@ -1472,6 +1472,18 @@ strip theduplex
         $1 dp
 end
 
+strip psmueller
+	name P. S. Mueller
+	useclass ucomics-gen
+	$1 psm
+end
+
+strip misterboffo
+	name Mister Boffo
+	useclass ucomics-gen
+	$1 mb
+end
+
 # unitedmedia.com strips
 strip alleyoop
 	name Alley Oop
@@ -2152,12 +2164,12 @@ strip middletons
 	$2 mid
 end
 
-strip misterboffo
-	name Mister Boffo
-	useclass comicspage-strips-gen
-	$1 misterboffo
-	#2 bfo
-end
+#strip misterboffo
+#	name Mister Boffo
+#	useclass comicspage-strips-gen
+#	$1 misterboffo
+#	#2 bfo
+#end
 
 strip mixedmedia
 	name Mixed Media
