@@ -649,9 +649,14 @@ end
 strip littlegamers
 	name Little Gamers
 	homepage http://www.little-gamers.com/
-	type generate
-	imageurl http://www.little-gamers.com/comics/%Y%m%d.gif
-	provides any
+	#type generate
+	#imageurl http://www.little-gamers.com/comics/%Y%m%d.gif
+	#provides any
+	type search
+	searchpattern <img.+?src='/(index.php\?do_command=show_strip&strip_id=\d+.+?)'
+	baseurl $homepage
+	provides latest
+	#img src='/index.php?do_command=show_strip&strip_id=540&auth=89345-28462-18353-19853-12612' border=0>
 end
 
 # tuesdays, thursdays, sundays
@@ -4118,4 +4123,30 @@ strip zudin
 	useclass slate-cagle
 	$1 $strip
 	$2 $strip
+end
+
+# more non-standard
+strip fleem
+	name fleem
+	homepage http://flem.keenspace.com/
+	type generate
+	imageurl http://flem.keenspace.com/comics/%Y%m%d.jpg
+	provides any
+end
+
+strip queenofwands
+	name Queen of Wands
+	homepage http://www.queenofwands.com/
+	type generate
+	imageurl http://www.queenofwands.net/comics/%Y%m%d.gif
+	provides any
+end
+
+strip wigu
+	name WIGU
+	artist Jeffrey Rowland
+	homepage http://www.wigu.com/
+	type generate
+	imageurl http://www.wigu.com/strips/%Y%m%d.png
+	provides any
 end
