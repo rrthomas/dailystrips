@@ -99,12 +99,13 @@ class sfgate-gen
 	type generate
 	imageurl http://pst.rbma.com/content/$1
 	provides latest
+	prefetch $homepage
 end
 
 class sfgate-srch
 	homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/$1.dtl
 	type search
-searchpattern <img.+?src=".+?(/comics/graphics/$2/.+?\..+?)"
+	searchpattern <img.+?src=".+?(/comics/graphics/$2/.+?\..+?)"
 	baseurl http://www.sfgate.com
 	provides latest
 end
