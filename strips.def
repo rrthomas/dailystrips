@@ -4303,3 +4303,27 @@ strip overdue
 	imageurl http://www.overduemedia.com/strips/%Y%m%d.gif
 	provides latest
 end
+
+strip nichtlustig
+	name Nicht Lustig
+	homepage http://www.nichtlustig.de/
+	type generate
+	imageurl http://www.nichtlustig.de/comics/full/%y%m%d.jpg
+	provides any
+end
+
+strip hackles
+	name Hackles
+	homepage http://hackles.org
+	type generate
+	imageurl http://hackles.org/latest/cartoon.png
+	provides latest
+end
+
+strip aford
+	name Aford Turtle
+	homepage http://www.afordturtle.com
+	type generate
+	imageurl http://www.afordturtle.com.cnchost.com/comicstrips/neweststrip.gif
+	provides latest
+end
