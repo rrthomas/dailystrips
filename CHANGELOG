@@ -27,7 +27,8 @@
   King Features/SF Gate strips should be working now (fixed by using URL as
   Referer value if no Referer is provided)
 
-  Added "pvpcurrent", which stays in sync with PVP website
+  Added "pvpcurrent" and "brunothebanditcurrent", which stay in sync with
+  their websites (The Doctor What)
 
 1.0.27
   24 Feb 2003

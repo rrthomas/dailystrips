@@ -638,6 +638,17 @@ strip brunothebandit
 	provides any
 end
 
+strip brunothebanditcurrent
+	name Bruno the Bandit
+	homepage http://www.brunothebandit.com
+	type search
+	searchpattern <IMG ALT="comic" BORDER=0 SRC="(/comics/%Y\d{4}[a-z]{0,1}\.GIF)"
+	baseurl $homepage
+	provides latest
+end
+
+
+
 strip dieselsweeties
 	name Diesel Sweeties
 	homepage http://www.dieselsweeties.com/gif.php
