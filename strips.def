@@ -402,7 +402,7 @@ end
 
 strip angst
 	name Angst Technology
-	homepage http://www.inktank.com/
+	homepage http://www.inktank.com/AT/
 	type generate
 	imageurl http://www.inktank.com/images/AT/cartoons/%m-%d-%y.gif
 	provides any
@@ -639,7 +639,7 @@ strip rpgworld
 	#imageurl http://www.rpgworldcomic.com/comics/%Y%m%d.jpg
 	#provides any
 	type search
-	searchpattern <IMG.+?SRC="?(/comics/.+?\..+?)"?
+	searchpattern <IMG.+?SRC="(/comics/.+?\..+?)"
 	provides latest
 	baseurl $homepage
 end
@@ -812,37 +812,136 @@ strip whenigrowup
 end
 
 strip walky
-    name It's Walky
-    homepage http://www.itswalky.com/
-    baseurl $homepage
-    type search
-    searchpattern <IMG.+?ALT="".+?SRC="(.+?)".+?> <br>
-    provides latest
+	name It's Walky
+	homepage http://www.itswalky.com/
+	baseurl $homepage
+	type search
+	searchpattern <IMG.+?ALT="".+?SRC="(.+?)".+?> <br>
+	provides latest
 end
 
 strip jackiesfridge
-    name Jackie's Fridge
-    type generate
-    homepage http://jackiesfridge.keenspace.com/
-    imageurl http://jackiesfridge.keenspace.com/comics/jf%Y%m%da.jpg
-    provides any
+	name Jackie's Fridge
+	type generate
+	homepage http://jackiesfridge.keenspace.com/
+	imageurl http://jackiesfridge.keenspace.com/comics/jf%Y%m%da.jpg
+	provides any
 end
 
 strip schlockmercenary
-    name Schlock Mercenary
-    type generate
-    homepage http://www.schlockmercenary.com/
-    imageurl http://www.schlockmercenary.com/comics/schlock%Y%m%d.png
-    provides any
+	name Schlock Mercenary
+	type generate
+	homepage http://www.schlockmercenary.com/
+	imageurl http://www.schlockmercenary.com/comics/schlock%Y%m%d.png
+	provides any
 end
 
 strip unicornjelly
-    name Unicorn Jelly
-    type search
-    homepage http://unicornjelly.com/
-    searchpattern <IMG.+?SRC="(images\/uni\d+\..+?)"
-    baseurl $homepage
-    provides latest
+	name Unicorn Jelly
+	type search
+	homepage http://unicornjelly.com/
+	searchpattern <IMG.+?SRC="(images\/uni\d+\..+?)"
+	baseurl $homepage
+	provides latest
+end
+
+strip downtoearth
+	name Down To Earth
+	homepage http://downtoearth.ncbuy.com
+	type generate
+	imageurl http://downtoearth.ncbuy.com/img/syndicate/nav1_dte_today.gif
+	provides latest
+end
+
+strip wandering
+	name Wandering Ones
+	homepage http://www.wanderingones.com/
+	type generate
+	imageurl http://www.wanderingones.com/comics/wan%Y%m%d.jpg
+	provides any
+end
+
+strip rvfun
+	name Reverend Fun
+	homepage http://rev-fun.gospelcom.net/
+	type generate
+	#imageurl http://rev-fun.gospelcom.net/%Y/%m/%Y%m%d.gif
+	imageurl http://rev-fun.gospelcom.net/add_toon_info.php?date=%Y%m%d
+	provides any
+end
+
+strip greytown
+        name Living in Greytown
+        homepage http://www.livingingreytown.com/
+        type generate
+        imageurl $homepage/comics/grey%Y%m%d.jpg
+        provides any
+end
+
+strip slowwave
+        name Slow Wave
+        homepage http://www.slowwave.com/
+        type generate
+        imageurl $homepage/img.cgi?thisweek.gif
+        provides latest
+end
+
+# formerly "The Thin H Line". NC-17. Vertical format.
+strip sexylosers
+        name Sexy Losers
+        homepage http://www.sexylosers.com/
+        type search
+        searchpattern <IMG.+?SRC = "(image.cgi\?sl\d+\.jpg)"
+        provides latest
+        baseurl $homepage
+end
+
+# weekly
+strip youdamnkid
+        name You Damn Kid
+        homepage http://www.youdamnkid.com/
+        type search
+        baseurl $homepage
+        provides latest
+        searchpattern <IMG.+?SRC="/(comics/ydk\d+\.gif)"
+end
+
+# weekly, moving daily soon?
+strip houndshome
+        name Hound's Home
+        homepage http://www.houndshome.com/
+        type search
+        baseurl $homepage
+        provides latest
+        searchpattern <IMG.+?SRC="/(comics/hh.+?)"
+end
+
+# starts again Dec 1 2001
+strip cutewendy
+        name CuteWendy
+        homepage http://www.wendycomic.com/
+        type generate
+        imageurl http://www.wendycomic.com/cutecomics/cutewendy%Y%m%d.gif
+        provides any
+end
+
+# sporadic
+strip lifesorad
+        name Life's So Rad
+        homepage http://www.radcomics.com/
+        type search
+        baseurl $homepage
+        provides latest
+        searchpattern <IMG.+?SRC="/(comics/\d+\.gif)"
+end
+
+# formerly known as otakufeh. NC-17.
+strip bigones
+        name Big Ones
+        homepage http://otakufeh.keenspace.com/
+        type generate
+        provides any
+        imageurl $homepage/comics/big%Y%m%d.gif
 end
 
 # ucomics.com strips
@@ -1856,12 +1955,13 @@ strip 9to5
 	$2 ntf
 end
 
-strip bottomliners
-	name Bottom Liners
-	useclass comicspage-panels-srch
-	$1 bottomliners
-	$2 bls
-end
+#seems gone - 2002-01-02
+#strip bottomliners
+#	name Bottom Liners
+#	useclass comicspage-panels-srch
+#	$1 bottomliners
+#	$2 bls
+#end
 
 strip computoon
 	name Compu-toon
