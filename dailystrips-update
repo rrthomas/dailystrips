@@ -138,7 +138,7 @@ unless ($options{'retries'}) {
 # default updates path
 unless (defined $options{'updates'})
 {
-        $options{'updates'} = ((getpwuid($>))[7]) . "/.dailystrips-updates.def";
+        $options{'updates'} = &get_homedir() . "/.dailystrips-updates.def";
 }
 
 
@@ -282,4 +282,19 @@ sub get_updated_defs
 			print "Local file is already latest revision, exiting.\n";
 		}
 	}
+}
+
+sub get_homedir
+{
+        if ($^O =~ /Win32/ )
+        {
+                my $dir = $ENV{'USERPROFILE'};
+                if ($dir eq "") {$dir = $ENV{'WINDIR'};}
+                $dir =~ s|\\|/|g;
+                return $dir;
+        }
+        else
+        {
+                return (getpwuid($>))[7];
+        }
 }

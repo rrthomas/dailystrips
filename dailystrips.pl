@@ -88,7 +88,6 @@ Options:
       --nosymlinks           Do not use symlinks for day-to-day duplicates
       --date DATE            Use value DATE instead of local time
                              (DATE is parsed by Date::Parse function)
-                             Note: not available on Win32
       --avantgo              Format images for viewing with Avantgo on PDAs
                              (local mode only)
       --basedir DIR          Work in specified directory instead of current
@@ -116,8 +115,9 @@ Options:
 Windows lacks a number of features and programs found on *NIX, so a number of
 changes must be made to the program's operation:
 
-1. --avantgo is not available
-2. Personal definition files are not supported
+1. --date and --avantgo are not available
+2. Personal and update definition files may or may not work
+3. System-wide definition files are not supported
 ";
 	} # ' please emacs perlmode
 
@@ -171,7 +171,7 @@ unless ($options{'defs'}) {
 # Load updated defs file
 unless (defined $options{'updates'})
 {
-        $options{'updates'} = ((getpwuid($>))[7]) . "/.dailystrips-updates.def";
+        $options{'updates'} = &get_homedir() . "/.dailystrips-updates.def";
 }
 
 
@@ -187,8 +187,8 @@ unless ($options{'nosystem'}) {
 	}
 }
 
-unless ($options{'nopersonal'} or ($^O =~ /Win32/)){
-	my $personal_defs = ((getpwuid($>))[7]) . "/.dailystrips.defs";
+unless ($options{'nopersonal'}){
+	my $personal_defs = &get_homedir()  . "/.dailystrips.defs";
 	if (-r $personal_defs) {
 		&get_defs($personal_defs);
 	}
@@ -1358,4 +1358,19 @@ sub make_avantgo_files {
 	my $file_base = $file; $file_base =~ s/$file_ext$//;
 
 	system("convert -crop 160x160 \"$file\" \"$file_base-\%d$file_ext\"");
+}
+
+sub get_homedir
+{
+	if ($^O =~ /Win32/ )
+	{
+		my $dir = $ENV{'USERPROFILE'};
+		if ($dir eq "") {$dir = $ENV{'WINDIR'};}
+		$dir =~ s|\\|/|g;
+		return $dir; 
+        }
+	else
+	{
+		return (getpwuid($>))[7];
+        }
 }
