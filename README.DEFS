@@ -4,12 +4,13 @@ Strips can be defined in one of two ways. The first is standalone. Also, strips
 can be provide the image URL by generating it (as from the current date) or by
 searching a web page for a URL. Let's look at an example of generating first:
 
->strip badtech
->	name Badtech
->	homepage http://www.badtech.com/
->	type generate
->	imageurl http://www.badtech.com/a/%-y/%-m/%-d.jpg
->end
+strip badtech
+	name Badtech
+	homepage http://www.badtech.com/
+	type generate
+	imageurl http://www.badtech.com/a/%-y/%-m/%-d.jpg
+	provides any
+end
 
 In the first line, we specify the short name of the strip that will be used to
 refer to it on the command line. This must be unique. Next, "name" specifies the
@@ -35,10 +36,10 @@ strip joyoftech
 	name The Joy of Tech
 	homepage http://www.joyoftech.com/joyoftech/
 	type search
-	searchpattern <IMG(.*?)src="(joyimages/\d+\.gif)\"(.*?)>
-	matchpart 2
+	searchpattern <IMG.+?src="(joyimages/\d+\.gif)\"
+	matchpart 1
 	baseurl http://www.joyoftech.com/joyoftech/
-	updated semidaily
+	provides latest
 end
 
 "strip", "name", and "homepage" all function as above. The difference is the
@@ -49,7 +50,7 @@ a web page and is only needed if the URL to the strip image is not found on the
 homepage. The same special variables listed above for "imageurl" may also be
 used here. "matchpart" tells the script which parenthetical section (there must
 be at least one) will contain the desired URL (see man perlre on $n variables
-for more). Note that this line only needs to be specified for values other than 1.
+for more). Note that this line is only mandatory for values other than 1.
 "baseurl" only needs to be specified if the "searchpattern" regular expression
 does not match a full URL (that is, it does not start with "http://" and contain
 the host). If specified, it is prepended to whatever "searchpattern" matched.
@@ -60,13 +61,11 @@ from a known portion and a variable portion that is searched for. Simply specify
 the URL template and insert "$match" wherever you wish the result of the search
 to be put. See the strips "8bit" and "pgs" for examples of how this works.
 
-The "updated semidaily" line is used is a strip is not updated every day. If
-this line is not specified, the program assumes that the site provides a new
-strip every day and will not download the same strip two days in a row (instead,
-it will put an error message in place of the image). If the strip of only
-updated every few days, specify "updated semidaily" and the script will download
-the current image, regardless of whether it is the same as a previous day or
-not.
+The "provides" line indicates which type of strips the definition can provide:
+either "any" for a definition that can provide the strip for any given date
+or "latest" for a definition that can only provide the current strip. This is
+used so that the program can skip definitons that only provide the latest strip
+when running with the --date option.
 
 Two additional variables are not shown. First is "referer". Some webservers
 insist that the HTTP_REFERER header be set to the address of the HTML page that
@@ -99,13 +98,14 @@ identical definition, except for some strip-specific elements. Classes work as
 follows:
 
 First, the class is declared:
->class ucomics-srch
->	homepage http://www.ucomics.com/$strip/view$1.htm
->	type search
->	searchpattern (/$1/(\d+)/$1(\d+)\.(gif|jpg))
->	matchpart 1
->	baseurl http://images.ucomics.com/comics
->end
+class ucomics-srch
+	homepage http://www.ucomics.com/$strip/view$1.htm
+	type search
+	searchpattern (/$1/(\d+)/$1(\d+)\.(gif|jpg))
+	matchpart 1
+	baseurl http://images.ucomics.com/comics
+	provides latest
+end
 
 This is just like a strip definition, except "class" is the first line. The
 value for "class" must be unique among other classes but will not conflict with
@@ -136,7 +136,7 @@ construct is as follows:
 >end
 
 The group name must be unique among all groups, but will not conflict with
-strips or classes (in fact it might be useful to have a class for each strip - I
+strips or classes (in fact it might be useful to have a group for each class - I
 might even make that automatic). "desc" is a description of the group that will
 be shown by --list. Everything after an "include" is added to the list of
 strips. You may specify one or more strips per "include" line, whatever you
@@ -163,7 +163,7 @@ Notes:
 
 * If no "referer" is specified, the value of "searchpage" is used. If this has
   not been set (in the case of definitions that generate the URL or search
-  definitions that use the homepage as the seachrpage), the value of "homepage"
+  definitions that use the homepage as the searchpage), the value of "homepage"
   is used.
 
 * There may be additional problems lurking in the defintion file-parsing code.

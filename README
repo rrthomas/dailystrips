@@ -30,7 +30,7 @@ strips and groups. Strip names can specified as listed. Groups must be preceeded
 with an '@' symbol.
 
 Adding new strips:
-The strips.defs file should be relatively self-explanatory. (see README.DEFS for
+The strips.def file should be relatively self-explanatory. (see README.DEFS for
 detailed information). If you are adding several strips from the same site that
 share a common format, please create a class for that site. In addition, please
 try to pick a method of determining the most current URL possible (i.e. don't
@@ -41,12 +41,27 @@ amedico@amedico.dhs.org so I can add it to the distribution.
 
 Personal definition file:
 Users may create a file called ".dailystrips.defs" in their home directory.
-Syntax is exactly the same as the main strips.defs file. Personal files will be
+Syntax is exactly the same as the main strips.def file. Personal files will be
 processed after the main file. This means that classes set in the main file are
 available for use in users' files. Also note that any entries (classes, strips,
 and groups) in users' files with the same name as entries in the main will take
 precedence. Personal definition files can be ignored with the '--nopersonal'
 option.
+
+System-wide definitions file:
+Administrators may wish to create definitions, classes, or groups available to
+all users on a system. This may be done by creating a file /etc/dailystrips.defs
+and placing the definitions there. This file is loaded after the default
+definition file and so may be use to override provided definitions, if desired.
+The system-wide definitions file can be ignored with the --nosystem option.
+
+Definition upgrades:
+Since full releases are not made available every time the definitions file
+changes, the current CVS copy of the definitions file is available through a
+link at http://dailystrips.sourceforge.net/download.html. Users may either
+replace /usr/share/dailystrips/strips.def with this updated copy, or if a
+package management system is used (Debian dpkg, RPM, etc.) placing the updated
+definitions in /etc/dailystrips.defs is recommended.
 
 *Notice*:
 Keep in mind that this program is for personal use only, as making
