@@ -191,12 +191,6 @@ if ($options{'dailydir'} and $options{'stripdir'}) {
 		die "Error: --dailydir and --stripdir cannot be used together\n";
 }
 
-if ($options{'proxyauth'}) {
-	unless ($options{'proxyauth'} =~ m/^.+?:.+?$/) {
-			die "Error: incorrectly formatted proxy credentials ('user:pass' expected)\n";
-	}		
-}
-
 #Set proxy
 if ($options{'proxy'}) {
 		$options{'proxy'} =~ m/^(http:\/\/)?(.*?):(.+?)\/?$/i;
@@ -215,6 +209,13 @@ if (!$options{'noenvproxy'} and !$options{'proxy'} and $ENV{'http_proxy'} ) {
 			
 	$options{'proxy'} = "http://$2:$3";
 }
+
+if ($options{'proxyauth'}) {
+	unless ($options{'proxyauth'} =~ m/^.+?:.+?$/) {
+			die "Error: incorrectly formatted proxy credentials ('user:pass' expected)\n";
+	}		
+}
+
 
 if ($options{'basedir'}) {
 	unless (chdir $options{'basedir'}) {
@@ -373,7 +374,7 @@ if ($options{'local'}) {
 	}
 	
 	unless (open(STDOUT, ">$options{'output'}")) {
-		die "Could not open output file ($options{'output'}) for writing\n";
+		die "Error: Could not open output file ($options{'output'}) for writing\n";
 	}
 }
 
