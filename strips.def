@@ -713,7 +713,7 @@ strip tuma
 	homepage http://www.cnsnews.com/cartoon/Tuma.asp
 	type search
 	searchpage http://www.cnsnews.com/cartoon/tuma.asp
-	searchpattern <img.+?border="0".+?src="(Tumaimages/%Y/\w+\..+?)
+	searchpattern <img.+?border="0".+?src="(Tumaimages/%Y/\w+\..+?)"
 	baseurl http://www.cnsnews.com/cartoon/
 	provides latest
 end
