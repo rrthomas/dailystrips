@@ -162,9 +162,8 @@ strip jokesonyou
 	name The Joke's on You
 	homepage http://www.thefunnypages.com/
 	type search
-	searchpattern <img.+src="\.\./(archives/.+?\.gif)"
+	searchpattern <img.+src="(http://www.thefunnypages.com/archives/.+?\.gif)"
 	matchpart 1
-	baseurl $homepage
 	#updated daily or not? - check - seems to be, but check weekend
 	provides latest
 end
@@ -469,7 +468,7 @@ strip striptease
 	name Strip Tease Comic
 	homepage http://www.stripteasecomic.com/
 	type search
-	searchpattern <img.+?src="(strips\d+/\d+\.(gif|jpg))"
+	searchpattern <img.+?src="(/strips\d+/\d+\.(gif|jpg))"
 	matchpart 1
 	baseurl $homepage
 	provides latest
