@@ -998,6 +998,10 @@ sub get_defs {
 						die "Error: strip $strip has no 'searchpattern' value in $defs_file\n";
 					}
 					
+					unless ($defs{$strip}{'searchpattern'} =~ /\(.+\)/) {
+						die "Error: strip $strip has no parentheses in searchpattern\n";
+					}
+					
 					unless ($defs{$strip}{'matchpart'}) {
 						#die "Error: strip $strip has no 'matchpart' value in $defs_file\n";
 						$defs{$strip}{'matchpart'} = 1;
