@@ -109,7 +109,7 @@ changes must be made to the program's operation:
 2. --avantgo is not available
 3. Personal definition files are not supported
 END_HELP_WIN32
-	}
+	} # ' please emacs perlmode
 
 print "\nBugs and comments to dailystrips\@amedico.dhs.org\n";
 
@@ -799,7 +799,6 @@ sub get_strip {
 sub get_defs {
 	my $defs_file = shift;
 	my ($strip, $class, $sectype, $group);
-	my (@strips, %nostrips, @okstrips);
 	my $line;
 	
 	unless(open(DEFS, "<$defs_file")) {
@@ -1129,6 +1128,8 @@ sub get_defs {
 	
 	# Post-processing validation
 	for $group (keys %groups) {
+		my (@strips, %nostrips, @okstrips);
+		
 		if (defined($groups{$group}{'nostrips'})) {
 			@strips = sort(keys(%defs));
 			foreach (split (/;/,$groups{$group}{'nostrips'})) {
