@@ -1,3 +1,25 @@
+1.0.20
+  14 Oct 2001
+  Made "matchpart 1" lines unnecessary
+
+  Added elflife, elflifeadult, funnyfarm, ozyandmillie, suburbanjungle,
+  acidreflux, whenigrowup (Jarrod Benjami Johnson)
+
+  16 Oct 2001
+  Added mechanism to automatically retry downloading bad links. Some webservers
+  seem to be randomly returning bogus 404s on strip images, possibly with the
+  intent of tripping up programs such as this.
+
+  26 Oct 2001
+  Fixed 8bit Theater, Diesel Sweeties, Shelton, Spiderman
+
+  Removed Adventurers, hotzp/Bad Boys of Computer Science (both gone)
+
+  Added system-wide definitions (Rene Weber)
+
+  Added --stripnav option to insert links for jumping to specific strips on a
+  large page of comics (Joseph Blough)
+
 1.0.19
   07 Sep 2001
   Removed some Win32 code that no longer applied to anything

@@ -46,7 +46,7 @@ Patch to automatically use the definition file located in the same directory
 as the script instead of the current directory
 
 Rene Weber <rene_dailyst@elvenlord.com>
---useragent option, Debian packaging.
+--useragent option, Debian packaging, system-wide definitions
 
 Peter De Wachter <pdewacht@vub.ac.be>
 Addeed Kevin and Kell, Freefall
@@ -71,3 +71,10 @@ Added Spaz Labs
 
 Chris Hoover <choover@ideatank.com>
 Added frazz, janesworld, bfriends; revised spooner, pcnpixel, thenorm
+
+Jarrod Benjami Johnson <jbjohns4@unity.ncsu.edu>
+Added elflife, elflifeadult, funnyfarm, ozyandmillie, suburbanjungle,
+acidreflux, whenigrowup
+
+Joseph Blough <jblough@CreativeSolutions.com>
+Added links for navigating between strips

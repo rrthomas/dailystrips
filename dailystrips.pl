@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    03 Sept 2001, 14:38 EST
-# Current Revision: 1.0.18-pre3
+# Last Modified:    26 Oct 2001, 20:49 EST
+# Current Revision: 1.0.20pre2
 #
 
 
@@ -27,7 +27,7 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-$version = "1.0.18-pre3";
+$version = "1.0.20pre2";
 
 $time_today = time;
 
@@ -37,7 +37,7 @@ GetOptions(\%options, 'quiet|q','verbose','output=s','lite','local|l','noindex',
 	'archive|a','dailydir|d','stripdir','save|s','date=s',
 	'new|n','defs=s','nopersonal','basedir=s','list','proxy=s',
 	'proxyauth=s','noenvproxy','nospaces','useragent=s','version|v','help|h','avantgo',
-	'random') or exit 1;
+	'random','nosystem','stripnav') or exit 1;
 
 	
 # Process options:
@@ -61,9 +61,11 @@ Options:
       --random               Downloads a random strip
       --defs FILE            Use alternate strips definition file
       --nopersonal           Ignore ~/.dailystrips.defs
+      --nosystem             Ignore system-wide definitions
       --output FILE          outputs HTML to FILE instead of STDOUT
                              (does not apply to local mode)
       --lite                 Outputs a reduced HTML page
+      --stripnav             Add links for navigation within the page
   -l  --local                Outputs HTML to file and saves strips locally
       --noindex              Disables symlinking current page to index.html
                              (local mode only)
@@ -76,7 +78,7 @@ Options:
   -s  --save                 If it appears that a particular strip has been
                              downloaded, does not attempt to re-download it
                              (local mode only)
-  	--nostale              If a new strip is not available, displays an error
+      --nostale              If a new strip is not available, displays an error
                              in the HTML output instead of showing the old image
       --date DATE            Use value DATE instead of local time
                              (DATE is parsed by Date::Parse function)
@@ -157,9 +159,16 @@ unless ($options{'defs'}) {
 
 &get_defs($options{'defs'});
 
+# Get system configurable strip definitions now
+unless ($options{'nosystem'}) {
+	unless (($^O =~ /Win32/) or (! -r '/etc/dailystrips.defs')) {
+		&get_defs('/etc/dailystrips.defs');
+	}
+}
+
 unless ($options{'nopersonal'} or ($^O =~ /Win32/)){
 	my $personal_defs = ((getpwuid($>))[7]) . "/.dailystrips.defs";
-	if (-e $personal_defs) {
+	if (-r $personal_defs) {
 		&get_defs($personal_defs);
 	}
 }
@@ -287,7 +296,6 @@ if ($options{'proxy'}) {
 if ($options{'local'}) {
 	if ($^O =~ /Win32/) {
 		$options{'noindex'} = 1;
-		$options{'new'} = 1;
 	}
 	
 	unless ($options{'quiet'}) {
@@ -454,6 +462,11 @@ END_HEADER
 
 #"#kwrite's syntax higlighting is buggy.. this preserves my sanity
 } else {
+	my $topanchor;
+	if ($options{'stripnav'}) {
+		$topanchor = "\n<a name=\"top\">\n";
+	}
+	
 	# Generate HTML page
 	print <<END_HEADER;
 <html>
@@ -463,7 +476,7 @@ END_HEADER
 </head>
 
 <body bgcolor=\"#ffffff\" text=\"#000000\" link=\"#ff00ff\">
-
+$topanchor
 <center>
 	<font face=\"helvetica\" size=\"+2\"><b><u>dailystrips for $long_date</u></b></font>
 </center>
@@ -471,9 +484,20 @@ END_HEADER
 <p><font face=\"helvetica\">
 &lt; <a href=\"dailystrips-$short_date_yesterday.html\">Previous day</a>$link_tomorrow &gt;
 </font></p>
-
-<table border=\"0\">
 END_HEADER
+
+#"#kwrite's syntax higlighting is buggy.. this preserves my sanity
+if ($options{'stripnav'}) {
+	print "<font face=\"helvetica\">Strips:</font><br>\n";
+	for (@strips) {
+		my ($strip, $name) = (split(/;/, $_))[0,1];
+		#print "<a href=\"#$strip\">&lt;$name&gt;</A>\n";
+		print "<a href=\"#$strip\">$name</A>&nbsp;&nbsp;";
+	}
+	print "\n<br><br>";
+}
+
+print "\n\n<table border=\"0\">\n";
 
 #"#kwrite's syntax higlighting is buggy.. this preserves my sanity
 }
@@ -565,11 +589,24 @@ for (@strips) {
 				} else {
 					$img_addr = $local_name;
 					$img_addr =~ s/ /\%20/go;
-					$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+					if ($options{'stripnav'}) {
+						$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
+					} else {
+						$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+					}
 				}
 			} else {			
 				# need to download
-				$image = &http_get($img_addr, $referer, $prefetch);
+				if ($prefetch) {
+					if (&http_get($prefetch, $referer) =~ m/^ERROR/) {
+						warn "Error: $strip: could not download prefetch URL\n";
+						$image = "ERROR";
+					} else {
+						$image = &http_get($img_addr, $referer);
+					}
+				} else {
+					$image = &http_get($img_addr, $referer);
+				}
 				
 				if ($image =~ /^ERROR/) {
 					# couldn't get the image
@@ -589,7 +626,11 @@ for (@strips) {
 					
 						$img_addr = $local_name;
 						$img_addr =~ s/ /\%20/go;
-						$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+						if ($options{'stripnav'}) {
+							$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
+						} else {
+							$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+						}
 					} else {
 						open(IMAGE, ">$local_name.tmp");
 						print IMAGE $image;
@@ -604,7 +645,11 @@ for (@strips) {
 							} else {
 								$img_addr = $local_name;
 								$img_addr =~ s/ /\%20/go;
-								$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+								if ($options{'stripnav'}) {
+									$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
+								} else {
+									$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+								}
 							}
 						} elsif (system("diff \"$local_name_yesterday\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
 							# same strip as yesterday
@@ -619,7 +664,11 @@ for (@strips) {
 							} else {
 								$img_addr = $local_name;
 								$img_addr =~ s/ /\%20/go;
-								$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+								if ($options{'stripnav'}) {
+									$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
+								} else {
+									$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+								}
 							}								
 						} else {
 							# completely new strip
@@ -644,7 +693,11 @@ for (@strips) {
 
 		} else {
 			# regular mode - just give addresses to strips on their webserver
-			$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+			if ($options{'stripnav'}) {
+				$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
+			} else {
+				$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+			}
 		}
 	}
 		
@@ -657,10 +710,15 @@ END_STRIP
 	
 	#"#kwrite's syntax highlighting is buggy.. this preserves my sanity	
 	} else {
+		my $stripanchor;
+		if ($options{'stripnav'}) {
+			$stripanchor = "<a name=\"$strip\">";
+		}
+		
 		print <<END_STRIP;
 	<tr>
 		<td>
-			<font face=\"helvetica\" size=\"+1\"><b><a href=\"$homepage\">$name</a></b></font>
+			<font face=\"helvetica\" size=\"+1\"><b>$stripanchor<a href=\"$homepage\">$name</a></b></font>
 		</td>
 	</tr>
 	<tr>
@@ -702,8 +760,13 @@ END_FOOTER
 }
 
 sub http_get {
-	my ($url, $referer, $prefetch) = @_;
+	my ($url, $referer, $retries) = @_;
 	my ($request, $response, $status);
+	
+	# default value
+	unless ($retries) {
+		$retries = 3;
+	}	
 	
 	my $headers = new HTTP::Headers;
 	$headers->proxy_authorization_basic(split(/:/, $options{'proxyauth'}));
@@ -713,36 +776,24 @@ sub http_get {
 	$ua->agent($options{'useragent'});
 	$ua->proxy('http', $options{'proxy'});
 	
-	#get prefetch url first
-	if ($prefetch ne "") {
-		$request = HTTP::Request->new('GET', $prefetch, $headers);
+	for (1 .. $retries) {
+		# main request
+		$request = HTTP::Request->new('GET', $url, $headers);				
 		$response = $ua->request($request);
-	
 		($status = $response->status_line()) =~ s/^(\d+)/$1:/;
 
 		if ($response->is_error()) {
 			if ($options{'verbose'}) {
-				warn "Error: could not download prefetch URL $prefetch: $status\n";
+				warn "Warning: could not download $url: $status (attempt $_ of $retries)\n";
 			}
-			
-			return "ERROR: $status";
+		} else {
+			return $response->content;
 		}
 	}
 	
-	# main request
-	$request = HTTP::Request->new('GET', $url, $headers);				
-	$response = $ua->request($request);
-	($status = $response->status_line()) =~ s/^(\d+)/$1:/;
-
-	if ($response->is_error()) {
-		if ($options{'verbose'}) {
-			warn "Error: could not download $url: $status\n";
-		}
-		
-		return "ERROR: $status";
-	} else {
-		return $response->content;
-	}
+	# if we get here, URL retrieval completely failed
+	warn "Warning: failed to download $url\n";
+	return "ERROR: $status";
 }
 
 sub get_strip {
@@ -934,7 +985,8 @@ sub get_defs {
 					}
 					
 					unless ($defs{$strip}{'matchpart'}) {
-						die "Error: strip $strip has no 'matchpart' value in $defs_file\n";
+						#die "Error: strip $strip has no 'matchpart' value in $defs_file\n";
+						$defs{$strip}{'matchpart'} = 1;
 					}
 					
 					if ($defs{$strip}{'imageurl'} and ($defs{$strip}{'baseurl'} or $defs{$strip}{'urlsuffix'})) {
@@ -1159,6 +1211,7 @@ sub my_eval {
 	$code =~ s/\\\>/\>/g;
 	
 	return eval $code;
+	#print STDERR "DEBUG: eval returned: " . scalar(eval $code) . ", errors: $!\n";
 }
 
 sub make_avantgo_table {

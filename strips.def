@@ -18,8 +18,7 @@ end
 class ucomics-srch
 	homepage http://www.ucomics.com/$strip/view$1.htm
 	type search
-	searchpattern (/$1/(\d+)/$1(\d+)\.(gif|jpg))
-	matchpart 1
+	searchpattern <img.+?src=".+?(/$1/(\d+)/$1(\d+).+?)"
 	baseurl http://images.ucomics.com/comics
 	provides latest
 end
@@ -36,8 +35,7 @@ class unitedmedia-srch-comics
 	homepage http://www.unitedmedia.com/comics/$strip/index.html
 	type search
 	searchpage http://www.unitedmedia.com/comics/$strip/archive/$strip-%Y%m%d.html	
-	searchpattern (/comics/$strip/archive/images/$strip(.*?)\.(gif|jpg))
-	matchpart 1
+	searchpattern <img.+?src="(/comics/$strip/archive/images/$strip.+?)"
 	baseurl http://www.unitedmedia.com
 	provides any
 end
@@ -45,8 +43,7 @@ end
 class unitedmedia-srch-creators
 	homepage http://www.unitedmedia.com/creators/$strip/index.html
 	type search
-	searchpattern <img.+?src="?(/creators/$strip/archive/images/(.*?)\.(gif|jpg))"
-	matchpart 1
+	searchpattern <img.+?src="?(/creators/$strip/archive/images/.+?\.(gif|jpg))"?
 	baseurl http://www.unitedmedia.com
 	provides latest
 end
@@ -55,7 +52,6 @@ class unitedmedia-srch-wash
 	homepage http://www.unitedmedia.com/wash/$strip/index.html
 	type search
 	searchpattern (/wash/$strip/archive/images/(.*?)\.(gif|jpg))
-	matchpart 1
 	baseurl http://www.unitedmedia.com
 	provides latest
 end
@@ -79,8 +75,7 @@ end
 class sfgate-srch
 	homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/$1.dtl
 	type search
-	searchpattern (/comics/graphics/$2/.*?\.(gif|jpg))
-	matchpart 1
+	searchpattern <img.+?src=".+?(/comics/graphics/$2/.+?\..+?)"
 	baseurl http://www.sfgate.com
 	#prefetch $homepage
 	provides latest
@@ -93,7 +88,6 @@ class comicspage-strips-srch
 	type search
 	searchpage http://www.comicspage.com/$1/main.html
 	searchpattern <img.+?src="(http://www.comicspage.com/daily/cs$2/\d+cs$2((-\w)?).gif)"
-	matchpart 1
 	provides latest
 end
 
@@ -104,7 +98,6 @@ class comicspage-panels-srch
 	type search
 	searchpage http://www.comicspage.com/$1/main.html
 	searchpattern <img.+?src="(http://www.comicspage.com/daily/cp$2/\d+cp$2((-\w)?).gif)"
-	matchpart 1
 	provides latest
 end
 
@@ -115,7 +108,6 @@ class comicspage-editorial-srch
 	type search
 	searchpage http://www.comicspage.com/$1/main.html
 	searchpattern <img.+?src="(http://www.comicspage.com/daily/ed$2/\d+ed$2((-\w)?).gif)"
-	matchpart 1
 	provides latest
 end
 
@@ -136,7 +128,6 @@ strip avalonhigh
 	homepage http://www.avalonhigh.com/
 	type search
 	searchpattern <IMG.+?SRC="(/comics/avalon\d{8}.+?\.gif)"
-	matchpart 1
 	baseurl $homepage
 	provides latest
 end
@@ -162,7 +153,6 @@ strip goats
 	homepage http://www.goats.com/
 	type search
 	searchpattern <IMG.+?SRC="(/comix/\d+/goats\d+.gif)"
-	matchpart 1
 	baseurl http://www.goats.com/
 	provides latest
 end
@@ -172,7 +162,6 @@ strip jokesonyou
 	homepage http://www.thefunnypages.com/
 	type search
 	searchpattern <img.+src="(http://www.thefunnypages.com/archives/.+?\.gif)"
-	matchpart 1
 	#updated daily or not? - check - seems to be, but check weekend
 	provides latest
 end
@@ -191,7 +180,6 @@ strip joyoftech
 	homepage http://www.joyoftech.com/joyoftech/
 	type search
 	searchpattern <IMG.+?src="(joyimages/\d+\.(gif|jpg))\"(.*?)>
-	matchpart 1
 	baseurl http://www.joyoftech.com/joyoftech/
 	provides latest
 end
@@ -201,7 +189,6 @@ strip megatokyo
 	homepage http://www.megatokyo.com/
 	type search
 	searchpattern <IMG.+?SRC="(/?strips/\d+\.gif)"
-	matchpart 1
 	baseurl http://www.megatokyo.com/
 	provides latest
 
@@ -229,8 +216,7 @@ strip pennyarcade
 	homepage http://www.penny-arcade.com/
 	type search
 	searchpage http://www.penny-arcade.com/view.php3
-	searchpattern <IMG(.*)src=\"(images/(.*)\.gif)\"><BR>
-	matchpart 2
+	searchpattern <IMG.+?src="(images/.+?\.gif)"><BR>
 	baseurl http://www.penny-arcade.com/
 	provides latest
 end
@@ -249,7 +235,6 @@ strip punc
 	type search
 	searchpage http://artiztik.com/cgi-bin/pmviewer.cgi?list=pm&config=pm.cfg&slide=999&style=pm
 	searchpattern <img.+?src=(/pm/strips/.+?\.jpg)
-	matchpart 1
 	baseurl http://artiztik.com/
 	provides latest
 end
@@ -270,12 +255,13 @@ strip redmeat
 	provides latest
 end
 
+
 strip rudypark
-	name Rudy Park
-      homepage http://www.rudypark.com/
-      type generate
-      imageurl http://www.rudypark.com/cartoons/rudypark.jpg
-	provides latest
+        name Rudy Park
+        homepage http://www.rudypark.com/
+        type generate
+        imageurl http://www.rudypark.com/comics/rudy%Y%m%d.gif
+        provides latest
 end
 
 #seems to be gone - 2001/09/04
@@ -301,7 +287,6 @@ strip sluggy
 	type search
 	searchpage http://www.sluggy.com/daily.php?date=%y%m%d
 	searchpattern <img.+?src="?(http://pics.sluggy.com/comics/%y%m%d.+?\.(gif|jpg))
-	matchpart 1
 	provides any
 end
 
@@ -336,8 +321,7 @@ strip userfriendly
 	homepage http://www.userfriendly.org/static/
 	type search
 	searchpage http://ars.userfriendly.org/cartoons/?id=%Y%m%d&mode=classic
-	searchpattern <img.+?border="0".+?src="(http://www.userfriendly.org/cartoons/archives/%y.+?/uf.+?\.gif)"
-	matchpart 1
+	searchpattern <img.+?src="(http://www.userfriendly.org/cartoons/archives/%y.+?/uf.+?\.gif)"
 	provides any
 end
 
@@ -346,7 +330,6 @@ strip exploitnow
 	homepage http://www.exploitationnow.com/
 	type search
 	searchpattern <IMG.+?SRC="(/comics/rb\d+\.(gif|jpg))"
-	matchpart 1
 	baseurl $homepage
 	provides latest
 end
@@ -356,7 +339,6 @@ strip coolcat
 	homepage http://www.coolcatstudio.com/
 	type search
 	searchpattern <IMG.+?SRC="(/comics/ccs\d+\.(jpg|gif))"
-	matchpart 1
 	baseurl http://www.coolcatstudio.com/
 	provides latest
 end
@@ -366,7 +348,6 @@ strip classm
 	homepage http://www.theclassm.com/
 	type search
 	searchpattern <IMG.+?SRC="(/comics/cm\d+\.gif)"
-	matchpart 1
 	baseurl http://www.theclassm.com/
 	provides latest
 end
@@ -384,7 +365,6 @@ strip nukees
 	homepage http://www.nukees.com
 	type search
 	searchpattern <IMG.+?SRC="(/comics/\d+\.gif)"
-	matchpart 1
 	baseurl http://www.nukees.com/
 	provides latest
 end
@@ -393,19 +373,19 @@ strip joeaverage
 	name Joe Average
 	homepage http://www.joeaverage.org
 	type search
-	searchpattern <IMG.+?SRC="(/comics/\d+\.(gif|jpg|png))"
-	matchpart 1
+	searchpattern <IMG.+?SRC="(/comics/\d+\..+?)"
 	baseurl http://www.joeaverage.org/
 	provides latest
 end
 
-strip hotzp
-	name Bad Boys of Computer Science
-	homepage http://hotzp.com/badboys/
-	type generate
-	imageurl http://hotzp.com/badboys/new.jpg
-	provides latest
-end
+# seems to be gone: 10/26/01
+#strip hotzp
+#	name Bad Boys of Computer Science
+#	homepage http://hotzp.com/badboys/
+#	type generate
+#	imageurl http://hotzp.com/badboys/new.jpg
+#	provides latest
+#end
 
 strip angst
 	name Angst Technology
@@ -421,7 +401,6 @@ strip zapiro
 	#type search
 	#searchpattern <img.+?src="?(/mg/zapiro/.+?\.(gif|jpg)).+?ALT="cartoon"
 	#provides any
-	#matchpart 1
 	type generate
 	imageurl http://www.mg.co.za/mg/zapiro/%Y/<code:lc(strftime("\%b", @localtime_today))>/<code:lc(strftime("\%b", @localtime_today))>%d.gif
 	provides any
@@ -440,7 +419,6 @@ strip gpf
 	homepage http://www.gpf-comics.com/
 	type search
 	searchpattern <IMG.+?SRC="(/comics/gpf\d+\.gif)"
-	matchpart 1
 	baseurl http://www.gpf-comics.com
 	provides latest
 end
@@ -450,7 +428,6 @@ strip in2it
 	homepage http://www.in2itonline.com/
 	type search
 	searchpattern <IMG.+?SRC=(archive/\d+/comics/\d+\.gif)
-	matchpart 1
 	baseurl http://www.in2itonline.com/
 	provides latest
 end
@@ -470,8 +447,7 @@ strip striptease
 	name Strip Tease Comic
 	homepage http://www.stripteasecomic.com/
 	type search
-	searchpattern <img.+?src="(/?strips\d+/\d+\.(gif|jpg))"
-	matchpart 1
+	searchpattern <img.+?src="(/?strips\d+/\d+\..+?)"
 	baseurl $homepage
 	provides latest
 end
@@ -483,7 +459,6 @@ strip dorktower
 	#searchpattern <IMG.+src="(comics/gamespy/GameSpy\d+\.jpg)".*?>
 	#searchpattern <IMG.+?src="(comics/interactiveweek/IW\d+\(\d+_\d+_\d+\)\.jpg)"
 	searchpattern <img.+?src="(comics/dorktower/Dorktower\d+.jpg)"
-	matchpart 1
 	baseurl $homepage
 	provides latest
 end
@@ -518,30 +493,28 @@ strip 8bit
 	type search
 	#searchpattern <A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>.*?<IMG.+?SRC="images/menu_03.gif"
 	#searchpattern <A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>.*?<IMG.+?SRC="images/menu_02.gif"
-	searchpattern <IMG.+?SRC="images/menu_02.gif".*?>.*?<A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>
-	matchpart 1
-	imageurl http://www.nuklearpower.com/comic/ep$match.gif
+	#searchpattern <IMG.+?SRC="images/menu_02.gif".*?>.*?<A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>
+	searchpattern <a.*?HREF="http://www.nuklearpower.com/comic/(090)\.htm".*?>.*?<b>Newest<br>
+	imageurl http://www.nuklearpower.com/comic/ep$match.png
 	provides latest
 end
 
 strip apodbig
-    name Astronomy Picture of the Day (big image)
-    homepage http://antwrp.gsfc.nasa.gov/apod/
-    type search
-    searchpattern <a.+?href="(image/\d{4}/.+?\.(jpg|gif))"
-    matchpart 1
-    baseurl $homepage
-    provides latest
+	name Astronomy Picture of the Day (big image)
+	homepage http://antwrp.gsfc.nasa.gov/apod/
+	type search
+	searchpattern <a.+?href="(image/\d{4}/.+?\.(jpg|gif))"
+	baseurl $homepage
+	provides latest
 end
 
 strip apod
-    name Astronomy Picture of the Day
-    homepage http://antwrp.gsfc.nasa.gov/apod/
-    type search
-    searchpattern <img.+?SRC="(image/\d{4}/.+?\.(jpg|gif))"
-    matchpart 1
-    baseurl $homepage
-    provides latest
+	name Astronomy Picture of the Day
+	homepage http://antwrp.gsfc.nasa.gov/apod/
+	type search
+	searchpattern <img.+?SRC="(image/\d{4}/.+?\..+?)"
+	baseurl $homepage
+	provides latest
 end
 
 
@@ -549,156 +522,154 @@ strip pgs
 	name Pathetic Geek Stories
 	homepage http://www.theonionavclub.com/
 	type search
-	searchpattern <FRAME SRC="http://www.theonionavclub.com/avclub(\d+)/index.html"
-	matchpart 1
+	searchpattern <FRAME.+?SRC="http://www.theonionavclub.com/avclub(\d+)/index.html"
 	imageurl http://graphics.theonion.com/avpics_$match/pgs_$match.gif
 	provides latest
 end
 
+#dead and gone - 10/26/01
 # Adventurers!
-strip adventurers
-        name Adventurers!
-        homepage http://www.adventurers-comic.com/
-        type search
-        searchpage http://www.fuzzyfur.net/DSOS/adv/
-        searchpattern <img.+?src="http://www.fuzzyfur.net/(DSOS/adv/strips/\d+.gif)"
-        matchpart 1
-        baseurl http://www.fuzzyfur.net/
-        provides latest
-end
+#strip adventurers
+#	name Adventurers!
+#	homepage http://www.adventurers-comic.com/
+#	type search
+#	searchpage http://www.fuzzyfur.net/DSOS/adv/
+#	searchpattern <img.+?src="http://www.fuzzyfur.net/(DSOS/adv/strips/\d+\.gif)"
+#	baseurl http://www.fuzzyfur.net/
+#	provides latest
+#end
 
 # basement studios
 strip basement
-        name Basement Studios
-        homepage http://www.basement-studios.com/
-        type generate
-        imageurl http://www.basement-studios.com/archive/images/%m%d%y.gif
-        provides any
+	name Basement Studios
+	homepage http://www.basement-studios.com/
+	type generate
+	imageurl http://www.basement-studios.com/archive/images/%m%d%y.gif
+	provides any
 end
 
-# Bob the Angry Flower Web Page
 strip btaf
-        name Bob, The Angry Flower
-        homepage http://angryflower.com/
-        type search
-        searchpattern <a href="bobsqu.gif">.*?<a href="([^"]*\.gif)">
-        matchpart 1
-        provides latest
-        baseurl http://angryflower.com/
+	name Bob, The Angry Flower
+	homepage http://angryflower.com/
+	type search
+	searchpattern <a.+?href="bobsqu.gif">.*?<a href="([^"]*\.gif)"
+	provides latest
+	baseurl http://angryflower.com/
 end
 
-# [Boy on a Stick and Slither]
 strip boasas
-        name Boy on a Stick and Slither
-        homepage http://www.boasas.com/
-        type search
-        searchpattern <img.+?src="(boasas/\d+\.gif)"
-        matchpart 1
-        provides latest
-        baseurl http://www.boasas.com/
+	name Boy on a Stick and Slither
+	homepage http://www.boasas.com/
+	type search
+	searchpattern <img.+?src="(boasas/\d+\.gif)"
+	provides latest
+	baseurl http://www.boasas.com/
 end
 
 # Bruno the Bandit
 strip brunothebandit
-        name Bruno the Bandit
-        homepage http://www.brunothebandit.com
-        type generate
-        imageurl http://www.brunothebandit.com/comics/%Y%m%da.gif
-        provides any
+	name Bruno the Bandit
+	homepage http://www.brunothebandit.com
+	type generate
+	imageurl http://www.brunothebandit.com/comics/%Y%m%da.gif
+	provides any
 end
 
 
 # Diesel sweeties
 strip dieselsweeties
-        name Diesel Sweeties
-        homepage http://www.dieselsweeties.com/
-        type search
-        searchpattern <img.*?src="(strips/sw.*?\.png)"
-        matchpart 1
-        provides latest
-        baseurl http://www.dieselsweeties.com/
+	name Diesel Sweeties
+	homepage http://www.dieselsweeties.com/
+	type search
+	searchpattern <img.+?src="?(/?strips/sw.+?\.png)"?
+	provides latest
+	baseurl http://www.dieselsweeties.com/
 end
 
 # Fuzzy Logic
 strip fuzzylogic
-        name Fuzzy Logic
-        homepage http://www.bbspot.com/comics/fuzzy_logic/index.html
-        type generate
-        imageurl http://www.bbspot.com/Images/comics/fuzzy_logic/%Y/%Y%m%d.jpg
-        provides any
+	name Fuzzy Logic
+	homepage http://www.bbspot.com/comics/fuzzy_logic/index.html
+	type generate
+	imageurl http://www.bbspot.com/Images/comics/fuzzy_logic/%Y/%Y%m%d.jpg
+	provides any
 end
 
 # Little Gamers
 strip littlegamers
-        name Little Gamers
-        homepage http://www.little-gamers.com/
-        type generate
-        imageurl http://www.little-gamers.com/comics/%Y%m%d.gif
-        provides any
+	name Little Gamers
+	homepage http://www.little-gamers.com/
+	type generate
+	imageurl http://www.little-gamers.com/comics/%Y%m%d.gif
+	provides any
 end
 
 # tuesdays, thursdays, sundays
 # Mac Hall
 strip machall
-        name Mac Hall
-        homepage http://machall.keenspace.com/today.html
-        type generate
-        imageurl http://machall.keenspace.com/comics/%Y%m%d.jpg
-        provides any
+	name Mac Hall
+	homepage http://machall.keenspace.com/today.html
+	type generate
+	imageurl http://machall.keenspace.com/comics/%Y%m%d.jpg
+	provides any
 end
 
 # not daily
 # The Mr. Chuck Show
 strip mrchuckshow
-        name Mr. Chuck Show
-        homepage http://www.mrchuckshow.com/
-        type generate
-        imageurl http://www.mrchuckshow.com/strips/mcs%Y%m%d.png
-        provides any
+	name Mr. Chuck Show
+	homepage http://www.mrchuckshow.com/
+	type generate
+	imageurl http://www.mrchuckshow.com/strips/mcs%Y%m%d.png
+	provides any
 end
 
 
 # Pentasmal
 strip pentasmal
-        name Pentasmal
-        homepage http://www.pentasmal.com/
-        type generate
-        imageurl http://www.pentasmal.com/comics/%Y%m%d.png
-        provides any
+	name Pentasmal
+	homepage http://www.pentasmal.com/
+	type generate
+	imageurl http://www.pentasmal.com/comics/%Y%m%d.png
+	provides any
 end
 
 # RPG World
 strip rpgworld
-        name RPG World
-        homepage http://www.rpgworldcomic.com/
-        type generate
-        imageurl http://www.rpgworldcomic.com/comics/%Y%m%d.jpg
-        provides any
+	name RPG World
+	homepage http://www.rpgworldcomic.com/
+	#type generate
+	#imageurl http://www.rpgworldcomic.com/comics/%Y%m%d.jpg
+	#provides any
+	type search
+	searchpattern <IMG.+?SRC="?(/comics/.+?\.(jpg|gif|png))"?
+	provides latest
+	baseurl $homepage
 end
 
 # Ubersoft - multi-strip
 strip ubersoft1
-        name Ubersoft-1
-        homepage http://www.ubersoft.net/
-        type generate
-        imageurl http://www.ubersoft.net/comics/hd%Y%m%da.png
-        provides any
+	name Ubersoft-1
+	homepage http://www.ubersoft.net/
+	type generate
+	imageurl http://www.ubersoft.net/comics/hd%Y%m%da.png
+	provides any
 end
 
 strip ubersoft2
-        name Ubersoft-2
-        homepage http://www.ubersoft.net/
-        type generate
-        imageurl http://www.ubersoft.net/comics/hd%Y%m%dc.png
-        provides any
+	name Ubersoft-2
+	homepage http://www.ubersoft.net/
+	type generate
+	imageurl http://www.ubersoft.net/comics/hd%Y%m%dc.png
+	provides any
 end
 
 strip ubersoft3
-        name Ubersoft-3
-        homepage http://www.ubersoft.net/
-        type generate
-        imageurl http://www.ubersoft.net/comics/hd%Y%m%de.png
-        provides any
+	name Ubersoft-3
+	homepage http://www.ubersoft.net/
+	type generate
+	imageurl http://www.ubersoft.net/comics/hd%Y%m%de.png
+	provides any
 end
 
 strip ubersoft4
@@ -723,6 +694,124 @@ strip glasbergen
 	type generate
 	imageurl http://www.glasbergen.com/images/toon.gif
 	provides latest
+end
+
+strip spiderman
+	name Spider Man
+	homepage http://www.kingfeatures.com/features/comics/spidermn/about.htm
+	#type generate
+	#imageurl http://est.rbma.com/content/Spiderman?date=%Y%m0<code:int(strftime("\%\d", localtime($time_today - 1209600)))>
+	type search
+	searchpage http://www.kingfeatures.com/features/comics/spidermn/aboutMaina.php
+	searchpattern <img.+?src='(http://est.rbma.com/content/Spiderman\?date=20011012)'
+	provides latest
+end
+
+# can be made into a class
+strip tuma
+	name Kevin Tuma Cartoon
+	homepage http://www.cnsnews.com/cartoon/Tuma.asp
+	type search
+	searchpage http://www.cnsnews.com/cartoon/tuma.asp
+	searchpattern <img.+?border="0".+?src="(Tumaimages/%Y/\w+\.jpg)
+	baseurl http://www.cnsnews.com/cartoon/
+	provides latest
+end
+
+strip nowak
+	name Paul Nowak Cartoon
+	homepage http://www.cnsnews.com/cartoon/nowak.asp
+	type search
+	searchpattern <img.+?border="0".+?src="(Nowakimages/%Y/\w+\.jpg)"
+	baseurl http://www.cnsnews.com/cartoon/
+	provides latest
+end
+
+strip asay
+	name Chuck Asay Cartoon
+	homepage http://www.cnsnews.com/cartoon/asay.asp
+	type search
+	searchpattern <img.+?border="0".+?src="(Asayimages/%Y/\w+\.jpg)"
+	baseurl http://www.cnsnews.com/cartoon/
+	provides latest
+end
+
+strip lang
+	name Bob Lang Cartoon
+	homepage http://www.cnsnews.com/cartoon/lang.asp
+	type search
+	searchpage http://www.cnsnews.com/cartoon/Lang.asp
+	searchpattern <img.+?border="0".+?src="(Langimages/%Y/\w+\.jpg)"
+	baseurl http://www.cnsnews.com/cartoon/
+	provides latest
+end
+
+strip shelton
+	name Barry Shelton Cartoon
+	homepage http://www.cnsnews.com/cartoon/shelton.asp
+	type search
+	searchpattern <img.+?border="0".+?src="(Sheltonimages/%Y/.+?\.jpg)"
+	baseurl http://www.cnsnews.com/cartoon/
+	provides latest
+end
+
+strip elflifeadult
+	name Elf Life: R Rated
+	homepage http://www.elflife.com/adults.html
+	type generate
+	imageurl http://www.elflife.com/current/%Y%m%dm.gif
+	provides any
+end
+
+strip funnyfarm
+	name Funny Farm
+	homepage http://www.funnyfarmcomics.com/
+	type search
+	searchpage http://www.funnyfarmcomics.com/d/%Y%m%d.html
+	searchpattern <IMG.+?SRC="(/comics/%Y%m%da\..+?)"
+	baseurl $homepage
+	provides any
+end
+
+strip elflife
+	name Elf Life
+	homepage http://www.elflife.com/
+	type generate
+	imageurl http://www.elflife.com/comics/%Y%m%dm.gif
+	provides any
+end
+
+strip ozyandmillie
+	name Ozy and Millie
+	homepage http://www.ozyandmillie.org/
+	type generate
+	imageurl http://www.ozyandmillie.org/comics/om%Y%m%d.gif
+	provides any
+end
+
+strip suburbanjungle
+	name Suburban Jungle
+	homepage http://www.suburbanjungle.com/
+	type generate
+	imageurl http://www.suburbanjungle.com/comics/sj%Y%m%d.jpg
+	provides any
+end
+
+strip acidreflux
+	name Acid Reflux
+	homepage http://www.acidrefluxcomic.com/
+	type search
+	baseurl http://www.acidrefluxcomic.com/
+	searchpattern <img.+?src="(archive/c\d+\.gif)"
+	provides latest
+end
+
+strip whenigrowup
+	name When I Grow Up
+	homepage http://www.whenigrowup.net/
+	type generate
+	imageurl http://www.whenigrowup.net/comics/wigu%Y%m%d.png
+	provides any
 end
 
 # ucomics.com strips
@@ -1069,8 +1158,7 @@ strip lilabner
 	name Li'l Abner
 	homepage http://www.unitedmedia.com/comics/lilabner/index.html
 	type search
-	searchpattern (/comics/lilabner/archive/images/lilabner(.*?)\.gif)
-	matchpart 1
+	searchpattern (/comics/lilabner/archive/images/lilabner.+?\.gif)
 	baseurl http://www.unitedmedia.com
 	provides latest
 end
@@ -1605,7 +1693,6 @@ strip profdoodles
 	type search
 	searchpage http://www.comicspage.com/profdoodles/main.html
 	searchpattern <img.+?src="(http://www.comicspage.com/daily/csdod/\d+csdod(-\w)?\.gif)"
-	matchpart 1
 	provides latest
 end
 
