@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    12 Nov 2001, 16:43 EST
+# Last Modified:    02 Jan 2002, 02:19 EST
 # Current Revision: 1.0.21pre1
 #
 
@@ -519,7 +519,7 @@ if ($options{'local'} and !$options{'quiet'}) {
 }
 
 for (@strips) {
-	my ($strip, $name, $homepage, $img_addr, $referer, $prefetch, $provides) = split(/;/, $_);
+	my ($strip, $name, $homepage, $img_addr, $referer, $prefetch, $artist) = split(/;/, $_);
 	my ($img_line, $local_name, $local_name_dir, $local_name_file, $local_name_ext, $image, $ext,
 	   $local_name_yesterday, $local_name_yesterday_dir, $local_name_yesterday_file, $local_name_yesterday_ext);
 	
@@ -718,9 +718,13 @@ for (@strips) {
 		}
 	}
 		
+	if ($artist) {
+		$artist = " by $artist";
+	}
+	
 	if ($options{'lite'}){
 		print
-"<font face=\"helvetica\" size=\"+1\"><b><a href=\"$homepage\">$name</a></b></font><br>
+"<font face=\"helvetica\" size=\"+1\"><b><a href=\"$homepage\">$name</a>$artist</b></font><br>
 $img_line<br>
 <br>
 ";
@@ -733,7 +737,7 @@ $img_line<br>
 		print
 "	<tr>
 		<td>
-			<font face=\"helvetica\" size=\"+1\"><b>$stripanchor<a href=\"$homepage\">$name</a></b></font>
+			<font face=\"helvetica\" size=\"+1\"><b>$stripanchor<a href=\"$homepage\">$name</a>$artist</b></font>
 		</td>
 	</tr>
 	<tr>
@@ -862,7 +866,7 @@ sub get_strip {
 	
 	unless ($addr =~ /^(http:\/\/|unavail)/io) { $addr = "http://" . $addr }
 	
-	push(@strips,"$strip;$defs{$strip}{'name'};$defs{$strip}{'homepage'};$addr;$defs{$strip}{'referer'};$defs{$strip}{'prefetch'}");
+	push(@strips,"$strip;$defs{$strip}{'name'};$defs{$strip}{'homepage'};$addr;$defs{$strip}{'referer'};$defs{$strip}{'prefetch'};$defs{$strip}{'artist'}");
 }
 
 sub get_defs {
@@ -937,7 +941,7 @@ sub get_defs {
 					my $using_class = $defs{$strip}{'useclass'};
 					
 					# import vars from class
-					for (qw(homepage searchpage searchpattern baseurl imageurl urlsuffix referer prefetch)) {
+					for (qw(homepage searchpage searchpattern baseurl imageurl urlsuffix referer prefetch artist)) {
 						if ($classes{$using_class}{$_} and !$defs{$strip}{$_}) {
 							my $classvar = $classes{$using_class}{$_};
 							$classvar =~ s/(\$[0-9])/$defs{$strip}{$1}/g;
@@ -1103,6 +1107,10 @@ sub get_defs {
 
 				$classes{$class}{'provides'} = $1;
 			}
+			elsif (/^artist\s+(.+)$/i)
+			{
+				$classes{$class}{'artist'} = $1;
+			}
 			elsif (/^(.+)\s+?/)
 			{
 				die "Unknown keyword '$1' at $defs_file line $line\n";
@@ -1179,6 +1187,10 @@ sub get_defs {
 				}
 				
 				$defs{$strip}{'provides'} = $1;
+			}
+			elsif (/^artist\s+(.+)$/i)
+			{
+				$defs{$strip}{'artist'} = $1;
 			}
 			elsif (/^(.+)\s+?/)
 			{
