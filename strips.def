@@ -1367,6 +1367,18 @@ strip thefifthwave
 	$1 fw
 end
 
+strip bensargent
+	name Ben Sargent
+	useclass ucomics-srch
+	$1 bs
+end
+
+strip patoliphant
+	name Pat Oliphant
+	useclass ucomics-srch
+	$1 po
+end
+
 strip foxtrot
 	name FoxTrot
 	useclass ucomics-gen
