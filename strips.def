@@ -74,6 +74,16 @@ strip drfun
 	imageurl http://www.ibiblio.org/Dave/Dr-Fun/html/Dr-Fun/df%Y%m/df%Y%m%d.jpg
 end
 
+strip goats
+        name Goats
+        homepage http://www.goats.com/
+        type search
+        searchpattern <IMG(.*?)SRC="(/comix/\d+/goats\d+.gif)"
+        matchpart 2
+        baseurl http://www.goats.com/
+        updated semidaily
+end
+
 strip jokesonyou
 	name The Joke's on You
 	homepage http://www.thefunnypages.com/
@@ -145,11 +155,12 @@ strip pennyarcade
 	updated semidaily
 end
 
-strip pvp
-	name Player vs. Player
-	homepage http://www.pvponline.com/
-	type generate
-	imageurl http://www.pvponline.com/archive/%Y/pvp%Y%m%d.gif
+strip plif
+      name Parking Lot is Full
+      homepage http://www.plif.com
+      type generate
+      imageurl http://www.plif.com/thisweek.gif
+      updated semidaily
 end
 
 strip punc
@@ -161,6 +172,13 @@ strip punc
 	matchpart 2
 	baseurl http://artiztik.com/
 	updated semidaily
+end
+
+strip pvp
+	name Player vs. Player
+	homepage http://www.pvponline.com/
+	type generate
+	imageurl http://www.pvponline.com/archive/%Y/pvp%Y%m%d.gif
 end
 
 strip redmeat
