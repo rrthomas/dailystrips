@@ -87,6 +87,14 @@ class unitedmedia-srch-editoons
 	provides latest
 end
 
+class sfgate-gen-zippy
+	homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/$1.dtl
+	type generate
+	imageurl http://pst.rbma.com/content/$3
+	provides latest
+	prefetch $homepage
+end
+
 class sfgate-gen-zippycolor
 	homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/$1.dtl
 	type generate
@@ -2046,12 +2054,21 @@ strip zippythecolorpinhead
 	$2 Zippy_the_Pinhead
 end
 
+#strip zippythepinhead
+#	name Zippy the Pinhead
+#	useclass sfgate-gen
+#	$1 Zippy_the_Pinhead
+#	$2 zippy
+#end
+
 strip zippythepinhead
 	name Zippy the Pinhead
-	useclass sfgate-gen
+	useclass sfgate-gen-zippy
 	$1 Zippy_the_Pinhead
+	$3 Zippy_BW
 	$2 zippy
 end
+
 
 strip zits
 	name Zits
