@@ -2612,3 +2612,14 @@ strip marvin
         useclass washpost-king
         $1 $name
 end
+
+#additional non-standard strips
+strip dtte
+	name Death to the Extremist
+	homepage http://www.zole.org/extremist/
+	type search
+	searchpage http://www.zole.org/extremist/
+	searchpattern <img.+?src="comics/(.+?)".+?name="comic"
+	baseurl http://www.zole.org/extremist/comics/
+	provides latest
+end
