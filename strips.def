@@ -4331,3 +4331,13 @@ strip aford
 	imageurl http://www.afordturtle.com.cnchost.com/comicstrips/neweststrip.gif
 	provides latest
 end
+
+strip dragontails
+	name Dragon Tails
+	artist Tim Dawson
+	homepage http://www.dragon-tails.com/
+	type search
+	searchpattern SRC="(comics/.+?\..+?)"
+	provides latest
+	baseurl $homepage
+end
