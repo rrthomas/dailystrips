@@ -316,6 +316,15 @@ strip pvp
 	provides any
 end
 
+strip pvp-current
+	name Player vs. Player
+	homepage http://www.pvponline.com/
+	type search
+	searchpattern <img SRC="(archive/%Y/pvp%Y\d{4}\.gif)">
+	baseurl $homepage
+	provides latest
+end
+
 strip redmeat
 	name Redmeat
 	homepage http://www.redmeat.com/redmeat/current/

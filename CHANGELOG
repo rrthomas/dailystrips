@@ -27,6 +27,8 @@
   King Features/SF Gate strips should be working now (fixed by using URL as
   Referer value if no Referer is provided)
 
+  Added "pvp-current", which stays in sync with PVP website
+
 1.0.27
   24 Feb 2003
   Added 180 new strips (Kim Scarborough)
