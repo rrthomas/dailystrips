@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    10 August 2001 22:04 EST
+# Last Modified:    10 August 2001 22:46 EST
 # Current Revision: 1.0.17-pre2
 #
 
@@ -119,21 +119,17 @@ if ($options{'version'}) {
 }
 
 
-# Date::Parse must be loaded before using --date
-eval "use Date::Parse" unless ($^O =~ /Win32/);
-if ($@ ne "") {
-	warn "Warning: Could not load Date::Parse module. --date option cannot be used\n";
-	$no_dateparse = 1;
-}
-
 if ($options{'date'}) {
-	if ($^O =~ /Win32/) {
-		die "Error: cannot use --date on Win32\n";
-	}
-	
-	if ($no_dateparse) {
+	eval "require Date::Parse"; #unless ($^O =~ /Win32/);
+	if ($@ ne "") {
 		die "Error: cannot use --date - Date::Parse not installed\n";
+	} else {
+		import Date::Parse;
 	}
+
+	#if ($^O =~ /Win32/) {
+	#	die "Error: cannot use --date on Win32\n";
+	#}
 	
 	unless ($time_today = str2time($options{'date'})) {
 		die "Error: invalid date specified\n";
