@@ -28,7 +28,7 @@
 
   Now completely up to date with comicspage.com strips
 
-  02 Jan 2001
+  02 Jan 2002
   Fixed RPG World def
 
   Added strips greytown, slowwave, sexylosers, youdamnkid, houndshome,
@@ -37,6 +37,9 @@
   Added 'artist' keyword to defs file
 
   Fixed freefalf def to work on Win32
+
+  12 Jan 2002
+  Fixed 'Avalon High' (again)
 
 1.0.20
   08 Oct 2001
