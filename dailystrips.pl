@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33
-# Last Modified:    04 June 2001 18:46
-# Current Revision: 1.0.13
+# Last Modified:    12 July 2001 22:01
+# Current Revision: 1.0.14
 #
 
 # Set up
@@ -21,7 +21,7 @@ use POSIX qw(strftime);
 
 my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @localtime_tomorrow, $long_date, $short_date,
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, $val, $link_tomorrow,
-    $no_dateparse);
+    $no_dateparse, @base_dirparts);
 
 # Help overrides anything else
 for (@ARGV)	{
@@ -78,9 +78,11 @@ if ($@ ne "") {
 	$no_dateparse = 1;
 }
 
-$version = "1.0.13";
+$version = "1.0.14";
 
-$options{'defs_file'} = "strips.def";
+@base_dirparts = split('/', $0);
+pop(@base_dirparts);
+$options{'defs_file'} = join('/',@base_dirparts) . "/strips.def";
 
 $time_today = time;
 
@@ -110,7 +112,9 @@ $short_date_yesterday = strftime("\%Y.\%m.\%d", @localtime_yesterday);
 $short_date_tomorrow = strftime("\%Y.\%m.\%d", @localtime_tomorrow);
 
 #get strip definitions (do it now because info is used below)
-&get_defs;
+warn "DEBUG: Going to use defs file $options{'defs_file'}\n";
+
+&get_defs($options{'defs_file'});
 $known_strips = join('|', sort keys %defs);
 $known_groups = join('|', sort keys %groups);
 
@@ -519,10 +523,12 @@ sub get_strip {
 }
 
 sub get_defs {
+	my $defs_file = shift;
 	my ($strip, $class, $sectype, %classes, $group);
+	my (@strips, %nostrips, @okstrips);
 	my $line = 1;
 	
-	open(DEFS, "<$options{'defs_file'}") or die "Error: could not open strip definitions file\n";
+	open(DEFS, "<$defs_file") or die "Error: could not open strip definitions file $defs_file\n";
 	my @defs_file = <DEFS>;
 	close(DEFS);
 	
@@ -763,6 +769,10 @@ sub get_defs {
 			{
 				$groups{$group}{'strips'} .= join(';', split(/\s+/, $1)) . ";";
 			}
+			elsif (/^exclude\s+(.+)$/io)
+			{
+				$groups{$group}{'nostrips'} .= join(';', split(/\s+/, $1)) . ";";
+			}
 			elsif (/^(.+)(\s+?)/io)
 			{
 				die "Unknown keyword '$1' at $options{'defs_file'} line $line, in group $group\n";
@@ -776,11 +786,27 @@ sub get_defs {
 	
 	# Post-processing validation
 	for $group (keys %groups) {
-		for ( split(/;/, $groups{$group}{'strips'}) ) {
-			unless ($defs{$_}) {
-				die "Error: group $group includes non-existant strip $_\n";
+#		for ( split(/;/, $groups{$group}{'strips'}) ) {
+#			unless ($defs{$_}) {
+#				die "Error: group $group includes non-existant strip $_\n";
+#			}
+#		}
+		if (defined($groups{$group}{'nostrips'})) {
+			@strips = sort(keys(%defs));
+			foreach (split (/;/,$groups{$group}{'nostrips'})) {
+				$nostrips{$_} = 1;
 			}
+		} else {
+			@strips = split(/;/, $groups{$group}{'strips'});
+			%nostrips = ();   #empty
 		}
+		
+		foreach (@strips) {
+			unless ($defs{$_}) { print warn "Warning: group $group references non-existant strip $_\n" }
+			next if ($nostrips{$_});
+			push (@okstrips,$_);
+		}
+		$groups{$group}{'strips'} = join(';',@okstrips);
 	}
 	
 }
