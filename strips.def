@@ -905,18 +905,15 @@ strip slowwave
         provides latest
 end
 
-# gone 10 feb 2002
 # formerly "The Thin H Line". NC-17. Vertical format.
-# supports varying HTML configurations - maybe overkill
-#strip sexylosers
-#        name Sexy Losers
-#        homepage http://www.sexylosers.com/
-#        type search
-#        searchpattern <IMG.+?SRC.+?=.+?"(http://sexylosers.com/)?(image.cgi\?sl\d+\.jpg)"
-#        matchpart 2
-#        provides latest
-#        baseurl $homepage
-#end
+strip sexylosers
+	homepage http://sexylosers.keenspace.com/
+	type search
+	searchpattern <IMG.+?SRC.+?=.+?"(http://sexylosers.keenspace.com/)?(images/sl\d+\.jpg)"
+	matchpart 2
+	provides latest
+	baseurl $homepage
+end
 
 # weekly
 strip youdamnkid
