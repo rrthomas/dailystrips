@@ -47,7 +47,7 @@ expression that must be written to match the strip's URL. Not shown is
 'searchpage', which would ordinarily go above 'searchpattern'. This is a URL to
 a web page and is only needed if the URL to the strip image is not found on the
 homepage. The same special variables listed above for 'imageurl' may also be
-used here. 'matchpart' tells the script witch parenthetical section (there must
+used here. 'matchpart' tells the script which parenthetical section (there must
 be at least one) will contain the desired URL (see man perlre on $n variables
 for more). 'baseurl' only needs to be specified if the 'searchpattern' regular
 expression does not match a full URL (that is, it does not start with http://
