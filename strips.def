@@ -4150,3 +4150,12 @@ strip wigu
 	imageurl http://www.wigu.com/strips/%Y%m%d.png
 	provides any
 end
+
+strip overdue
+	name Overdue
+	artist Bill Barnes and Gene Ambaum
+	homepage http://www.overduemedia.com/
+	type generate
+	imageurl http://www.overduemedia.com/strips/%Y%m%d.gif
+	provides latest
+end
