@@ -21,12 +21,14 @@ class ucomics-srch
 	searchpattern (/$1/(\d+)/$1(\d+)\.(gif|jpg))
 	matchpart 1
 	baseurl http://images.ucomics.com/comics
+	provides latest
 end
 
 class ucomics-gen
 	homepage http://www.ucomics.com/$strip/view$1.htm
 	type generate
 	imageurl http://images.ucomics.com/comics/$1/%Y/$1%y%m%d.gif
+	provides any
 end
 
 class unitedmedia-srch-comics
@@ -36,6 +38,7 @@ class unitedmedia-srch-comics
 	searchpattern (/comics/$strip/archive/images/$strip(.*?)\.(gif|jpg))
 	matchpart 1
 	baseurl http://www.unitedmedia.com
+	provides any
 end
 
 class unitedmedia-srch-creators
@@ -44,6 +47,7 @@ class unitedmedia-srch-creators
 	searchpattern (/creators/$strip/archive/images/(.*?)\.(gif|jpg))
 	matchpart 1
 	baseurl http://www.unitedmedia.com
+	provides latest
 end
 
 class unitedmedia-srch-wash
@@ -52,6 +56,7 @@ class unitedmedia-srch-wash
 	searchpattern (/wash/$strip/archive/images/(.*?)\.(gif|jpg))
 	matchpart 1
 	baseurl http://www.unitedmedia.com
+	provides latest
 end
 
 class sfgate-gen-zippycolor
@@ -59,6 +64,7 @@ class sfgate-gen-zippycolor
 	type generate
 	#prefetch $homepage
 	imageurl http://pst.rbma.com/content/$2
+	provides latest
 end
 
 class sfgate-gen
@@ -66,6 +72,7 @@ class sfgate-gen
 	type generate
 	#prefetch $homepage
 	imageurl http://pst.rbma.com/content/$1
+	provides latest
 end
 
 class sfgate-srch
@@ -75,6 +82,7 @@ class sfgate-srch
 	matchpart 1
 	baseurl http://www.sfgate.com
 	#prefetch $homepage
+	provides latest
 end
 
 class comicspage-strips-srch
@@ -85,6 +93,7 @@ class comicspage-strips-srch
 	searchpage http://www.comicspage.com/$1/main.html
 	searchpattern <img(.*?)src="(http://www.comicspage.com/daily/cs$2/\d+cs$2((-\w)?).gif)"
 	matchpart 2
+	provides latest
 end
 
 class comicspage-panels-srch
@@ -95,6 +104,7 @@ class comicspage-panels-srch
 	searchpage http://www.comicspage.com/$1/main.html
 	searchpattern <img(.*?)src="(http://www.comicspage.com/daily/cp$2/\d+cp$2((-\w)?).gif)"
 	matchpart 2
+	provides latest
 end
 
 class comicspage-editorial-srch
@@ -105,6 +115,7 @@ class comicspage-editorial-srch
 	searchpage http://www.comicspage.com/$1/main.html
 	searchpattern <img(.*?)src="(http://www.comicspage.com/daily/ed$2/\d+ed$2((-\w)?).gif)"
 	matchpart 2
+	provides latest
 end
 
 # Non-standard strips
@@ -116,6 +127,7 @@ strip avalonhigh
         matchpart 3
         baseurl $homepage
         updated semidaily
+        provides latest
 end
 
 strip badtech
@@ -123,6 +135,7 @@ strip badtech
 	homepage http://www.badtech.com/
 	type generate
 	imageurl http://www.badtech.com/a/%-y/%-m/%-d.jpg
+	provides any
 end
 
 strip drfun
@@ -131,6 +144,7 @@ strip drfun
 	type generate
 	imageurl http://www.ibiblio.org/Dave/Dr-Fun/html/Dr-Fun/latest.jpg
 	updated semidaily
+	provides latest
 end
 
 strip goats
@@ -141,6 +155,7 @@ strip goats
         matchpart 2
         baseurl http://www.goats.com/
         updated semidaily
+        provides latest
 end
 
 strip jokesonyou
@@ -150,6 +165,7 @@ strip jokesonyou
 	searchpattern <img(.*?)src="(http://www.thefunnypages.com/archives/(.*?).gif)"
 	matchpart 2
 	#updated daily or not? - check - seems to be, but check weekend
+	provides latest
 end
 
 strip innies
@@ -158,6 +174,7 @@ strip innies
 	type generate
 	#updated M/W/F - no sense searching
 	imageurl http://www.inniesandoutties.com/images/front.jpg
+	provides latest
 end
 
 strip joyoftech
@@ -168,6 +185,7 @@ strip joyoftech
 	matchpart 2
 	baseurl http://www.joyoftech.com/joyoftech/
 	updated semidaily
+	provides latest
 end
 
 #strip markfiore
@@ -187,6 +205,7 @@ strip megatokyo
 	matchpart 2
 	baseurl http://www.megatokyo.com/
 	updated semidaily
+	provides latest
 end
 
 strip mostlybusiness
@@ -195,6 +214,7 @@ strip mostlybusiness
 	type generate
 	#fix to use more precise addr - maybe not possible?
 	imageurl http://www.tedgoff.com/mb/images/today.gif
+	provides latest
 end
 
 strip notquiteright
@@ -202,6 +222,7 @@ strip notquiteright
 	homepage http://www.notquiteright.com/
 	type generate
 	imageurl http://www.notquiteright.com/wow/todaystoon.gif
+	provides latest
 end
 
 strip pennyarcade
@@ -213,6 +234,7 @@ strip pennyarcade
 	matchpart 2
 	baseurl http://www.penny-arcade.com/
 	updated semidaily
+	provides latest
 end
 
 strip plif
@@ -221,6 +243,7 @@ strip plif
       type generate
       imageurl http://www.plif.com/thisweek.gif
       updated semidaily
+      provides latest
 end
 
 strip punc
@@ -232,6 +255,7 @@ strip punc
 	matchpart 2
 	baseurl http://artiztik.com/
 	updated semidaily
+	provides latest
 end
 
 strip pvp
@@ -239,6 +263,7 @@ strip pvp
 	homepage http://www.pvponline.com/
 	type generate
 	imageurl http://www.pvponline.com/archive/%Y/pvp%Y%m%d.gif
+	provides any
 end
 
 strip redmeat
@@ -247,6 +272,7 @@ strip redmeat
 	type generate
 	imageurl http://www.redmeat.com/redmeat/current/index-1.gif
 	updated semidaily
+	provides latest
 end
 
 strip rudypark
@@ -255,6 +281,7 @@ strip rudypark
       type generate
       imageurl http://www.rudypark.com/cartoons/rudypark.jpg
 	updated semidaily
+	provides latest
 end
 
 strip scragends
@@ -262,6 +289,7 @@ strip scragends
 	homepage http://jarbabies.hikeeba.com/carts/carts.htm
 	type generate
 	imageurl http://jarbabies.hikeeba.com/carts/scragend.jpg
+	provides latest
 end
 
 strip sinfest
@@ -269,13 +297,15 @@ strip sinfest
 	homepage http://sinfest.net
 	type generate
 	imageurl http://sinfest.net/comics/sf%Y%m%d.gif
+	provides any
 end
 
 strip sluggy
-        name Sluggy Freelance
-        homepage http://www.sluggy.com/
-        type generate
-        imageurl http://pics.sluggy.com/comics/%y%m%da.gif
+	name Sluggy Freelance
+	homepage http://www.sluggy.com/
+	type generate
+	imageurl http://pics.sluggy.com/comics/%y%m%da.gif
+	provides any
 end
 
 strip squinkers
@@ -285,6 +315,7 @@ strip squinkers
 	imageurl http://www.squinkers.com/sqkrs/Images/today.gif
 	# only updated M-F, but no better way to handle it
 	updated semidaily
+	provides latest
 end
 
 strip superosity
@@ -292,6 +323,7 @@ strip superosity
 	homepage http://www.superosity.com/
 	type generate
 	imageurl http://www.superosity.com/comics/sup%Y%m%d.gif
+	provides any
 end
 
 strip theweedpatch
@@ -301,6 +333,7 @@ strip theweedpatch
 	imageurl http://www.jpjennings.com/toons/%m%d%Y.gif
 	#every day except sunday
 	updated semidaily
+	provides any
 end
 
 strip userfriendly
@@ -311,6 +344,7 @@ strip userfriendly
 	#searchpattern <img(.*?)alt="Cartoon for(.*?)src="(.*?)"
 	searchpattern <img(.*?)border="0"(.*?)src="(http://www.userfriendly.org/cartoons/archives/%y(.*?)/uf(.*?).gif)"(.*?)>
 	matchpart 3
+	provides any
 end
 
 strip exploitnow
@@ -321,6 +355,7 @@ strip exploitnow
         matchpart 2
         baseurl http://www.exploitationnow.com/
         updated semidaily
+        provides latest
 end
 
 strip coolcat
@@ -331,6 +366,7 @@ strip coolcat
         matchpart 2
         baseurl http://www.coolcatstudio.com/
         updated semidaily
+        provides latest
 end
 
 strip classm
@@ -341,6 +377,7 @@ strip classm
         matchpart 2
         baseurl http://www.theclassm.com/
         updated semidaily
+        provides latest
 end
 
 strip bruno
@@ -349,6 +386,7 @@ strip bruno
         type generate
         imageurl http://www.brunostrip.com/%Ypics/%Y%m%d.gif
         updated semidaily
+        provides any
 end
 
 strip thinhline
@@ -359,6 +397,7 @@ strip thinhline
        matchpart 1
        baseurl http://thinhline.com/
        updated weekly
+       provides latest
 end
 
 strip nukees
@@ -369,6 +408,7 @@ strip nukees
         matchpart 2
         baseurl http://www.nukees.com/
         updated semidaily
+        provides latest
 end
 
 strip joeaverage
@@ -379,6 +419,7 @@ strip joeaverage
         matchpart 2
         baseurl http://www.joeaverage.org/
         updated semidaily
+        provides latest
 end
 
 strip hotzp
@@ -386,6 +427,7 @@ strip hotzp
         homepage http://hotzp.com/badboys/
         type generate
         imageurl http://hotzp.com/badboys/new.jpg
+        provides latest
 end
 
 strip flem
@@ -393,6 +435,7 @@ strip flem
 	  homepage http://impure.org/flem/
 	  type generate
 	  imageurl http://impure.org/flem/new.gif
+	  provides latest
 end
 
 strip angst
@@ -400,6 +443,7 @@ strip angst
         homepage http://www.inktank.com/
         type generate
         imageurl http://www.inktank.com/images/cartoons/%m-%d-%y.gif
+        provides any
 end
 
 strip zapiro
@@ -410,6 +454,7 @@ strip zapiro
         matchpart 1
         updated semidaily
         baseurl http://www.mg.co.za
+        provides latest
 end
 
 strip madameve
@@ -420,6 +465,7 @@ strip madameve
         matchpart 1
         updated semidaily
         baseurl http://www.mg.co.za/mg/m&e/
+        provides latest
 end
 
 strip clanofthecats
@@ -427,6 +473,7 @@ strip clanofthecats
         homepage http://www.clanofthecats.com/
         type generate
         imageurl http://www.clanofthecats.com/comics/%Y%m%da.gif
+        provides any
 end
 
 strip gpf
@@ -437,6 +484,7 @@ strip gpf
         matchpart 2
         baseurl http://www.gpf-comics.com
         updated semidaily
+        provides latest
 end
 
 strip in2it
@@ -447,6 +495,7 @@ strip in2it
         matchpart 2
         baseurl http://www.in2itonline.com/
         updated semidaily
+        provides latest
 end
 
 strip crfh
@@ -454,6 +503,7 @@ strip crfh
           homepage http://www.crfh.net
           type generate
           imageurl http://www.crfh.net/comics/crfh%Y%m%d\.jpg
+          provides any
 end
 
 strip striptease
@@ -464,16 +514,18 @@ strip striptease
         matchpart 2
         baseurl $homepage
         updated semidaily
+        provides latest
 end
 
 strip dorktower
-        name Dork Tower
-        homepage http://www.gamespy.com/comics/dorktower/
-        type search
-        searchpattern <IMG(.*?)src="(comics/gamespy/GameSpy\d+\.jpg)"(.*?)>
-        matchpart 2
-        baseurl $homepage
-        updated semidaily
+	name Dork Tower
+	homepage http://www.gamespy.com/comics/dorktower/
+	type search
+	searchpattern <IMG(.*?)src="(comics/gamespy/GameSpy\d+\.jpg)"(.*?)>
+	matchpart 2
+	baseurl $homepage
+	updated semidaily
+	provides latest
 end
 
 strip thenorm
@@ -481,6 +533,7 @@ strip thenorm
 	homepage http://www.thenorm.com/
 	type generate
 	imageurl http://www.thenorm.com/daily/<code:int(strftime("\%\d", localtime($time_today - 1209600)))>.gif
+	provides latest
 end
 
 strip jerkcity
@@ -489,6 +542,7 @@ strip jerkcity
   type generate
   imageurl http://www.jerkcity.com/today.gif
   updated daily
+  provides latest
 end
 
 # ucomics.com strips
