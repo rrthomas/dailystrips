@@ -2314,14 +2314,15 @@ strip ballardstreet
 	provides latest
 end
 
-strip bachelorparty
-	name Bachelor Party
-	homepage http://www.creators.com/comics_show.cfm?comicname=bch
-	type search
-	searchpattern <img.+?alt="Bachelor Party".+?src="(.+?)"
-	baseurl http://www.creators.com/
-	provides latest
-end
+# apparently gone 20050126
+#strip bachelorparty
+#	name Bachelor Party
+#	homepage http://www.creators.com/comics_show.cfm?comicname=bch
+#	type search
+#	searchpattern <img.+?alt="Bachelor Party".+?src="(.+?)"
+#	baseurl http://www.creators.com/
+#	provides latest
+#end
 
 strip charlie
 	name Charlie
@@ -4416,13 +4417,14 @@ strip slylock
 	$2 Slylock
 end 
 
-strip babsandaldo
-	name Babs and Aldo
-	artist Buddy Valentine
-	useclass kingfeatures-alt
-	$1 babs
-	$2 bvt
-end
+# apparently gone 20050126
+#strip babsandaldo
+#	name Babs and Aldo
+#	artist Buddy Valentine
+#	useclass kingfeatures-alt
+#	$1 babs
+#	$2 bvt
+#end
 
 strip hazel
 	name Hazel
@@ -4483,7 +4485,7 @@ end
 strip bizarro
 	name Bizarro
 	artist Dan Piraro
-	useclass kingfeatures-alt
+	useclass kingfeatures
 	$1 bizarro
 	$2 Bizarro
 end
