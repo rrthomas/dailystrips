@@ -61,10 +61,10 @@ if ($options{'version'}) {
 }
 
 
-unless (defined @ARGV[0]) {
+unless (defined $ARGV[0]) {
 	die "Error: no number of days specified\n";
 } else {
-	$options{'days'} = @ARGV[0];
+	$options{'days'} = $ARGV[0];
 	if ($options{'days'} =~ m/\D/) {
 		die "Error:number of days must be numeric\n";
 	}
