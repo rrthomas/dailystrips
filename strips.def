@@ -118,6 +118,13 @@ class sfgate-srch
 	provides latest
 end
 
+class sfgate-columnists
+	homepage http://www.sfgate.com/columnists/$1/
+	type search
+	provides latest
+	searchpattern <IMG.+?SRC="(http://www.sfgate.com/chronicle/pictures/\d+/\d+/\d+/.+?-farley.gif)"
+end
+
 class comicspage-strips-gen
         # $1 - more or less the real name
         # $2 - 3-letter abbreviation of $1
@@ -262,7 +269,7 @@ strip megatokyo
 	name MegaTokyo
 	homepage http://www.megatokyo.com/
 	type search
-	searchpattern <IMG.+?SRC="(/?strips/\d+\.gif)"
+	searchpattern <IMG.+?SRC="(/?strips/\d+\..+?)"
 	baseurl http://www.megatokyo.com/
 	provides latest
 
@@ -500,7 +507,7 @@ strip gpf
 	name General Protection Fault
 	homepage http://www.gpf-comics.com/
 	type search
-	searchpattern <IMG.+?SRC="(/comics/gpf\d+\..+?)"
+	searchpattern <IMG.+?SRC="(/comics/gpf\d+.+?\..+?)"
 	baseurl http://www.gpf-comics.com
 	provides latest
 end
@@ -589,9 +596,14 @@ strip pgs
 	name Pathetic Geek Stories
 	homepage http://www.theonionavclub.com/
 	type search
-	searchpattern <a.+?HREF="/avclub\d+/pgs(\d+).html"
-	#<FRAME.+?SRC="http://www.theonionavclub.com/avclub(\d+)/"
-	imageurl http://graphics.theonion.com/avpics_$match/pgs_$match.gif
+	#searchpattern <a.+?HREF="/avclub\d+/pgs(\d+).html"
+	#imageurl http://graphics.theonion.com/avpics_$match/pgs_$match.gif
+
+	#window.open('/comics.php?img_article_id=1192','pgs'
+        #http://www.theonionavclub.com/images/229/image_article1192.jpg
+	searchpattern issue_id=(\d+).+?window.open\('/comics.php\?img_article_id=(\d+)','pgs'
+	imageurl http://www.theonionavclub.com/images/$match_1/image_article$match_2.jpg
+	
 	provides latest
 end
 
@@ -795,7 +807,8 @@ strip nowak
 	name Paul Nowak Cartoon
 	homepage http://www.cnsnews.com/cartoon/nowak.asp
 	type search
-	searchpattern <img.+?border="0".+?src="(Nowakimages/%Y/\w+\..+?)"
+	searchpattern <img.+?src=".+?(Nowakimages/%Y/\w+\..+?)"
+	#<img border="0" src="/cartoon/nowakimages/2003/rightwing.jpg"></td>
 	baseurl http://www.cnsnews.com/cartoon/
 	provides latest
 end
@@ -807,8 +820,9 @@ strip lang
 	homepage http://www.cnsnews.com/cartoon/lang.asp
 	type search
 	searchpage http://www.cnsnews.com/cartoon/Lang.asp
-	searchpattern <img.+?border="0".+?src="(Langimages/%Y/\w+\..+?)"
-	baseurl http://www.cnsnews.com/cartoon/
+	searchpattern <img.+?src="/?(cartoon/langimages/\d+/.+?\..+?)"
+	#<img border="0" src="/cartoon/langimages/2003/lastdays.jpg"></td>
+	baseurl http://www.cnsnews.com/
 	provides latest
 end
 
@@ -1032,7 +1046,7 @@ strip asif
 	homepage http://www.asifcomic.com/
 	type search
 	searchpage http://www.asifcomic.com/current.html
-	searchpattern <img.+?src=".*?_left\.jpg".+?><img.+?src="(\d+\..{3})".+?alt="Strip
+	searchpattern <img.+?src=".*?_left\.jpg".+?><img.+?src="(\d+\..{3})".+?alt="Comic
 	baseurl $homepage
 	provides latest
 end
@@ -1041,7 +1055,7 @@ strip nipandtuck
 	name Nip 'N Tuck
 	homepage http://nipandtuck.keenspace.com
 	type search
-	searchpattern SRC="(/comics/nt(\d{8})\.gif)"
+	searchpattern SRC=".+?(/comics/nt(\d{8})\.gif)"
 	baseurl $homepage
 	provides latest
 end
@@ -1050,7 +1064,8 @@ strip lemontree
 	name Under The Lemon Tree
 	homepage http://utlt.keenspace.com
 	type search
-	searchpattern SRC="(/comics/.+?(\d{8})\..+?)"
+	searchpattern <IMG.+?SRC=".+?(/comics/.+?\d{8}\..+?)"
+	#<IMG ALT="comic" BORDER=0 SRC="http://utlt.keenspace.com/comics/bn20030824.gif" HEIGHT="360" WIDTH="994">
 	baseurl $homepage
 	provides latest
 end
@@ -1183,7 +1198,8 @@ strip lcd
 	name Lowest Common Denominator
 	homepage http://lcd.keenspace.com
 	type search
-	searchpattern <IMG.+?SRC="(/comics/lcd.+?\..+?)"
+	searchpattern <IMG.+?SRC=".+?(/comics/(lcd|soph).+?\..+?)"
+	#<IMG ALT="" BORDER=0 SRC="http://lcd.keenspace.com/comics/soph20030810.png" WIDTH="732" HEIGHT="262">
 	baseurl http://lcd.keenspace.com
 	provides latest
 end
@@ -1944,11 +1960,13 @@ strip dennisthemenace
 	$1 Dennis_The_Menace
 end
 
+#non-standard
 strip farley
 	name Farley
-	useclass sfgate-srch
-	$1 $name
-	$2 farley
+        homepage http://www.sfgate.com/columnists/farley/
+        type search
+        provides latest
+        searchpattern <IMG.+?SRC="(http://www.sfgate.com/chronicle/pictures/\d+/\d+/\d+/.+?-farley.gif)"
 end
 
 strip fastrack
@@ -2591,14 +2609,15 @@ strip charlie
 	provides latest
 end
 
-strip drawingacrowd
-	name Drawing a Crowd
-	homepage http://www.creators.com/comics_show.cfm?comicname=dac
-	type search
-	searchpattern <img.+?alt="Drawing a Crowd".+?src="(.+?)"
-	baseurl http://www.creators.com/
-	provides latest
-end
+# available at pay site mycomicspage.com
+#strip drawingacrowd
+#	name Drawing a Crowd
+#	homepage http://www.creators.com/comics_show.cfm?comicname=dac
+#	type search
+#	searchpattern <img.+?alt="Drawing a Crowd".+?src="(.+?)"
+#	baseurl http://www.creators.com/
+#	provides latest
+#end
 
 strip flightdeck
 	name Flight Deck
@@ -3162,12 +3181,22 @@ strip catrow
 	$2 $strip
 end
 
+#strip cole
+#	name John Cole
+#	useclass slate-cagle
+#	$1 $strip
+#	#$2 $strip
+#	$2 coletoon
+#end
+
+#non-template
 strip cole
-	name John Cole
-	useclass slate-cagle
-	$1 $strip
-	$2 $strip
-end
+	name John Cole 
+	homepage http://cagle.slate.msn.com/politicalcartoons/PCcartoons/cole.asp
+	type generate
+	provides latest
+	imageurl http://www.heraldsun.com/images/photos/live/coletoon.jpg
+end	
 
 strip crowe
 	name J.D. Crowe
