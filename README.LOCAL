@@ -24,7 +24,7 @@ Create a cron script like the following and put it in  /etc/cron.daily
 
 #!/bin/sh
 echo "dailystrips running:"
-su user -c "dailystrips.pl --basedir=/home/user/dailystrips --local all"
+su user -c "dailystrips.pl --basedir /home/user/dailystrips --local all"
 
 Of course, change /home/user/dailystrips to the exact  directory  that
 you created.  Also, change "su user.." to reflect an appropriate login

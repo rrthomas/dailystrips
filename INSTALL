@@ -22,7 +22,7 @@ definition file with the "--defs FILE" option.
 Win32:
 Copy the script and strips.def to the directory of your choice. When run,
 the script will check the current directory for strips.def, so always
-'cd' the appropriate or use the --defs option.
+'cd' the appropriate location or use the --defs option.
 
 
 If you have any questions, please contact me.

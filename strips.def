@@ -541,7 +541,8 @@ strip 8bit
 	name 8-Bit Theater
 	homepage http://www.nuklearpower.com/comic/
 	type search
-	searchpattern <A(.+)HREF="http://www.nuklearpower.com/comic/(\d+).htm"(.*?)>(.+)<IMG(.+)SRC="images/menu_03.gif"
+	#searchpattern <A(.+)HREF="http://www.nuklearpower.com/comic/(\d+).htm"(.*?)>(.*?)<IMG(.+)SRC="images/menu_03.gif"
+	searchpattern <A(.+)HREF="http://www.nuklearpower.com/comic/(\d+).htm"(.*?)>(.*?)<IMG(.+)SRC="images/menu_02.gif"
 	matchpart 2
 	baseurl http://www.nuklearpower.com/comic/ep
 	urlsuffix .gif

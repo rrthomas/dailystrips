@@ -19,6 +19,9 @@
 
   Even more fixes to --date. It should work now. Really.
 
+14 Aug 2001
+  Typo fixes
+
 1.0.16
   23 July 2001
   Fixed reporting of line numbers for errors encountered while parsing

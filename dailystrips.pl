@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    10 August 2001 22:46 EST
-# Current Revision: 1.0.17-pre2
+# Last Modified:    14 August 2001 11:03 EST
+# Current Revision: 1.0.17-pre3
 #
 
 
@@ -27,7 +27,7 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-$version = "1.0.17-pre2";
+$version = "1.0.17-pre3";
 
 $time_today = time;
 
@@ -49,7 +49,7 @@ if ($options{'help'}) {
 	print <<END_HELP;
 Usage: $0 [OPTION] STRIPS
 STRIPS can be a mix of strip names and group names
-(group names must be predeeded by an '\@' symbol)
+(group names must be preceeded by an '\@' symbol)
 'all' may be used to retrieve all known strips,
 or use option --list to list available strips
 
@@ -89,8 +89,8 @@ Options:
       --proxyauth=user:pass  Sets username and password for proxy server
       --noenvproxy           Ignores the http_proxy environment variable, if set
       --nospaces             Removes spaces from image filenames (local mode
-      --useragent="STRING"   Set User-Agent: header to STRING (default is none)
                              only)
+      --useragent="STRING"   Set User-Agent: header to STRING (default is none)
   -v  --version              Prints version number
 END_HELP
 #/#kwrite's syntax higlighting is buggy.. this preserves my sanity	
@@ -120,16 +120,12 @@ if ($options{'version'}) {
 
 
 if ($options{'date'}) {
-	eval "require Date::Parse"; #unless ($^O =~ /Win32/);
+	eval "require Date::Parse";
 	if ($@ ne "") {
 		die "Error: cannot use --date - Date::Parse not installed\n";
 	} else {
 		import Date::Parse;
 	}
-
-	#if ($^O =~ /Win32/) {
-	#	die "Error: cannot use --date on Win32\n";
-	#}
 	
 	unless ($time_today = str2time($options{'date'})) {
 		die "Error: invalid date specified\n";
@@ -569,7 +565,7 @@ for (@strips) {
 						#	unlink "$local_name_dir$local_name_file-*";
 						#}
 					}
-					# any issues with print()ing binary data to a file on Win32?
+					
 					open(IMAGE, ">$local_name");
 					
 					if ($^O =~ /Win32/) {
