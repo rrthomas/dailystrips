@@ -6,7 +6,10 @@ tackle..
   Add a method for handling strips that are made up of more than one image
   (for example, Avalon High). This may get complicated for strips that have
   one scheme for single images one some days and another for multiple images
-  on other days.
+  on other days. Related to this, add a method for trying several different
+  search options - some strips (e.g. dorktower) seem to rotate between a few
+  different ones and it's impractical to keep switching the def in every
+  release.
 
   Add a manpage - possibly use Rene Weber's work for Debian as a starting point
 
