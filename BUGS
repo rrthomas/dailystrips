@@ -33,7 +33,7 @@
   but gets weird in places and is generally hard to maintain.
 
   One thing I should have mentioned for 1.0.4 is that the defs file parsing code
-  gives completely erroneous line numbers (they represent the fines of the file
+  gives completely erroneous line numbers (they represent the lines of the file
   after removing blank line and comment lines) and should be dealt with.
 
 1.0.6
