@@ -1184,15 +1184,6 @@ strip fatjesus
 	provides latest
 end
 
-strip funnyfarm
-	name Funny Farm
-	homepage http://www.funnyfarmcomics.com
-	type search
-	searchpattern <IMG.+?SRC="(/comics/.+?\..+?)"
-	baseurl http://www.funnyfarmcomics.com
-	provides latest
-end
-
 strip sexandviolence
 	name Sex and Violence
 	homepage http://www.mrbang.net
