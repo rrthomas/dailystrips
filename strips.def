@@ -191,7 +191,7 @@ strip megatokyo
 	name MegaTokyo
 	homepage http://www.megatokyo.com/
 	type search
-	searchpattern <IMG.+?SRC="(strips/\d+-\d+-\d+.gif)"
+	searchpattern <IMG.+?SRC="(/strips/\d+\.gif)"
 	matchpart 1
 	baseurl http://www.megatokyo.com/
 	provides latest
@@ -718,6 +718,13 @@ strip ubersoft4
         provides any
 end
 
+strip spazlabs
+  name Spaz Labs
+  homepage http://www.stonebrokestudios.com
+  type generate
+  imageurl http://www.stonebrokestudios.com/archives/spaz/%y%m%dspaz.gif
+  provides any
+end
 
 # ucomics.com strips
 strip adamathome
