@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    12 Jan 2002, 01:24 EST
+# Last Modified:    12 Jan 2002, 01:42 EST
 # Current Revision: 1.0.21pre1
 #
 
@@ -348,7 +348,7 @@ if ($options{'local'}) {
 </head>
 
 <body bgcolor=\"#ffffff\" text=\"#000000\" link=\"#0000ff\" vlink=\"#ff00ff\" alink=\"#ff0000\">
-w
+
 <p align=\"center\">\n
 
 <font face=\"helvetica,arial\" size=\"14pt\">$options{'titles'}dailystrips archive</font>
