@@ -681,6 +681,11 @@ strip pcnpixel
 	useclass unitedmedia-srch-wash
 end
 
+strip peanuts
+        name Peanuts
+        useclass unitedmedia-srch-comics
+end
+
 strip pearls
 	name Pearls Before Swine
 	useclass unitedmedia-srch-comics
