@@ -142,7 +142,7 @@
   expected to be updated at (just daily/semidaily for now). Now, dailystrips
   will not download the same image two days in a row for a daily strip (which
   previously would happen if it was being run before a strip's website was
-  updated with the day's new strip). If youwish to add to the definitions file,
+  updated with the day's new strip). If you wish to add to the definitions file,
   note that "updated daily" is assumed (being the most common) if no "updated"
   line is present - only "updated semidaily" needs to be specified.
 
