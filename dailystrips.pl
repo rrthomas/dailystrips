@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    31 July 2001 02:21 EST
-# Current Revision: 1.0.16
+# Last Modified:    9 August 2001 22:19 EST
+# Current Revision: 1.0.17-pre2
 #
 
 
@@ -27,7 +27,7 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-$version = "1.0.16";
+$version = "1.0.17-pre2";
 
 $time_today = time;
 
@@ -72,8 +72,11 @@ Options:
                              (local mode only)
       --date=DATE            Use value DATE instead of local time
                              (DATE is parsed by Date::Parse function)
+                             Note: not available on Win32
   -n  --new                  if today's file and yesterday's file for a strip
                              are the same, does not symlink to save space
+                             (local mode only)
+      --avantgo              Formats images for viewing with Avantgo on PDAs
                              (local mode only)
       --defs=FILE            Use alternate strips definition file
       --nopersonal           Ignore ~/.dailystrips.defs
@@ -88,7 +91,6 @@ Options:
       --nospaces             Removes spaces from image filenames (local mode
       --useragent="STRING"   Set User-Agent: header to STRING (default is none)
                              only)
-      --avantgo              Formats images for viewing with Avantgo on PDAs
   -v  --version              Prints version number
 END_HELP
 #/#kwrite's syntax higlighting is buggy.. this preserves my sanity	
@@ -118,13 +120,17 @@ if ($options{'version'}) {
 
 
 # Date::Parse must be loaded before using --date
-eval "use Date::Parse";
+eval "use Date::Parse" unless $^O ~ /Win32/;
 if ($@ ne "") {
 	warn "Warning: Could not load Date::Parse module. --date option cannot be used\n";
 	$no_dateparse = 1;
 }
 
 if ($options{'date'}) {
+	if ($^O ~ /Win32/) {
+		die "Error: cannot use --date on Win32\n";
+	}
+	
 	if ($no_dateparse) {
 		die "Error: cannot use --date - Date::Parse not installed\n";
 	}
@@ -148,7 +154,7 @@ $short_date_tomorrow = strftime("\%Y.\%m.\%d", @localtime_tomorrow);
 # Get strip definitions now - info used below
 unless ($options{'defs'}) {
 	if ($^O =~ /Win32/ ) {
-		$options{'defs_file'} = 'strips.def';
+		$options{'defs'} = 'strips.def';
 	} else {
 		$options{'defs'} = '/usr/share/dailystrips/strips.def';
 	}
@@ -569,6 +575,11 @@ for (@strips) {
 					}
 					# any issues with print()ing binary data to a file on Win32?
 					open(IMAGE, ">$local_name");
+					
+					if ($^O =~ /Win32/ ) {
+						binmode(IMAGE);
+					}
+					
 					print IMAGE $image;
 					close(IMAGE);
 					
@@ -1154,13 +1165,13 @@ sub make_avantgo_table {
 	$dimensions =~ m/^$file (\d+)x(\d+)/;
 	my $width = $1; my $height = $2;
 	
-	if (int($width/160) != $cols) {
+	if (int($width/160) != ($width/160)) {
 		$cols = int($width/160) + 1;
 	} else {
 		$cols = $width/160;
 	}
 	
-	if (int($height/160) != $rows) {
+	if (int($height/160) != ($height/160)) {
 		$rows = int($height/160) + 1;
 	} else {
 		$rows = $height/160;
