@@ -1072,7 +1072,7 @@ strip fans
 	name Fans!
 	homepage http://faans.com
 	type search
-	searchpattern <IMG.+?SRC="(http://faans.com/images/.+?\..+?)"
+	searchpattern <IMG.+?SRC="?(http://(www\.)?faans.com/\d+/\d+.+?\..+?)[">\s]
 	provides latest
 end
 
