@@ -2249,12 +2249,13 @@ strip monkeyhouse
 	$2 mhs
 end
 
-strip grimmy
-	name Mother Goose and Grimm
-	useclass comicspage-strips-gen
-	$1 grimmy
-	$2 mgg
-end
+#no longer carried by comicspage
+#strip grimmy
+#	name Mother Goose and Grimm
+#	useclass comicspage-strips-gen
+#	$1 grimmy
+#	$2 mgg
+#end
 
 strip shoe
 	name Shoe
@@ -4441,6 +4442,7 @@ strip nothingnice
 	imageurl http://www.nothingnice.com/strips/%y/%m-%d-%y.gif
 	provides any
 end
+
 strip ctrlaltdel
 	name Ctrl+Alt+Del
 	artist Tim Buckley
@@ -4524,6 +4526,7 @@ strip sarahanddavid
 	baseurl http://www.sara-and-david.com/
 	provides latest
 end
+
 strip haiopeis
 	name Haiopeis
 	homepage http://www.drive-in-cartoons.de/haiopeis/hauptteil.php
@@ -4531,4 +4534,12 @@ strip haiopeis
 	searchpattern <img src=http://www.drive-in-cartoons.de/albums/haiopeis/(\S+.png)
 	baseurl http://www.drive-in-cartoons.de/albums/haiopeis/
 	provides latest
+end
+
+strip grimmy
+	name Mother Goose and Grimm
+	homepage http://www.grimmy.com/daycartoon.asp
+	type generate
+	imageurl http://www.grimmy.com/images/%Y/MGG%m%d%y.gif
+	provides any
 end
