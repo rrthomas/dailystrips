@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@calug.net>
 # Created:          23 Nov 2000, 23:33
-# Last Modified:    20 Feb 2001, 21:37
-# Current Revision: 1.0.8
+# Last Modified:    21 Feb 2001, 15:18
+# Current Revision: 1.0.9
 #
 
 # Set up
@@ -22,7 +22,7 @@ use POSIX qw(strftime);
 my (%options, $version, @localtime_today, @localtime_yesterday, $long_date, $short_date, $short_date_yesterday, @get, @strips, %defs,
     $known_strips);
 
-$version = "1.0.8";
+$version = "1.0.9";
 
 $options{'defs_file'} = "strips.def";
 
@@ -126,7 +126,6 @@ $_, $defs{$_}{'name'}
 	} elsif ($_ =~ m/^--proxy=/o) {
 		unless ($_ =~ m/^--proxy=((.*?):(.*?))$/o) {die "Invalid proxy server\n"}
 		$options{'http_proxy'} = $1;
-		#print STDERR "DEBUG: proxy is now $options{'http_proxy'}\n";
 	} else {
 		die "Unknown option: $_\n";
 	}}
@@ -140,13 +139,11 @@ if (!defined $options{'no_env_proxy'} && !defined $options{'http_proxy'} ) {
 	if (defined $ENV{'http_proxy'} ) {
 		my $env_proxy = $ENV{'http_proxy'};
 		$options{'http_proxy'} = $env_proxy;
-		#print STDERR "\nDEBUG: setting proxy to $env_proxy from env\n";
 	}
 }
 if (defined $options{'http_proxy'}) {
 	unless ($options{'http_proxy'} =~ m/^http:\/\//io) {$options{'http_proxy'} = "http://" . $options{'http_proxy'}}
 }
-#print STDERR "\nDEBUG: proxy is, finally, $options{'http_proxy'}\n";
 
 if (defined $options{'local_mode'}) {
 	unless (defined $options{'quiet'}) { print STDERR "Operating in local mode\n" }
@@ -282,7 +279,6 @@ for (@strips) {
 				$img_line = "<img src=\"$img_addr\" alt=\"$strip\">";
 			} else {
 				# need to download
-				#print STDERR "DEBUG: specifying referer " . $referer . "\n";
 				$image = &http_get($img_addr,$referer);
 				if ($image =~ m/^ERROR/o) {
 					$img_line = "[Error - unable to download image]";
@@ -368,7 +364,6 @@ sub http_get {
 	if (defined $referer) {
 		$headers = new HTTP::Headers;
 		$headers->referer($referer);
-		#print STDERR "DEBUG: using referer $referer\n";
 	}
 	
 	my $request = HTTP::Request->new('GET', $url, $headers);
@@ -452,7 +447,6 @@ sub get_defs {
 		elsif ($sectype eq "class") {
 			if ($_ =~ m/^homepage\s+(.+)$/io) {
 				my $val = $1;
-				#unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted homepage at $options{'defs_file'} line $line\n" }
 				$classes{$class}{'homepage'} = $val;
 			}
 			elsif ($_ =~ m/^type\s+(.+)$/io)
@@ -464,7 +458,6 @@ sub get_defs {
 			elsif ($_ =~ m/^searchpage\s+(.+)$/io)
 			{
 				my $val = $1;
-				#unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted searchpage at $options{'defs_file'} line $line\n" }
 				$classes{$class}{'searchpage'} = $val;
 			}
 			elsif ($_ =~ m/^searchpattern\s+(.+)$/io)
@@ -480,13 +473,11 @@ sub get_defs {
 			elsif ($_ =~ m/^baseurl\s+(.+)$/io)
 			{
 				my $val = $1;
-				#unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted baseurl at $options{'defs_file'} line $line\n" }
 				$classes{$class}{'baseurl'} = $val;
 			}
 			elsif ($_ =~ m/^imageurl\s+(.+)$/io)
 			{
 				my $val = $1;
-				#unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted imageurl at $options{'defs_file'} line $line\n" }
 				$classes{$class}{'imageurl'} = $val;
 			}
 			elsif ($_ =~ m/^referer\s+(.+)$/io)
@@ -509,8 +500,6 @@ sub get_defs {
 			}
 			elsif ($_ =~ m/^homepage\s+(.+)$/io) {
 				my $val = $1;
-				#doesn't handle %..
-				#unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted homepage at $options{'defs_file'} line $line\n" }
 				$defs{$strip}{'homepage'} = $val;
 			}
 			elsif ($_ =~ m/^type\s+(.+)$/io)
@@ -522,8 +511,6 @@ sub get_defs {
 			elsif ($_ =~ m/^searchpage\s+(.+)$/io)
 			{
 				my $val = $1;
-				#doesn't handle %..
-				#unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted searchpage at $options{'defs_file'} line $line\n" }
 				$defs{$strip}{'searchpage'} = $val;
 			}
 			elsif ($_ =~ m/^searchpattern\s+(.+)$/io)
@@ -539,15 +526,11 @@ sub get_defs {
 			elsif ($_ =~ m/^baseurl\s+(.+)$/io)
 			{
 				my $val = $1;
-				#doesn't handle %..
-				#unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted baseurl at $options{'defs_file'} line $line\n" }
 				$defs{$strip}{'baseurl'} = $val;
 			}
 			elsif ($_ =~ m/^imageurl\s+(.+)$/io)
 			{
 				my $val = $1;
-				#doesn't handle %..
-				#unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted imageurl at $options{'defs_file'} line $line\n" }
 				$defs{$strip}{'imageurl'} = $val;
 			}
 			elsif ($_ =~ m/^updated\s+(.+)$/io)
@@ -560,7 +543,6 @@ sub get_defs {
 			}
 			elsif ($_ =~ m/^(\%[0-9])\s+(.+)$/io)
 			{
-				#print STDERR "DEBUG: substituting for autovar $1 value \"$2\" for strip $strip\n";
 				$defs{$strip}{$1} = $2;
 			}
 		}
@@ -590,13 +572,18 @@ sub get_defs {
 				}	
 						
 				#substitute auto vars for real vals here/set defaults
-				unless (defined $defs{$strip}{'updated'}) { $defs{$strip}{'updated'} = "daily" }
+				unless (defined $defs{$strip}{'updated'})    {$defs{$strip}{'updated'} = "daily"}
 				unless (defined $defs{$strip}{'searchpage'}) {$defs{$strip}{'searchpage'} = $defs{$strip}{'homepage'}}
-				unless (defined $defs{$strip}{'referer'}) {$defs{$strip}{'referer'} = $defs{$strip}{'homepage'}}
+				unless (defined $defs{$strip}{'referer'})    {
+					if (defined $defs{$strip}{'searchpage'}) {
+						$defs{$strip}{'referer'} = $defs{$strip}{'searchpage'}
+					} else {
+						$defs{$strip}{'referer'} = $defs{$strip}{'homepage'}
+					}
+				}
 				
 				for (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
 					#other vars in definition
-					#print STDERR "DEBUG: on $_\n";
 					if (defined $defs{$strip}{$_}) {$defs{$strip}{$_} =~ s/%(\w{2,})/$defs{$strip}{$1}/g}
 				}			
 				
@@ -627,6 +614,7 @@ sub get_defs {
 				#	foreach my $key (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
 				#		print STDERR "DEBUG: $strip:$key=$defs{$strip}{$key}\n";
 				#	}
+				#	#print STDERR "DEBUG: $strip:$key=$defs{$strip}{'homepage'}\n";
 				#}
 			
 				undef $strip;
