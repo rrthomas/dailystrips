@@ -518,18 +518,18 @@ strip freefall
 	provides any
 end
 
-#disabled pending a flash of creativity
-#strip 8bit
-#	name 8-Bit Theater
-#	homepage http://www.nuklearpower.com/comic/
-#	type search
-#	#searchpattern <A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm"(.*?)>(.*?)<IMG(.+)SRC="images/menu_03.gif"
-#	searchpattern <A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>.*?<IMG.+?SRC="images/menu_02.gif"
-#	matchpart 1
-#	baseurl http://www.nuklearpower.com/comic/ep
-#	urlsuffix .gif
-#	provides latest
-#end
+strip 8bit
+	name 8-Bit Theater
+	homepage http://www.nuklearpower.com/comic/
+	type search
+	#searchpattern <A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>.*?<IMG.+?SRC="images/menu_03.gif"
+	#searchpattern <A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>.*?<IMG.+?SRC="images/menu_02.gif"
+	searchpattern <IMG.+?SRC="images/menu_02.gif".*?>.*?<A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>
+	matchpart 1
+	baseurl http://www.nuklearpower.com/comic/ep
+	urlsuffix .gif
+	provides latest
+end
 
 strip apodbig
     name Astronomy Picture of the Day (big image)
