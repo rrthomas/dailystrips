@@ -316,7 +316,7 @@ strip pvp
 	provides any
 end
 
-strip pvp-current
+strip pvpcurrent
 	name Player vs. Player
 	homepage http://www.pvponline.com/
 	type search
