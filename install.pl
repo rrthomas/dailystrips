@@ -7,8 +7,8 @@
 # Description:      installs dailystrips
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          13 Jul 2001, 11:34 EST
-# Last Modified:    02 Apr 2002, 18:59 EST
-# Current Revision: 1.0.4
+# Last Modified:    29 May 2003, 21:15 EDT
+# Current Revision: 1.0.5
 #
 
 
@@ -18,7 +18,7 @@ use strict;
 
 # Misc vars
 my (%options, $prog_version);
-$prog_version = "1.0.27";
+$prog_version = "1.0.28pre1";
 
 
 # Not for Win32
@@ -45,7 +45,7 @@ Options:
       --verbose         turn on extra progress information, overrides -q
       --sharedir=DIR    install shared files to DIR instead of
                         /usr/share/dailystrips/
-      --scriptdir=DIR   install script to DIR instead of /usr/bin/
+      --scriptdir=DIR   install scripts to DIR instead of /usr/bin/
       --docdir=DIR      install documentation to DIR/dailystrips-$prog_version
                         instead of /usr/share/doc/dailystrips-$prog_version
 
@@ -114,14 +114,14 @@ if (system("install BUGS CHANGELOG CONTRIBUTORS COPYING INSTALL README README.DE
 }
 
 
-# script:
+# scripts:
 if ($options{'verbose'}) { warn "Installing scripts to directory $options{'scriptdir'}\n" }
 
 if (system("install -d $options{'scriptdir'}")) {
 	die "Error creating scripts directory. See above for reason.\n";
 }
 
-if (system("install dailystrips dailystrips-clean $options{'scriptdir'}")) {
+if (system("install dailystrips dailystrips-clean dailystrips-update $options{'scriptdir'}")) {
 	die "Error installing script. See above for reason.\n";
 }
 
