@@ -195,7 +195,7 @@ end
 class slate-cagle
         homepage http://cagle.slate.msn.com/politicalcartoons/PCcartoons/$1.asp
         type search
-        searchpattern <IMG.+?SRC=.+?(/working/\d+/$2\.(gif|jpg))"
+        searchpattern <IMG.+?SRC=.+?(/working/\d+/$2.+?\.(gif|jpg))"
         baseurl http://cagle.slate.msn.com
         provides latest
 end
@@ -203,7 +203,7 @@ end
 class slate-cagle-alt
         homepage http://cagle.slate.msn.com/politicalcartoons/PCcartoons/$1.asp
         type search
-        searchpattern <IMG.+?SRC=.+?(/comics/updating/$2\.(gif|jpg))"
+        searchpattern <IMG.+?SRC=.+?(/comics/updating/$2.+?\.(gif|jpg))"
         baseurl http://cagle.slate.msn.com
         provides latest
 end
@@ -2906,7 +2906,7 @@ end
 
 strip greenberg
 	name Steve Greenberg
-	useclass slate-cagle-alt
+	useclass slate-cagle
 	$1 $strip
 	$2 $strip
 end
