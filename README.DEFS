@@ -121,11 +121,13 @@ construct is as follows:
 
 The group name must be unique among all groups, but will not conflict with
 strips or classes (in fact it might be useful to have a class for each strip - I
-might even make that automatic). 'desc' is a description of the strip that will
+might even make that automatic). 'desc' is a description of the group that will
 be shown by --list. Everything after an 'include' is added to the list of
 strips. You may specify one or more strips per 'include' line, whatever you
 prefer. Groups are referenced on the command line by an '@' symbol followed by
 the name (bare words not preceeded by an '@' symbol will be considered strips).
+Finally, you may use 'exclude [strips]' lines instead of 'include' lines to
+make the group contain everystrip except those specified.
 
 Notes:
 

@@ -25,7 +25,7 @@ Usage:
 	'./dailystrips.pl [stripname(s)]' will print to STDOUT an HTML page with image
 links to the latest strip. These links are to the strip's webserver.
 dailystrips.pl --help lists all available options. --list shows the available
-strips and groups. Strip names can specified as listed. Group must be
+strips and groups. Strip names can specified as listed. Groups must be
 preceeded with an '@' symbol.
 
 Adding new strips:
@@ -36,7 +36,16 @@ please try to pick a method of determining the most current URL possible (i.e.
 don't search if it's possible to predict - we don't want to get old strips if
 running early in the morning and a site hasn't updated the static page yet)
 Also, when you add a new strip, I'd appreciate it if you could email the
-defintion to me at amedico@calug.net so I can add it to the distribution.
+defintion to me at amedico@amedico.dhs.org so I can add it to the distribution.
+
+Personal definition file:
+	Users may create a file called ".dailystrips.defs" in their home
+directory. Syntax is exactly the same as the main strips.defs file. Personal
+files will be processed after the main file. This means that classes set in the
+main file are available for use in users' files. Also note that any entries
+(classes, strips, and groups) in users' files with the same name as entries in
+the main will take precedence. Personal definition files can be ignored with
+the '--no_personal' option.
 
 *Notice*:
 	Keep in mind that this program is for personal use only, as making
@@ -50,7 +59,6 @@ nasty fashion if it even looks like you're using dailystrips to make a public
 website.
 
 Copyright info:
-	This program copyright (C) 2001 Andrew Medico
-<amedico@amedico.dhs.org>.
+	This program copyright (C) 2001 Andrew Medico <amedico@amedico.dhs.org>.
 All rights reserved.  This program is free software; you may redistribute it
 and/or modify it under the terms of the GNU GPL, Version 2.

@@ -40,3 +40,7 @@ Added --stripdir and --date options
 
 Mark Larimer <larimer@fantasybowl.com
 Added Dork Tower definition
+
+Francesco Chemolli <kinkie@whistler.gruppocredit.it>
+Patch to automatically use the definition file located in the same directory
+as the script instead of the current directory

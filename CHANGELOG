@@ -1,3 +1,12 @@
+1.0.14
+  12 July 2001
+  Now uses the strips.def file located in the same directory as the script,
+  instead of checking the current directory (Francesco Chemolli)
+
+  Added 'exclude' keyword for defs file (Francesco Chemolli)
+
+  Personal definition files are now supported (~/.dailystrips.defs)
+
 1.0.13
   04 June 2001
   Enchanced the strip definition file a bit (see README.DEFS for more)
