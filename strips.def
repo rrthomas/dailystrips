@@ -260,7 +260,8 @@ strip joyoftech
 	name The Joy of Tech
 	homepage http://www.joyoftech.com/joyoftech/
 	type search
-	searchpattern <IMG.+?src="(joyimages/\d+\.(gif|jpg))\"
+	searchpattern <IMG.+?src="(joyimages/.+?\d+\..+?)\"
+	#joyimages/001_300/216.gif
 	baseurl http://www.joyoftech.com/joyoftech/
 	provides latest
 end
@@ -4513,7 +4514,7 @@ strip building12
 	artist Chris Hazelton
 	homepage http://www.building12.net/
 	type search
-	searchpattern (http://www.building12.net/issue\d/page\d*.jpg)
+	searchpattern <img.+?src="(http://www.building12.net/issue\d/page\d+\.jpg)"
 	provides latest
 end
 
