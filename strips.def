@@ -324,7 +324,7 @@ strip userfriendly
 	homepage http://www.userfriendly.org/static/
 	type search
 	searchpage http://ars.userfriendly.org/cartoons/?id=%Y%m%d&mode=classic
-	searchpattern <img.+?border="0".+?src="(http://www.userfriendly.org/cartoons/archives/%y.+?/uf.+?.gif)"
+	searchpattern <img.+?border="0".+?src="(http://www.userfriendly.org/cartoons/archives/%y.+?/uf.+?\.gif)"
 	matchpart 1
 	provides any
 end

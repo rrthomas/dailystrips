@@ -7,7 +7,7 @@
 # Description:      installs dailystrips
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          13 Jul 2000, 11:34 EST
-# Last Modified:    18 Aug 2001, 15:12 EST
+# Last Modified:    03 Sep 2001, 22:28 EST
 # Current Revision: 0.0.1
 #
 
@@ -18,7 +18,7 @@ use strict;
 
 # Misc vars
 my (%options, $prog_version);
-$prog_version = "1.0.18-pre1";
+$prog_version = "1.0.18-pre3";
 
 
 # Editable paths
@@ -92,7 +92,7 @@ if (system("install -o root BUGS CHANGELOG CONTRIBUTORS COPYING INSTALL README R
 # script:
 if ($options{'verbose'}) { warn "Installing script to directory $options{'bindir'}\n" }
 
-if (system("install -o root dailystrips.pl $options{'bindir'}")) {
+if (system("install -o root dailystrips $options{'bindir'}")) {
 	die "Error installing script. See above for reason.\n";
 }
 

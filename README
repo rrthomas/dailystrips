@@ -23,7 +23,7 @@ Installation:
 	See the INSTALL file.
 	
 Usage:
-	'dailystrips.pl [stripname(s)]' will print to STDOUT an HTML page with
+	'dailystrips [stripname(s)]' will print to STDOUT an HTML page with
 image links to the latest strip. These links are to the strip's webserver.
 dailystrips.pl --help lists all available options. --list shows the available
 strips and groups. Strip names can specified as listed. Groups must be

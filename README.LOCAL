@@ -1,7 +1,7 @@
-This file describes in further detail dailystrips.pl's 'local' mode of
+This file describes in further detail dailystrips' 'local' mode of
 operation.
 
-Normally, dailystrips.pl generates the URLs to the selected strips and
+Normally, dailystrips generates the URLs to the selected strips and
 displays them on STDOUT for redirection into a file (--output lets you
 specify a file to save the HTML into automatically).  However, this is
 usually inconvenient as you must first run the program  manually,  and
@@ -24,7 +24,7 @@ Create a cron script like the following and put it in  /etc/cron.daily
 
 #!/bin/sh
 echo "dailystrips running:"
-su user -c "dailystrips.pl --basedir /home/user/dailystrips --local all"
+su user -c "dailystrips --basedir /home/user/dailystrips --local all"
 
 Of course, change /home/user/dailystrips to the exact  directory  that
 you created.  Also, change "su user.." to reflect an appropriate login

@@ -3,7 +3,7 @@
 #
 # Program Summary:
 #
-# Name:             dailystrips.pl
+# Name:             dailystrips
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
