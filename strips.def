@@ -104,10 +104,19 @@ end
 class sfgate-srch
 	homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/$1.dtl
 	type search
-	searchpattern <img.+?src=".+?(/comics/graphics/$2/.+?\..+?)"
+searchpattern <img.+?src=".+?(/comics/graphics/$2/.+?\..+?)"
 	baseurl http://www.sfgate.com
 	provides latest
 end
+
+#use POSIX;my $d=strftime("\%"."w",localtime($time_today));$l = "s" if$w==0;$l = "a" if$w!=0;"foo$l"
+
+#use POSIX;
+#if (strftime("\%"."w",localtime($time_today)) == 0)
+#{$l = "s"}
+#else
+#{$l = "a"}
+#"$a"
 
 class comicspage-strips-gen
         # $1 - more or less the real name
@@ -115,7 +124,7 @@ class comicspage-strips-gen
         referer http://www.comicspage.com/$1/index.html
         homepage http://www.comicspage.com/$1/index.html
         type generate
-        imageurl http://www.tmsfeatures.com/tmsfeatures/servlet/com.featureserv.util.Download?file=%Y%m%dcs$2-a-p.jpg&code=cs$2
+        imageurl http://www.tmsfeatures.com/tmsfeatures/servlet/com.featureserv.util.Download?file=%Y%m%dcs$2-<code:"s" if %w == 0><code:"a" if %w != 0>-p.jpg&code=cs$2
         provides any
 end
 
@@ -127,7 +136,7 @@ class comicspage-panels-gen
 	#searchpage http://www.comicspage.com/$1/main.html
 	#searchpattern <img.+?src="(http://www.comicspage.com/daily/cp$2/\d+cp$2((-\w)?)\..+?)"
 	type generate
-	imageurl http://www.tmsfeatures.com/tmsfeatures/servlet/com.featureserv.util.Download?file=%Y%m%dcp$2-a-p.jpg&code=cp$2
+	imageurl http://www.tmsfeatures.com/tmsfeatures/servlet/com.featureserv.util.Download?file=%Y%m%dcp$2-<code:"s" if %w == 0><code:"a" if %w != 0>-p.jpg&code=cp$2
 	#provides latest
 	provides any
 end
@@ -238,13 +247,14 @@ strip mostlybusiness
 	provides latest
 end
 
-strip notquiteright
-	name Not Quite Right
-	homepage http://www.notquiteright.com/
-	type generate
-	imageurl http://www.notquiteright.com/wow/todaystoon.gif
-	provides latest
-end
+# website gone (?) 2002-05-24
+#strip notquiteright
+#	name Not Quite Right
+#	homepage http://www.notquiteright.com/
+#	type generate
+#	imageurl http://www.notquiteright.com/wow/todaystoon.gif
+#	provides latest
+#end
 
 strip pennyarcade
 	name Penny Arcade
@@ -425,12 +435,8 @@ end
 strip zapiro
 	name Zapiro
 	homepage http://www.mg.co.za/mg/zapiro/
-	#type search
-	#searchpattern <img.+?src="?(/mg/zapiro/.+?\.(gif|jpg)).+?ALT="cartoon"
-	#provides any
 	type generate
-	#imageurl http://www.mg.co.za/mg/zapiro/%Y/<code:lc(strftime("\%b", @localtime_today))>/<code:lc(strftime("\%b", @localtime_today))>%d.gif
-	imageurl http://www.mg.co.za/images/zapiro/%y-<code:lc(strftime("\%b", @localtime_today))>%d.gif
+	imageurl http://www.chico.mweb.co.za/images/zapiro/%y-<code:lc(strftime("\%b", @localtime_today))>%d.gif
 	provides any
 end
 
@@ -541,7 +547,8 @@ strip pgs
 	name Pathetic Geek Stories
 	homepage http://www.theonionavclub.com/
 	type search
-	searchpattern <FRAME.+?SRC="http://www.theonionavclub.com/avclub(\d+)/"
+	searchpattern <a.+?HREF="/avclub\d+/pgs(\d+).html"
+	#<FRAME.+?SRC="http://www.theonionavclub.com/avclub(\d+)/"
 	imageurl http://graphics.theonion.com/avpics_$match/pgs_$match.gif
 	provides latest
 end
@@ -555,13 +562,15 @@ strip adventurers
 	provides any
 end
 
-strip basement
-	name Basement Studios
-	homepage http://www.basement-studios.com/
-	type generate
-	imageurl http://www.basement-studios.com/archive/images/%m%d%y.gif
-	provides any
-end
+# discontinued 2002-05-24
+# may be updated to download old strips
+#strip basement
+#	name Basement Studios
+#	homepage http://www.basement-studios.com/
+#	type generate
+#	imageurl http://www.basement-studios.com/archive/images/%m%d%y.gif
+#	provides any
+#end
 
 strip btaf
 	name Bob, The Angry Flower
@@ -628,7 +637,7 @@ strip mrchuckshow
 	name Mr. Chuck Show
 	homepage http://www.mrchuckshow.com/
 	type generate
-	imageurl http://www.mrchuckshow.com/strips/mcs%Y%m%d.png
+	imageurl http://www.mrchuckshow.com/strips/mcs%Y%m%db.png
 	provides any
 end
 
@@ -859,13 +868,14 @@ strip downtoearth
 	provides latest
 end
 
-strip wandering
-	name Wandering Ones
-	homepage http://www.wanderingones.com/
-	type generate
-	imageurl http://www.wanderingones.com/comics/wan%Y%m%d.jpg
-	provides any
-end
+# website gone (?) 2002-05-24
+#strip wandering
+#	name Wandering Ones
+#	homepage http://www.wanderingones.com/
+#	type generate
+#	imageurl http://www.wanderingones.com/comics/wan%Y%m%d.gif
+#	provides any
+#end
 
 strip rvfun
 	name Reverend Fun
@@ -876,6 +886,7 @@ strip rvfun
 	provides any
 end
 
+# no longer updated 2002-05-24
 strip greytown
         name Living in Greytown
         homepage http://www.livingingreytown.com/
@@ -923,12 +934,11 @@ strip houndshome
         searchpattern <IMG.+?SRC="/(comics/hh.+?)"
 end
 
-# starts again Dec 1 2001
 strip cutewendy
         name CuteWendy
         homepage http://www.wendycomic.com/
         type generate
-        imageurl http://www.wendycomic.com/cutecomics/cutewendy%Y%m%d.gif
+        imageurl http://www.wendycomic.com/comics/wendy%Y%m%d.gif
         provides any
 end
 
@@ -1071,7 +1081,7 @@ strip reallife
         name Real Life
         homepage http://www.reallifecomics.com/
         type generate
-        imageurl http://www.reallifecomics.com/comics/%Y%m%d.gif
+        imageurl http://www.reallifecomics.com/comics/%Y%m%da.jpg
         provides any
 end
 
@@ -1146,11 +1156,12 @@ strip cornered
 	$1 co
 end
 
-strip crabbyroad
-	name Crabby Road
-	useclass ucomics-gen
-	$1 cr
-end
+# discontinued ar ucomics.com 2002-05-24
+#strip crabbyroad
+#	name Crabby Road
+#	useclass ucomics-gen
+#	$1 cr
+#end
 
 strip crankshaft
 	name Crankshaft
@@ -1511,12 +1522,13 @@ strip luann
 end
 
 # last updated 22 oct 2001?
-strip lupo
-	name Lupo Alberto
-	useclass unitedmedia-srch-comics
-	searchpage $homepage
-	provides latest
-end
+# seems gone: 2002-05-24
+#strip lupo
+#	name Lupo Alberto
+#	useclass unitedmedia-srch-comics
+#	searchpage $homepage
+#	provides latest
+#end
 
 strip marmaduke
 	name Marmaduke
@@ -1559,10 +1571,11 @@ strip naturalselection
 	useclass unitedmedia-srch-creators
 end
 
-strip offsides
-	name Offsides
-	useclass unitedmedia-srch-comics
-end
+# gone from unitedmedia 2002-05-24
+#strip offsides
+#	name Offsides
+#	useclass unitedmedia-srch-comics
+#end
 
 strip onebighappy
 	name One Big Happy
@@ -1634,10 +1647,11 @@ strip rubes
 	useclass unitedmedia-srch-creators
 end
 
-strip rugrats
-	name Rugrats
-	useclass unitedmedia-srch-creators
-end
+# discontinued at unitedmedia 2002-05-24
+#strip rugrats
+#	name Rugrats
+#	useclass unitedmedia-srch-creators
+#end
 
 strip shirleynson
 	name Shirley And Son
@@ -2154,6 +2168,7 @@ end
 #	$2 slc
 #end
 
+# gone? 2002-05-24
 strip thatsjake
 	name That's Jake
 	useclass comicspage-panels-gen
@@ -2168,6 +2183,7 @@ strip conrad
 	$2 con
 end
 
+# now at www.danzigercartoons.com
 strip danziger
 	name Jeff Danziger
 	useclass comicspage-editorial-gen

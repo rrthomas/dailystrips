@@ -619,7 +619,8 @@ for (@strips) {
 						$image = &http_get($img_addr, $referer);
 					}
 				} else {
-					$image = &http_get($img_addr, $referer);
+					#$image = &http_get($img_addr, $referer);
+					$image = &http_get($img_addr, "");
 				}
 				
 				if ($image =~ /^ERROR/) {
@@ -826,7 +827,7 @@ if ($options{'clean'}) {
 }
 
 sub http_get {
-	my ($url, $referer, $retries) = @_;
+	my ($url, $referer) = @_;
 	my ($request, $response, $status);
 	
 	# default value

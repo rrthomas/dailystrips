@@ -9,6 +9,21 @@
 
   Added "Real Life", "Sheldon", "Weak-end Warriors" (Mike Schwartz)
 
+  Fixed comicspage.com strips (Aaron D. Marasco)
+
+  Removed "Professor Doodles"
+
+  Fixed another file extension detection bug (Pat Lashley)
+
+  24 May 2002
+  Removed "Lupo Alberto", "Off Sides", "Rug Rats", "Basement Studio",
+  "Crabby Road", "Not Quite Right", "Real Life", "Wandering Ones",
+  "When I Grow Up", "That's Jake"
+
+  Fixed "Pathetic Geek Stories", "Cute Wendy", "Mr. Chuck Show", "Zapiro"
+
+  Fixed comicspage.com strips to work on Sundays.
+
 1.0.23
   02 Apr 2002
   "Diesel Sweeties" fixed
