@@ -521,13 +521,8 @@ strip dorktower
 	name Dork Tower
 	homepage http://www.dorktower.com/
 	type search
-	#searchpattern <IMG.+src="(comics/gamespy/GameSpy\d+\.jpg)".*?>
-	#searchpattern <IMG.+?src="(comics/interactiveweek/IW\d+\(\d+_\d+_\d+\)\.jpg)"
-	#searchpattern <img.+?src="(comics/dorktower/Dorktower\d+..+?)"
-	#searchpattern <img.+?src="(comics/backups/.+?)"
-	#searchpattern <img.+?src="(/(comics/(backups|gamespy|interactiveweek|dorktower)/.+?)"
 	searchpattern <img.+?src="(/?images/comics/.+?\..+?)"
-	baseurl $homepage
+	baseurl http://www.gamespy.com/comics/dorktower/
 	provides latest
 end
 
@@ -559,7 +554,7 @@ strip 8bit
 	name 8-Bit Theater
 	homepage http://www.nuklearpower.com/latest.php
 	type search
-	searchpattern <img alt="8-Bit.+?" src="(http://www.nuklearpower.com/comics/\d+.(gif|png))">
+	searchpattern <img.+?src="(http://www.nuklearpower.com/comics/\d+\..+?)">
 	provides latest
 end
 
@@ -2026,11 +2021,11 @@ strip safehavn
 	$1 Safe_Havens
 end
 
-strip shermanslagoon
-	name Sherman's Lagoon
-	useclass sfgate-gen
-	$1 Shermans_Lagoon
-end
+#strip shermanslagoon
+#	name Sherman's Lagoon
+#	useclass sfgate-gen
+#	$1 Shermans_Lagoon
+#end
 
 strip sixchix
 	name Six Chix
@@ -4367,4 +4362,13 @@ strip dragontails
 	searchpattern SRC="(comics/.+?\..+?)"
 	provides latest
 	baseurl $homepage
+end
+
+strip shermanslagoon
+	name Sherman's Lagoon
+	artist Jim Toomey
+	homepage http://www.slagoon.com
+	type generate
+	imageurl $homepage/dailies/SL%y.%m.%d.gif
+	provides latest
 end
