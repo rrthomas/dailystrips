@@ -26,6 +26,8 @@
   Fixed a bug in defs parsing where referencing non-existant classes was not
   reported
 
+  Now completely up to date with comicspage.com strips
+
 1.0.20
   08 Oct 2001
   Added spiderman, tuma, nowak, asay, lang, shelton (Jeff Brown)

@@ -75,7 +75,6 @@ end
 class sfgate-gen-zippycolor
 	homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/$1.dtl
 	type generate
-	#prefetch $homepage
 	imageurl http://pst.rbma.com/content/$2
 	provides latest
 end
@@ -83,8 +82,6 @@ end
 class sfgate-gen
 	homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/$1.dtl
 	type generate
-	#prefetch $homepage
-	#referer $homepage
 	imageurl http://pst.rbma.com/content/$1
 	provides latest
 end
@@ -94,7 +91,6 @@ class sfgate-srch
 	type search
 	searchpattern <img.+?src=".+?(/comics/graphics/$2/.+?\..+?)"
 	baseurl http://www.sfgate.com
-	#prefetch $homepage
 	provides latest
 end
 
@@ -104,7 +100,7 @@ class comicspage-strips-srch
 	homepage http://www.comicspage.com/$1/index.html
 	type search
 	searchpage http://www.comicspage.com/$1/main.html
-	searchpattern <img.+?src="(http://www.comicspage.com/daily/cs$2/\d+cs$2((-\w)?).gif)"
+	searchpattern <img.+?src="(http://www.comicspage.com/daily/cs$2/\d+cs$2((-\w)?)\..+?)"
 	provides latest
 end
 
@@ -114,7 +110,7 @@ class comicspage-panels-srch
 	homepage http://www.comicspage.com/$1/index.html
 	type search
 	searchpage http://www.comicspage.com/$1/main.html
-	searchpattern <img.+?src="(http://www.comicspage.com/daily/cp$2/\d+cp$2((-\w)?).gif)"
+	searchpattern <img.+?src="(http://www.comicspage.com/daily/cp$2/\d+cp$2((-\w)?)\..+?)"
 	provides latest
 end
 
@@ -124,7 +120,7 @@ class comicspage-editorial-srch
 	homepage http://www.comicspage.com/$1/index.html
 	type search
 	searchpage http://www.comicspage.com/$1/main.html
-	searchpattern <img.+?src="(http://www.comicspage.com/daily/ed$2/\d+ed$2((-\w)?).gif)"
+	searchpattern <img.+?src="(http://www.comicspage.com/daily/ed$2/\d+ed$2((-\w)?)\..+?)"
 	provides latest
 end
 
@@ -144,7 +140,9 @@ class sev-comics
         provides latest
 end
 
+
 # Non-standard strips
+
 # should be possible to generate?
 # sometimes multi-image - need a new way to handle this
 strip avalonhigh
@@ -203,7 +201,7 @@ strip joyoftech
 	name The Joy of Tech
 	homepage http://www.joyoftech.com/joyoftech/
 	type search
-	searchpattern <IMG.+?src="(joyimages/\d+\.(gif|jpg))\"(.*?)>
+	searchpattern <IMG.+?src="(joyimages/\d+\.(gif|jpg))\"
 	baseurl http://www.joyoftech.com/joyoftech/
 	provides latest
 end
@@ -288,15 +286,6 @@ strip rudypark
         provides latest
 end
 
-#seems to be gone - 2001/09/04
-#strip scragends
-#	name Scrag Ends
-#	homepage http://jarbabies.hikeeba.com/carts/carts.htm
-#	type generate
-#	imageurl http://jarbabies.hikeeba.com/carts/scragend.jpg
-#	provides latest
-#end
-
 strip sinfest
 	name Sinfest
 	homepage http://sinfest.net
@@ -314,12 +303,12 @@ strip sluggy
 	provides any
 end
 
+# only updated M-F, but no better way to handle it
 strip squinkers
 	name Squinkers
 	homepage http://www.squinkers.com/
 	type generate
 	imageurl http://www.squinkers.com/sqkrs/Images/today.gif
-	# only updated M-F, but no better way to handle it
 	provides latest
 end
 
@@ -331,12 +320,12 @@ strip superosity
 	provides any
 end
 
+#every day except sunday
 strip theweedpatch
 	name The WeedPatch
 	homepage http://www.jpjennings.com/toons/
 	type generate
 	imageurl http://www.jpjennings.com/toons/%m%d%Y.gif
-	#every day except sunday
 	provides any
 end
 
@@ -353,7 +342,7 @@ strip exploitnow
 	name Exploitation Now
 	homepage http://www.exploitationnow.com/
 	type search
-	searchpattern <IMG.+?SRC="(/comics/rb\d+\.(gif|jpg))"
+	searchpattern <IMG.+?SRC="(/comics/rb\d+\..+?)"
 	baseurl $homepage
 	provides latest
 end
@@ -362,7 +351,7 @@ strip coolcat
 	name Cool Cat Studio
 	homepage http://www.coolcatstudio.com/
 	type search
-	searchpattern <IMG.+?SRC="(/comics/ccs\d+\.(jpg|gif))"
+	searchpattern <IMG.+?SRC="(/comics/ccs\d+\..+?)"
 	baseurl http://www.coolcatstudio.com/
 	provides latest
 end
@@ -371,7 +360,7 @@ strip classm
 	name The Class Menagerie
 	homepage http://www.theclassm.com/
 	type search
-	searchpattern <IMG.+?SRC="(/comics/cm\d+\.gif)"
+	searchpattern <IMG.+?SRC="(/comics/cm\d+\..+?)"
 	baseurl http://www.theclassm.com/
 	provides latest
 end
@@ -388,7 +377,7 @@ strip nukees
 	name Nukees
 	homepage http://www.nukees.com
 	type search
-	searchpattern <IMG.+?SRC="(/comics/\d+\.gif)"
+	searchpattern <IMG.+?SRC="(/comics/\d+\..+?)"
 	baseurl http://www.nukees.com/
 	provides latest
 end
@@ -442,7 +431,7 @@ strip gpf
 	name General Protection Fault
 	homepage http://www.gpf-comics.com/
 	type search
-	searchpattern <IMG.+?SRC="(/comics/gpf\d+\.gif)"
+	searchpattern <IMG.+?SRC="(/comics/gpf\d+\..+?)"
 	baseurl http://www.gpf-comics.com
 	provides latest
 end
@@ -451,7 +440,7 @@ strip in2it
 	name In2It Online
 	homepage http://www.in2itonline.com/
 	type search
-	searchpattern <IMG.+?SRC=(archive/\d+/comics/\d+\.gif)
+	searchpattern <IMG.+?SRC=(archive/\d+/comics/\d+\..+?)
 	baseurl http://www.in2itonline.com/
 	provides latest
 end
@@ -482,7 +471,7 @@ strip dorktower
 	type search
 	#searchpattern <IMG.+src="(comics/gamespy/GameSpy\d+\.jpg)".*?>
 	#searchpattern <IMG.+?src="(comics/interactiveweek/IW\d+\(\d+_\d+_\d+\)\.jpg)"
-	searchpattern <img.+?src="(comics/dorktower/Dorktower\d+.jpg)"
+	searchpattern <img.+?src="(comics/dorktower/Dorktower\d+..+?)"
 	baseurl $homepage
 	provides latest
 end
@@ -522,16 +511,6 @@ strip 8bit
 	imageurl http://www.nuklearpower.com/comic/ep$match.gif
 	provides latest
 end
-
-#strip 8bit
-#         name 8-Bit Theater
-#         homepage http://www.nuklearpower.com/comic/
-#         type search
-#         searchpattern <A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>
-#         matchpart 1
-#         imageurl http://www.nuklearpower.com/comic/ep$match.gif
-#         provides latest
-#end
 
 strip apodbig
 	name Astronomy Picture of the Day (big image)
@@ -590,7 +569,7 @@ strip boasas
 	name Boy on a Stick and Slither
 	homepage http://www.boasas.com/
 	type search
-	searchpattern <img.+?src="(boasas/\d+\.gif)"
+	searchpattern <img.+?src="(boasas/\d+\..+?)"
 	provides latest
 	baseurl http://www.boasas.com/
 end
@@ -660,7 +639,7 @@ strip rpgworld
 	#imageurl http://www.rpgworldcomic.com/comics/%Y%m%d.jpg
 	#provides any
 	type search
-	searchpattern <IMG.+?SRC="?(/comics/.+?\.(jpg|gif|png))"?
+	searchpattern <IMG.+?SRC="?(/comics/.+?\..+?)"?
 	provides latest
 	baseurl $homepage
 end
@@ -731,7 +710,7 @@ strip tuma
 	homepage http://www.cnsnews.com/cartoon/Tuma.asp
 	type search
 	searchpage http://www.cnsnews.com/cartoon/tuma.asp
-	searchpattern <img.+?border="0".+?src="(Tumaimages/%Y/\w+\.jpg)
+	searchpattern <img.+?border="0".+?src="(Tumaimages/%Y/\w+\..+?)
 	baseurl http://www.cnsnews.com/cartoon/
 	provides latest
 end
@@ -740,7 +719,7 @@ strip nowak
 	name Paul Nowak Cartoon
 	homepage http://www.cnsnews.com/cartoon/nowak.asp
 	type search
-	searchpattern <img.+?border="0".+?src="(Nowakimages/%Y/\w+\.jpg)"
+	searchpattern <img.+?border="0".+?src="(Nowakimages/%Y/\w+\..+?)"
 	baseurl http://www.cnsnews.com/cartoon/
 	provides latest
 end
@@ -749,7 +728,7 @@ strip asay
 	name Chuck Asay Cartoon
 	homepage http://www.cnsnews.com/cartoon/asay.asp
 	type search
-	searchpattern <img.+?border="0".+?src="(Asayimages/%Y/\w+\.jpg)"
+	searchpattern <img.+?border="0".+?src="(Asayimages/%Y/\w+\..+?)"
 	baseurl http://www.cnsnews.com/cartoon/
 	provides latest
 end
@@ -759,7 +738,7 @@ strip lang
 	homepage http://www.cnsnews.com/cartoon/lang.asp
 	type search
 	searchpage http://www.cnsnews.com/cartoon/Lang.asp
-	searchpattern <img.+?border="0".+?src="(Langimages/%Y/\w+\.jpg)"
+	searchpattern <img.+?border="0".+?src="(Langimages/%Y/\w+\..+?)"
 	baseurl http://www.cnsnews.com/cartoon/
 	provides latest
 end
@@ -768,7 +747,7 @@ strip shelton
 	name Barry Shelton Cartoon
 	homepage http://www.cnsnews.com/cartoon/shelton.asp
 	type search
-	searchpattern <img.+?border="0".+?src="(Sheltonimages/%Y/.+?\.jpg)"
+	searchpattern <img.+?border="0".+?src="(Sheltonimages/%Y/.+?\..+?)"
 	baseurl http://www.cnsnews.com/cartoon/
 	provides latest
 end
@@ -820,7 +799,7 @@ strip acidreflux
 	homepage http://www.acidrefluxcomic.com/
 	type search
 	baseurl http://www.acidrefluxcomic.com/
-	searchpattern <img.+?src="(archive/c\d+\.gif)"
+	searchpattern <img.+?src="(archive/c\d+\..+?)"
 	provides latest
 end
 
@@ -861,7 +840,7 @@ strip unicornjelly
     name Unicorn Jelly
     type search
     homepage http://unicornjelly.com/
-    searchpattern <IMG.+?SRC="(images\/uni\d+\.gif)"
+    searchpattern <IMG.+?SRC="(images\/uni\d+\..+?)"
     baseurl $homepage
     provides latest
 end
@@ -1186,7 +1165,7 @@ strip freckles
 	name Freckles and His Friends
 	homepage http://www.unitedmedia.com/comics/freckles/index.html
 	type search
-	searchpattern (/comics/freckles/archive/images/freckles.+?\.gif)
+	searchpattern (/comics/freckles/archive/images/freckles.+?\..+?)
 	baseurl http://www.unitedmedia.com
 	provides latest
 end
@@ -1266,7 +1245,7 @@ strip lilabner
 	name Li'l Abner
 	homepage http://www.unitedmedia.com/comics/lilabner/index.html
 	type search
-	searchpattern (/comics/lilabner/archive/images/lilabner.+?\.gif)
+	searchpattern (/comics/lilabner/archive/images/lilabner.+?\..+?)
 	baseurl http://www.unitedmedia.com
 	provides latest
 end
@@ -1797,14 +1776,6 @@ strip helen
 	$2 hln
 end
 
-#gone
-#strip herb
-#	name Herb and Jamaal
-#	useclass comicspage-strips-srch
-#	$1 herb
-#	$2 hjl
-#end
-
 strip kudzu
 	name Kudzu
 	useclass comicspage-strips-srch
@@ -1817,6 +1788,13 @@ strip lola
 	useclass comicspage-strips-srch
 	$1 lola
 	$2 lol
+end
+
+strip lewis
+	name Lewis
+	useclass comicspage-strips-srch
+	$1 lewis
+	$2 lew
 end
 
 strip meehan
@@ -1853,7 +1831,7 @@ strip profdoodles
 	homepage http://www.comicspage.com/$1/index.html
 	type search
 	searchpage http://www.comicspage.com/profdoodles/main.html
-	searchpattern <img.+?src="(http://www.comicspage.com/daily/csdod/\d+csdod(-\w)?\.gif)"
+	searchpattern <img.+?src="(http://www.comicspage.com/daily/csdod/\d+csdod(-\w)?\..+?)"
 	provides latest
 end
 
@@ -1885,26 +1863,11 @@ strip bottomliners
 	$2 bls
 end
 
-#gone
-#strip charlie
-#	name Charlie
-#	useclass comicspage-panels-srch
-#	$1 charlie
-#	$2 chr
-#end
-
 strip computoon
 	name Compu-toon
 	useclass comicspage-panels-srch
 	$1 computoon
 	$2 cpt
-end
-
-strip dunagin
-	name Dunagin's People
-	useclass comicspage-panels-srch
-	$1 dunagin
-	$2 dpe
 end
 
 strip looseparts
@@ -2026,20 +1989,20 @@ strip peters
 	$2 pet
 end
 
-#gone
-#strip powell
-#	name Dwane Powell
-#	useclass comicspage-editorial-srch
-#	$1 powell
-#	$2 pow
-#end
-
 strip sack
 	name Steve Sack
 	useclass comicspage-editorial-srch
 	$1 sack
 	$2 sak
 end
+
+strip sheneman
+	name Drew Sheneman
+	useclass comicspage-editorial-srch
+	$1 sheneman
+	$2 she
+end
+
 
 strip stayskal
 	name Wayne Stayskal
@@ -2081,6 +2044,16 @@ strip wright
 	useclass comicspage-editorial-srch
 	$1 wright
 	$2 wrt
+end
+
+strip captainribman
+	name Captain RibMan
+	homepage http://www.comicspage.com/ribman/index.html
+	type search
+	searchpage http://www.supercomics.com/strips/new.html
+	searchpattern <img.+?src="(.+?)".+?ALT="Captain RibMan"
+	baseurl http://www.supercomics.com/strips/
+	provides latest
 end
 
 #mercury center strips
