@@ -1031,6 +1031,15 @@ strip bobbins
 	provides any
 end
 
+strip brainbuzz
+	name Brainbuzz
+	homepage http://cramsession.brainbuzz.com/lists/cartoon/
+	type generate
+	imageurl http://i.brainbuzz.com/CS/Lists/Cartoon/%y%m%d.gif
+	#every day except saturday, sunday
+	provides any
+end
+
 # ucomics.com strips
 strip adamathome
 	name Adam@home
@@ -1218,6 +1227,12 @@ strip ziggy
 	name Ziggy
 	useclass ucomics-gen
 	$1 zi
+end
+
+strip theduplex
+        name The Duplex
+        useclass ucomics-gen
+        $1 dp
 end
 
 # unitedmedia.com strips
@@ -2055,7 +2070,6 @@ strip 9to5
 	$2 ntf
 end
 
-#seems gone - 2002-01-02
 strip bottomliners
 	name Bottom Liners
 	useclass comicspage-panels-srch
