@@ -171,6 +171,22 @@ class sev-comics
         provides latest
 end
 
+class washpost-creators
+        homepage http://featurepage.creators.com/washpost.html?name=$1
+        type generate
+	prefetch $homepage
+        imageurl http://www.creators.com/%m%d/$1/$1%m%dg.gif
+        provides any
+end
+
+class washpost-king
+        homepage http://www.washingtonpost.com/wp-srv/style/comics/king.htm?$1
+        prefetch $homepage
+        imageurl http://est.rbma.com/content/$1
+        type generate
+        provides latest
+end
+
 
 # Non-standard strips
 
@@ -1451,10 +1467,10 @@ strip alleyoop
 	useclass unitedmedia-srch-comics
 end
 
-strip andycapp
-	name Andy Capp
-	useclass unitedmedia-srch-creators
-end
+#strip andycapp
+#	name Andy Capp
+#	useclass unitedmedia-srch-creators
+#end
 
 strip arlonjanis
 	name Arlo & Janis
@@ -1466,10 +1482,10 @@ strip askshagg
 	useclass unitedmedia-srch-creators
 end
 
-strip bc
-	name B.C.
-	useclass unitedmedia-srch-creators
-end
+#strip bc
+#	name B.C.
+#	useclass unitedmedia-srch-creators
+#end
 
 strip ballardst
 	name Ballard Street
@@ -1886,10 +1902,10 @@ end
 #	useclass unitedmedia-srch-creators
 #end
 
-strip wizardofid
-	name Wizard of Id
-	useclass unitedmedia-srch-creators
-end
+#strip wizardofid
+#	name Wizard of Id
+#	useclass unitedmedia-srch-creators
+#end
 
 strip workingdaze
 	name Working Daze
@@ -2559,4 +2575,29 @@ strip sevscifi
         type generate
         imageurl http://www.sev.com.au/toonzone/scifitv.jpg
         provides latest
+end
+
+#washpost strips
+strip andycapp
+        name Andy Capp
+        useclass washpost-creators
+        $1 cap
+end
+
+strip wizardofid
+        name Wizard of Id
+        useclass washpost-creators
+        $1 wiz
+end
+
+strip bc
+        name BC
+        useclass washpost-creators
+        $1 bc
+end
+
+strip marvin
+        name Marvin
+        useclass washpost-king
+        $1 $name
 end
