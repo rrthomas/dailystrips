@@ -16,6 +16,23 @@
 
   Misc bug fixes
 
+  24 July 2001
+  Cleaned up some regexps in option parsing code
+
+  Fixed syntax checking and error reporting in option pasring code
+
+  26 July 2001
+  strips.def:
+  Added 8-Bit Theater
+  Removed flem, madameve, katies, mrlowe, ribman
+  Fixed dorktower
+  Cleaned up some regexps
+
+  Fixed proxy server detection
+
+  Implemented urlsuffix in defs file
+
+
 1.0.15
   13 July 2001
   Major change: now installs to system directories instead of one dir.

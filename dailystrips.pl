@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    26 July 2001 12:36 EST
+# Last Modified:    26 July 2001 13:23 EST
 # Current Revision: 1.0.16-pre3
 #
 
@@ -248,11 +248,11 @@ unless (@get) {
 
 #Set proxy
 if (!defined $options{'no_env_proxy'} and !defined $options{'http_proxy'} and defined $ENV{'http_proxy'} ) {
-	unless ($ENV{'http_proxy'} =~ m/^http:\/\/.+:.+\/?$/) {
+	unless ($ENV{'http_proxy'} =~ m/^(http:\/\/.+:.+)\/?$/) {
 		die "Error: incorrectly formatted proxy server environment variable\n('http://server:port' expected)\n";
 	}
 	
-	$options{'http_proxy'} = $ENV{'http_proxy'};
+	$options{'http_proxy'} = $1;
 }
 if ($options{'http_proxy'}) {
 	if ($options{'verbose'}) {
@@ -652,7 +652,7 @@ sub get_strip {
 			
 			$addr = "unavail-server";
 		} else {
-			$page =~ m/$defs{$strip}{'searchpattern'}/i;
+			$page =~ m/$defs{$strip}{'searchpattern'}/si;
 			
 			unless (${$defs{$strip}{'matchpart'}}) {
 				if ($options{'verbose'}) {
@@ -661,7 +661,7 @@ sub get_strip {
 				
 				$addr = "unavail-nomatch";
 			} else {
-				$addr = $defs{$strip}{'baseurl'} . "${$defs{$strip}{'matchpart'}}";
+				$addr = $defs{$strip}{'baseurl'} . "${$defs{$strip}{'matchpart'}}" . $defs{$strip}{'urlsuffix'};
 			}
 		}
 		
@@ -748,7 +748,7 @@ sub get_defs {
 					my $using_class = $defs{$strip}{'useclass'};
 					
 					# import vars from class
-					for (qw(homepage searchpage searchpattern baseurl imageurl referer prefetch)) {
+					for (qw(homepage searchpage searchpattern baseurl imageurl urlsuffix referer prefetch)) {
 						if ($classes{$using_class}{$_} and !$defs{$strip}{$_}) {
 							my $classvar = $classes{$using_class}{$_};
 							$classvar =~ s/(\$[0-9])/$defs{$strip}{$1}/g;
@@ -776,21 +776,21 @@ sub get_defs {
 				}
 				
 				#other vars in definition
-				for (qw(homepage searchpage searchpattern imageurl baseurl referer prefetch)) {
+				for (qw(homepage searchpage searchpattern imageurl baseurl urlsuffix referer prefetch)) {
 					if ($defs{$strip}{$_}) {
 						$defs{$strip}{$_} =~ s/\$(name|homepage|searchpage|searchpattern|imageurl|baseurl|referer|prefetch)/$defs{$strip}{$1}/g;
 					}
 				}			
 		
 				#dates		
-				for (qw(homepage searchpage searchpattern imageurl baseurl referer prefetch)) {
+				for (qw(homepage searchpage searchpattern imageurl baseurl urlsuffix referer prefetch)) {
 					if ($defs{$strip}{$_}) {
 						$defs{$strip}{$_} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge;
 					}
 				}
 				
 				# <code:> stuff
-				for (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
+				for (qw(homepage searchpage searchpattern imageurl baseurl urlsuffix referer)) {
 					if ($defs{$strip}{$_}) {
 						$defs{$strip}{$_} =~ s/<code:(.*?)(?<!\\)>/&my_eval($1)/ge;
 					}
@@ -882,6 +882,10 @@ sub get_defs {
 			{
 				$classes{$class}{'baseurl'} = $1;
 			}
+			elsif (/^urlsuffix\s+(.+)$/i)
+			{
+				$classes{$class}{'urlsufix'} = $1;
+			}
 			elsif (/^imageurl\s+(.+)$/i)
 			{
 				$classes{$class}{'imageurl'} = $1;
@@ -950,6 +954,10 @@ sub get_defs {
 			elsif (/^baseurl\s+(.+)$/i)
 			{
 				$defs{$strip}{'baseurl'} = $1;
+			}
+			elsif (/^urlsuffix\s+(.+)$/i)
+			{
+				$defs{$strip}{'urlsuffix'} = $1;
 			}
 			elsif (/^imageurl\s+(.+)$/i)
 			{

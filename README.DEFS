@@ -52,13 +52,18 @@ be at least one) will contain the desired URL (see man perlre on $n variables
 for more). 'baseurl' only needs to be specified if the 'searchpattern' regular
 expression does not match a full URL (that is, it does not start with http://
 and contain the host). If specified, it is prepended to whatever 'searchpattern'
-matched. The 'updated semidaily' line is used is a strip is not updated every
+matched. Not shown is 'urlsuffix', which will be appended to the what
+'searchpattern' matched.
+
+The 'updated semidaily' line is used is a strip is not updated every
 day. If this line is not specified, the program assumes that the site provides a
 new strip every day and will not download the same strip two days in a row
 (instead, it will put an error message in place of the image). If the strip of
 only updated every few days, specify 'updated semidaily' and the script will
 download the current image, regardless of whether it is the same as a previous
-day or not. Two additional variables are not shown. First is 'referer'. Some
+day or not.
+
+Two additional variables are not shown. First is 'referer'. Some
 webservers insist that the HTTP_REFERER header be set to the address of the HTML
 page that the image is on, or they will not return the image. This is to prevent
 other sites from linking to the image and (presumably) scripts like this from
