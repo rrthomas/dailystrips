@@ -58,7 +58,7 @@ or use option --list to list available strips
 Options:
   -q  --quiet                turns off progress messages		
       --output=FILE          outputs HTML to FILE instead of STDOUT
-                             (does not apply to local mode
+                             (does not apply to local mode)
   -l  --local                outputs HTML to file and saves strips locally
       --noindex              disables symlinking current page to index.html
                              (local mode only)
@@ -81,6 +81,7 @@ Options:
                              proxy,if set)
       --proxyauth=user:pass  Sets username and password for proxy server
       --noenvproxy           Ignores the http_proxy environment variable, if set
+      --nospaces             Removes spaces from image filenames (local mode only)
   -v  --version              Prints version number
 
 Bugs and comments to amedico\@calug.net
@@ -115,6 +116,8 @@ $_, $val
 		$options{'output_file'} = $1;
 	} elsif ($_ =~ m/^(--new|-n)$/o) {
 		$options{'new'} = 1;
+	} elsif ($_ =~ m/^(--nospaces)$/o) {
+		$options{'nospaces'} = 1;
 	} elsif ($_ =~ m/^(--version|-v)$/o) {
 		print "dailystrips version $version\n";
 		exit;
@@ -290,6 +293,10 @@ for (@strips) {
 				$local_name = "$strip-$short_date$ext";
 			}
 			
+			if (defined $options{'nospaces'}) {
+				$local_name =~ s/(\ )//g;
+			}
+
 			if (defined $options{'save_existing'} and  -e $local_name) {
 				# strip already exists - skip download
 				$img_addr = $local_name;
