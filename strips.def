@@ -122,7 +122,7 @@ class sfgate-columnists
 	homepage http://www.sfgate.com/columnists/$1/
 	type search
 	provides latest
-	searchpattern <IMG.+?SRC="(http://www.sfgate.com/chronicle/pictures/\d+/\d+/\d+/.+?-farley.gif)"
+	searchpattern <IMG.+?SRC="(http://www\.sfgate\.com/chronicle/pictures/\d+/\d+/\d+/.+?-farley.gif)"
 end
 
 class comicspage-strips-gen
@@ -188,7 +188,7 @@ end
 class washpost-uclick
 	homepage http://www2.uclick.com/client/wpc/$1/
 	type search
-	searchpattern <IMG.+?SRC="(http://images.ucomics.com/comics/$1/\d+/$1\d+.gif)">
+	searchpattern <IMG.+?SRC="(http://images\.ucomics\.com/comics/$1/\d+/$1\d+.gif)">
 	provides latest
 end
 
@@ -212,7 +212,7 @@ class kingfeatures
 	homepage http://www.kingfeatures.com/features/comics/$1/about.htm
 	type search
 	searchpage http://www.kingfeatures.com/features/comics/$1/aboutMaina.php
-	searchpattern <img.+?src='(http://est.rbma.com/content/$2\?date=\d+)'
+	searchpattern <img.+?src='(http://est\.rbma\.com/content/$2\?date=\d+)'
 	provides latest
 end
 
@@ -268,7 +268,7 @@ strip jokesonyou
 	name The Joke's on You
 	homepage http://www.thefunnypages.com/
 	type search
-	searchpattern <img.+src="(http://www.thefunnypages.com/archives/.+?\.gif)"
+	searchpattern <img.+src="(http://www\.thefunnypages\.com/archives/.+?\.gif)"
 	provides latest
 end
 
@@ -371,7 +371,7 @@ strip sluggy
 	homepage http://www.sluggy.com/
 	type search
 	searchpage http://www.sluggy.com/daily.php?date=%y%m%d
-	searchpattern <img.+?src="?(http://pics.sluggy.com/comics/%y%m%d.+?\.(gif|jpg))
+	searchpattern <img.+?src="?(http://pics\.sluggy\.com/comics/%y%m%d.+?\.(gif|jpg))
 	provides any
 end
 
@@ -404,7 +404,7 @@ strip userfriendly
 	homepage http://www.userfriendly.org/static/
 	type search
 	searchpage http://ars.userfriendly.org/cartoons/?id=%Y%m%d&mode=classic
-	searchpattern <img.+?src="(http://www.userfriendly.org/cartoons/archives/%y.+?/uf.+?\.gif)"
+	searchpattern <img.+?src="(http://www\.userfriendly\.org/cartoons/archives/%y.+?/uf.+?\.gif)"
 	provides any
 end
 
@@ -524,7 +524,7 @@ strip 8bit
 	name 8-Bit Theater
 	homepage http://www.nuklearpower.com/latest.php
 	type search
-	searchpattern <img.+?src="(http://images.nuklearpower.com/comics/\d+\..+?)">
+	searchpattern <img.+?src="(http://images\.nuklearpower\.com/comics/\d+\..+?)">
 	provides latest
 end
 
@@ -604,7 +604,7 @@ strip dieselsweeties
 	name Diesel Sweeties
 	homepage http://www.dieselsweeties.com/gif.php
 	type search
-	searchpattern <img.+?src="(http://images.clango.org/strips/sw\d+\..+?)"
+	searchpattern <img.+?src="(http://images\.clango\.org/strips/sw\d+\..+?)"
 	provides latest
 end
 
@@ -713,7 +713,7 @@ strip spiderman
 	homepage http://www.kingfeatures.com/features/comics/spidermn/about.htm
 	type search
 	searchpage http://www.kingfeatures.com/features/comics/spidermn/aboutMaina.php
-	searchpattern <img.+?src='(http://est.rbma.com/content/Spiderman\?date=\d{8})'
+	searchpattern <img.+?src='(http://est\.rbma\.com/content/Spiderman\?date=\d{8})'
 	provides latest
 	prefetch http://www.kingfeatures.com/images/clear.gif
 end
@@ -853,7 +853,7 @@ strip sexylosers
 	name Sexy Losers
 	homepage http://sexylosers.keenspace.com/
 	type search
-	searchpattern <A.+?HREF="http://sexylosers.keenspace.com/(\d+).html"
+	searchpattern <A.+?HREF="http://sexylosers\.keenspace\.com/(\d+).html"
 	imageurl http://sexylosers.keenspace.com/comics/sl$match_1.jpg
 	provides latest
 end
@@ -909,7 +909,7 @@ strip offthemark
 	type search
 	provides latest
 	searchpage $homepage/daily.asp
-	searchpattern <img.+?src="(http://www.offthemark.com/rotate/\d+.gif)"
+	searchpattern <img.+?src="(http://www\.offthemark\.com/rotate/\d+.gif)"
 end
 
 strip asif
@@ -964,7 +964,7 @@ strip swamp
 	homepage http://www.swamp.com.au
 	type search
 	searchpage http://s1.emcs.com.au/SwampStrips/Strips/Strip.asp?Date=<code:strftime("%-d-%b-%Y", @localtime_today)
-	searchpattern <img.+?src="(http://s1.emcs.com.au/swampstrips/Strips_Images/\d+\..+?)"
+	searchpattern <img.+?src="(http://s1\.emcs\.com\.au/swampstrips/Strips_Images/\d+\..+?)"
 	provides any
 end
 
@@ -1045,7 +1045,7 @@ strip devilspanties
 	name The Devil's Panties
 	homepage http://thedevilspanties.keenspace.com
 	type search
-	searchpattern <IMG.+?SRC="(http://thedevilspanties.keenspace.com/comics/.+?\..+?)"
+	searchpattern <IMG.+?SRC="(http://thedevilspanties\.keenspace\.com/comics/.+?\..+?)"
 	provides latest
 end
 
@@ -1107,7 +1107,8 @@ strip perscheid
 	artist Martin Perscheid -> www.martin-perscheid.de
 	homepage http://portale.web.de/Boulevard/Comics/Perscheid/
 	type search
-	searchpattern <img.+?src="[h]*[t]*[t]*[p]*[:]*//(img.web.de/c/00.+?)"
+	searchpattern <img.+?src="(http:)?(//)?(img.web.de/c/00.+?)"
+	matchpart 3
 	provides latest
 end
 
@@ -1116,7 +1117,8 @@ strip harmbengen
 	artist Harm Bergen -> www.harmbengen.de
 	homepage http://portale.web.de/Boulevard/Comics/Bengen/
 	type search
-	searchpattern <img.+?src="[h]*[t]*[t]*[p]*[:]*//(img.web.de/c/00.+?)"
+	searchpattern <img.+?src="(http:)?(//)?(img.web.de/c/00.+?)"
+	matchpart 3
 	provides latest
 end
 
@@ -1125,7 +1127,8 @@ strip weyershausenwelt
 	artist Karsten Weyershausen -> www.weyershausen.de
 	homepage http://portale.web.de/Boulevard/Comics/Weyershausen/
 	type search
-	searchpattern <img.+?src="[h]*[t]*[t]*[p]*[:]*//(img.web.de/c/00.+?)"
+	searchpattern <img.+?src="(http:)?(//)?(img.web.de/c/00.+?)"
+	matchpart 3
 	provides latest
 end
 
@@ -1134,10 +1137,10 @@ strip quirit
 	artist Quirit -> www.quirit.com
 	homepage http://portale.web.de/Boulevard/Comics/Quirit/
 	type search
-	searchpattern <img.+?src="[h]*[t]*[t]*[p]*[:]*//(img.web.de/c/00.+?)"
+	searchpattern <img.+?src="(http:)?(//)?(img.web.de/c/00.+?)"
+	matchpart 3
 	provides latest
 end
-
 
 strip touche
         name Touche
@@ -2202,7 +2205,7 @@ strip bfriends
 	artist Sandra Bell-lundy
 	homepage http://www.betweenfriendscartoons.com/
 	type search
-	searchpattern <img.+?src='(http://est.rbma.com/content/Between_Friends\?date=\d+)'
+	searchpattern <img.+?src='(http://est\.rbma\.com/content/Between_Friends\?date=\d+)'
 	provides latest
 end
 
@@ -3845,7 +3848,7 @@ end
 class azcentral-srch
 	homepage http://www.azcentral.com/ent/comics/$strip.html
 	type search
-	searchpattern <img.+?SRC="(http://mst.rbma.com/content/$1)"
+	searchpattern <img.+?SRC="(http://mst\.rbma\.com/content/$1)"
 	prefetch $homepage
 	provides latest
 end
@@ -4052,7 +4055,7 @@ strip dicebox
 	name Dicebox
 	homepage http://www.girlamatic.com/series.php?name=dicebox
 	type search
-	searchpattern <img src=(http://www.girlamatic.com/jmlee/\w+?\.jpg)
+	searchpattern <img src=(http://www\.girlamatic\.com/jmlee/\w+?\.jpg)
 	provides latest
 end
 
@@ -4125,7 +4128,8 @@ strip moviepunks
 	artist Carrington Vanston
 	homepage http://www.moviepunks.com/
 	type search
-	searchpattern (http://www.moviepunks.com/comics/\d*\.png)
+	searchpattern "(http://www\.moviepunks\.com/comics/\d+\..+?)"
+	#<img CLASS="COMIC" SRC="http://www.moviepunks.com/comics/242.gif"
 	provides latest
 end
 
@@ -4134,7 +4138,7 @@ strip building12
 	artist Chris Hazelton
 	homepage http://www.building12.net/
 	type search
-	searchpattern <img.+?src="(http://www.building12.net/issue\d/page\d+\.jpg)"
+	searchpattern <img.+?src="(http://www\.building12\.net/issue\d/page\d+\.jpg)"
 	provides latest
 end
 
@@ -4143,7 +4147,7 @@ strip sarahanddavid
 	artist Alex Aberle
 	homepage http://www.sara-and-david.com/comic.php?comic=latest
 	type search
-	searchpattern (comics/\d*\.jpg)
+	searchpattern (comics/\d+\.jpg)
 	baseurl http://www.sara-and-david.com/
 	provides latest
 end
@@ -4152,7 +4156,7 @@ strip haiopeis
 	name Haiopeis
 	homepage http://www.drive-in-cartoons.de/haiopeis/hauptteil.php
 	type search
-	searchpattern <img src=http://www.drive-in-cartoons.de/albums/haiopeis/(\S+.png)
+	searchpattern <img src=http://www\.drive-in-cartoons\.de/albums/haiopeis/(\S+\.png)
 	baseurl http://www.drive-in-cartoons.de/albums/haiopeis/
 	provides latest
 end
@@ -4353,7 +4357,7 @@ strip ghastly
 	name Ghastly's Ghastly Comic
 	homepage http://ghastly.keenspace.com
 	type search
-	searchpattern <img.+?SRC="(http://www.ghastlycomic.com/comics/\d+\.jpg)"
+	searchpattern <img.+?SRC="(http://www\.ghastlycomic\.com/comics/\d+\.jpg)"
 	provides latest
 end
 
@@ -4541,7 +4545,7 @@ strip noroomformagic
         name No Room for Magic
         homepage http://www.drunkduck.com/No_Room_For_Magic/
         type search
-        searchpattern <img.+?src='(\d+%Y\d+.gif)'
+        searchpattern <img.+?src='(\d+%Y\d+\.gif)'
         baseurl $homepage
         provides latest
 end
