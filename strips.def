@@ -4653,3 +4653,13 @@ strip pondus
 	imageurl http://www.start.no/pondus/striper/%d%m%Y.gif
 	provides any
 end 
+
+strip dela
+	name Dela the Hooda
+	homepage http://www.delathehooda.com/
+	type search
+	searchpage http://www.delathehooda.com
+	searchpattern <img SRC="(<code:<"Delac" if %w==0><code:"dela" if %w!=0>~[^"]+)"
+	baseurl http://www.delathehooda.com/
+	provides latest
+end
