@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    27 Jun 2002, 01:11 EST
-# Current Revision: 1.0.25pre1
+# Last Modified:    07 May 2002, 20:15 EST
+# Current Revision: 1.0.25
 #
 
 
@@ -28,7 +28,7 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-$version = "1.0.25pre1";
+$version = "1.0.25";
 
 $time_today = time;
 
@@ -39,7 +39,7 @@ GetOptions(\%options, 'quiet|q','verbose','output=s','lite','local|l','noindex',
 	'new|n','defs=s','nopersonal','basedir=s','list','proxy=s',
 	'proxyauth=s','noenvproxy','nospaces','useragent=s','version|v','help|h',
 	'avantgo', 'random','nosystem','stripnav','nosymlinks','titles=s',
-	'retries=s','clean=s','offset=s') or exit 1;
+	'retries=s','clean=s') or exit 1;
 
 # Process options:
 #  Note: Blocks have been ordered so that we only do as much as absolutely
@@ -86,9 +86,6 @@ Options:
       --date DATE            Use value DATE instead of local time
                              (DATE is parsed by Date::Parse function)
                              Note: not available on Win32
-      --offset HOURS         When downloading strips, adjust date by HOURS.
-                             Useful if you are in a timezone far away from the
-                             webservers.
       --avantgo              Format images for viewing with Avantgo on PDAs
                              (local mode only)
       --basedir DIR          Work in specified directory instead of current
