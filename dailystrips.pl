@@ -133,7 +133,7 @@ if ($options{'date'}) {
 	} else {
 		import Date::Parse;
 	}
-	
+
 	unless ($time_today = str2time($options{'date'})) {
 		die "Error: invalid date specified\n";
 	}
@@ -403,7 +403,7 @@ if ($options{'local'}) {
 		# Don't bother if no tag exists in the file (because it has already been updated)
 		if (grep(/<!--nextday-->/, @previous_page)) {
 			my $match_count;
-		
+
 			for (@previous_page) {
 				if (s/<!--nextday-->/ | <a href="dailystrips-$short_date.html">Next day<\/a>/) {
 					$match_count++;
@@ -673,7 +673,7 @@ for (@strips) {
 								} else {
 									system("ln -s \"$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
 								}
-							
+
 							}
 							
 							if ($options{'nostale'}) {
@@ -808,7 +808,7 @@ sub http_get {
 			return $response->content;
 		}
 	}
-	
+
 	# if we get here, URL retrieval completely failed
 	warn "Warning: failed to download $url\n";
 	return "ERROR: $status";
@@ -1100,7 +1100,7 @@ sub get_defs {
 				unless ($1 =~ /^(any|latest)$/i) {
 					die "Error: invalid 'provides' at $defs_file line $line\n";
 				}
-				
+
 				$classes{$class}{'provides'} = $1;
 			}
 			elsif (/^(.+)\s+?/)
@@ -1115,6 +1115,10 @@ sub get_defs {
 			}
 			elsif (/^useclass\s+(.+)$/i)
 			{
+				unless (defined $classes{$1}) {
+					die "Error: strip $strip references invalid class $1 at $defs_file line $line\n";
+				}
+
 				$defs{$strip}{'useclass'} = $1;
 			}
 			elsif (/^homepage\s+(.+)$/i) {
@@ -1213,7 +1217,7 @@ sub get_defs {
 			@strips = split(/;/, $groups{$group}{'strips'});
 			%nostrips = ();   #empty
 		}
-		
+
 		foreach (@strips) {
 			unless ($defs{$_}) {
 				warn "Warning: group $group references non-existant strip $_\n";
