@@ -9,6 +9,5 @@ HTML files are located, simply run the command:
 
 'dailystrips-clean DAYS'
 
-Where DAYS is the number of days to preserve. Any files older than that will be
-deleted. There are also a few simple options available that may be viewed by
-running 'dailystrips-clean --help'.
+Where DAYS is the number of days to preserve. There are also a few simple
+options available that may be viewed by running 'dailystrips-clean --help'.

@@ -11,16 +11,16 @@ root:
 
 perl install.pl
 
-This will install the definitions file to /usr/share/dailystrips, the
-documentation to /usr/share/doc/dailystrips-VERSION, and the script to /usr/bin.
-Use "perl install.pl --help" for more info.
+This will install the definitions file to /usr/share/dailystrips/, the
+documentation to /usr/share/doc/dailystrips-VERSION, and the scripts to
+/usr/bin/. Use "perl install.pl --help" for more info.
 
 Once dailystrips is installed, you may run the program by typing:
 
 dailystrips
 
-For personal installations (no root access), copy dailystrips and strips.def to
-the directory of your choice. Since dailystrips uses
+For personal installations (no root access), copy dailystrips, dailystrips-clean
+and strips.def to the directory of your choice. Since dailystrips uses
 /usr/share/dailystrips/strips.def by default, you will need to specify the
 definition file with the "--defs FILE" option.
 

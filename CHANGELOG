@@ -24,6 +24,24 @@
   03 Feb 2002
   Fixed Penny Arcade (Daniel M. Drucker)
 
+  Added 'dailystrips-clean' script that will delete any files older than a
+  specified number of days
+
+  Fixed "The Class Menagerie"
+
+  10 Feb 2002
+  Removed 'Sexy Losers'
+
+  12 Feb 2002
+  Made number of retries configurable
+
+  Fixed a few broken strips (Dorktower, Life So Rad, Winter)
+
+  16 Feb 2002
+  Fixed PC and Pixel, Liberty Meadows (Jeff Brown)
+
+  Added "Bobbins" (Robert Jagger)
+
 1.0.21
   28 Oct 2001
   Fixed --nostale option - code was there, but attempting to use it would result

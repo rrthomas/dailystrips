@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    25 Jan 2002, 22:02 EST
-# Current Revision: 1.0.22-pre1
+# Last Modified:    12 Feb 2002, 21:46 EST
+# Current Revision: 1.0.22
 #
 
 
@@ -28,7 +28,7 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-$version = "1.0.22-pre1";
+$version = "1.0.22";
 
 $time_today = time;
 
@@ -37,10 +37,10 @@ $time_today = time;
 GetOptions(\%options, 'quiet|q','verbose','output=s','lite','local|l','noindex',
 	'archive|a','dailydir|d','stripdir','save|s','nostale','date=s',
 	'new|n','defs=s','nopersonal','basedir=s','list','proxy=s',
-	'proxyauth=s','noenvproxy','nospaces','useragent=s','version|v','help|h','avantgo',
-	'random','nosystem','stripnav','nosymlinks','titles=s') or exit 1;
+	'proxyauth=s','noenvproxy','nospaces','useragent=s','version|v','help|h',
+	'avantgo', 'random','nosystem','stripnav','nosymlinks','titles=s',
+	'retries=s','clean=s') or exit 1;
 
-	
 # Process options:
 #  Note: Blocks have been ordered so that we only do as much as absolutely
 #  necessary if an error is encountered (i.e. do not load defs if --version
@@ -56,49 +56,53 @@ STRIPS can be a mix of strip names and group names
 or use option --list to list available strips and groups
 
 Options:
-  -q  --quiet                Turns off progress messages		
-      --verbose              Turns on extra progress information, overrides -q
+  -q  --quiet                Turn off progress messages		
+      --verbose              Turn on extra progress information, overrides -q
       --list                 List available strips
-      --random               Downloads a random strip
+      --random               Download a random strip
       --defs FILE            Use alternate strips definition file
       --nopersonal           Ignore ~/.dailystrips.defs
       --nosystem             Ignore system-wide definitions
-      --output FILE          outputs HTML to FILE instead of STDOUT
+      --output FILE          Output HTML to FILE instead of STDOUT
                              (does not apply to local mode)
-      --lite                 Outputs a reduced HTML page
+      --lite                 Output a reduced HTML page
       --stripnav             Add links for navigation within the page
-      --titles STRING        Customizes HTML output
-  -l  --local                Outputs HTML to file and saves strips locally
-      --noindex              Disables symlinking current page to index.html
+      --titles STRING        Customize HTML output
+  -l  --local                Output HTML to file and saves strips locally
+      --noindex              Disable symlinking current page to index.html
                              (local mode only)
-  -a  --archive              Generates archive.html as a list of all days,
+  -a  --archive              Generate archive.html as a list of all days,
                              (local mode only)
-  -d  --dailydir             Creates a separate directory for each day's images
+  -d  --dailydir             Create a separate directory for each day's images
                              (local mode only)
-      --stripdir             Creates a separate directory for each strip's
+      --stripdir             Create a separate directory for each strip's
                              images (local mode only)
   -s  --save                 If it appears that a particular strip has been
                              downloaded, does not attempt to re-download it
                              (local mode only)
       --nostale              If a new strip is not available, displays an error
                              in the HTML output instead of showing the old image
-      --nosymlinks           Doesn't use symlinks for day-to-day duplicates
+      --nosymlinks           Do not use symlinks for day-to-day duplicates
       --date DATE            Use value DATE instead of local time
                              (DATE is parsed by Date::Parse function)
                              Note: not available on Win32
-      --avantgo              Formats images for viewing with Avantgo on PDAs
+      --avantgo              Format images for viewing with Avantgo on PDAs
                              (local mode only)
       --basedir DIR          Work in specified directory instead of current
                              directory (program will look here for previous HTML
                              file and save new files here, etc.)
-      --proxy host:port      Uses specified HTTP proxy server (overrides
+      --proxy host:port      Use specified HTTP proxy server (overrides
                              environment proxy, if set)
-      --proxyauth user:pass  Sets username and password for proxy server
-      --noenvproxy           Ignores the http_proxy environment variable, if set
-      --nospaces             Removes spaces from image filenames (local mode
+      --proxyauth user:pass  Set username and password for proxy server
+      --noenvproxy           Ignore the http_proxy environment variable, if set
+      --nospaces             Remove spaces from image filenames (local mode
                              only)
       --useragent STRING     Set User-Agent: header to STRING (default is none)
-  -v  --version              Prints version number
+      --retries NUM          When downloading items, retry NUM times instead of
+                             default 3 times
+      --clean NUM            Keep only the latest NUM days of files; remove all
+                             older files
+  -v  --version              Print version number
 ";
 
 
@@ -251,7 +255,21 @@ if (!$options{'noenvproxy'} and !$options{'proxy'} and $ENV{'http_proxy'} ) {
 if ($options{'proxyauth'}) {
 	unless ($options{'proxyauth'} =~ /^.+?:.+?$/) {
 			die "Error: incorrectly formatted proxy credentials ('user:pass' expected)\n";
-	}		
+	}
+}
+
+
+# Handle/validate other options
+if ($options{'clean'} =~ m/\D/) {
+	die "Error: 'clean' value must be numeric\n";
+}
+
+if ($options{'retries'} =~ m/\D/) {
+	die "Error: 'retries' value must be numeric\n";
+}
+
+unless ($options{'retries'}) {
+	$options{'retries'} = 3;
 }
 
 
@@ -282,7 +300,7 @@ undef $known_strips; undef $known_groups; undef $val;
 
 # Go
 unless ($options{'quiet'}) {
-	warn "dailystrips $version starting:\n"
+	warn "dailystrips $version starting:\n";
 }
 
 
@@ -784,14 +802,33 @@ if (!$options{'date'} and !$options{'noindex'} and $^O =~ /Win32/) {
 	copy("dailystrips-$short_date.html","index.html");
 }
 
+
+# Clean out old files, if requested
+if ($options{'clean'}) {
+	unless ($options{'quiet'}) {
+		print STDERR "Cleaning files older than $options{'clean'} days...";
+	}
+	
+	unless (system("perl dailystrips-clean --quiet $options{'clean'}")) {
+		unless ($options{'quiet'}) {
+			print STDERR "done\n";
+		}
+	}
+	else {
+		warn "failed\nWarning: could not run dailystrips-clean script\n";
+	}
+	
+	
+}
+
 sub http_get {
 	my ($url, $referer, $retries) = @_;
 	my ($request, $response, $status);
 	
 	# default value
-	unless ($retries) {
-		$retries = 3;
-	}	
+	#unless ($retries) {
+	#	$retries = 3;
+	#}	
 	
 	my $headers = new HTTP::Headers;
 	$headers->proxy_authorization_basic(split(/:/, $options{'proxyauth'}));
@@ -801,7 +838,7 @@ sub http_get {
 	$ua->agent($options{'useragent'});
 	$ua->proxy('http', $options{'proxy'});
 	
-	for (1 .. $retries) {
+	for (1 .. $options{'retries'}) {
 		# main request
 		$request = HTTP::Request->new('GET', $url, $headers);				
 		$response = $ua->request($request);
@@ -809,7 +846,7 @@ sub http_get {
 
 		if ($response->is_error()) {
 			if ($options{'verbose'}) {
-				warn "Warning: could not download $url: $status (attempt $_ of $retries)\n";
+				warn "Warning: could not download $url: $status (attempt $_ of $options{'retries'})\n";
 			}
 		} else {
 			return $response->content;

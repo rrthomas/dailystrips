@@ -294,11 +294,11 @@ end
 
 
 strip rudypark
-        name Rudy Park
-        homepage http://www.rudypark.com/
-        type generate
-        imageurl http://www.rudypark.com/comics/rudy%Y%m%d.gif
-        provides latest
+	name Rudy Park
+	homepage http://www.rudypark.com/
+	type generate
+	imageurl http://www.rudypark.com/comics/rudy%Y%m%d.gif
+	provides latest
 end
 
 strip sinfest
@@ -375,7 +375,7 @@ strip classm
 	name The Class Menagerie
 	homepage http://www.theclassm.com/
 	type search
-	searchpattern <IMG.+?SRC="(/comics/cm\d+\..+?)"
+	searchpattern <IMG.+?SRC="(/comics/tcm\d+\..+?)"
 	baseurl http://www.theclassm.com/
 	provides latest
 end
@@ -487,7 +487,9 @@ strip dorktower
 	type search
 	#searchpattern <IMG.+src="(comics/gamespy/GameSpy\d+\.jpg)".*?>
 	#searchpattern <IMG.+?src="(comics/interactiveweek/IW\d+\(\d+_\d+_\d+\)\.jpg)"
-	searchpattern <img.+?src="(comics/dorktower/Dorktower\d+..+?)"
+	#searchpattern <img.+?src="(comics/dorktower/Dorktower\d+..+?)"
+	#searchpattern <img.+?src="(comics/backups/.+?)"
+	searchpattern <img.+?src="(comics/(backups|gamespy|interactiveweek|dorktower)/.+?)"
 	baseurl $homepage
 	provides latest
 end
@@ -903,17 +905,18 @@ strip slowwave
         provides latest
 end
 
+# gone 10 feb 2002
 # formerly "The Thin H Line". NC-17. Vertical format.
 # supports varying HTML configurations - maybe overkill
-strip sexylosers
-        name Sexy Losers
-        homepage http://www.sexylosers.com/
-        type search
-        searchpattern <IMG.+?SRC.+?=.+?"(http://sexylosers.com/)?(image.cgi\?sl\d+\.jpg)"
-        matchpart 2
-        provides latest
-        baseurl $homepage
-end
+#strip sexylosers
+#        name Sexy Losers
+#        homepage http://www.sexylosers.com/
+#        type search
+#        searchpattern <IMG.+?SRC.+?=.+?"(http://sexylosers.com/)?(image.cgi\?sl\d+\.jpg)"
+#        matchpart 2
+#        provides latest
+#        baseurl $homepage
+#end
 
 # weekly
 strip youdamnkid
@@ -951,7 +954,7 @@ strip lifesorad
         type search
         baseurl $homepage
         provides latest
-        searchpattern <IMG.+?SRC="/(comics/\d+\.gif)"
+        searchpattern <IMG.+?SRC="/(comics/\d+.+?)"
 end
 
 # formerly known as otakufeh. NC-17.
@@ -1003,9 +1006,26 @@ strip winter
 	name Winter
 	homepage http://www.wintercomic.com/
 	type search
-	searchpattern img src='(pages/page(\d+)\.gif)'
+	#searchpattern img src='(pages/page(\d+)\.gif)'
+	searchpattern <img.+?src='(/index.php\?do_command=show_strip&.+?)'
 	baseurl $homepage
 	provides latest
+end
+
+strip pcnpixel
+	name PC and Pixel
+	homepage http://www.pccomix.com/PCandPixel/
+	type generate
+	imageurl http://www.pccomix.com/PCandPixel/pc_dailystrip/pc%y%m<code:strftime("\%\d", localtime($time_today - 604800))>.gif
+	provides any
+end
+
+strip bobbins
+	name Bobbins
+	homepage http://www.bobbins.org/
+	type generate
+	imageurl http://www.bobbins.org/comics/%Y%m%d.png
+	provides any
 end
 
 # ucomics.com strips
@@ -1403,6 +1423,15 @@ end
 #	name Liberty Meadows
 #	useclass unitedmedia-srch-creators
 #end
+strip old_liberty
+	name Liberty Meadows
+	homepage http://www.sunnyfundays.com/
+	type search
+	searchpage http://www.sunnyfundays.com/comix.htm
+	searchpattern <img.+?SRC="(\d+.gif)".+?ALIGN="BOTTOM".+?BORDER="0".+?NATURALSIZEFLAG="3"
+	baseurl http://www.sunnyfundays.com/
+	provides latest
+end
 
 #can't use the class - dates are 53 years ago
 strip lilabner
@@ -1587,10 +1616,11 @@ strip tarzan
 	useclass unitedmedia-srch-comics
 end
 
-strip tmnt
-	name Teenage Mutant Ninja Turtles
-	useclass unitedmedia-srch-creators
-end
+#gone 10 feb 2002
+#strip tmnt
+#	name Teenage Mutant Ninja Turtles
+#	useclass unitedmedia-srch-creators
+#end
 
 strip thatslife
 	name That's Life
@@ -2223,13 +2253,6 @@ strip captainribman
 end
 
 #mercury center strips
-strip pcnpixel
-        name PC and Pixel
-        useclass mercurycenter
-        $1 83
-        $2 pc_and_pixel
-end
-
 strip thenorm
         name The Norm
         useclass mercurycenter
