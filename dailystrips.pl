@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    23 July 2001 11:19 EST
+# Last Modified:    23 July 2001 12:24 EST
 # Current Revision: 1.0.16-pre1
 #
 
@@ -389,11 +389,6 @@ for (@strips) {
 	my ($img_line, $local_name, $image, $ext);
 	my ($local_name_yesterday);
 	
-	#if ($options{'alt_date'} and $provides eq "latest") {
-	#	warn "Warning strip $strip not compatible with --date, skipping\n";
-	#	next;
-	#}
-	
 	if ($options{'verbose'} and $options{'local_mode'}) { warn "Downloading strip file for " . lc((split(/;/, $_))[0]) . "\n" }
 	
 	if ($img_addr =~ "^unavail") {
@@ -561,7 +556,7 @@ sub get_strip {
 	my ($page, $addr);
 	
 	if ($options{'alt_date'} and $defs{$strip}{'provides'} eq "latest") {
-		warn "Warning: strip $strip not compatible with --date, skipping\n";
+		if ($options{'verbose'}) { warn "Warning: strip $strip not compatible with --date, skipping\n" }
 		next;
 	}
 	
@@ -603,9 +598,6 @@ sub get_defs {
 	close(DEFS);
 	
 	if ($options{'verbose'}) { warn "Loading definitions from file $defs_file\n" }
-	
-	#@defs_file = grep(!/^\s*#/, @defs_file); # weed out comment-only lines
-	#@defs_file = grep(!/^\s*$/, @defs_file); # get rid of blank lines
 	
 	for (@defs_file) {
 		$line++;
@@ -890,9 +882,6 @@ sub get_defs {
 				die "Error: Unknown keyword '$1' at $defs_file line $line, in group $group\n";
 			}
 		}
-				
-		
-		#$line++;
 	}
 	
 	# Post-processing validation
