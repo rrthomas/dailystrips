@@ -4713,3 +4713,28 @@ strip thismodernworld
 	imageurl http://workingforchange.speedera.net/www.workingforchange.com/webgraphics/wfc/TMW%m-%d-%y.gif
 	provides any
 end
+
+strip toytrunkrailroad 
+	name Toy Trunk Railroad 
+	homepage http://www.toytrunkrailroad.com/
+	type generate 
+	imageurl http://www.toytrunkrailroad.com/today.gif
+	provides latest 
+end
+
+strip escomposlinux
+	name Escomposlinux
+	homepage http://comic.escomposlinux.org/
+	type generate
+	imageurl http://comic.escomposlinux.org/strip.png
+	provides latest
+end
+
+strip warbucket
+	name Warbucket
+	homepage http://www.warbucket.com/comic.php?state=current&id=0
+	type search
+	searchpattern <img.+?src="(comics/\d+\.gif)">
+	baseurl http://www.warbucket.com/
+	provides latest
+end
