@@ -21,13 +21,13 @@
 
   When using the --date option, the program downloads strips that may not be for
   the correct day anyway (such as searching an index.html page, as opposed to
-  a %Y%m%d.html page). The definitions should declare whether or not they can find
-  a strip for a specific day, or just the latest one. - FIXED in 1.0.16
+  a %Y%m%d.html page). The definitions should declare whether or not they can
+  find a strip for a specific day, or just the latest one. - FIXED in 1.0.16
 
 1.0.8
   20 Feb 2001
-  Need better error handling with the LWP::UserAgent module (if there's a problem,
-  report exactly *what* went wrong - proxy, etc..)
+  Need better error handling with the LWP::UserAgent module (if there's a
+  problem, report exactly *what* went wrong - proxy, etc..)
 
   The definition file parsing code needs to be re-thought and re-done. It works,
   but gets weird in places and is generally hard to maintain.

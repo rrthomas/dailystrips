@@ -8,6 +8,8 @@ tackle..
   one scheme for single images one some days and another for multiple images
   on other days.
 
+  Add a manpage - possibly use Rene Weber's work for Debian as a starting point
+
 1.0.16
   27 July 2001
   Write a test script to verify that everything works as it should to cut down

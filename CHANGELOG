@@ -20,6 +20,12 @@
   Changed method of operation for search mode to be more flexible
 
   Fixed a bug in groups support (Pat Lashley)
+
+  03 Sep 2001
+  Renamed the script to just 'dailystrips', not 'dailystrips.pl'
+
+  RPMs now available
+
 1.0.17
   1 August 2001
   Small fix to Avantgo table generation
@@ -159,8 +165,8 @@
 
 1.0.12
   11 Mar 2001
-  Added --stripdir option to put the files for each strip in a separate directory
-  (Daniel Skarda)
+  Added --stripdir option to put the files for each strip in a separate
+  directory (Daniel Skarda)
 
   Added --date to specify the date to work with, instead of the current date.
   This works with many strips, but some sites do not provide an HTML page for
@@ -226,7 +232,8 @@
 
   Fixed a bug that was causing problems with image files that have no extension
 
-  With the completion of the above two items, SFGate strips should now work properly.
+  With the completion of the above two items, SFGate strips should now work
+  properly.
 
   Fixed the Avalon High definition
 
@@ -301,7 +308,8 @@
   Added --archive option. This adds a link to the current day's page to the
   file archive.html
 
-  Added --noindex option. This disables symlinking the latest page to 'index.html'
+  Added --noindex option. This disables symlinking the latest page to
+  'index.html'
 
   Various other cleanups
 
@@ -321,8 +329,8 @@
 
   21 Jan 2001
   No longer uses wget - replaced with LWP
-  This enhances portability and also allows for better error handling of
-  failed downloads
+  This enhances portability and also allows for better error handling of failed
+  downloads
 
 1.0.0:
   20 Jan 2001

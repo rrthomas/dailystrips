@@ -1,7 +1,13 @@
 dailystrips Installation Instructions:
 
 *NIX:
-To install dailystrips, run the following as root:
+If you downloaded the RPM, simply run the following as root:
+
+rpm -Uvh dailystrips-VERSION.noarch.rpm
+
+
+If you downloaded anything else (.tar.bz/.tar.gz2/.zip), run the following as
+root:
 
 perl install.pl
 
@@ -11,18 +17,18 @@ Use "perl install.pl --help" for more info.
 
 Once dailystrips is installed, you may run the program by typing:
 
-dailystrips.pl
+dailystrips
 
-For personal installations (no root access), copy dailystrips.pl and
-strips.def to the directory of your choice. Since dailystrips uses
+For personal installations (no root access), copy dailystrips and strips.def to
+the directory of your choice. Since dailystrips uses
 /usr/share/dailystrips/strips.def by default, you will need to specify the
 definition file with the "--defs FILE" option.
 
 
 Win32:
-Copy the script and strips.def to the directory of your choice. When run,
-the script will check the current directory for strips.def, so always
-'cd' the appropriate location or use the --defs option.
+Copy the script and strips.def to the directory of your choice. When run, the
+script will check the current directory for strips.def, so always 'cd' the
+appropriate location or use the --defs option.
 
 
 If you have any questions, please contact me.
