@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    27 July 2001 02:26 EST
-# Current Revision: 1.0.16-pre5
+# Last Modified:    31 July 2001 01:31 EST
+# Current Revision: 1.0.16-pre6
 #
 
 
@@ -27,7 +27,7 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-$version = "1.0.16-pre5";
+$version = "1.0.16-pre6";
 
 $time_today = time;
 
@@ -88,6 +88,7 @@ Options:
       --nospaces             Removes spaces from image filenames (local mode
       --useragent="STRING"   Set User-Agent: header to STRING (default is none)
                              only)
+      --avantgo              Formats images for viewing with Avantgo on PDAs
   -v  --version              Prints version number
 END_HELP
 #/#kwrite's syntax higlighting is buggy.. this preserves my sanity	
@@ -470,7 +471,8 @@ if ($options{'local'} and !$options{'quiet'}) {
 
 for (@strips) {
 	my ($strip, $name, $homepage, $img_addr, $updated, $referer, $prefetch, $provides) = split(/;/, $_);
-	my ($img_line, $local_name, $image, $ext, $local_name_yesterday);
+	my ($img_line, $local_name, $local_name_dir, $local_name_file, $local_name_ext, $image, $ext,
+	   $local_name_yesterday, $local_name_yesterday_dir, $local_name_yesterday_file, $local_name_yesterday_ext);
 	
 	if ($options{'verbose'} and $options{'local'}) {
 		warn "Downloading strip file for " . lc((split(/;/, $_))[0]) . "\n";
@@ -490,17 +492,39 @@ for (@strips) {
 			
 			if ($options{'stripdir'}) {
  				$local_name_yesterday = "$name/$short_date_yesterday$ext";
+ 				$local_name_yesterday_dir = "$name/";
+ 				$local_name_yesterday_file = $short_date_yesterday;
+ 				$local_name_yesterday_ext = $ext;
+ 				
  				$local_name = "$name/$short_date$ext";
+ 				$local_name_dir = "$name/";
+ 				$local_name_file = "$short_date";
+ 				$local_name_ext = "$ext";
+ 				
  				unless ( -d $strip) {
  				# any issues with masks and Win32?
  					mkdir $name, 0755;
  				}
  			} elsif ($options{'dailydir'}) {
 				$local_name_yesterday = "$short_date_yesterday/$name-$short_date_yesterday$ext";
+				$local_name_yesterday_dir = "$short_date_yesterday/";	
+				$local_name_yesterday_file = "$name-$short_date_yesterday";
+				$local_name_yesterday_ext = "$ext";
+				
 				$local_name = "$short_date/$name-$short_date$ext";
+				$local_name_dir = "$short_date/";
+				$local_name_file = "$name-$short_date";
+				$local_name_ext = "$ext";
 			} else {
 				$local_name_yesterday = "$name-$short_date_yesterday$ext";				
+				$local_name_yesterday_dir = "./";
+				$local_name_yesterday_file = "$name-$short_date_yesterday";
+				$local_name_yesterday_ext = "$ext";
+				
 				$local_name = "$name-$short_date$ext";
+				$local_name_dir = "./";
+				$local_name_file = "$name-$short_date";
+				$local_name_ext = "$ext";
 			}
 			
 			if ($options{'nospaces'}) {
@@ -508,14 +532,23 @@ for (@strips) {
 				# used --nospaces or not, but this should work more
 				# often
 				$local_name_yesterday =~ s/\s+//g;
+				$local_name_yesterday_dir =~ s/\s+//g;
+				$local_name_yesterday_file =~ s/\s+//g;
+				
 				$local_name =~ s/\s+//g;
+				$local_name_dir =~ s/\s+//g;
+				$local_name_file =~ s/\s+//g;
 			}
 
 			if ($options{'save'} and  -e $local_name) {
 				# strip already exists - skip download
-				$img_addr = $local_name;
-				$img_addr =~ s/ /\%20/go;
-				$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+				if ($options{'avantgo'}) {
+					$img_line = &make_avantgo_table($local_name, $ext);
+				} else {
+					$img_addr = $local_name;
+					$img_addr =~ s/ /\%20/go;
+					$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+				}
 			} else {
 				# need to download
 				$image = &http_get($img_addr, $referer, $prefetch);
@@ -530,12 +563,16 @@ for (@strips) {
 					if (-l $local_name) {
 						# in case today's file is a symlink to yesterday's
 						unlink $local_name;
+						#if ($options{'avantgo'}) {
+						#	unlink "$local_name_dir$local_name_file-*";
+						#}
 					}
-					# any issues with print() in binary data to a file on Win32?
+					# any issues with print()ing binary data to a file on Win32?
 					open(IMAGE, ">$local_name");
 					print IMAGE $image;
 					close(IMAGE);
 					
+								
 					# Check to see if this is the same file as yesterday
 					if ($^O =~ /Win32/) {
 						# no 'diff' on Win32 - just go with what we have
@@ -543,11 +580,19 @@ for (@strips) {
 						$img_addr =~ s/ /\%20/go;
 						$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 					} else {
+						if ($options{'avantgo'}) {
+							&make_avantgo_files($local_name, $local_name_ext);
+						}
+						
 						if (system("diff \"$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1") == 0) {
 						
 							if ($updated eq "daily") {
 								#don't save the same strip as yesterday if it's supposed to be updated daily
 								unlink("$local_name");
+								#if ($options{'avantgo'}) {
+								#	unlink(glob("\"$local_name_dir$local_name_file-*\""));
+								#}
+								
 								$img_line = "[Error - new strip not available]";
 							} else {
 								#semidaily strips are allowed to be duplicates
@@ -555,20 +600,44 @@ for (@strips) {
 									unlink("$local_name");
 									if ($options{'stripdir'} or $options{'dailydir'}) {
 										system("ln -s \"../$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
+										
+										#if ($options{'avantgo'}) {
+										#	chdir("$local_name_dir");
+										#	system("ln",glob("\"../$local_name_yesterday_dir$local_name_yesterday_file-*\""),".");
+										#	chdir("..");
+										#	
+										#	print STDERR "DEBUG: Link command: cd $local_name_dir; ln ../$local_name_yesterday_dir$local_name_yesterday_file-* .\n";
+										#	#system("ln -s $local_name_yesterday_dir/$local_name_yesterday_file-* $local_name_dir/");
+										#}
 									} else {
 										system("ln -s \"$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
+										
+										#if ($options{'avantgo'}) {
+										#	system("ln",glob("\"$local_name_yesterday_file-*\""),".");
+										#	print STDERR "DEBUG: wildcard match:" . glob("\"$local_name_yesterday_file-*\"") . "\n";
+										#	print STDERR "DEBUG: Link command: ln $local_name_yesterday_file-* .\n";
+										#	#system("cd $local_name_dir/; ln -s ../$local_name_yesterday_dir/$local_name_yesterday_file-* .");
+										#}
 									}
 								}
 							
+								if ($options{'avantgo'}) {
+									$img_line = &make_avantgo_table($local_name, $ext);
+								} else {
+									$img_addr = $local_name;
+									$img_addr =~ s/ /\%20/go;
+									$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+								}
+							}
+						} else {
+							#strip is new for today
+							if ($options{'avantgo'}) {
+								$img_line = &make_avantgo_table($local_name, $ext);
+							} else {
 								$img_addr = $local_name;
 								$img_addr =~ s/ /\%20/go;
 								$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 							}
-						} else {
-							#strip is new for today
-							$img_addr = $local_name;
-							$img_addr =~ s/ /\%20/go;
-							$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 						}
 					}
 				}
@@ -1074,4 +1143,51 @@ sub my_eval {
 	$code =~ s/\\\>/\>/g;
 	
 	return eval $code;
+}
+
+sub make_avantgo_table {
+	my ($file, $file_ext) = @_;
+	my ($rows, $cols, $table);
+	
+	my $dimensions = `identify \"$file\"`;
+	
+	$dimensions =~ m/^$file (\d+)x(\d+)/;
+	my $width = $1; my $height = $2;
+	
+	if (int($width/160) != $cols) {
+		$cols = int($width/160) + 1;
+	} else {
+		$cols = $width/160;
+	}
+	
+	if (int($height/160) != $rows) {
+		$rows = int($height/160) + 1;
+	} else {
+		$rows = $height/160;
+	}
+	
+	my $file_base = $file; $file_base =~ s/$file_ext$//;
+
+	$file_base =~ s/ /\%20/g;
+	
+	$table = "<table border=0 cellspacing=0 cellpadding=0>";
+	foreach my $row (0 .. ($rows-1)) {
+		$table .= "<tr>";
+		foreach my $col (0 .. ($cols-1)) {
+			$table .= "<td><img src=$file_base-" . (($row * $cols) + $col) . "$file_ext></td>";
+		
+		}
+		$table .= "</tr>";
+	}
+	$table .= "</table>";
+	
+	return $table;
+}
+
+sub make_avantgo_files {
+	my ($file, $file_ext) = @_;
+
+	my $file_base = $file; $file_base =~ s/$file_ext$//;
+
+	system("convert -crop 160x160 \"$file\" \"$file_base-\%d$file_ext\"");
 }
