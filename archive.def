@@ -1,0 +1,13 @@
+strip badtech
+	name Badtech
+	homepage http://www.badtech.com/
+	type generate
+	imageurl http://www.badtech.com/a/%-y/%-m/%-d.jpg
+	provides any
+end
+
+strip citizendog
+	name Citizen Dog
+	useclass ucomics-gen
+	$1 cd
+end

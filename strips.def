@@ -1,7 +1,7 @@
 # Strip Groups
 group andrews
 	desc Andrew's Favorite Strips
-	include userfriendly dilbert foxtrot badtech
+	include userfriendly dilbert foxtrot
 	include pennyarcade joyoftech thefifthwave monty bc
 	include wizardofid garfield adamathome
 end
@@ -167,14 +167,6 @@ strip avalonhigh
 	searchpattern <IMG.+?SRC="(/?comics/avalon\d{8}.*?\.gif)"
 	baseurl $homepage
 	provides latest
-end
-
-strip badtech
-	name Badtech
-	homepage http://www.badtech.com/
-	type generate
-	imageurl http://www.badtech.com/a/%-y/%-m/%-d.jpg
-	provides any
 end
 
 strip drfun
@@ -1109,14 +1101,6 @@ strip cathy
 	name Cathy
 	useclass ucomics-gen
 	$1 ca
-end
-
-# not updated daily any more, but left in so previous strips can still be
-# retrieved
-strip citizendog
-	name Citizen Dog
-	useclass ucomics-gen
-	$1 cd
 end
 
 strip closetohome

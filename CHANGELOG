@@ -1,3 +1,9 @@
+1.0.24
+  24 Apr 2002
+  Moved definitions for strips that are no longer updated
+  but which can still be downloaded for previous days to
+  'archive.def' (Badtech, Citizen Dog)
+
 1.0.23
   02 Apr 2002
   'Diesel Sweeties' fixed
