@@ -68,7 +68,7 @@ Options:
       --lite                 Output a reduced HTML page
       --stripnav             Add links for navigation within the page
       --titles STRING        Customize HTML output
-  -l  --local                Output HTML to file and saves strips locally
+  -l  --local                Output HTML to file and save strips locally
       --noindex              Disable symlinking current page to index.html
                              (local mode only)
   -a  --archive              Generate archive.html as a list of all days,
