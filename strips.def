@@ -786,13 +786,14 @@ end
 #	provides latest
 #end
 
-strip whenigrowup
-	name When I Grow Up
-	homepage http://www.whenigrowup.net/
-	type generate
-	imageurl http://www.whenigrowup.net/comics/wigu%Y%m%d.png
-	provides any
-end
+#discontinued - removed 20050227
+#strip whenigrowup
+#	name When I Grow Up
+#	homepage http://www.whenigrowup.net/
+#	type generate
+#	imageurl http://www.whenigrowup.net/comics/wigu%Y%m%d.png
+#	provides any
+#end
 
 strip walky
 	name It's Walky
@@ -5187,3 +5188,12 @@ strip mrwiggles
 	baseurl $homepage
 end
 
+strip mais
+	name Magical Adventures in Space
+	artist Jeffrey Rowland
+	homepage http://www.wigu.com/
+	type search
+	searchpattern <img.+?src="(strips/\d{8}\.png)"
+	baseurl $homepage
+	provides latest
+end
