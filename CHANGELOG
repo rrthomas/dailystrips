@@ -43,6 +43,8 @@
 
   Added "Ghastly"
 
+  Added "Count Your Sheep", "Catharsis" (The Doctor What)
+
 1.0.28
   23 Mar 2003
   Removed redundant def for "Funny Farm"
@@ -131,6 +133,12 @@
 
   Added "Leftersons" and "Politically Correct", moved "Kevin Tuma",
   "Paul Nowak", "Bob Lang" to CNSNews class (Jeff Brown)
+
+  Tweaked "Bruno the Bandit" to be more general
+
+  Cleaned out old, commented junk from defs
+
+  Revived "Wandering Ones"
  
 1.0.27
   24 Feb 2003
