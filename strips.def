@@ -125,7 +125,7 @@ class mercurycenter
         homepage http://cgi.mercurycenter.com/cgi-bin/comics/show.cgi?ID=$1&DATE=TODAY
         type generate
         imageurl http://cgi.mercurycenter.com/premium/comics/%m_%d/$2.gif
-        provides latest
+        provides any
 end
 
 # Non-standard strips
@@ -497,14 +497,6 @@ strip dorktower
 	searchpattern <img.+?src="(comics/dorktower/Dorktower\d+.jpg)"
 	matchpart 1
 	baseurl $homepage
-	provides latest
-end
-
-strip thenorm
-	name The Norm
-	homepage http://www.thenorm.com/
-	type generate
-	imageurl http://www.thenorm.com/daily/<code:int(strftime("\%d", localtime($time_today - 1209600)))>.gif
 	provides latest
 end
 
@@ -1176,11 +1168,6 @@ end
 strip onebighappy
 	name One Big Happy
 	useclass unitedmedia-srch-creators
-end
-
-strip pcnpixel
-	name PC and Pixel
-	useclass unitedmedia-srch-wash
 end
 
 strip peanuts
@@ -1861,21 +1848,21 @@ strip wright
 end
 
 #mercury center strips
-strip pcnpixel2
+strip pcnpixel
         name PC and Pixel
         useclass mercurycenter
         $1 83
         $2 pc_and_pixel
 end
 
-strip thenorm2
+strip thenorm
         name The Norm
         useclass mercurycenter
         $1 79
         $2 norm
 end
 
-strip bfriends2
+strip bfriends
         name Between Friends
         useclass mercurycenter
         $1 14
