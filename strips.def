@@ -431,7 +431,8 @@ strip zapiro
 	#searchpattern <img.+?src="?(/mg/zapiro/.+?\.(gif|jpg)).+?ALT="cartoon"
 	#provides any
 	type generate
-	imageurl http://www.mg.co.za/mg/zapiro/%Y/<code:lc(strftime("\%b", @localtime_today))>/<code:lc(strftime("\%b", @localtime_today))>%d.gif
+	#imageurl http://www.mg.co.za/mg/zapiro/%Y/<code:lc(strftime("\%b", @localtime_today))>/<code:lc(strftime("\%b", @localtime_today))>%d.gif
+	imageurl http://www.mg.co.za/images/zapiro/%y-<code:lc(strftime("\%b", @localtime_today))>%d.gif
 	provides any
 end
 
@@ -617,10 +618,11 @@ end
 # tuesdays, thursdays, sundays
 strip machall
 	name Mac Hall
-	homepage http://machall.keenspace.com/today.html
-	type generate
-	imageurl http://machall.keenspace.com/comics/%Y%m%d.jpg
-	provides any
+	homepage http://www.MacHall.com/
+	type search
+	searchpattern <img.+?src='(/index.php\?do_command=show_strip\&strip_id=\d+\&auth=.+?)'
+	baseurl $homepage
+	provides latest
 end
 
 # not daily
