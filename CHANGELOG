@@ -1,3 +1,13 @@
+1.0.16
+  23 July 2001
+  Fixed reporting of line numbers for errors encountered while parsing
+  definitions.
+
+  Strip definitions now specify what they can provide (latest image only
+  or the correct strip for any date) so that only strips that can actually
+  provide the strip for the requested date are downloaded when using the
+  --date option.
+
 1.0.15
   13 July 2001
   Major change: now installs to system directories instead of one dir.

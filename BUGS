@@ -21,8 +21,8 @@
 
   When using the --date option, the program downloads strips that may not be for
   the correct day anyway (such as searching an index.html page, as opposed to
-  a %Y%m%d.html page). The definitions should declare whether or not the can find
-  a strip for a specific day, or just the latest one.
+  a %Y%m%d.html page). The definitions should declare whether or not they can find
+  a strip for a specific day, or just the latest one. - FIXED in 1.0.16
 
 1.0.8
   20 Feb 2001
@@ -34,7 +34,9 @@
 
   One thing I should have mentioned for 1.0.4 is that the defs file parsing code
   gives completely erroneous line numbers (they represent the lines of the file
-  after removing blank line and comment lines) and should be dealt with.
+  after removing blank line and comment lines) and should be dealt with. -
+  FIXED in 1.0.16
+
 
 1.0.6
   02 Feb 2001

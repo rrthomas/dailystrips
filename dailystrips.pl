@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    23 July 2001 00:46 EST
-# Current Revision: 1.0.15
+# Last Modified:    23 July 2001 11:19 EST
+# Current Revision: 1.0.16-pre1
 #
 
 # Set up
@@ -86,7 +86,7 @@ if ($@ ne "") {
 	use Date::Parse;
 }
 
-$version = "1.0.15";
+$version = "1.0.16-pre1";
 
 $time_today = time;
 
@@ -385,9 +385,14 @@ if ($options{'local_mode'} and !$options{'quiet'}) {
 }
 
 for (@strips) {
-	my ($strip, $name, $homepage, $img_addr, $updated, $referer, $prefetch) = split(/;/, $_);
+	my ($strip, $name, $homepage, $img_addr, $updated, $referer, $prefetch, $provides) = split(/;/, $_);
 	my ($img_line, $local_name, $image, $ext);
 	my ($local_name_yesterday);
+	
+	#if ($options{'alt_date'} and $provides eq "latest") {
+	#	warn "Warning strip $strip not compatible with --date, skipping\n";
+	#	next;
+	#}
 	
 	if ($options{'verbose'} and $options{'local_mode'}) { warn "Downloading strip file for " . lc((split(/;/, $_))[0]) . "\n" }
 	
@@ -555,6 +560,11 @@ sub get_strip {
 	my ($strip) = @_;
 	my ($page, $addr);
 	
+	if ($options{'alt_date'} and $defs{$strip}{'provides'} eq "latest") {
+		warn "Warning: strip $strip not compatible with --date, skipping\n";
+		next;
+	}
+	
 	if ($defs{$strip}{'type'} eq "search") {
 		$page = &http_get($defs{$strip}{'searchpage'});
 
@@ -586,7 +596,7 @@ sub get_defs {
 	my $defs_file = shift;
 	my ($strip, $class, $sectype, $group);
 	my (@strips, %nostrips, @okstrips);
-	my $line = 1;
+	my $line;
 	
 	open(DEFS, "<$defs_file") or die "Error: could not open strip definitions file $defs_file\n";
 	my @defs_file = <DEFS>;
@@ -594,13 +604,17 @@ sub get_defs {
 	
 	if ($options{'verbose'}) { warn "Loading definitions from file $defs_file\n" }
 	
-	@defs_file = grep(!/^\s*#/, @defs_file); # weed out comment-only lines
-	@defs_file = grep(!/^\s*$/, @defs_file); # get rid of blank lines
+	#@defs_file = grep(!/^\s*#/, @defs_file); # weed out comment-only lines
+	#@defs_file = grep(!/^\s*$/, @defs_file); # get rid of blank lines
 	
 	for (@defs_file) {
+		$line++;
+		
 		chomp;
-		s/^\s+//o; s/\s+$//o; s/#(.*)//o;
-
+		s/#(.*)//o; s/^\s+//o; s/\s+$//o; #s/^\s*#(.*)$//; s/^\s*$/o;
+		
+		next if $_ eq "";
+		
 		if (!$sectype) {
 			if (/^strip\s+(\w+)$/io)
 			{
@@ -777,6 +791,12 @@ sub get_defs {
 			{
 				$classes{$class}{'updated'} = $1;
 			}
+			elsif (/^provides\s+(.+)$/io)
+			{
+				#my $val = $1;
+				unless ($1 =~ m/^(any|latest)$/io) { die "Error: invalid provides at $defs_file line $line\n" }
+				$classes{$class}{'provides'} = $1;
+			}
 			elsif (/^(.+)(\s+?)/io)
 			{
 				die "Unknown keyword '$1' at $defs_file line $line\n";
@@ -842,6 +862,12 @@ sub get_defs {
 			{
 				$defs{$strip}{$1} = $2;
 			}
+			elsif (/^provides\s+(.+)$/io)
+			{
+				#my $val = $1;
+				unless ($1 =~ m/^(any|latest)$/io) { die "Error: invalid provides at $defs_file line $line\n" }
+				$defs{$strip}{'provides'} = $1;
+			}
 			elsif (/^(.+)(\s+?)/io)
 			{
 				die "Error: Unknown keyword '$1' at $defs_file line $line, in strip $strip\n";
@@ -864,10 +890,9 @@ sub get_defs {
 				die "Error: Unknown keyword '$1' at $defs_file line $line, in group $group\n";
 			}
 		}
-			
+				
 		
-		
-		$line++;
+		#$line++;
 	}
 	
 	# Post-processing validation
