@@ -1,3 +1,20 @@
+1.0.10
+  27 Feb 2001
+  Documentation now better explains usage of groups
+
+  Non-date variables now use '$' instead of '%'. Before, when both used '%'
+  it was impossible for the script to distinguish between a date variable
+  follwed by unrelated text and any other sort of named variable (most
+  importantly, this was breaking Sluggy Freelance)
+
+  Added several new strips
+
+  Fixed several strips
+
+  Added --nospaces option (Michael Lewis)
+
+  Added proxy authentication support
+
 1.0.9
   24 Feb 2001
   Added groups support - define multiple strips as one keyword
