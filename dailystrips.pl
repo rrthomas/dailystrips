@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    29 May 2003, 21:15 EDT
+# Last Modified:    25 Jun 2003, 12:23 EDT
 # Current Revision: 1.0.28pre1
 #
 
@@ -177,7 +177,9 @@ unless (defined $options{'updates'})
 
 unless($options{'noupdates'})
 {
-	&get_defs($options{'updates'});
+	if (-r $options{'updates'}) {
+		&get_defs($options{'updates'});
+	}
 }
 
 # Get system configurable strip definitions now
@@ -199,9 +201,9 @@ $known_groups = join('|', sort keys %groups);
 
 if ($options{'random'}) {
 	my @known_strips_array = keys %defs;
-	
+
 	push(@get, $known_strips_array[(rand $#known_strips_array)]);
-	
+
 	undef @known_strips_array;
 } else {
 	# Only strips/groups to download remain in @ARGV
