@@ -1777,9 +1777,10 @@ end
 
 strip zippythepinhead
 	name Zippy the Pinhead
-	useclass sfgate-srch
+	useclass sfgate-gen
 	$1 Zippy_the_Pinhead
 	$2 zippy
+	#http://pst.rbma.com/content/Zippy_the_Pinhead
 end
 
 strip zits
