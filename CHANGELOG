@@ -1,4 +1,7 @@
 1.0.7
+  19 Feb 2001
+  Added several new strips (total is now 148)
+
   18 Feb 2001
   Fixed a bug when using the --dailydir option that would make incorrect
   symlinks for duplicate files
