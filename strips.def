@@ -1423,15 +1423,16 @@ end
 #	name Liberty Meadows
 #	useclass unitedmedia-srch-creators
 #end
-strip old_liberty
-	name Liberty Meadows
-	homepage http://www.sunnyfundays.com/
-	type search
-	searchpage http://www.sunnyfundays.com/comix.htm
-	searchpattern <img.+?SRC="(\d+.gif)".+?ALIGN="BOTTOM".+?BORDER="0".+?NATURALSIZEFLAG="3"
-	baseurl http://www.sunnyfundays.com/
-	provides latest
-end
+
+# disabled again 2002-04-02
+#strip old_liberty
+#	name Liberty Meadows
+#	homepage http://www.sunnyfundays.com/
+#	type search
+#	searchpage http://www.sunnyfundays.com/comix.htm
+#	searchpattern <img.+?SRC="(\d+.gif)".+?ALIGN="BOTTOM".+?BORDER="0".+?NATURALSIZEFLAG="3" 	
+#	baseurl http://www.sunnyfundays.com/ 	provides latest
+#end
 
 #can't use the class - dates are 53 years ago
 strip lilabner
