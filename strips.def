@@ -5146,3 +5146,13 @@ strip phdcomics
 	provides latest
 end
 
+strip coxandforkum
+	name Cox and Forkum
+	artist John Cox and Allen Forkum
+	homepage http://www.coxandforkum.com/
+	type search
+	searchpattern (/archives/(.*?)\.gif)
+	baseurl http://www.coxandforkum.com
+	provides latest
+end
+
