@@ -527,7 +527,8 @@ strip 8bit
 	#searchpattern <A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>.*?<IMG.+?SRC="images/menu_03.gif"
 	#searchpattern <A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>.*?<IMG.+?SRC="images/menu_02.gif"
 	#searchpattern <IMG.+?SRC="images/menu_02.gif".*?>.*?<A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>
-	searchpattern First.*?Comic.*?<a.*?HREF="http://www.nuklearpower.com/comic/(\d+)\.htm".*?>.*?Newest
+	#searchpattern First.*?Comic.*?<a.*?HREF="http://www.nuklearpower.com/comic/(\d+)\.htm".*?>.*?Newest
+	searchpattern <a.+?href="(\d+)\.htm">Newest Comic</a>
 	imageurl http://www.nuklearpower.com/comic/ep$match.gif
 	provides latest
 end
