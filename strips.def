@@ -38,6 +38,7 @@ class unitedmedia-srch-comics
 	searchpattern <img.+?src="(/comics/$strip/archive/images/$strip.+?)"
 	baseurl http://www.unitedmedia.com
 	provides any
+	artist Unitedmedia
 end
 
 class unitedmedia-srch-comics-lag
@@ -496,7 +497,7 @@ strip freefall
 	name Freefall
 	homepage http://www.purrsia.com/freefall/
 	type generate
-	imageurl $homepage<code:use POSIX;my $w=strftime("\%u",localtime($time_today));my $s=517+3*floor(($time_today-995839200)/604800);$s++if$w\>2;$s++if$w\>4;my$c=int(($s+99)/100);"ff${c}00/fv00$s.gif">
+	imageurl $homepage<code:use POSIX;my $w=strftime("\%"."u",localtime($time_today));my $s=517+3*floor(($time_today-995839200)/604800);$s++if$w\>2;$s++if$w\>4;my$c=int(($s+99)/100);"ff${c}00/fv00$s.gif">
 	provides any
 end
 
