@@ -1,3 +1,14 @@
+1.0.9
+  21 Feb 2001
+  Added Peanuts and everything except Yak's Corner from comicspage.com
+  (strip count is now 206)
+
+  Cleaned out a bunch of old code from the script
+
+  Made searchpage the default referer (if different than homepage)
+
+  Added documentation for the strip definition file
+
 1.0.8
   20 Feb 2001
   Added HTTP proxy server support

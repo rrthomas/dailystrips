@@ -26,12 +26,12 @@ links to the latest strip. These links are to the strip's webserver.
 dailystrips.pl --help lists all available options
 
 Adding new strips:
-	The strips.defs file should be relatively self-explanatory. (real docs
-coming soon). If you are adding several strips from the same site that share a
-common format, please create a class for that site. In addition, please try to
-pick a method of determining the most current URL possible (i.e. don't search if
-it's possible to predict - we don't want to get old strips if running early in
-the morning and a site hasn't updated the static page yet)
+	The strips.defs file should be relatively self-explanatory. (see README.DEFS
+for detailed information). If you are adding several strips from the same site
+that share a common format, please create a class for that site. In addition,
+please try to pick a method of determining the most current URL possible (i.e.
+don't search if it's possible to predict - we don't want to get old strips if
+running early in the morning and a site hasn't updated the static page yet)
 
 Copyright info:
 	This program copyright (C) 2001 Andrew Medico <amedico@calug.net>.
