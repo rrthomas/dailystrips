@@ -201,11 +201,20 @@ class washpost-uclick
 end
 
 class slate-cagle
-	homepage http://cagle.slate.msn.com/politicalcartoons/PCcartoons/$1.asp
-	type search
-	searchpattern <IMG.+?SRC=.+?(/comics/updating/$2\.(gif|jpg))"
-	baseurl http://cagle.slate.msn.com
-	provides latest
+        homepage http://cagle.slate.msn.com/politicalcartoons/PCcartoons/$1.asp
+        type search
+        searchpattern <IMG.+?SRC=.+?(/working/\d+/$2\.(gif|jpg))"
+        baseurl http://cagle.slate.msn.com
+        provides latest
+end
+
+class slate-cagle-alt
+        homepage http://cagle.slate.msn.com/politicalcartoons/PCcartoons/$1.asp
+        type search
+        searchpattern <IMG.+?SRC=.+?(/comics/updating/$2\.(gif|jpg))"
+        #searchpattern <IMG.+?SRC=.+?(/working/\d+/$2\.(gif|jpg))"
+        baseurl http://cagle.slate.msn.com
+        provides latest
 end
 
 # Non-standard strips
@@ -3263,7 +3272,7 @@ end
 
 strip greenberg
 	name Steve Greenberg
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
@@ -3461,7 +3470,7 @@ end
 
 strip summers
 	name Dana Summers
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
@@ -3562,7 +3571,7 @@ end
 strip swill
 	name Swill
 	artist Peter Kohlsaat
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 kohlsaat
 	$2 kohlsaat
 end
@@ -3570,7 +3579,7 @@ end
 strip cartoonfix
 	name Cartoonfix
 	artist John Kurtz
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 kurtz
 	$2 kurtz
 end
@@ -3594,28 +3603,28 @@ end
 strip slowpoke
 	name Slowpoke
 	artist Jen Sorenson
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 sorenson
 	$2 sorenson
 end
 
 strip snibbe
 	name Kurt Snibbe
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
 
 strip spencer
 	name John Spencer
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
 
 strip wallace
 	name Russ Wallace
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
@@ -3721,7 +3730,7 @@ end
 
 strip moudakis
 	name Theo Moudakis
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 mou
 end
@@ -3770,7 +3779,7 @@ end
 
 strip mitropoulos
 	name Bas Mitropoulos
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 bas
 	$2 bas
 end
@@ -3798,14 +3807,14 @@ end
 
 strip boyle
 	name Francis Boyle
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
 
 strip cajas
 	name Pancho Cajas
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
@@ -3826,28 +3835,28 @@ end
 
 strip coco
 	name Coco
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
 
 strip corax
 	name Corax
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
 
 strip deangelis
 	name Marco DeAngelis
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
 
 strip doloricon
 	name Doloricon
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
@@ -3862,14 +3871,14 @@ end
 
 strip emmerson
 	name Rod Emmerson
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
 
 strip evans
 	name Malcolm Evans
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
@@ -3883,7 +3892,7 @@ end
 
 strip garrincha
 	name Garrincha
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
@@ -3925,14 +3934,14 @@ end
 
 strip hervi
 	name Hervi
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
 
 strip kazanevsky
 	name Vladmir Kazanevsky
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
@@ -4009,14 +4018,14 @@ end
 
 strip miel
 	name Deng Coy Miel
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
 
 strip alimov
 	name Murat Alimov
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 murat
 	$2 murat
 end
@@ -4044,14 +4053,14 @@ end
 
 strip obi
 	name Obi
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
 
 strip palomo
 	name Palomo
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
@@ -4107,7 +4116,7 @@ end
 
 strip rowe
 	name David Rowe
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
@@ -4128,7 +4137,7 @@ end
 
 strip schot
 	name Bas van der Schot
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
@@ -4149,7 +4158,7 @@ end
 
 strip kim
 	name Kim Gyung Soo
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 soo
 	$2 soo
 end
@@ -4177,7 +4186,7 @@ end
 
 strip touka
 	name Touka
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
@@ -4205,7 +4214,7 @@ end
 
 strip zeev
 	name Ze'ev
-	useclass slate-cagle
+	useclass slate-cagle-alt
 	$1 $strip
 	$2 $strip
 end
@@ -4223,7 +4232,6 @@ strip zudin
 	$1 $strip
 	$2 $strip
 end
-
 
 # azcentral strips
 class azcentral-srch
