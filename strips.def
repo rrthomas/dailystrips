@@ -502,10 +502,20 @@ strip 8bit
 	#searchpattern <A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>.*?<IMG.+?SRC="images/menu_03.gif"
 	#searchpattern <A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>.*?<IMG.+?SRC="images/menu_02.gif"
 	#searchpattern <IMG.+?SRC="images/menu_02.gif".*?>.*?<A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>
-	searchpattern <a.*?HREF="http://www.nuklearpower.com/comic/(090)\.htm".*?>.*?<b>Newest<br>
-	imageurl http://www.nuklearpower.com/comic/ep$match.png
+	searchpattern First.*?Comic.*?<a.*?HREF="http://www.nuklearpower.com/comic/(\d+)\.htm".*?>.*?Newest
+	imageurl http://www.nuklearpower.com/comic/ep$match.gif
 	provides latest
 end
+
+#strip 8bit
+#         name 8-Bit Theater
+#         homepage http://www.nuklearpower.com/comic/
+#         type search
+#         searchpattern <A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>
+#         matchpart 1
+#         imageurl http://www.nuklearpower.com/comic/ep$match.gif
+#         provides latest
+#end
 
 strip apodbig
 	name Astronomy Picture of the Day (big image)
@@ -535,19 +545,14 @@ strip pgs
 	provides latest
 end
 
-#dead and gone - 10/26/01
-# Adventurers!
-#strip adventurers
-#	name Adventurers!
-#	homepage http://www.adventurers-comic.com/
-#	type search
-#	searchpage http://www.fuzzyfur.net/DSOS/adv/
-#	searchpattern <img.+?src="http://www.fuzzyfur.net/(DSOS/adv/strips/\d+\.gif)"
-#	baseurl http://www.fuzzyfur.net/
-#	provides latest
-#end
+strip adventurers
+	name Adventurers!
+	homepage http://www.adventurers-comic.com/
+	type generate
+	imageurl http://www.adventurers-comic.com/comics/adventurers%Y%m%d.gif
+	provides any
+end
 
-# basement studios
 strip basement
 	name Basement Studios
 	homepage http://www.basement-studios.com/
@@ -574,7 +579,6 @@ strip boasas
 	baseurl http://www.boasas.com/
 end
 
-# Bruno the Bandit
 strip brunothebandit
 	name Bruno the Bandit
 	homepage http://www.brunothebandit.com
@@ -583,18 +587,14 @@ strip brunothebandit
 	provides any
 end
 
-
-# Diesel Sweeties
 strip dieselsweeties
 	name Diesel Sweeties
 	homepage http://www.dieselsweeties.com/
 	type search
-	searchpattern <img.+?src="?(/?strips/sw.+?\.png)
+	searchpattern <img.+?src="(http://www.metalsteve.com/strips/sw\d+\..+?)"
 	provides latest
-	baseurl http://www.dieselsweeties.com/
 end
 
-# Fuzzy Logic
 strip fuzzylogic
 	name Fuzzy Logic
 	homepage http://www.bbspot.com/comics/fuzzy_logic/index.html
@@ -603,7 +603,6 @@ strip fuzzylogic
 	provides any
 end
 
-# Little Gamers
 strip littlegamers
 	name Little Gamers
 	homepage http://www.little-gamers.com/
@@ -613,7 +612,6 @@ strip littlegamers
 end
 
 # tuesdays, thursdays, sundays
-# Mac Hall
 strip machall
 	name Mac Hall
 	homepage http://machall.keenspace.com/today.html
@@ -623,7 +621,6 @@ strip machall
 end
 
 # not daily
-# The Mr. Chuck Show
 strip mrchuckshow
 	name Mr. Chuck Show
 	homepage http://www.mrchuckshow.com/
@@ -632,8 +629,6 @@ strip mrchuckshow
 	provides any
 end
 
-
-# Pentasmal
 strip pentasmal
 	name Pentasmal
 	homepage http://www.pentasmal.com/
@@ -642,7 +637,6 @@ strip pentasmal
 	provides any
 end
 
-# RPG World
 strip rpgworld
 	name RPG World
 	homepage http://www.rpgworldcomic.com/
