@@ -1015,9 +1015,12 @@ end
 strip pcnpixel
 	name PC and Pixel
 	homepage http://www.pccomix.com/PCandPixel/
-	type generate
-	imageurl http://www.pccomix.com/PCandPixel/pc_dailystrip/pc%y%m<code:strftime("\%\d", localtime($time_today - 604800))>.gif
-	provides any
+        type search
+        searchpage http://www.pccomix.com/PCandPixel/pc_dailystrip/PCdaily.html
+        searchpattern <p><img SRC="pc(\w+).gif" WIDTH=
+        matchpart 1
+        imageurl http://www.pccomix.com/PCandPixel/pc_dailystrip/pc$match.gif
+        provides latest	
 end
 
 strip bobbins
