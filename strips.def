@@ -68,6 +68,7 @@ class sfgate-gen
 	homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/$1.dtl
 	type generate
 	#prefetch $homepage
+	#referer $homepage
 	imageurl http://pst.rbma.com/content/$1
 	provides latest
 end
