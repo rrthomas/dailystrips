@@ -5118,7 +5118,7 @@ strip wulffmorgenthaler
 	homepage http://www.wulffmorgenthaler.com
 	type search
 	searchpage $homepage/thestrip.asp?cDay=%d&cMonth=%m&cYear=%Y
-	searchpattern <img.+?src="(log/[a-zA-Z]{2}\d{8}\.gif)"
+        searchpattern <img.+?src="(log/\w+\.gif)"
 	imageurl $homepage/$match
 	provides any
 end
