@@ -19,7 +19,64 @@
   24 July 2001
   Cleaned up some regexps in option parsing code
 
-  Fixed syntax checking and error reporting in option pasring code
+  Fixed syntax checking and error reporting in option parsJoaquín Perez <joaquin@mondongo.com.ar>
+Finished implementing every strip at ucomics.com & unitedmedia.com
+
+Marc Doumayrou <mad@oxyan.com>
+Implemented --dailydir option and link to previous day's strip
+
+Scott Carlson <ScottCarlson@email.com>
+Implemented detection and symlinking for duplicate strip files
+
+Dave Tweed <dtweed@acm.org>
+Added sfgate strips & others
+
+Itai Zukerman <zukerman@math-hat.com>
+Added Avalon High
+
+Russell Keppner <rkeppner@idiglobal.com>
+Added Sluggy Freelance
+
+Peter <pete@pretender.com>
+Added strips: exploitnow coolcat classm bruno thinhline nukees joeaverage hotzp
+flem gpf in2it crfh striptease
+
+Robert Jagger <jagger@oznog.org>
+Added strip: angst
+
+Robert Sandilands <robert.sandilands@secureworx.com
+Added strips: zapiro madameve
+
+Roy Moore <lizard@tyrannos.com>
+Added strips: goats plif
+
+Michael Lewis <michael.s.lewis@att.net>
+--nospaces option, zippythecolorpinhead
+
+Mark Wallace <Mark.Wallace@osd.mil
+Added strip: clanofthecats
+
+Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>
+Added --stripdir and --date options
+
+Mark Larimer <larimer@fantasybowl.com
+Added Dork Tower definition
+
+Francesco Chemolli <kinkie@kame.usr.dsi.unimi.it>
+Patch to automatically use the definition file located in the same directory
+as the script instead of the current directory
+
+Rene Weber <rene_dailyst@elvenlord.com>
+--useragent option, Debian packaging.
+
+Peter De Wachter <pdewacht@vub.ac.be>
+Addeed Kevin and Kell, Freefall
+Fixed --date option
+
+"Tom Klinger" <Admin@the-piper.net>
+Win32 porting
+Getops
+Fixes to strips.defing code
 
   26 July 2001
   strips.def:
@@ -31,7 +88,6 @@
   Fixed proxy server detection
 
   Implemented urlsuffix in defs file
-
 
 1.0.15
   13 July 2001

@@ -51,3 +51,8 @@ Rene Weber <rene_dailyst@elvenlord.com>
 Peter De Wachter <pdewacht@vub.ac.be>
 Addeed Kevin and Kell, Freefall
 Fixed --date option
+
+"Tom Klinger" <Admin@the-piper.net>
+Win32 porting
+Getops
+Fixes to strips.def

@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    26 July 2001 13:23 EST
+# Last Modified:    26 July 2001 23:33 EST
 # Current Revision: 1.0.16-pre3
 #
 
@@ -84,7 +84,7 @@ if ($@ ne "") {
 	$no_dateparse = 1;
 }
 
-$version = "1.0.16-pre2";
+$version = "1.0.16-pre3";
 
 $time_today = time;
 
@@ -214,11 +214,14 @@ $_, $val
 		
 		$options{'http_proxy_auth'} = $1;
 	} elsif (/^--proxy/) {
-		unless (/^--proxy=(http:\/\/.+:.+)\/?$/) {
+		$_ =~ m/--proxy=(http:\/\/)?(.+?):(.+?)\/?$/i;
+		unless ($2 and $3) {
 			die "Error: incorrectly formatted proxy server ('http://server:port' expected)\n";
 		}
+				
+		$options{'http_proxy'} = "http://$2:$3";
 		
-		$options{'http_proxy'} = $1;
+		print STDERR "DEBUG: setting proxy to: http://$2:$3 (1)\n";
 	} elsif (/^--useragent/) {
 		unless (/^--useragent=(.+)/) {
 			die "Error: no argument given for --useragent\n";
@@ -248,11 +251,14 @@ unless (@get) {
 
 #Set proxy
 if (!defined $options{'no_env_proxy'} and !defined $options{'http_proxy'} and defined $ENV{'http_proxy'} ) {
-	unless ($ENV{'http_proxy'} =~ m/^(http:\/\/.+:.+)\/?$/) {
+	$ENV{'http_proxy'} =~ m/(http:\/\/)?(.+?):(.+?)\/?$/i;
+	unless ($2 and $3) {
 		die "Error: incorrectly formatted proxy server environment variable\n('http://server:port' expected)\n";
 	}
+			
+	$options{'http_proxy'} = "http://$2:$3";
 	
-	$options{'http_proxy'} = $1;
+	print STDERR "DEBUG: setting proxy to: http://$2:$3 (2)\n";
 }
 if ($options{'http_proxy'}) {
 	if ($options{'verbose'}) {
