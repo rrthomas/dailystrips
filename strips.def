@@ -437,14 +437,15 @@ strip gpf
 	provides latest
 end
 
-strip in2it
-	name In2It Online
-	homepage http://www.in2itonline.com/
-	type search
-	searchpattern <IMG.+?SRC=(archive/\d+/comics/\d+\..+?)
-	baseurl http://www.in2itonline.com/
-	provides latest
-end
+# gone for some time now, as of 2002-01-12
+#strip in2it
+#	name In2It Online
+#	homepage http://www.in2itonline.com/
+#	type search
+#	searchpattern <IMG.+?SRC=(archive/\d+/comics/\d+\..+?)
+#	baseurl http://www.in2itonline.com/
+#	provides latest
+#end
 
 #note: doesn't work perfectly - some strips are broken up into multiple images
 # this is not yet supported, but could be done
