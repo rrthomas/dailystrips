@@ -548,6 +548,29 @@ strip 8bit
 	updated semidaily
 	provides latest
 end
+
+
+strip apodbig
+    name Astronomy Picture of the Day (big image)
+    homepage http://antwrp.gsfc.nasa.gov/apod/
+    type search
+    searchpattern <a href="(image/\d{4}/.*?.(jpg|gif))">
+    matchpart 1
+    baseurl $homepage
+    updated daily
+    provides latest
+end
+
+strip apod
+    name Astronomy Picture of the Day
+    homepage http://antwrp.gsfc.nasa.gov/apod/
+    type search
+    searchpattern <img SRC="(image/\d{4}/.*?.(jpg|gif))">
+    matchpart 1
+    baseurl $homepage
+    updated daily
+    provides latest
+end
 	
 # ucomics.com strips
 strip adamathome
