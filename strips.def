@@ -269,16 +269,17 @@ end
 
 # Non-standard strips
 
+# discontinued = removed 20050109
 # should be possible to generate?
 # sometimes multi-image - need a new way to handle this
-strip avalonhigh
-	name Avalon High
-	homepage http://www.avalonhigh.com/
-	type search
-	searchpattern <IMG.+?SRC="(/?comics/avalon\d{8}.*?\.gif)"
-	baseurl $homepage
-	provides latest
-end
+#strip avalonhigh
+#	name Avalon High
+#	homepage http://www.avalonhigh.com/
+#	type search
+#	searchpattern <IMG.+?SRC="(/?comics/avalon\d{8}.*?\.gif)"
+#	baseurl $homepage
+#	provides latest
+#end
 
 strip drfun
 	name Doctor Fun
