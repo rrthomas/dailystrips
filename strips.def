@@ -80,7 +80,7 @@ class comicspage-strips-srch
 	homepage http://www.comicspage.com/$1/index.html
 	type search
 	searchpage http://www.comicspage.com/$1/main.html
-	searchpattern <img(.*?)src="(http://www.comicspage.com/daily/cs$2/\d+cs$2((-a)?).gif)"
+	searchpattern <img(.*?)src="(http://www.comicspage.com/daily/cs$2/\d+cs$2((-\w)?).gif)"
 	matchpart 2
 end
 
@@ -90,7 +90,7 @@ class comicspage-panels-srch
 	homepage http://www.comicspage.com/$1/index.html
 	type search
 	searchpage http://www.comicspage.com/$1/main.html
-	searchpattern <img(.*?)src="(http://www.comicspage.com/daily/cp$2/\d+cp$2((-a)?).gif)"
+	searchpattern <img(.*?)src="(http://www.comicspage.com/daily/cp$2/\d+cp$2((-\w)?).gif)"
 	matchpart 2
 end
 
@@ -100,7 +100,7 @@ class comicspage-editorial-srch
 	homepage http://www.comicspage.com/$1/index.html
 	type search
 	searchpage http://www.comicspage.com/$1/main.html
-	searchpattern <img(.*?)src="(http://www.comicspage.com/daily/ed$2/\d+ed$2((-a)?).gif)"
+	searchpattern <img(.*?)src="(http://www.comicspage.com/daily/ed$2/\d+ed$2((-\w)?).gif)"
 	matchpart 2
 end
 
@@ -109,7 +109,7 @@ strip avalonhigh
         name Avalon High
         homepage http://www.avalonhigh.com/
         type search
-        searchpattern <IMG(.*?)ALT="comic"(.*?)SRC="(/comics/avalon%Y%d%m.gif)"
+        searchpattern <IMG(.*?)ALT="comic"(.*?)SRC="(/comics/avalon\d+(.*?).gif)"
         matchpart 3
         baseurl $homepage
         updated semidaily
@@ -143,8 +143,8 @@ strip jokesonyou
 	name The Joke's on You
 	homepage http://www.thefunnypages.com/
 	type search
-	searchpattern <img(.*?)src="(http://www.thefunnypages.com/archives/(.*?).gif)"(.*?)border="2"(.*?)>
-	matchpart 3
+	searchpattern <img(.*?)src="(http://www.thefunnypages.com/archives/(.*?).gif)"
+	matchpart 2
 	#updated daily or not? - check - seems to be, but check weekend
 end
 
@@ -166,13 +166,14 @@ strip joyoftech
 	updated semidaily
 end
 
-strip markfiore
-        name Mark Fiore
-        homepage http://www.sfgate.com/columnists/fiore/
-        type search
-        searchpattern (http://www.sfgate.com/gate/graphics/\d+/\d+/\d+/fiore.*\.(gif|jpg))
-        matchpart 1
-end
+#strip markfiore
+#      name Mark Fiore
+#      homepage http://www.sfgate.com/columnists/fiore/
+#      type search
+#	#searchpattern (http://www.sfgate.com/gate/graphics/\d+/\d+/\d+/fiore.*\.(gif|jpg))
+#	searchpattern <PARAM(.*?)NAME=movie(.*?)VALUE="(http://www.sfgate.com/gate/graphics/\d+/\d+/\d+/(.*?).swf)">
+#      matchpart 3
+#end
 
 strip megatokyo
 	name MegaTokyo
@@ -223,7 +224,7 @@ strip punc
 	homepage http://byteus.com/pm/
 	type search
 	searchpage http://artiztik.com/cgi-bin/pmviewer.cgi?list=pm&config=pm.cfg&slide=999&style=pm
-	searchpattern <img(.*?)src=/pm/strips/(.*?).jpg
+	searchpattern <img(.*?)src=(/pm/strips/(.*?).jpg)
 	matchpart 2
 	baseurl http://artiztik.com/
 	updated semidaily
@@ -763,9 +764,14 @@ strip liberty
 	useclass unitedmedia-srch-creators
 end
 
+#can't use the class - dates are 53 years ago
 strip lilabner
 	name Li'l Abner
-	useclass unitedmedia-srch-comics
+	homepage http://www.unitedmedia.com/comics/lilabner/index.html
+	type search
+	searchpattern (/comics/lilabner/archive/images/lilabner(.*?)\.gif)
+	matchpart 1
+	baseurl http://www.unitedmedia.com
 end
 
 strip luann
@@ -773,9 +779,14 @@ strip luann
 	useclass unitedmedia-srch-comics
 end
 
+# can't use class - strip lags 1 day (current html page exists, but not strip image0
 strip lupo
 	name Lupo Alberto
-	useclass unitedmedia-srch-comics
+	homepage http://www.unitedmedia.com/comics/lupo/index.html
+	type search
+	searchpattern (/comics/lupo/archive/images/lupo(.*?)\.gif)
+	matchpart 1
+	baseurl http://www.unitedmedia.com
 end
 
 strip marmaduke
@@ -798,9 +809,15 @@ strip momma
 	useclass unitedmedia-srch-creators
 end
 
+#can't use class - site lags several days
 strip motley
 	name Motley
-	useclass unitedmedia-srch-comics
+	name Lupo Alberto
+	homepage http://www.unitedmedia.com/comics/motley/index.html
+	type search
+	searchpattern (/comics/motley/archive/images/motley(.*?)\.gif)
+	matchpart 1
+	baseurl http://www.unitedmedia.com
 end
 
 strip mrlowe
@@ -929,9 +946,14 @@ strip speedbump
 	useclass unitedmedia-srch-creators
 end
 
+#can't use class - 1 week behind
 strip stockcartoons
 	name StockcarToons
-	useclass unitedmedia-srch-comics
+	homepage http://www.unitedmedia.com/comics/stockcartoons/index.html
+	type search
+	searchpattern (/comics/stockcartoons/archive/images/stockcartoons(.*?)\.(gif|jpg))
+	matchpart 1
+	baseurl http://www.unitedmedia.com
 end
 
 strip strangebrew
@@ -1262,11 +1284,17 @@ strip monkeyhouse
         $2 mhs
 end
 
+#not updated regularly
 strip profdoodles
-        name Doodles
-        useclass comicspage-strips-srch
-        $1 profdoodles
-        $2 dod
+	name Doodles
+	#useclass comicspage-strips-srch
+	#$1 profdoodles
+	#$2 dod
+	homepage http://www.comicspage.com/$1/index.html
+	type search
+	searchpage http://www.comicspage.com/profdoodles/main.html
+	searchpattern <img(.*?)src="(http://www.comicspage.com/daily/csdod/\d+csdod((-\w)?).gif)"
+	matchpart 2
 end
 
 strip ribman
