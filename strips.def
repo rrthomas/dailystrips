@@ -4536,3 +4536,12 @@ strip catharsis
         baseurl http://catharsiscomic.com/
         provides latest
 end
+
+strip noroomformagic
+        name No Room for Magic
+        homepage http://www.drunkduck.com/No_Room_For_Magic/
+        type search
+        searchpattern <img.+?src='(\d+%Y\d+.gif)'
+        baseurl $homepage
+        provides latest
+end
