@@ -57,12 +57,14 @@ end
 class sfgate-gen-zippycolor
 	homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/$1.dtl
 	type generate
+	#prefetch $homepage
 	imageurl http://pst.rbma.com/content/$2
 end
 
 class sfgate-gen
 	homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/$1.dtl
 	type generate
+	#prefetch $homepage
 	imageurl http://pst.rbma.com/content/$1
 end
 
@@ -72,6 +74,7 @@ class sfgate-srch
 	searchpattern (/comics/graphics/$2/.*\.(gif|jpg))
 	matchpart 1
 	baseurl http://www.sfgate.com
+	#prefetch $homepage
 end
 
 class comicspage-strips-srch
@@ -292,7 +295,7 @@ strip superosity
 end
 
 strip theweedpatch
-	name the WeedPatch
+	name The WeedPatch
 	homepage http://www.jpjennings.com/toons/
 	type generate
 	imageurl http://www.jpjennings.com/toons/%m%d%Y.gif
@@ -478,6 +481,14 @@ strip thenorm
 	homepage http://www.thenorm.com/
 	type generate
 	imageurl http://www.thenorm.com/daily/<code:int(strftime("\%\d", localtime($time_today - 1209600)))>.gif
+end
+
+strip jerkcity
+  name Jerkcity
+  homepage http://www.jerkcity.com/
+  type generate
+  imageurl http://www.jerkcity.com/today.gif
+  updated daily
 end
 
 # ucomics.com strips
@@ -1203,7 +1214,7 @@ end
 
 strip zits
         name Zits
-        useclass sfgate-srch
+        useclass sfgate-gen
         $1 $name
 end
 
