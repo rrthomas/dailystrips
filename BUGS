@@ -6,6 +6,11 @@
   check for duplicates that time. Unless you switch options every day, though,
   this shouldn't really be a problem.
 
+  When using the --date option, the program downloads strips that may not be for
+  the correct day anyway (such as searching an index.html page, as opposed to
+  a %Y%m%d.html page). The definitions should declare whether or not the can find
+  a strip for a specific day, or just the latest one.
+
 1.0.8
   20 Feb 2001
   Need better error handling with the LWP::UserAgent module (if there's a problem,

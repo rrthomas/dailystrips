@@ -13,7 +13,8 @@ file README.LOCAL for more information and examples)
 Requirements:
 	dailystrips.pl requires a reasonably current version of Perl - it was
 developed with 5.005_03. The HTTP::Request, LWP::UserAgent, and POSIX modules
-are needed. See www.cpan.org if you don't have them installed already.
+are needed. If you want to use --date, you will need Date::Time from the
+TimeDate package. See www.cpan.org if you don't have them installed already.
 dailystrips.pl was developed on Linux but should be able to run on any *nix
 with that has the necessary Perl modules installed.
 
@@ -46,7 +47,7 @@ specifically public), make sure you set up IP restrictions so that only you have
 access to it - some publishers (specifically, Thin H Line) seem to be checking
 their webserver logs for dailystrips users and will come after you in a rather
 nasty fashion if it even looks like you're using dailystrips to make a public
-website..
+website.
 
 Copyright info:
 	This program copyright (C) 2001 Andrew Medico <amedico@calug.net>.

@@ -30,7 +30,7 @@ tackle..
 
   Add a 'group' section to strips.def where you can specify an alias (such as
   "tech") that would stand for several strips (such as "userfriendly",
-  "joyoftech", and "badtech")
+  "joyoftech", and "badtech") - DONE in 1.0.9
 
 1.0.1
   22 Jan 2001
