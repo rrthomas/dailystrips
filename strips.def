@@ -996,7 +996,7 @@ strip lemontree
 	name Under The Lemon Tree
 	homepage http://utlt.keenspace.com
 	type search
-	searchpattern SRC="(/comics/bn(\d{8})\.gif)"
+	searchpattern SRC="(/comics/.+?(\d{8})\..+?)"
 	baseurl $homepage
 	provides latest
 end
