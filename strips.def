@@ -804,8 +804,10 @@ end
 strip suburbanjungle
 	name Suburban Jungle
 	homepage http://www.suburbanjungle.com/
-	type generate
-	imageurl http://www.suburbanjungle.com/comics/sj%Y%m%d.jpg
+	type search
+	searchpage http://suburbanjungle.com/d/%Y%m%d.html
+	searchpattern <img.+?SRC="(/comics/sj%Y%m%d\..+?)"
+	baseurl http://www.suburbanjungle.com
 	provides any
 end
 
@@ -1021,8 +1023,10 @@ end
 strip bobbins
 	name Bobbins
 	homepage http://www.bobbins.org/
-	type generate
-	imageurl http://www.bobbins.org/comics/%Y%m%d.png
+	type search
+	searchpage http://bobbins.org/d/%Y%m%d.html
+	searchpattern <img.+?SRC="(/comics/%Y%m%d\..+?)"
+	baseurl http://www.bobbins.org
 	provides any
 end
 
@@ -1100,6 +1104,78 @@ strip weakendwarriors
         provides any
 end
 
+strip alice
+	name Alice!
+	homepage http://www.alicecomics.com/today.html
+	type search
+	searchpattern <IMG.+?SRC="(/comics/alice.+?\..+?)"
+	baseurl http://www.alicecomics.com/
+	provides latest
+end
+
+strip theshadows
+	name The Shadows
+	homepage http://www.alicecomics.com/shadows.html
+	type search
+	searchpattern <IMG.+?SRC="(/shadcomics/shad.+?\..+?)"
+	baseurl http://www.alicecomics.com/
+	provides latest
+end
+
+strip lcd
+	name Lowest Common Denominator
+	homepage http://lcd.keenspace.com
+	type search
+	searchpattern <IMG.+?SRC="(/comics/lcd.+?\..+?)"
+	baseurl http://lcd.keenspace.com
+	provides latest
+end
+
+
+strip devilspanties
+	name The Devil's Panties
+	homepage http://thedevilspanties.keenspace.com
+	type search
+	searchpattern <IMG.+?SRC="(/comics/.+?\..+?)"
+	baseurl http://thedevilspanties.keenspace.com
+	provides latest
+end
+
+strip fatjesus
+	name Fat Jesus
+	homepage http://www.fat-jesus.com
+	type search
+	searchpage http://fatjesus.keenspace.com
+	searchpattern <IMG.+?SRC="(/comics/fatjesus.+?)"
+	baseurl http://fatjesus.keenspace.com
+	provides latest
+end
+
+strip funnyfarm
+	name Funny Farm
+	homepage http://www.funnyfarmcomics.com
+	type search
+	searchpattern <IMG.+?SRC="(/comics/.+?\..+?)"
+	baseurl http://www.funnyfarmcomics.com
+	provides latest
+end
+
+strip sexandviolence
+	name Sex and Violence
+	homepage http://www.mrbang.net
+	type search
+	searchpattern <IMG.+?SRC="(/comics/.+?\..+?)"
+	baseurl http://www.mrbang.net
+	provides latest
+end
+
+strip fans
+	name Fans!
+	homepage http://faans.com
+	type search
+	searchpattern <IMG.+?SRC="(http://faans.com/images/%Y/.+?\..+?)"
+	provides latest
+end
 
 # ucomics.com strips
 strip adamathome
