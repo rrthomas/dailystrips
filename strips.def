@@ -4114,10 +4114,9 @@ end
 strip comet7
 	name Comet 7
 	artist David Tekiela
-	homepage http://www.comet7.moreevolved.com/index.htm
+	homepage http://www.comet7.com/
 	type search
-	searchpattern (strips/c7_\d*\.gif)
-	baseurl http://www.comet7.moreevolved.com/
+	searchpattern <img src="(http://www.comet7.com/strips/\d+.+?)"
 	provides latest
 end
 
