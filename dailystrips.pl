@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@calug.net>
 # Created:          23 Nov 2000, 23:33
-# Last Modified:    24 Feb 2001, 03:11
-# Current Revision: 1.0.9
+# Last Modified:    26 Feb 2001, 16:40
+# Current Revision: 1.0.10
 #
 
 # Set up
@@ -49,38 +49,41 @@ $known_groups = join('|', sort keys %groups);
 
 for (@ARGV)	{
 	if ($_ eq "" or $_ =~ m/^(--help|-h)$/o) {
-		print "Usage: $0 [OPTION] STRIPS\n";
-		print "STRIPS can be a mix of strip names and group names\n";
-		print "(group names must be predeeded by an '\@' symbol)\n";
-		print "'all' may be used to retrieve all known strips,\n";
-		print "or use option --list to list available strips\n";
-		print "\nOptions:\n";
-		print "  -q  --quiet            turns off progress messages\n";		
-		print "      --output=FILE      outputs HTML to FILE instead of STDOUT\n";
-		print "                         (does not apply to local mode\n";
-		print "  -l  --local            outputs HTML to file and saves strips locally\n";
-		print "      --noindex          disables symlinking current page to index.html\n";
-		print "                         (local mode only)\n";
-		print "  -a  --archive          generates archive.html as a list of all days,\n";
-		print "                         (local mode only)\n";
-		print "  -d  --dailydir         creates a separate directory for each day's files\n";
-		print "                         (local mode only)\n";
-		print "  -s  --save             if it appears that a particular strip has been\n";
-		print "                         downloaded, does not attempt to re-download it\n";
-		print "                         (local mode only)\n";
-		print "  -n  --new              if today's file and yesterday's file for a strip are the\n";
-		print "                         same, does not symlink to save space\n";
-		print "                         (local mode only, required on non-*NIX platforms\n";
-		print "      --defs=FILE        use alternate strips definition file\n";
-		print "      --basedir=DIR      work in specified directory instead of current directory\n";
-		print "                         (program will look here for strip definitions, previous\n";
-		print "                         HTML files, etc. and save new files here)\n";
-		print "      --list             list available strips\n";
-		print "      --proxy=host:port  Uses specified HTTP proxy server (overrides environment\n";
-		print "                         proxy,if set)\n";
-		print "      --noenvproxy       Ignores the http_proxy environment variable, if set\n";
-		print "  -v  --version          Prints version number\n";
-		print "\nBugs and comments to amedico\@calug.net\n";
+		print <<END_HELP;
+Usage: $0 [OPTION] STRIPS
+STRIPS can be a mix of strip names and group names
+(group names must be predeeded by an '\@' symbol)
+'all' may be used to retrieve all known strips,
+or use option --list to list available strips
+Options:
+  -q  --quiet            turns off progress messages		
+      --output=FILE      outputs HTML to FILE instead of STDOUT
+                         (does not apply to local mode
+  -l  --local            outputs HTML to file and saves strips locally
+      --noindex          disables symlinking current page to index.html
+                         (local mode only)
+  -a  --archive          generates archive.html as a list of all days,
+                         (local mode only)
+  -d  --dailydir         creates a separate directory for each day's files
+                         (local mode only)
+  -s  --save             if it appears that a particular strip has been
+                         downloaded, does not attempt to re-download it
+                         (local mode only)
+  -n  --new              if today's file and yesterday's file for a strip are the
+                         same, does not symlink to save space
+                         (local mode only, required on non-*NIX platforms
+      --defs=FILE        use alternate strips definition file
+      --basedir=DIR      work in specified directory instead of current directory
+                         (program will look here for strip definitions, previous
+                         HTML files, etc. and save new files here)
+      --list             list available strips
+      --proxy=host:port  Uses specified HTTP proxy server (overrides environment
+                         proxy,if set)
+      --noenvproxy       Ignores the http_proxy environment variable, if set
+  -v  --version          Prints version number
+
+Bugs and comments to amedico\@calug.net
+END_HELP
 		exit;
 	} elsif ($_ =~ m/^--list$/o) {
 format =
