@@ -636,9 +636,10 @@ end
 
 strip dieselsweeties
 	name Diesel Sweeties
-	homepage http://www.dieselsweeties.com/gif.php
+	homepage http://www.dieselsweeties.com/
 	type search
-	searchpattern <img.+?src="(http://images\.clango\.org/strips/sw\d+\..+?)"
+	searchpattern <img.+?src="(/strips/sw\d+\..+?)"
+	baseurl $homepage
 	provides latest
 end
 
