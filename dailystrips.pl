@@ -20,8 +20,8 @@ use HTTP::Request;
 use POSIX qw(strftime);
 
 my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @localtime_tomorrow, $long_date, $short_date,
-    $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, $val, $link_tomorrow,
-    $no_dateparse, @base_dirparts);
+    $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val, $link_tomorrow,
+    $no_dateparse, @base_dirparts, $no_personal_defs);
 
 # Help overrides anything else
 for (@ARGV)	{
@@ -55,11 +55,12 @@ Options:
   -n  --new                  if today's file and yesterday's file for a strip
                              are the same, does not symlink to save space
                              (local mode only, required on non-*NIX platforms
-      --defs=FILE            use alternate strips definition file
-      --basedir=DIR          work in specified directory instead of current directory
+      --defs=FILE            Use alternate strips definition file
+      --nopersonal           Ignore ~/.dailystrips.defs
+      --basedir=DIR          Work in specified directory instead of current directory
                              (program will look here for strip definitions, previous
                              HTML files, etc. and save new files here)
-      --list                 list available strips
+      --list                 List available strips
       --proxy=host:port      Uses specified HTTP proxy server (overrides environment
                              proxy, if set)
       --proxyauth=user:pass  Sets username and password for proxy server
@@ -95,9 +96,13 @@ for (@ARGV)	{
 		$options{'defs_file'} = $1;
 	}
 	
-	if ($_=~ m/^--date=(.*)$/o) {
+	if (/^--date=(.*)$/o) {
 		if ($no_dateparse) {die "Error: cannot use --date - Date::Parse not installed\n"}
 		unless ($time_today = str2time $1) {die "Error: invalid date specified\n"}
+	}
+	
+	if (/^--nopersonal$/o) {
+		$no_personal_defs = 1;
 	}
 }
 
@@ -112,9 +117,14 @@ $short_date_yesterday = strftime("\%Y.\%m.\%d", @localtime_yesterday);
 $short_date_tomorrow = strftime("\%Y.\%m.\%d", @localtime_tomorrow);
 
 #get strip definitions (do it now because info is used below)
-warn "DEBUG: Going to use defs file $options{'defs_file'}\n";
-
 &get_defs($options{'defs_file'});
+unless ($no_personal_defs) {
+	my $personal_defs = ((getpwuid($>))[7]) . "/.dailystrips.defs";
+	if (-e $personal_defs) {
+		warn "Using personal defs file $personal_defs\n";
+		&get_defs($personal_defs);
+	}
+}
 $known_strips = join('|', sort keys %defs);
 $known_groups = join('|', sort keys %groups);
 
@@ -524,7 +534,7 @@ sub get_strip {
 
 sub get_defs {
 	my $defs_file = shift;
-	my ($strip, $class, $sectype, %classes, $group);
+	my ($strip, $class, $sectype, $group); #%classes
 	my (@strips, %nostrips, @okstrips);
 	my $line = 1;
 	
@@ -533,7 +543,7 @@ sub get_defs {
 	close(DEFS);
 	
 	@defs_file = grep(!/^\s*#/, @defs_file);		# weed out comment-only lines
-	@defs_file = grep(!/^\s*\n/, @defs_file);		# get rid of blank lines
+	@defs_file = grep(!/^\s*$/, @defs_file);		# get rid of blank lines
 	
 	for (@defs_file) {
 		chomp;
@@ -542,22 +552,37 @@ sub get_defs {
 		if (!$sectype) {
 			if (/^strip\s+(\w+)$/io)
 			{
+				if (defined ($defs{$1}))
+				{
+					undef $defs{$1};
+				}
+				
 				$strip = $1;
 				$sectype = "strip";
 			}
 			elsif (/^class\s+(.*)$/io)
 			{
+				if (defined ($classes{$1}))
+				{
+					undef $classes{$1};
+				}
+							
 				$class = $1;
 				$sectype = "class";
 			}
 			elsif (/^group\s+(.*)$/io)
 			{
+				if (defined ($groups{$1}))
+				{
+					undef $groups{$1};
+				}
+			
 				$group = $1;
 				$sectype = "group";
 			}
-			elsif (/^(.*)/io)
+			elsif (/^(.*)/o)
 			{
-				die "Unknown keyword '$1' at $options{'defs_file'} line $line\n";
+				die "Error: Unknown keyword '$1' at $defs_file line $line\n";
 			}
 		}
 		elsif (/^end$/io)
@@ -659,7 +684,7 @@ sub get_defs {
 			elsif (/^type\s+(.+)$/io)
 			{
 				my $val = $1;
-				unless ($val =~ m/^(search|generate)$/io) { die "Error: invalid types at $options{'defs_file'} line $line\n" }
+				unless ($val =~ m/^(search|generate)$/io) { die "Error: invalid types at $defs_file line $line\n" }
 				$classes{$class}{'type'} = $val;
 			}
 			elsif (/^searchpage\s+(.+)$/io)
@@ -674,7 +699,7 @@ sub get_defs {
 			elsif (/^matchpart\s+(.+)$/o)
 			{
 				my $val = $1;
-				unless ($val =~ m/^\d+$/io) { die "Error: invalid matchpart at $options{'defs_file'} line $line\n" }
+				unless ($val =~ m/^\d+$/io) { die "Error: invalid matchpart at $defs_file line $line\n" }
 				$classes{$class}{'matchpart'} = $val;
 			}
 			elsif (/^baseurl\s+(.+)$/io)
@@ -697,7 +722,7 @@ sub get_defs {
 			}
 			elsif (/^(.+)(\s+?)/io)
 			{
-				die "Unknown keyword '$1' at $options{'defs_file'} line $line\n";
+				die "Unknown keyword '$1' at $defs_file line $line\n";
 			}
 		}
 		elsif ($sectype eq "strip") {
@@ -716,7 +741,7 @@ sub get_defs {
 			elsif (/^type\s+(.+)$/io)
 			{
 				my $val = $1;
-				unless ($val =~ m/^(search|generate)$/io) { die "Error: invalid type at $options{'defs_file'} line $line\n" }
+				unless ($val =~ m/^(search|generate)$/io) { die "Error: invalid type at $defs_file line $line\n" }
 				$defs{$strip}{'type'} = $val;
 			}
 			elsif (/^searchpage\s+(.+)$/io)
@@ -731,7 +756,7 @@ sub get_defs {
 			elsif (/^matchpart\s+(.+)$/o)
 			{
 				my $val = $1;
-				unless ($val =~ m/^\d+$/io) { die "Error: invalid matchpart at $options{'defs_file'} line $line\n" }
+				unless ($val =~ m/^\d+$/io) { die "Error: invalid matchpart at $defs_file line $line\n" }
 				$defs{$strip}{'matchpart'} = $val;
 			}
 			elsif (/^baseurl\s+(.+)$/io)
@@ -758,7 +783,7 @@ sub get_defs {
 			}
 			elsif (/^(.+)(\s+?)/io)
 			{
-				die "Unknown keyword '$1' at $options{'defs_file'} line $line, in strip $strip\n";
+				die "Error: Unknown keyword '$1' at $defs_file line $line, in strip $strip\n";
 			}
 		} elsif ($sectype eq "group") {
 			if (/^desc\s+(.+)$/io)
@@ -775,7 +800,7 @@ sub get_defs {
 			}
 			elsif (/^(.+)(\s+?)/io)
 			{
-				die "Unknown keyword '$1' at $options{'defs_file'} line $line, in group $group\n";
+				die "Error: Unknown keyword '$1' at $defs_file line $line, in group $group\n";
 			}
 		}
 			
