@@ -1,6 +1,10 @@
 This is mostly my rambling, but feel free to implement anything you want to
 tackle..
 
+1.0.21
+  02 Jan 2001
+  Create some way of automatically downloading the latest defs file
+
 1.0.19
   13 Sep 2001
   Make 'provides' information in definitions more specific than 'every day' or
