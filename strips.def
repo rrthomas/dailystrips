@@ -4614,3 +4614,42 @@ strip amores
 	$1 amores
 	$2 amr
 end
+strip nemi
+	name Nemi
+	homepage http://spray.nettavisen.no/kultur/tegneserie/nemi/
+	type generate
+	imageurl http://spray.nettavisen.no/shared/nemi/img/%d.%m.%y.gif
+	provides any
+end
+
+strip halge
+	name Halge
+	homepage http://www.halge.com
+	type generate
+	imageurl http://www.halge.com/svenska/strip/strip_vardag/%Y%m%d.gif
+	provides any
+end
+
+strip berglin
+	name Berglin
+	homepage http://www.svd.se/berglin
+	type generate
+	imageurl http://svd.se/images/ettan/berglin/berglin.gif
+	provides latest
+end
+
+strip elvis
+	name Elvis
+	homepage http://www.metro.se/site/metro/cartoons/?cartoon=0
+	type generate
+	imageurl http://www.metro.se/content/cartoons/elvis/%Y%m%d.gif
+	provides any
+end
+
+strip pondus
+	name Pondus
+	homepage http://www.start.no/pondus/
+	type generate
+	imageurl http://www.start.no/pondus/striper/%d%m%Y.gif
+	provides any
+end 
