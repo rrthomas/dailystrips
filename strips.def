@@ -126,7 +126,8 @@ strip drfun
 	name Doctor Fun
 	homepage http://www.ibiblio.org/Dave/Dr-Fun/html/
 	type generate
-	imageurl http://www.ibiblio.org/Dave/Dr-Fun/html/Dr-Fun/df%Y%m/df%Y%m%d.jpg
+	imageurl http://www.ibiblio.org/Dave/Dr-Fun/html/Dr-Fun/latest.jpg
+	updated semidaily
 end
 
 strip goats
