@@ -45,5 +45,5 @@ Francesco Chemolli <kinkie@kame.usr.dsi.unimi.it>
 Patch to automatically use the definition file located in the same directory
 as the script instead of the current directory
 
-Rene Weber <rene_debmaint@elvenlord.com>
+Rene Weber <rene_dailyst@elvenlord.com>
 --useragent option, Debian packaging.

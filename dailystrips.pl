@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    19 July 2001 14:37 EST
+# Last Modified:    23 July 2001 00:46 EST
 # Current Revision: 1.0.15
 #
 
@@ -190,7 +190,7 @@ $_, $val
 		unless (/^--proxyauth=((.*?):(.*?))$/o) {die "Error: incorrectly formatted proxy username/password\n"}
 		$options{'http_proxy_auth'} = $1;
 	} elsif (/^--proxy/o) {
-		unless (/^--proxy=(http:\/\/)?((.*?):(.*?))(\/)?$/o) {die "Error: incorrectly formatted proxy server\n"}
+		unless (/^--proxy=http:\/\/(.*?):(.*?)(\/)?$/o) {die "Error: incorrectly formatted proxy server ('http://server:port' expected)\n"}
 		$options{'http_proxy'} = $1;
 	} elsif (/^--useragent=(.*)$/) {
 		$options{'user_agent'} = $1;
@@ -213,7 +213,7 @@ unless (@get) {
 
 #Set proxy
 if (!defined $options{'no_env_proxy'} and !defined $options{'http_proxy'} and defined $ENV{'http_proxy'} ) {
-	unless ($ENV{'http_proxy'} =~ m/^(http:\/\/)?((.*?):(.*?))(\/)?$/o) {die "Error: incorrectly formatted proxy server environment variable\n"}
+	unless ($ENV{'http_proxy'} =~ m/^http:\/\/((.*?):(.*?))(\/)?$/o) {die "Error: incorrectly formatted proxy server environment variable\n('http://server:port' expected)\n"}
 	$options{'http_proxy'} = $ENV{'http_proxy'};
 }
 if ($options{'http_proxy'}) {
@@ -416,8 +416,8 @@ for (@strips) {
 				# impossible to tell for sure if previous day's file
 				# used --nospaces or not, but this should work more
 				# often
-				$local_name_yesterday =~ s/(\ )//g;
-				$local_name =~ s/(\ )//g;
+				$local_name_yesterday =~ s/\s+//g;
+				$local_name =~ s/\s+//g;
 			}
 
 			if ($options{'save_existing'} and  -e $local_name) {

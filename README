@@ -12,7 +12,7 @@ file README.LOCAL for more information and examples)
 
 Requirements:
 	dailystrips.pl requires a reasonably current version of Perl - it was
-developed with 5.005_03. The HTTP::Request, LWP::UserAgent, and POSIX modules
+developed with 5.6.0. The HTTP::Request, LWP::UserAgent, and POSIX modules
 are needed. If you want to use --date, you will need Date::Time from the
 TimeDate package. See www.cpan.org if you don't have them installed already.
 dailystrips.pl was developed on Linux but should be able to run on any *nix

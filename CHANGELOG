@@ -4,7 +4,7 @@
   This involves:
     -installer script install.pl
     -strips.def goes in /usr/share/dailystrips
-    -docs go in /usr/doc/dailystrips-VERSION
+    -docs go in /usr/share/doc/dailystrips-VERSION
     -script goes in /usr/bin
    Personal installations are described in the INSTALL file.
 
@@ -14,7 +14,7 @@
 
    Other small code fixes
 
-   15 Jul 2001
+   15 July 2001
    Proxy authentication changed. Please notify if any problems arise.
 
    Added 'prefetch' keyword to definition file (see README.DEFS for more)
@@ -23,13 +23,18 @@
 
    Other small code fixes
 
-   19 Jul 2001
+   19 July 2001
    Fixed usage of Date::Parse yet again
 
    No longer creates index.html when an alternate date is specified (so that it
    will not overwrite the latest symlink if running for an earlier day)
 
    Fixed syntax checking of http_proxy environment variable
+
+   23 July 2001
+   Better errors for mis-specified proxy servers
+
+   Misc changes
 
 1.0.14
   12 July 2001
