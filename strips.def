@@ -38,7 +38,6 @@ class unitedmedia-srch-comics
 	searchpattern <img.+?src="(/comics/$strip/archive/images/$strip.+?)"
 	baseurl http://www.unitedmedia.com
 	provides any
-	artist Unitedmedia
 end
 
 class unitedmedia-srch-comics-lag
