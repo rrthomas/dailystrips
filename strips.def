@@ -711,19 +711,27 @@ strip ubersoft3
 end
 
 strip ubersoft4
-        name Ubersoft-4
-        homepage http://www.ubersoft.net/
-        type generate
-        imageurl http://www.ubersoft.net/comics/hd%Y%m%dg.png
-        provides any
+	name Ubersoft-4
+	homepage http://www.ubersoft.net/
+	type generate
+	imageurl http://www.ubersoft.net/comics/hd%Y%m%dg.png
+	provides any
 end
 
 strip spazlabs
-  name Spaz Labs
-  homepage http://www.stonebrokestudios.com
-  type generate
-  imageurl http://www.stonebrokestudios.com/archives/spaz/%y%m%dspaz.gif
-  provides any
+	name Spaz Labs
+	homepage http://www.stonebrokestudios.com
+	type generate
+	imageurl http://www.stonebrokestudios.com/archives/spaz/%y%m%dspaz.gif
+	provides any
+end
+
+strip glasbergen
+	name Randy Glasbergen
+	homepage http://www.glasbergen.com
+	type generate
+	imageurl http://www.glasbergen.com/toon.gif
+	provides latest
 end
 
 # ucomics.com strips
