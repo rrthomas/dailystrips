@@ -89,7 +89,7 @@ END_HELP
 		exit;
 	} elsif ($_ =~ m/^--list$/o) {
 format =
-@<<<<<<<<<<<<<<<<<<<< 	@<<<<<<<<<<<<<<<<<<<<<<<<<<
+@<<<<<<<<<<<<<<<<<<<<<<<< 	@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 $_, $val
 .
 		print "Available strips:\n";
@@ -515,7 +515,7 @@ sub get_defs {
 				for (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
 					#other vars in definition
 					# could do without 'if defined..' if not running under -w
-					if (defined $defs{$strip}{$_}) {$defs{$strip}{$_} =~ s/\$(homepage|searchpage|searchpattern|imageurl|baseurl|referer)/$defs{$strip}{$1}/g}
+					if (defined $defs{$strip}{$_}) {$defs{$strip}{$_} =~ s/\$(name|homepage|searchpage|searchpattern|imageurl|baseurl|referer)/$defs{$strip}{$1}/g}
 				}			
 				
 				for (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
