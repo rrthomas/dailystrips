@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    15 July 2001 15:16 EST
+# Last Modified:    19 July 2001 14:37 EST
 # Current Revision: 1.0.15
 #
 
@@ -82,6 +82,8 @@ eval "use Date::Parse";
 if ($@ ne "") {
 	warn "Warning: Could not load Date::Parse module. --date option cannot be used\n";
 	$no_dateparse = 1;
+} else {
+	use Date::Parse;
 }
 
 $version = "1.0.15";
@@ -100,6 +102,7 @@ for (@ARGV)	{
 	} elsif (/^--date=(.*)$/o) {
 		if ($no_dateparse) {die "Error: cannot use --date - Date::Parse not installed\n"}
 		unless ($time_today = str2time $1) {die "Error: invalid date specified\n"}
+		$options{'alt_date'} = 1;
 	} elsif (/^--nopersonal$/o) {
 		$no_personal_defs = 1;
 	} elsif (/^(--quiet|-q)$/o) {
@@ -234,9 +237,13 @@ if ($options{'local_mode'}) {
 		system("rm -f dailystrips-$short_date.html;ln -s $short_date/dailystrips-$short_date.html dailystrips-$short_date.html");
 	} else {
 		open(STDOUT, ">dailystrips-$short_date.html") or die "Error: could not open HTML file (dailystrips-$short_date.html) for writing\n";
-    }
+	}
 
-    unless (defined $options{'no_index'}) { system("rm -f index.html;ln -s dailystrips-$short_date.html index.html") }
+	unless ($options{'alt_date'}) {
+		unless (defined $options{'no_index'}) {
+			system("rm -f index.html;ln -s dailystrips-$short_date.html index.html")
+		}
+	}
 
 	if (defined $options{'make_archive'}) {
 	
