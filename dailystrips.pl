@@ -637,8 +637,8 @@ for (@strips) {
 						$image = &http_get($img_addr, $referer);
 					}
 				} else {
-					#$image = &http_get($img_addr, $referer);
-					$image = &http_get($img_addr, "");
+					$image = &http_get($img_addr, $referer);
+					#$image = &http_get($img_addr, "");
 				}
 				
 				if ($image =~ /^ERROR/) {
