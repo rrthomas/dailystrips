@@ -34,3 +34,6 @@ Michael Lewis <michael.s.lewis@att.net>
 
 Mark Wallace <Mark.Wallace@osd.mil
 Added strip: clanofthecats
+
+Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>
+Added --stripdir and --date options

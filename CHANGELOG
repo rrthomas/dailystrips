@@ -1,3 +1,26 @@
+1.0.12
+  11 Mar 2001
+  Added --stripdir option to put the files for each strip in a separate directory
+  (Daniel Skarda)
+
+  Added --date to specify the date to work with, instead of the current date.
+  This works with many strips, but some sites do not provide an HTML page for
+  each day (in the case of URLs that must be searched for) or an image
+  for each day (in the case of URLs that are generated). Check the definition
+  file before using this option, or you may end up downloading current strips
+  in addition to strips for the specified date (this requires the Date::Parse
+  module from CPAN) (Daniel Skarda)
+
+  Added --verbose option to give extra status information. This is helpful
+  if you're trying to figure out what's wrong when a strip won't download.
+
+  Fixed the Dr. Fun definition -  the strip is not updated daily
+
+1.0.11
+  07 Mar 2001
+  Output no longer contains my name and email, so as not to confuse the
+  lawyers.
+ 
 1.0.10
   27 Feb 2001
   Documentation now better explains usage of groups

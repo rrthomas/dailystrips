@@ -1,3 +1,11 @@
+1.0.12
+  11 Mar 2001
+  Since the program does not keep track of which options you use when running in
+  local mode, changing options from one day to the next (such as using
+  --dailydir one day and --stripdir the next) will prevent it from being able to
+  check for duplicates that time. Unless you switch options every day, though,
+  this shouldn't really be a problem.
+
 1.0.8
   20 Feb 2001
   Need better error handling with the LWP::UserAgent module (if there's a problem,

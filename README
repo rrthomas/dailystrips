@@ -34,8 +34,19 @@ that share a common format, please create a class for that site. In addition,
 please try to pick a method of determining the most current URL possible (i.e.
 don't search if it's possible to predict - we don't want to get old strips if
 running early in the morning and a site hasn't updated the static page yet)
-Also, when you add a new strip, I'd appreciate it if you could email the defintion
-to me at amedico@calug.net so I can add it to the distribution.
+Also, when you add a new strip, I'd appreciate it if you could email the
+defintion to me at amedico@calug.net so I can add it to the distribution.
+
+*Notice*:
+	Keep in mind that this program is for personal use only, as making
+the output publicly available on the internet constitutes copyright infringement
+without permission from the strips' authors. If you're running it on a
+personal webserver that can be accessed fron the internet (even if it's not
+specifically public), make sure you set up IP restrictions so that only you have
+access to it - some publishers (specifically, Thin H Line) seem to be checking
+their webserver logs for dailystrips users and will come after you in a rather
+nasty fashion if it even looks like you're using dailystrips to make a public
+website..
 
 Copyright info:
 	This program copyright (C) 2001 Andrew Medico <amedico@calug.net>.
