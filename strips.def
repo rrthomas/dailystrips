@@ -209,6 +209,14 @@ class slate-cagle-alt
         provides latest
 end
 
+class kingfeatures
+	homepage http://www.kingfeatures.com/features/comics/$1/about.htm
+	type search
+	searchpage http://www.kingfeatures.com/features/comics/$1/aboutMaina.php
+	searchpattern <img.+?src='(http://est.rbma.com/content/$2\?date=\d+)'
+	provides latest
+end
+
 # Non-standard strips
 
 # should be possible to generate?
@@ -1391,11 +1399,12 @@ strip cornered
 	$1 co
 end
 
-strip crankshaft
-	name Crankshaft
-	useclass ucomics-gen
-	$1 cs
-end
+#moved to kingfeatures
+#strip crankshaft
+#	name Crankshaft
+#	useclass ucomics-gen
+#	$1 cs
+#end
 
 strip doonesbury
 	name Doonesbury
@@ -4767,4 +4776,13 @@ strip warbucket
 	searchpattern <img.+?src="(comics/\d+\.gif)">
 	baseurl http://www.warbucket.com/
 	provides latest
+end
+
+# kingfeatures
+strip crankshaft
+	name Crankshaft
+	useclass kingfeatures
+	$1 crank
+	$2 Crankshaft
+	artist Tom Batiuk and Chuck Ayers
 end
