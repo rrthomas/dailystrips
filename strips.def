@@ -2050,7 +2050,7 @@ end
 strip zippythecolorpinhead
 	name Zippy the Pinhead (in color)
 	useclass sfgate-gen-zippycolor
-	$1 Zippy_the_Color_Pinhead
+	$1 Zippy_the_Pinhead_Color
 	$2 Zippy_the_Pinhead
 end
 
