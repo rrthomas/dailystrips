@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    13 Jan 2002, 21:44 EST
+# Last Modified:    25 Jan 2002, 21:54 EST
 # Current Revision: 1.0.22-pre1
 #
 
@@ -20,6 +20,7 @@ use LWP::UserAgent;
 use HTTP::Request;
 use POSIX qw(strftime);
 use Getopt::Long;
+use File::Copy;
 
 
 # Variables
@@ -47,8 +48,8 @@ GetOptions(\%options, 'quiet|q','verbose','output=s','lite','local|l','noindex',
 
 # Help and version override anything else
 if ($options{'help'}) {
-	print <<END_HELP;
-Usage: $0 [OPTION] STRIPS
+	print
+"Usage: $0 [OPTION] STRIPS
 STRIPS can be a mix of strip names and group names
 (group names must be preceeded by an '\@' symbol)
 'all' may be used to retrieve all known strips,
@@ -98,22 +99,19 @@ Options:
                              only)
       --useragent STRING     Set User-Agent: header to STRING (default is none)
   -v  --version              Prints version number
-END_HELP
-#/#kwrite's syntax higlighting is buggy.. this preserves my sanity	
+";
 
 
 	if ($^O =~ /Win32/ ) {
-		print <<END_HELP_WIN32;
-
-Additional Win32 Notes:
+		print
+"Additional Win32 Notes:
 
 Windows lacks a number of features and programs found on *NIX, so a number of
 changes must be made to the program's operation:
 
-1. --noindex is always in effect
-2. --avantgo is not available
-3. Personal definition files are not supported
-END_HELP_WIN32
+1. --avantgo is not available
+2. Personal definition files are not supported
+";
 	} # ' please emacs perlmode
 
 print "\nBugs and comments to dailystrips\@amedico.dhs.org\n";
@@ -301,10 +299,6 @@ if ($options{'proxy'}) {
 
 
 if ($options{'local'}) {
-	if ($^O =~ /Win32/) {
-		$options{'noindex'} = 1;
-	}
-	
 	unless ($options{'quiet'}) {
 		warn "Operating in local mode\n";
 	}
@@ -326,11 +320,14 @@ if ($options{'local'}) {
 		die "Error: could not open HTML file (dailystrips-$short_date.html) for writing\n";
 	}
 
-	unless ($^O =~ /Win32/) {
-		unless ($options{'date'}) {
-			unless ($options{'noindex'}) {
+	unless ($options{'date'}) {
+		unless ($options{'noindex'}) {
+			unless ($^O =~ /Win32/) {
 				unlink("index.html");
-				system("ln -s dailystrips-$short_date.html index.html")
+				system("ln -s dailystrips-$short_date.html index.html");
+			} else {
+				# no symlinks on windows.. just make a copy of the file
+				copy("dailystrips-$short_date.html","index.html");
 			}
 		}
 	}
