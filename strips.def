@@ -226,6 +226,16 @@ class kingfeatures-alt
         provides latest
 end
 
+class cnsnews
+	homepage http://www.cnsnews.com/cartoon/$1.asp
+	type search
+	searchpage http://www.cnsnews.com/cartoon/$1.asp
+	searchpattern <img.+?src="(/cartoon/$1images/\d+/.+?\..+?)"
+	#<img border="0" src="/cartoon/langimages/2003/payraise.jpg">
+	baseurl http://www.cnsnews.com
+	provides latest
+end
+
 # Non-standard strips
 
 # should be possible to generate?
@@ -815,38 +825,36 @@ strip spiderman
 end
 
 # can be made into a class
-strip tuma
-	name Kevin Tuma Cartoon
-	homepage http://www.cnsnews.com/cartoon/Tuma.asp
-	type search
-	searchpage http://www.cnsnews.com/cartoon/tuma.asp
-	searchpattern <img.+?src="/cartoon/(tumaimages/\d+/\w+\..+?)"
-	baseurl http://www.cnsnews.com/cartoon/
-	provides latest
-end
+#strip tuma
+#	name Kevin Tuma Cartoon
+#	homepage http://www.cnsnews.com/cartoon/Tuma.asp
+#	type search
+#	searchpage http://www.cnsnews.com/cartoon/tuma.asp
+#	searchpattern <img.+?src="/cartoon/(tumaimages/\d+/\w+\..+?)"
+#	baseurl http://www.cnsnews.com/cartoon/
+#	provides latest
+#end
 
-strip nowak
-	name Paul Nowak Cartoon
-	homepage http://www.cnsnews.com/cartoon/nowak.asp
-	type search
-	searchpattern <img.+?src=".+?(Nowakimages/%Y/\w+\..+?)"
-	#<img border="0" src="/cartoon/nowakimages/2003/rightwing.jpg"></td>
-	baseurl http://www.cnsnews.com/cartoon/
-	provides latest
-end
+#strip nowak
+#	name Paul Nowak Cartoon
+#	homepage http://www.cnsnews.com/cartoon/nowak.asp
+#	type search
+#	searchpattern <img.+?src=".+?(Nowakimages/%Y/\w+\..+?)"
+#	#<img border="0" src="/cartoon/nowakimages/2003/rightwing.jpg"></td>
+#	baseurl http://www.cnsnews.com/cartoon/
+#	provides latest
+#end
 
-
-
-strip lang
-	name Bob Lang Cartoon
-	homepage http://www.cnsnews.com/cartoon/lang.asp
-	type search
-	searchpage http://www.cnsnews.com/cartoon/Lang.asp
-	searchpattern <img.+?src="/?(cartoon/langimages/\d+/.+?\..+?)"
-	#<img border="0" src="/cartoon/langimages/2003/lastdays.jpg"></td>
-	baseurl http://www.cnsnews.com/
-	provides latest
-end
+#strip lang
+#	name Bob Lang Cartoon
+#	homepage http://www.cnsnews.com/cartoon/lang.asp
+#	type search
+#	searchpage http://www.cnsnews.com/cartoon/Lang.asp
+#	searchpattern <img.+?src="/?(cartoon/langimages/\d+/.+?\..+?)"
+#	#<img border="0" src="/cartoon/langimages/2003/lastdays.jpg"></td>
+#	baseurl http://www.cnsnews.com/
+#	provides latest
+#end
 
 strip shelton
 	name Barry Shelton Cartoon
@@ -4736,16 +4744,17 @@ strip forcemonkeys
 	provides latest
 end
 
-strip bizarro
-	name Bizarro
-	homepage http://www.kingfeatures.com/features/comics/bizarro/about.htm
-	type search
-	prefetch $searchpage
-	referer $searchpage
-	searchpage http://www.kingfeatures.com/features/comics/bizarro/aboutMaina.php
-	searchpattern <img.+?src='(http://est.rbma.com/content/Bizarro\?date=\d{8})'
-	provides latest
-end
+#moved to kingfeatures def
+#strip bizarro
+#	name Bizarro
+#	homepage http://www.kingfeatures.com/features/comics/bizarro/about.htm
+#	type search
+#	prefetch $searchpage
+#	referer $searchpage
+#	searchpage http://www.kingfeatures.com/features/comics/bizarro/aboutMaina.php
+#	searchpattern <img.+?src='(http://est.rbma.com/content/Bizarro\?date=\d{8})'
+#	provides latest
+#end
 
 strip irregular
 	name Irregular Webcomic!
@@ -4921,4 +4930,45 @@ strip trudy
 	useclass kingfeatures-alt
 	$1 trudy
 	$2 trt
+end
+
+strip bizarro
+	name Bizarro
+	artist Dan Piraro
+	useclass kingfeatures-alt
+	$1 bizarro
+	$2 Bizarro
+end
+
+strip leftersons
+        name The Leftersons
+        useclass cnsnews
+	$1 leftersons
+end
+                                                                                
+strip tuma
+        name Kevin Tuma Cartoon
+        useclass cnsnews
+	$1 tuma
+end
+                                                                                
+strip nowak
+        name Paul Nowak Cartoon
+        useclass cnsnews
+	$1 nowak
+end
+
+strip lang
+        name Bob Lang Cartoon
+        useclass cnsnews
+	$1 lang
+end
+
+strip politicallycorrect
+        name Politically Correct
+        homepage http://www.conservativecartoons.com
+        type search
+        searchpattern <img.+?SRC="(/%Y/\w+.gif)".+?ALT="This week's cartoon"
+        baseurl http://www.conservativecartoons.com
+        provides latest
 end
