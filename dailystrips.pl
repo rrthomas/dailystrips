@@ -678,6 +678,7 @@ for (@strips) {
 					} else {
 						# FIXME: only download to .tmp if earlier file exists
 						open(IMAGE, ">$local_name.tmp");
+						binmode(IMAGE);
 						print IMAGE $image;
 						close(IMAGE);
 				
