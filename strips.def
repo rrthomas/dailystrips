@@ -1205,6 +1205,52 @@ strip nekobox
         provides any
 end
 
+strip perscheid
+        name Perscheids Abgruende
+        artist Martin Perscheid -> www.martin-perscheid.de
+        homepage http://portale.web.de/Boulevard/Comics/Perscheid/
+        type search
+        searchpattern <img.+?src="(http://img.web.de/c/00.+?)"
+        provides latest
+end
+
+strip harmbengen
+        name Harm Bengen's Alltagsskizzen
+        artist Harm Bergen -> www.harmbengen.de
+        homepage http://portale.web.de/Boulevard/Comics/Bengen/
+        type search
+        searchpattern <img.+?src="(http://img.web.de/c/00.+?)"
+        provides latest
+end
+strip weyershausenwelt
+        name Weyershausen - Wunderbare Welt
+        artist Karsten Weyershausen -> www.weyershausen.de
+        homepage http://portale.web.de/Boulevard/Comics/Weyershausen/
+        type search
+        searchpattern <img.+?src="(http://img.web.de/c/00.+?)"
+        provides latest
+end
+
+strip quirit
+        name Quirit - alltaegliches auf den Punkt gebracht
+        artist Quirit -> www.quirit.com
+        homepage http://portale.web.de/Boulevard/Comics/Quirit/
+        type search
+        searchpattern <img.+?src="(http://img.web.de/c/00.+?)"
+        provides latest
+end
+
+strip touche
+        name Touche
+        artist Tom
+        homepage http://www.drive-in-cartoons.de/touche/
+        type search
+        searchpage http://www.drive-in-cartoons.de/touche/hauptteil.php
+        searchpattern <img.+?src='(.+?)'
+        baseurl http://www.drive-in-cartoons.de/touche/
+        provides latest
+end
+
 # ucomics.com strips
 strip adamathome
 	name Adam@home
