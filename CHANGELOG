@@ -7,54 +7,56 @@
   07 May 2002
   Fixed a bug in the call to the dailystrips-clean script (Rene Weber)
 
+  Added "Real Life", "Sheldon", "Weak-end Warriors" (Mike Schwartz)
+
 1.0.23
   02 Apr 2002
-  'Diesel Sweeties' fixed
+  "Diesel Sweeties" fixed
 
   Disabled Liberty Meadows again
 
-  'PC and Pixel' fixed (Jeff Brown)
+  "PC and Pixel" fixed (Jeff Brown)
 
-  'Bottom Liners' restored
+  "Bottom Liners" restored
 
-  'Brainbuzz' and 'The Duplex' added (Robert Fleming)
+  "Brainbuzz" and "The Duplex" added (Robert Fleming)
 
   Typo in help fixed (Rene Weber)
 
-  'Sexy Losers' fixed (Matt Hucke)
+  "Sexy Losers" fixed (Matt Hucke)
 
-  'Swamp' added (David Findlay)
+  "Swamp" added (David Findlay)
 
   install.pl updated to be more configurable
 
   Fixed bug with --stripnav option
 
-  Removed 'Wee Pals', 'Dear Dudley', 'Punc and Mark', 'Spooner', 'Jack Ohman'
+  Removed "Wee Pals", "Dear Dudley", "Punc and Mark", "Spooner", "Jack Ohman"
 
-  Fixed 'Dork Tower', 'Under the Lemon Tree'
+  Fixed "Dork Tower", "Under the Lemon Tree"
 
   04 Apr 2002
-  Fixed 'The Norm' (Ryan T. Dean)
+  Fixed "The Norm" (Ryan T. Dean)
 
   06 Apr 2002
-  Added 'Something Positive'
+  Added "Something Positive"
 
   Added Melonpool (Ryan T. Dean)
 
-  Fixed '8-Bit Theater'
+  Fixed "8-Bit Theater"
 
   Cleaned some old junk out of the definitions file
 
   16 Apr 2002
-  Fixed 'Dork Tower', 'Pathetic Geek Stories', 'Zapiro', 'Mac Hall'
+  Fixed "Dork Tower", "Pathetic Geek Stories", "Zapiro", "Mac Hall"
 
   Fixed file-extension detection
 
   18 Apr 2002
-  Added 'Flem' (David S. Geirsson)
+  Added "Flem" (David S. Geirsson)
 
   20 Apr 2002
-  Fixed 'As If'
+  Fixed "As If"
 
 1.0.22
   12 Jan 2002

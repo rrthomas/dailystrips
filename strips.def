@@ -110,33 +110,39 @@ class sfgate-srch
 end
 
 class comicspage-strips-srch
-	# $1 - more or less the real name
-	# $2 - 3-letter abbreviation of $1
-	homepage http://www.comicspage.com/$1/index.html
-	type search
-	searchpage http://www.comicspage.com/$1/main.html
-	searchpattern <img.+?src="(http://www.comicspage.com/daily/cs$2/\d+cs$2((-\w)?)\..+?)"
-	provides latest
+        # $1 - more or less the real name
+        # $2 - 3-letter abbreviation of $1
+        referer http://www.comicspage.com/$1/index.html
+        homepage http://www.comicspage.com/$1/index.html
+        type generate
+        imageurl http://www.tmsfeatures.com/tmsfeatures/servlet/com.featureserv.util.Download?file=%Y%m%dcs$2-a-p.jpg&code=cs$2
+        provides any
 end
 
 class comicspage-panels-srch
 	# $1 - more or less the real name
 	# $2 - 3-letter abbreviation of $1
 	homepage http://www.comicspage.com/$1/index.html
-	type search
-	searchpage http://www.comicspage.com/$1/main.html
-	searchpattern <img.+?src="(http://www.comicspage.com/daily/cp$2/\d+cp$2((-\w)?)\..+?)"
-	provides latest
+	#type search
+	#searchpage http://www.comicspage.com/$1/main.html
+	#searchpattern <img.+?src="(http://www.comicspage.com/daily/cp$2/\d+cp$2((-\w)?)\..+?)"
+	type generate
+	imageurl http://www.tmsfeatures.com/tmsfeatures/servlet/com.featureserv.util.Download?file=%Y%m%dcp$2-a-p.jpg&code=cp$2
+	#provides latest
+	provides any
 end
 
 class comicspage-editorial-srch
 	# $1 - more or less the real name
 	# $2 - 3-letter abbreviation of $1
 	homepage http://www.comicspage.com/$1/index.html
-	type search
-	searchpage http://www.comicspage.com/$1/main.html
-	searchpattern <img.+?src="(http://www.comicspage.com/daily/ed$2/\d+ed$2((-\w)?)\..+?)"
-	provides latest
+	#type search
+	#searchpage http://www.comicspage.com/$1/main.html
+	#searchpattern <img.+?src="(http://www.comicspage.com/daily/ed$2/\d+ed$2((-\w)?)\..+?)"
+	#provides latest
+	type generate
+	imageurl http://www.tmsfeatures.com/tmsfeatures/servlet/com.featureserv.util.Download?file=%Y%m%ded$2-a-p.jpg&code=ed$2
+	provides any
 end
 
 class mercurycenter
@@ -2076,16 +2082,6 @@ strip monkeyhouse
 	useclass comicspage-strips-srch
 	$1 monkeyhouse
 	$2 mhs
-end
-
-#not updated regularly
-strip profdoodles
-	name Doodles
-	homepage http://www.comicspage.com/$1/index.html
-	type search
-	searchpage http://www.comicspage.com/profdoodles/main.html
-	searchpattern <img.+?src="(http://www.comicspage.com/daily/csdod/\d+csdod(-\w)?\..+?)"
-	provides latest
 end
 
 strip shoe
