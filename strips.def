@@ -754,6 +754,7 @@ strip spiderman
 	searchpage http://www.kingfeatures.com/features/comics/spidermn/aboutMaina.php
 	searchpattern <img.+?src='(http://est.rbma.com/content/Spiderman\?date=\d{8})'
 	provides latest
+	prefetch http://www.kingfeatures.com/images/clear.gif
 end
 
 # can be made into a class
@@ -4290,7 +4291,7 @@ end
 
 strip queenofwands
 	name Queen of Wands
-	homepage http://www.queenofwands.com/
+	homepage http://www.queenofwands.net/
 	type generate
 	imageurl http://www.queenofwands.net/comics/%Y%m%d.gif
 	provides any
