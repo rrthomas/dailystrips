@@ -19,10 +19,10 @@ dailystrips.pl was developed on Linux but should be able to run on any *nix
 with that has the necessary Perl modules installed.
 
 Installation:
-	dailystrips.pl can be copied to whichever directory suits you.
+	See the INSTALL file.
 	
 Usage:
-	'./dailystrips.pl [stripname(s)]' will print to STDOUT an HTML page with image
+	'dailystrips.pl [stripname(s)]' will print to STDOUT an HTML page with image
 links to the latest strip. These links are to the strip's webserver.
 dailystrips.pl --help lists all available options. --list shows the available
 strips and groups. Strip names can specified as listed. Groups must be
@@ -45,7 +45,7 @@ files will be processed after the main file. This means that classes set in the
 main file are available for use in users' files. Also note that any entries
 (classes, strips, and groups) in users' files with the same name as entries in
 the main will take precedence. Personal definition files can be ignored with
-the '--no_personal' option.
+the '--nopersonal' option.
 
 *Notice*:
 	Keep in mind that this program is for personal use only, as making
