@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    07 May 2002, 20:15 EST
-# Current Revision: 1.0.25
+# Last Modified:    29 May 2003, 21:15 EDT
+# Current Revision: 1.0.28pre1
 #
 
 
@@ -28,7 +28,7 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-$version = "1.0.27";
+$version = "1.0.28pre1";
 
 $time_today = time;
 
@@ -63,6 +63,9 @@ Options:
       --defs FILE            Use alternate strips definition file
       --nopersonal           Ignore ~/.dailystrips.defs
       --nosystem             Ignore system-wide definitions
+      --updates              Read updated defs from FILE instead of
+                             ~/.dailystrips-updates.def
+      --noupdates            Ignore updated defs file 
       --output FILE          Output HTML to FILE instead of STDOUT
                              (does not apply to local mode)
       --lite                 Output a reduced HTML page
@@ -163,6 +166,19 @@ unless ($options{'defs'}) {
 }
 
 &get_defs($options{'defs'});
+
+
+# Load updated defs file
+unless (defined $options{'updates'})
+{
+        $options{'updates'} = ((getpwuid($>))[7]) . "/.dailystrips-updates.def";
+}
+
+
+unless($options{'noupdates'})
+{
+	&get_defs($options{'updates'});
+}
 
 # Get system configurable strip definitions now
 unless ($options{'nosystem'}) {
