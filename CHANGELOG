@@ -3,6 +3,8 @@
   Fixed a bug when using the --dailydir option that would make incorrect
   symlinks for duplicate files
 
+  Fixed the sample code in README.LOCAL
+
 1.0.6
   02 Feb 2001
   Added --basedir option. dailystrips will change to the specified directory to

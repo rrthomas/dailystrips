@@ -85,6 +85,16 @@ strip markfiore
         matchpart 1
 end
 
+strip megatokyo
+	name MegaTokyo
+	homepage http://www.megatokyo.com/
+	type search
+	searchpattern <IMG(.*?)SRC="(strips/\d+-\d+-\d+.gif)"
+	matchpart 2
+	baseurl http://www.megatokyo.com/
+	updated semidaily
+end
+
 strip pennyarcade
 	name Penny Arcade
 	homepage http://www.penny-arcade.com/
@@ -94,6 +104,13 @@ strip pennyarcade
 	matchpart 2
 	baseurl http://www.penny-arcade.com/
 	updated semidaily
+end
+
+strip pvp
+	name Player vs. Player
+	homepage http://www.pvponline.com/
+	type generate
+	imageurl http://www.pvponline.com/archive/%Y/pvp%Y%m%d.gif
 end
 
 strip redmeat
