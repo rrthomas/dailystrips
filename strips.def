@@ -798,7 +798,7 @@ strip tuma
 	homepage http://www.cnsnews.com/cartoon/Tuma.asp
 	type search
 	searchpage http://www.cnsnews.com/cartoon/tuma.asp
-	searchpattern <img.+?border="0".+?src="(Tumaimages/%Y/\w+\..+?)"
+	searchpattern <img.+?src="/cartoon/(tumaimages/\d+/\w+\..+?)"
 	baseurl http://www.cnsnews.com/cartoon/
 	provides latest
 end
@@ -922,14 +922,15 @@ strip schlockmercenary
 	provides any
 end
 
-strip unicornjelly
-	name Unicorn Jelly
-	type search
-	homepage http://unicornjelly.com/
-	searchpattern <IMG.+?SRC="(images\/uni\d+\..+?)"
-	baseurl $homepage
-	provides latest
-end
+# finished
+#strip unicornjelly
+#	name Unicorn Jelly
+#	type search
+#	homepage http://unicornjelly.com/
+#	searchpattern <IMG.+?SRC="(images\/uni\d+\..+?)"
+#	baseurl $homepage
+#	provides latest
+#end
 
 strip downtoearth
 	name Down To Earth
@@ -979,9 +980,11 @@ strip sexylosers
 	name Sexy Losers
 	homepage http://sexylosers.keenspace.com/
 	type search
-	searchpattern <IMG.+?SRC.*?=.*?"(http://sexylosers\.(keenspace\.)?com/)?(images/sl\d+\.jpg)"
+	#searchpattern <IMG.+?SRC.*?=.*?"(http://sexylosers\.(keenspace\.)?com/)?(images/sl\d+\.jpg)"
 	#searchpattern <IMG.+?SRC="http://sexylosers=com/(images/sl\d+\.jpg)"
 	#searchpattern <table.+?width.*?=.*?325.+?<img.+?src.*?=.*?"(http://sexylosers.keenspace.com/images/.+?)"
+	searchpattern <A.+?HREF="http://sexylosers.keenspace.com/(\d+).html"
+	imageurl http://sexylosers.keenspace.com/comics/sl$match_1.jpg
 	provides latest
 end
 
@@ -1111,11 +1114,12 @@ strip brainbuzz
 	provides any
 end
 
+#they win... for now (8394022423 levels of frames and i don't feel like building a full-blown web browser right now)
 strip swamp
 	name Swamp
 	homepage http://www.swamp.com.au
 	type search
-	searchpage http://s1.emcs.com.au/SwampStrips/Strips/Strip.asp?Date=<code:strftime("%-d-%b-%Y", @localtime_today)>
+	searchpage http://s1.emcs.com.au/SwampStrips/Strips/Strip.asp?Date=<code:strftime("%-d-%b-%Y", @localtime_today)
 	searchpattern <img.+?src="(http://s1.emcs.com.au/swampstrips/Strips_Images/\d+\..+?)"
 	provides any
 end
@@ -1818,15 +1822,17 @@ strip topofworld
 	useclass unitedmedia-srch-comics-lag
 end
 
-strip usplay
-	name The US of Play
-	useclass unitedmedia-srch-comics
-end
+# done!
+#strip usplay
+#	name The US of Play
+#	useclass unitedmedia-srch-comics
+#end
 
-strip warped
-	name Warped
-	useclass unitedmedia-srch-comics
-end
+# also done!
+#strip warped
+#	name Warped
+#	useclass unitedmedia-srch-comics
+#end
 
 strip workingdaze
 	name Working Daze
