@@ -14,6 +14,21 @@ group michael
 	include userfriendly geech shoe wizardofid
 end
 
+group gloucestertimes
+	desc Gloucester Daily Times Strips
+	include garfield broomhilda bc wizardofid roseisrose
+	include dilbert cathy sallyforth monty grimmy peanuts
+	include forbetter foxtrot offthemark
+end
+
+group bgsunday
+	desc Boston Globe Sunday Comics
+	include dilbert doonesbury garfield getfuzzy adamathome grimmy forbetter
+	include foxtrot jumpstart zits zippythecolorpinhead curtis
+	include rhymeswithorange boondocks nonsequitur stonesoup roseisrose monty
+	include arlonjanis askshagg
+end
+
 # Class definitions
 class ucomics-srch
 	homepage http://www.ucomics.com/$strip/view$1.htm
@@ -955,6 +970,42 @@ strip offthemark
 	provides latest
 	searchpage $homepage/daily.asp
 	searchpattern <img.+?src="(http://www.offthemark.com/rotate/\d+.gif)"
+end
+
+strip asif
+	name As If
+	homepage http://www.asifcomic.com/
+	type search
+	searchpattern img src="_left\.jpg" width=\d+ height=\d+ border=0"><img src="(\d+\.jpg)"
+	baseurl $homepage
+	provides latest
+end
+
+strip nipandtuck
+	name Nip 'N Tuck
+	homepage http://nipandtuck.keenspace.com
+	type search
+	searchpattern SRC="(/comics/nt(\d{8})\.gif)"
+	baseurl $homepage
+	provides latest
+end
+
+strip lemontree
+	name Under The Lemon Tree
+	homepage http://utlt.keenspace.com
+	type search
+	searchpattern SRC="(/comics/bn(\d{8})\.gif)"
+	baseurl $homepage
+	provides latest
+end
+
+strip winter
+	name Winter
+	homepage http://www.wintercomic.com/
+	type search
+	searchpattern img src='(pages/page(\d+)\.gif)'
+	baseurl $homepage
+	provides latest
 end
 
 # ucomics.com strips
