@@ -119,6 +119,15 @@ class comicspage-editorial-srch
 	provides latest
 end
 
+class mercurycenter
+        # $1 - number of strip (unique to Mercury Center?)
+        # $2 - name of strip spaces=_?
+        homepage http://cgi.mercurycenter.com/cgi-bin/comics/show.cgi?ID=$1&DATE=TODAY
+        type generate
+        imageurl http://cgi.mercurycenter.com/premium/comics/%m_%d/$2.gif
+        provides latest
+end
+
 # Non-standard strips
 # should be possible to generate?
 # sometimes multi-image - need a new way to handle this
@@ -289,8 +298,10 @@ end
 strip sluggy
 	name Sluggy Freelance
 	homepage http://www.sluggy.com/
-	type generate
-	imageurl http://pics.sluggy.com/comics/%y%m%da.gif
+	type search
+	searchpage http://www.sluggy.com/daily.php?date=%y%m%d
+	searchpattern <img.+?src="?(http://pics.sluggy.com/comics/%y%m%d.+?\.(gif|jpg))
+	matchpart 1
 	provides any
 end
 
