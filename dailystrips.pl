@@ -8,7 +8,7 @@
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
 # Last Modified:    24 Aug 2003, 16:55 
-# Current Revision: 1.0.28pre1
+# Current Revision: 1.0.28
 #
 
 
