@@ -109,7 +109,7 @@ class sfgate-srch
 	provides latest
 end
 
-class comicspage-strips-srch
+class comicspage-strips-gen
         # $1 - more or less the real name
         # $2 - 3-letter abbreviation of $1
         referer http://www.comicspage.com/$1/index.html
@@ -119,7 +119,7 @@ class comicspage-strips-srch
         provides any
 end
 
-class comicspage-panels-srch
+class comicspage-panels-gen
 	# $1 - more or less the real name
 	# $2 - 3-letter abbreviation of $1
 	homepage http://www.comicspage.com/$1/index.html
@@ -132,7 +132,7 @@ class comicspage-panels-srch
 	provides any
 end
 
-class comicspage-editorial-srch
+class comicspage-editorial-gen
 	# $1 - more or less the real name
 	# $2 - 3-letter abbreviation of $1
 	homepage http://www.comicspage.com/$1/index.html
@@ -1945,42 +1945,42 @@ end
 #comicspage.com strips
 strip animal
 	name Animal Crackers
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 animal
 	$2 ack
 end
 
 strip annie
 	name Annie
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 annie
 	$2 ann
 end
 
 strip bound
 	name Bound and Gagged
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 bound
 	$2 bgg
 end
 
 strip brenda
 	name Brenda Starr
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 brenda
 	$2 bsr
 end
 
 strip broomhilda
 	name Broom Hilda
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 broomhilda
 	$2 bhl
 end
 
 strip cats
 	name Cats with Hands
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 cats
 	$2 cwh
 end
@@ -1988,238 +1988,238 @@ end
 # gone? 2002-04-02
 #strip deardudley
 #	name Dear Dudley
-#	useclass comicspage-strips-srch
+#	useclass comicspage-strips-gen
 #	$1 deardudley
 #	$2 drd
 #end
 
 strip dicktracy
 	name Dick Tracy
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 dicktracy
 	$2 dty
 end
 
 strip fred
 	name Fred Basset
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 fred
 	$2 fbt
 end
 
 strip gasolinealley
 	name Gasoline Alley
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 gasolinealley
 	$2 gas
 end
 
 strip gilthorp
 	name Gil Thorp
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 gilthorp
 	$2 gtp
 end
 
 strip grimmy
 	name Mother Goose and Grimm
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 grimmy
 	$2 mgg
 end
 
 strip helen
 	name Helen, Sweetheart of the Internet
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 helen
 	$2 hln
 end
 
 strip kudzu
 	name Kudzu
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 kudzu
 	$2 kdz
 end
 
 strip lola
 	name Lola
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 lola
 	$2 lol
 end
 
 strip lewis
 	name Lewis
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 lewis
 	$2 lew
 end
 
 strip meehan
 	name Meehan Streak
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 meehan
 	$2 mst
 end
 
 strip middletons
 	name The Middletons
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 middletons
 	$2 mid
 end
 
 strip mixedmedia
 	name Mixed Media
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 mixedmedia
 	$2 mix
 end
 
 strip monkeyhouse
 	name Monkeyhouse
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 monkeyhouse
 	$2 mhs
 end
 
 strip shoe
 	name Shoe
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 shoe
 	$2 sho
 end
 
 strip sylvia
 	name Sylvia
-	useclass comicspage-strips-srch
+	useclass comicspage-strips-gen
 	$1 sylvia
 	$2 syl
 end
 
 strip 9to5
 	name 9 to 5
-	useclass comicspage-panels-srch
+	useclass comicspage-panels-gen
 	$1 9to5
 	$2 ntf
 end
 
 strip bottomliners
 	name Bottom Liners
-	useclass comicspage-panels-srch
+	useclass comicspage-panels-gen
 	$1 bottomliners
 	$2 bls
 end
 
 strip computoon
 	name Compu-toon
-	useclass comicspage-panels-srch
+	useclass comicspage-panels-gen
 	$1 computoon
 	$2 cpt
 end
 
 strip looseparts
 	name Loose Parts
-	useclass comicspage-panels-srch
+	useclass comicspage-panels-gen
 	$1 looseparts
 	$2 lsp
 end
 
 strip loveis
 	name Love Is...
-	useclass comicspage-panels-srch
+	useclass comicspage-panels-gen
 	$1 loveis
 	$2 lis
 end
 
 strip pluggers
 	name Pluggers
-	useclass comicspage-panels-srch
+	useclass comicspage-panels-gen
 	$1 pluggers
 	$2 plg
 end
 
 strip quigmans
 	name The Quiqmans
-	useclass comicspage-panels-srch
+	useclass comicspage-panels-gen
 	$1 quigmans
 	$2 qgm
 end
 
 #strip singleslices
 #	name Single Slices
-#	useclass comicspage-panels-srch
+#	useclass comicspage-panels-gen
 #	$1 singleslices
 #	$2 slc
 #end
 
 strip thatsjake
 	name That's Jake
-	useclass comicspage-panels-srch
+	useclass comicspage-panels-gen
 	$1 thatsjake
 	$2 tjk
 end
 
 strip conrad
 	name Paul Conrad
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 conrad
 	$2 con
 end
 
 strip danziger
 	name Jeff Danziger
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 danziger
 	$2 dan
 end
 
 strip davies
 	name Matt Davies
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 davies
 	$2 dav
 end
 
 strip handelsman
 	name Walt Handelsman
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 handelsman
 	$2 han
 end
 
 strip horsey
 	name David Horsey
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 horsey
 	$2 hor
 end
 
 strip jones
 	name Taylor Jones
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 jones
 	$2 jon
 end
 
 strip locher
 	name Dick Locher
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 locher
 	$2 dik
 end
 
 strip lowe
 	name Chan Lowe
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 lowe
 	$2 low
 end
 
 strip marlette
 	name Doug Marlette
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 marlette
 	$2 mar
 end
@@ -2227,28 +2227,28 @@ end
 # gone? 2002-04-02
 #strip ohman
 #	name Jack Ohman
-#	useclass comicspage-editorial-srch
+#	useclass comicspage-editorial-gen
 #	$1 ohman
 #	$2 ohm
 #end
 
 strip peters
 	name Mike Peters
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 peters
 	$2 pet
 end
 
 strip sack
 	name Steve Sack
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 sack
 	$2 sak
 end
 
 strip sheneman
 	name Drew Sheneman
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 sheneman
 	$2 she
 end
@@ -2256,7 +2256,7 @@ end
 
 strip stayskal
 	name Wayne Stayskal
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 stayskal
 	$2 sty
 end
@@ -2264,35 +2264,35 @@ end
 # gone? 2002-04-02
 #strip summers
 #	name Dana Summers
-#	useclass comicspage-editorial-srch
+#	useclass comicspage-editorial-gen
 #	$1 summers
 #	$2 sum
 #end
 
 strip telnaes
 	name Ann Telnaes
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 telnaes
 	$2 tel
 end
 
 strip wasserman
 	name Dan Wasserman
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 wasserman
 	$2 was
 end
 
 strip wrightd
 	name Dick Wright
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 wrightd
 	$2 dwr
 end
 
 strip wright
 	name Don Wright
-	useclass comicspage-editorial-srch
+	useclass comicspage-editorial-gen
 	$1 wright
 	$2 wrt
 end
