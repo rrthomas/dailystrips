@@ -67,6 +67,16 @@ the searchpage (if specified), or the homepage (if no specific searchpage was
 specified). If the webserver for some reason needs a referer other than the
 searchpage or homepage, it can be specified with this variable.
 
+New feature: you can now put little snippets of Perl code right into the
+definition. For example, the definition for The Norm uses this to generate the
+day number for 14 days ago. The Norm website uses Javascript to generate the
+image URL, so it couldn't be searched for and previously there was no way to
+work with dates other than the current date. Here's how it works: just
+insert <code:Perl code>. No need to quote the code, just put it where
+'Perl code' is. Just don't forget to escape any > that may happen to be in your
+code.
+
+
 The other method of specifying strips is to use classes. This method is used
 when there are serveral strips provided by the same webserver that all have an
 identical definition, except for some strip-specific elements. Classes work as
