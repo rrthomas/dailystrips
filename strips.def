@@ -4389,3 +4389,11 @@ strip shermanslagoon
 	imageurl $homepage/dailies/SL%y.%m.%d.gif
 	provides latest
 end
+
+strip dicebox
+	name Dicebox
+	homepage http://www.girlamatic.com/series.php?name=dicebox
+	type search
+	searchpattern <img src=(http://www.girlamatic.com/jmlee/\w+?\.jpg)
+	provides latest
+end
