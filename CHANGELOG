@@ -1,3 +1,8 @@
+1.0.21
+  28 Oct 2001
+  Fixed --nostale option - code was there, but attempting to use it would result
+  in a 'no such option' error.
+
 1.0.20
   08 Oct 2001
   Added spiderman, tuma, nowak, asay, lang, shelton (Jeff Brown)

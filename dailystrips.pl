@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    27 Oct 2001, 12:58 EST
-# Current Revision: 1.0.20
+# Last Modified:    28 Oct 2001, 20:57 EST
+# Current Revision: 1.0.21pre1
 #
 
 
@@ -27,14 +27,14 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-$version = "1.0.20";
+$version = "1.0.21pre1";
 
 $time_today = time;
 
 
 # Get options
 GetOptions(\%options, 'quiet|q','verbose','output=s','lite','local|l','noindex',
-	'archive|a','dailydir|d','stripdir','save|s','date=s',
+	'archive|a','dailydir|d','stripdir','save|s','nostale','date=s',
 	'new|n','defs=s','nopersonal','basedir=s','list','proxy=s',
 	'proxyauth=s','noenvproxy','nospaces','useragent=s','version|v','help|h','avantgo',
 	'random','nosystem','stripnav','nosymlinks','titles=s') or exit 1;
