@@ -55,9 +55,9 @@ class unitedmedia-srch-wash
 end
 
 class sfgate-gen-zippycolor
-	homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/%1.dtl
+	homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/$1.dtl
 	type generate
-	imageurl http://pst.rbma.com/content/%2
+	imageurl http://pst.rbma.com/content/$2
 end
 
 class sfgate-gen
@@ -341,7 +341,7 @@ strip bruno
         name The Bruno Daily times
         homepage http://www.brunostrip.com/bruno.html
         type generate
-        imageurl http://www.brunostrip.com/2001pics/2001%m%d.gif
+        imageurl http://www.brunostrip.com/%Ypics/%Y%m%d.gif
         updated semidaily
 end
 
@@ -1104,8 +1104,8 @@ end
 strip zippythecolorpinhead
         name Zippy the Pinhead (in color)
         useclass sfgate-gen-zippycolor
-        %1 Zippy_the_Color_Pinhead
-        %2 Zippy_the_Pinhead
+        $1 Zippy_the_Color_Pinhead
+        $2 Zippy_the_Pinhead
 end
 
 strip zippythepinhead
