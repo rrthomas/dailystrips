@@ -8,14 +8,14 @@ One feature that sets this program apart from the rest is the ability to operate
 in 'local' mode. This mode, instead of writing the addresses to images in the
 HTML file, actually downloads the image and saves it locally. This way, you do
 not have to wait for each image to download - it's already on your hard drive.
-This is most useful when dailystrips.pl is run from a cron script. (See file
+This is most useful when dailystrips is run from a cron script. (See file
 README.LOCAL for more information and examples)
 
 Requirements:
-dailystrips.pl requires a reasonably current version of Perl - it was developed
+dailystrips requires a reasonably current version of Perl - it was developed
 with 5.6.0. The HTTP::Request, LWP::UserAgent, and POSIX modules are needed. If
 you want to use --date, you will need Date::Time from the TimeDate package. See
-www.cpan.org if you don't have them installed already. dailystrips.pl was
+www.cpan.org if you don't have them installed already. dailystrips was
 developed on Linux but should be able to run on any *nix with that has the
 necessary Perl modules installed. Running on Win32 is also possible.
 
@@ -25,7 +25,7 @@ See the INSTALL file.
 Usage:
 'dailystrips [stripname(s)]' will print to STDOUT an HTML page with image links
 to the latest strip. These links are to the strip's webserver.
-dailystrips.pl --help lists all available options. --list shows the available
+'dailystrips --help' lists all available options. --list shows the available
 strips and groups. Strip names can specified as listed. Groups must be preceeded
 with an '@' symbol.
 

@@ -41,7 +41,7 @@ tackle..
   starting a developmemt branch shortly to get started on this.
 
   31 Jan 2001
-  Look into using the getopts perl module for getting command-line parameters. -
+  Look into using the Getopt perl module for getting command-line parameters. -
   DONE in 1.0.16
 
 1.0.4
