@@ -1853,11 +1853,11 @@ strip robrogers
 	$1 rogers
 end
 
-strip robertariail
-	name Robert Ariail
-	useclass unitedmedia-srch-editoons
-	$1 ariail
-end
+#strip robertariail
+#	name Robert Ariail
+#	useclass unitedmedia-srch-editoons
+#	$1 ariail
+#end
 
 strip stevebenson
 	name Steve Benson
@@ -2693,41 +2693,41 @@ strip weepals
 	provides latest
 end
 
-strip chuckasay
-	name Chuck Asay
-	homepage http://www.creators.com/editorial_show.cfm?comicname=ca
-	type search
-	searchpattern <img.+?alt="Chuck Asay".+?src="(.+?)"
-	baseurl http://www.creators.com/
-	provides latest
-end
+#strip chuckasay
+#	name Chuck Asay
+#	homepage http://www.creators.com/editorial_show.cfm?comicname=ca
+#	type search
+#	searchpattern <img.+?alt="Chuck Asay".+?src="(.+?)"
+#	baseurl http://www.creators.com/
+#	provides latest
+#end
 
-strip chipbok
-	name Chip Bok
-	homepage http://www.creators.com/editorial_show.cfm?comicname=cb
-	type search
-	searchpattern <img.+?alt="Chip Bok".+?src="(.+?)"
-	baseurl http://www.creators.com/
-	provides latest
-end
+#strip chipbok
+#	name Chip Bok
+#	homepage http://www.creators.com/editorial_show.cfm?comicname=cb
+#	type search
+#	searchpattern <img.+?alt="Chip Bok".+?src="(.+?)"
+#	baseurl http://www.creators.com/
+#	provides latest
+#end
 
-strip kencatalino
-	name Ken Catalino
-	homepage http://www.creators.com/editorial_show.cfm?comicname=kn
-	type search
-	searchpattern <img.+?alt="Ken Catalino".+?src="(.+?)"
-	baseurl http://www.creators.com/
-	provides latest
-end
+#strip kencatalino
+#	name Ken Catalino
+#	homepage http://www.creators.com/editorial_show.cfm?comicname=kn
+#	type search
+#	searchpattern <img.+?alt="Ken Catalino".+?src="(.+?)"
+#	baseurl http://www.creators.com/
+#	provides latest
+#end
 
-strip johndeering
-	name John Deering
-	homepage http://www.creators.com/editorial_show.cfm?comicname=jd
-	type search
-	searchpattern <img.+?alt="John Deering".+?src="(.+?)"
-	baseurl http://www.creators.com/
-	provides latest
-end
+#strip johndeering
+#	name John Deering
+#	homepage http://www.creators.com/editorial_show.cfm?comicname=jd
+#	type search
+#	searchpattern <img.+?alt="John Deering".+?src="(.+?)"
+#	baseurl http://www.creators.com/
+#	provides latest
+#end
 
 strip bobgorrell
 	name Bob Gorrell
@@ -2961,11 +2961,11 @@ strip rall
 	$1 tr
 end
 
-strip sargent
-	name Ben Sargent
-	useclass washpost-uclick
-	$1 bs
-end
+#strip sargent
+#	name Ben Sargent
+#	useclass washpost-uclick
+#	$1 bs
+#end
 
 #cagle strips
 strip topsyturvey
@@ -3160,12 +3160,12 @@ strip englehart
 	$2 $strip
 end
 
-strip gorrell
-	name Bob Gorrell
-	useclass slate-cagle
-	$1 $strip
-	$2 $strip
-end
+#strip gorrell
+#	name Bob Gorrell
+#	useclass slate-cagle
+#	$1 $strip
+#	$2 $strip
+#end
 
 strip greenberg
 	name Steve Greenberg
@@ -3195,12 +3195,12 @@ strip jacobson
 	$2 davidjacobson
 end
 
-strip jonesc
-	name Clay Jones
-	useclass slate-cagle
-	$1 jones
-	$2 jones
-end
+#strip jonesc
+#	name Clay Jones
+#	useclass slate-cagle
+#	$1 jones
+#	$2 jones
+#end
 
 strip kallaugher
 	name Kevin Kallaugher
@@ -3399,12 +3399,12 @@ strip trinidad
 	$2 corky
 end
 
-strip varvel
-	name Gary Varvel
-	useclass slate-cagle
-	$1 $strip
-	$2 $strip
-end
+#strip varvel
+#	name Gary Varvel
+#	useclass slate-cagle
+#	$1 $strip
+#	$2 $strip
+#end
 
 strip walters
 	name Kirk Walters
