@@ -1264,6 +1264,21 @@ strip soup2nutz
 	useclass unitedmedia-srch-comics
 end
 
+strip frazz
+        name Frazz
+        useclass unitedmedia-srch-comics
+end
+
+strip janesworld
+        name Jane's World
+        useclass unitedmedia-srch-comics
+end
+
+strip spooner
+        name Spooner
+        useclass unitedmedia-srch-comics
+end
+
 strip speedbump
 	name Speed Bump
 	useclass unitedmedia-srch-creators
@@ -1626,13 +1641,6 @@ strip shoe
 	$2 sho
 end
 
-strip spooner
-	name Spooner
-	useclass comicspage-strips-srch
-	$1 spooner
-	$2 spn
-end
-
 strip sylvia
 	name Sylvia
 	useclass comicspage-strips-srch
@@ -1850,4 +1858,26 @@ strip wright
 	useclass comicspage-editorial-srch
 	$1 wright
 	$2 wrt
+end
+
+#mercury center strips
+strip pcnpixel2
+        name PC and Pixel
+        useclass mercurycenter
+        $1 83
+        $2 pc_and_pixel
+end
+
+strip thenorm2
+        name The Norm
+        useclass mercurycenter
+        $1 79
+        $2 norm
+end
+
+strip bfriends2
+        name Between Friends
+        useclass mercurycenter
+        $1 14
+        $2 bfriends
 end
