@@ -190,7 +190,7 @@ $_, $val
 		unless (/^--proxyauth=((.*?):(.*?))$/o) {die "Error: incorrectly formatted proxy username/password\n"}
 		$options{'http_proxy_auth'} = $1;
 	} elsif (/^--proxy/o) {
-		unless (/^--proxy=((.*?):(.*?))$/o) {die "Error: incorrectly formatted proxy server\n"}
+		unless (/^--proxy=(http:\/\/)?((.*?):(.*?))(\/)?$/o) {die "Error: incorrectly formatted proxy server\n"}
 		$options{'http_proxy'} = $1;
 	} elsif (/^--useragent=(.*)$/) {
 		$options{'user_agent'} = $1;
@@ -213,7 +213,7 @@ unless (@get) {
 
 #Set proxy
 if (!defined $options{'no_env_proxy'} and !defined $options{'http_proxy'} and defined $ENV{'http_proxy'} ) {
-	unless ($ENV{'http_proxy'} =~ m/^(.*?):(.*?)$/o) {die "Error: incorrectly formatted proxy server environment variable\n"}
+	unless ($ENV{'http_proxy'} =~ m/^(http:\/\/)?((.*?):(.*?))(\/)?$/o) {die "Error: incorrectly formatted proxy server environment variable\n"}
 	$options{'http_proxy'} = $ENV{'http_proxy'};
 }
 if ($options{'http_proxy'}) {

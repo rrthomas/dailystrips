@@ -23,6 +23,14 @@
 
    Other small code fixes
 
+   19 Jul 2001
+   Fixed usage of Date::Parse yet again
+
+   No longer creates index.html when an alternate date is specified (so that it
+   will not overwrite the latest symlink if running for an earlier day)
+
+   Fixed syntax checking of http_proxy environment variable
+
 1.0.14
   12 July 2001
   Now uses the strips.def file located in the same directory as the script,
