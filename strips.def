@@ -1758,7 +1758,7 @@ strip farley
         homepage http://www.sfgate.com/columnists/farley/
         type search
         provides latest
-        searchpattern <IMG.+?SRC="(http://www.sfgate.com/chronicle/pictures/\d+/\d+/\d+/.+?-farley.gif)"
+        searchpattern <IMG.+?SRC="(http://(www\.)?sfgate\.com/chronicle/pictures/\d+/\d+/\d+/.+?-farley.gif)"
 end
 
 strip fastrack
