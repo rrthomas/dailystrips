@@ -13,6 +13,8 @@
 10 Aug 2001
   Small (but important) fixes
 
+  Fixed Exploitation Now, small optimizations to other regexps
+
 1.0.16
   23 July 2001
   Fixed reporting of line numbers for errors encountered while parsing
