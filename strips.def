@@ -234,6 +234,13 @@ class cnsnews
 	provides latest
 end
 
+class graphicsmash
+        type search
+        searchpage http://www.moderntales.com/tooncast.php?series=$1
+        searchpattern <img.+?src=(.+?)>
+        provides latest
+end
+
 # Non-standard strips
 
 # should be possible to generate?
@@ -1068,13 +1075,14 @@ strip sexandviolence
 	provides latest
 end
 
-strip fans
-	name Fans!
-	homepage http://faans.com
-	type search
-	searchpattern <IMG.+?SRC="?(http://(www\.)?faans.com/\d+/\d+.+?\..+?)[">\s]
-	provides latest
-end
+# not working
+#strip fans
+#	name Fans!
+#	homepage http://faans.com
+#	type search
+#	searchpattern <IMG.+?SRC="?(http://(www\.)?faans.com/\d+/\d+.+?\..+?)[">\s]
+#	provides latest
+#end
 
 strip spooner
         name Spooner
@@ -4370,13 +4378,14 @@ strip crankshaft
 	artist Tom Batiuk and Chuck Ayers
 end
 
-strip apartment3g
-	name Apartment 3-G
-	artist Frank Bolle and Lisa Trusiani
-        useclass kingfeatures
-	$1 apt3g
-	$2 Apartment_3-G
-end
+# already handled
+#strip apartment3g
+#	name Apartment 3-G
+#	artist Frank Bolle and Lisa Trusiani
+#	useclass kingfeatures
+#	$1 apt3g
+#	$2 Apartment_3-G
+#end
 
 strip familycircus
         name Family Circus
@@ -4548,4 +4557,415 @@ strip noroomformagic
         searchpattern <img.+?src='(\d+%Y\d+\.gif)'
         baseurl $homepage
         provides latest
+end
+
+#graphicsmash.com strips
+strip gimbley
+	name A Tale From Gimbley 
+	artist Paul Elliot
+	useclass graphicsmash-serializer
+	$1 pooltales
+end
+
+strip americanbornchinese
+	name American Born Chinese
+	artist Gene Yang
+	useclass graphicsmash-moderntales
+	$1 americanbornchinese
+end
+
+strip americanelf
+	name American Elf: the Sketchbook Diaries of James Kochalka
+	artist James Kochalka
+	homepage http://www.americanelf.com/
+	useclass graphicsmash
+	$1 americanelf
+end
+
+strip arcaynajaynesoul
+	name Arcana Jayne: A'Soulin
+	artist Lisa Jonte
+	useclass graphicsmash-girlamatic
+	$1 arcaynajaynesoul
+end
+
+strip arcanajayne
+	name Arcana Jayne: Hair of the Dog
+	artist Lisa Jonte
+	useclass graphicsmash-girlamatic
+	$1 arcanajayne
+end
+
+strip athena
+	name Athena Voltaire
+	artist Paul Daly, Steve Bryant, and Chad Fidler
+	useclass graphicsmash-moderntales
+	$1 athena
+end
+
+strip biteme
+	name Bite Me!
+	artist Dylan Meconis
+	useclass graphicsmash-girlamatic
+	$1 biteme
+end
+
+strip crss
+	name Charlie Red Eye Sunday Specials
+	artist Edward J. Grug III and Matthew William Boyd Langfield
+ 	useclass graphicsmash-moderntales
+	$1 crss
+end
+
+strip chasingrainbows
+	name Chasing Rainbows
+	artist Svetlana Chmakova
+	useclass graphicsmash-girlamatic
+	$1 svetlanaseries
+end
+
+strip circleweave
+	name Circle Weave
+	artist Indigo Kelleigh
+	useclass graphicsmash-moderntales
+	$1 circleweave
+end
+
+strip doublehappiness
+	name Double Happiness
+	artist Jason Shiga
+	useclass graphicsmash-moderntales
+	$1 2xhappiness
+end
+
+strip edie
+	name Edie in Orbit
+	artist Shaenon K. Garrity
+	homepage http://www.joeymanley.com/edie/series.php
+	useclass graphicsmash
+	$1 edie
+end
+
+strip fancyfroglin
+	name Fancy Froglin
+	artist James Kochalka
+	useclass graphicsmash-moderntales
+	$1 fancyfroglin
+end
+
+strip fearmongers
+	name Fear Mongers
+	artist Joe Zabel
+	useclass graphicsmash-moderntales
+	$1 fearmongers
+end
+
+strip fetusx
+	name Fetus-X
+	artist Eric Millikin and Casey Sorrow
+	useclass graphicsmash-serializer
+	$1 fetusx
+end
+
+strip fredtheclown
+	name Fred the Clown
+	artist Roger Langridge
+	useclass graphicsmash-moderntales
+	$1 fredtheclown
+end
+
+strip hutchowen
+	name HUTCH OWEN - Public Relations!
+	artist Tom Hart
+	useclass graphicsmash-moderntales
+	$1 hutchowen
+end
+
+strip hope
+	name I Was There & Just Returned
+	artist Hope Larson
+	useclass graphicsmash-girlamatic
+	$1 hope
+end
+
+strip jeepers
+	name Jeepers
+	artist Andre Richard
+	useclass graphicsmash-girlamatic
+	$1 jeepers
+end
+
+strip kismet
+	name Kismet: Hunter's Moon
+	artist Layla Lawlor
+	useclass graphicsmash-girlamatic
+	$1 kismet
+end
+
+strip mell
+	name L'il Mell
+	artist Shaenon K. Garrity and Vera Brosgol
+	useclass graphicsmash-girlamatic
+	$1 mell
+end
+
+strip lionel_am
+	name Lionel's Lament - AM
+	artist Josh Neufeld and Dean Haspiel
+	useclass graphicsmash-serializer
+	$1 lionel_am
+end
+
+strip lionel
+	name Lionel's Lament - PM
+	artist Dean Haspiel and Josh Neufeld
+	useclass graphicsmash-serializer
+	$1 lionel
+end
+
+strip locationlocationlocation
+	name Location Location Location
+	artist John Barber
+	useclass graphicsmash-moderntales
+	$1 locationlocationlocation
+end
+
+strip narbonic
+	name Narbonic
+	artist Shaenon K. Garrity
+	useclass graphicsmash-moderntales
+	$1 narbonic
+end
+
+strip nostereotypes
+	name No Stereotypes
+	artist Amber "Glych" Greenlee
+	useclass graphicsmash-moderntales
+	$1 NS
+end
+
+strip oddjobs
+	name Odd Jobs3: Cash and Carry
+	artist Tim Broderick
+	useclass graphicsmash-moderntales
+	$1 oddjobscashandcarry
+end
+
+strip paradigmshift
+	name Paradigm Shift: Part Two
+	artist Dirk Tiede
+	useclass graphicsmash-moderntales
+	$1 PS2
+end
+
+strip pewfell
+	name Pewfell
+	artist Chuck Whelon
+	useclass graphicsmash-moderntales
+	$1 pewfell
+end
+
+strip robotbarber
+	name Robot Barber
+	artist Caleb Sevcik
+	useclass graphicsmash-moderntales
+	$1 robotbarber
+end
+
+strip rogues
+	name Rogues of Clwyd-Rhan
+	artist Reinder Dijkhuis
+	useclass graphicsmash-moderntales
+	$1 rogues
+end
+
+strip northampton
+	name Streets of Northampton
+	artist Chris Shadoian
+	useclass graphicsmash-moderntales
+	$1 northampton
+end
+
+strip charlieredeye
+	name The Bizarre Life of Charlie Red Eye
+	artist Matthew William Boyd Langfield, Esq. and Edward J. Grug III
+	useclass graphicsmash-moderntales
+	$1 charlieredeye
+end
+
+strip death
+	name The New Adventures of Death
+	artist Dorothy Gambrell
+	useclass graphicsmash-moderntales
+	$1 death
+end
+
+strip thestiff
+	name The Stiff
+	artist Jason Thompson
+	homepage http://girlamatic.com/series.php?name=thestiff
+	useclass graphicsmash-girlamatic
+	$1 thestiff
+end
+
+strip tokyohigh
+	name TokyoHigh
+	artist George Panella
+	useclass graphicsmash-moderntales
+	$1 tokyohigh
+end
+
+strip tokyohighdayout
+	name TokyoHigh: A Day Out
+	artist Amber "Glych" Greenlee
+	useclass graphicsmash-moderntales
+	$1 tokyohighguestrun
+end
+
+strip tween
+	name Tween: The Bad Mojo Saga
+	artist Anthony P. Furtado
+	useclass graphicsmash-moderntales
+	$1 tween
+end
+
+strip yeslogo
+	name Yes Logo!
+	artist Paulo Patricio
+	useclass graphicsmash-serializer
+	$1 yeslogo
+end
+
+strip digger
+	name Digger
+	artist Ursula Vernon
+	useclass graphicsmash
+	$1 digger
+end
+
+# not running right now?
+#strip fans
+#	name Fans
+#	homepage 
+#	useclass graphicsmash
+#	$1 fans
+#end
+
+strip felicity
+	name Felicity
+	artist John Troutman
+	useclass graphicsmash
+	$1 felicity
+end
+
+strip flick
+	name Flick
+	artist Mikael Oskarsson
+	useclass graphicsmash
+	$1 flick
+end
+
+strip gsg
+	name Gun Street Girl
+	artist Barb Lien and Ryan Howe
+	useclass graphicsmash
+	$1 gsg
+end
+
+strip grift
+	name Interplanetary Grift
+	artist Jim Keplinger and Scott Story
+	useclass graphicsmash
+	$1 grift
+end
+
+strip killroyandtina
+	name Killroy and Tina
+	artist Justin Pierce
+	useclass graphicsmash
+	$1 killroyandtina
+end
+
+strip mam
+	name Mythos and Magick
+	artist Brynn Sheridan
+	useclass graphicsmash
+	$1 mam
+end
+
+strip nonpersons
+	name NonPersons
+	artist Amber "Glych" Greenlee
+	useclass graphicsmash
+	$1 nonpersons
+end
+
+strip rip
+	name Rip & Teri
+	artist T Campbell and John Waltrip
+	useclass graphicsmash
+	$1 rip
+end
+
+strip ram
+	name Saga of The Ram
+	artist Brian Daniel
+	useclass graphicsmash
+	$1 ram
+end
+
+strip shesanightmare
+	name She's a Nightmare
+	artist Jesse Chen
+	useclass graphicsmash
+	$1 shesanightmare
+end
+
+strip skirting
+	name Skirting Danger
+	artist Meredith Gran
+	useclass graphicsmash
+	$1 skirting
+end
+
+strip skritch
+	name Skritch
+	artist Lucas Phelps
+	useclass graphicsmash
+	$1 skritch
+end
+
+strip soulchaserbetty
+	name Soul Chaser Betty
+	artist Brian Babendererde
+	useclass graphicsmash
+	$1 soulchaserbetty
+end
+
+strip stealingjustice
+	name Stealing Justice
+	artist Paul D. Storrie and Jason Howard with Terri Boyle
+	useclass graphicsmash
+	$1 stealingjustice
+end
+
+strip guardians
+	name The Guardians
+	artist Graveyard Greg and Webtroll
+	useclass graphicsmash
+	$1 guardians
+end
+
+strip thetwisting
+	name The Twisting
+	artist Patric Lewandowski
+	useclass graphicsmash
+	$1 thetwisting
+end
+
+strip vigilanteho
+	name Vigilante, Ho!
+	artist Meaghan Quinn and John Troutman
+	useclass graphicsmash
+	$1 vigilanteho
 end
