@@ -1,7 +1,7 @@
 # Strip Groups
 group andrews
 	desc Andrew's Favorite Strips
-	include userfriendly dilbert sinfest foxtrot badtech
+	include userfriendly dilbert foxtrot badtech
 	include pennyarcade joyoftech thefifthwave monty bc
 	include wizardofid garfield adamathome
 end	
@@ -29,6 +29,7 @@ class ucomics-gen
 	type generate
 	imageurl http://images.ucomics.com/comics/$1/%Y/$1%y%m%d.gif
 	provides any
+	
 end
 
 class unitedmedia-srch-comics
@@ -120,14 +121,14 @@ end
 
 # Non-standard strips
 strip avalonhigh
-        name Avalon High
-        homepage http://www.avalonhigh.com/
-        type search
-        searchpattern <IMG(.*?)ALT="comic"(.*?)SRC="(/comics/avalon\d+(.*?).gif)"
-        matchpart 3
-        baseurl $homepage
-        updated semidaily
-        provides latest
+	name Avalon High
+	homepage http://www.avalonhigh.com/
+	type search
+	searchpattern <IMG(.*?)ALT="comic"(.*?)SRC="(/comics/avalon\d+(.*?).gif)"
+	matchpart 3
+	baseurl $homepage
+	updated semidaily
+	provides latest
 end
 
 strip badtech
@@ -148,14 +149,14 @@ strip drfun
 end
 
 strip goats
-        name Goats
-        homepage http://www.goats.com/
-        type search
-        searchpattern <IMG(.*?)SRC="(/comix/\d+/goats\d+.gif)"
-        matchpart 2
-        baseurl http://www.goats.com/
-        updated semidaily
-        provides latest
+	name Goats
+	homepage http://www.goats.com/
+	type search
+	searchpattern <IMG(.*?)SRC="(/comix/\d+/goats\d+.gif)"
+	matchpart 2
+	baseurl http://www.goats.com/
+	updated semidaily
+	provides latest
 end
 
 strip jokesonyou
@@ -188,15 +189,6 @@ strip joyoftech
 	provides latest
 end
 
-#strip markfiore
-#      name Mark Fiore
-#      homepage http://www.sfgate.com/columnists/fiore/
-#      type search
-#	#searchpattern (http://www.sfgate.com/gate/graphics/\d+/\d+/\d+/fiore.*\.(gif|jpg))
-#	searchpattern <PARAM(.*?)NAME=movie(.*?)VALUE="(http://www.sfgate.com/gate/graphics/\d+/\d+/\d+/(.*?).swf)">
-#      matchpart 3
-#end
-
 strip megatokyo
 	name MegaTokyo
 	homepage http://www.megatokyo.com/
@@ -206,6 +198,7 @@ strip megatokyo
 	baseurl http://www.megatokyo.com/
 	updated semidaily
 	provides latest
+
 end
 
 strip mostlybusiness
@@ -341,52 +334,51 @@ strip userfriendly
 	homepage http://www.userfriendly.org/static/
 	type search
 	searchpage http://ars.userfriendly.org/cartoons/?id=%Y%m%d&mode=classic
-	#searchpattern <img(.*?)alt="Cartoon for(.*?)src="(.*?)"
 	searchpattern <img(.*?)border="0"(.*?)src="(http://www.userfriendly.org/cartoons/archives/%y(.*?)/uf(.*?).gif)"(.*?)>
 	matchpart 3
 	provides any
 end
 
 strip exploitnow
-        name Exploitation Now
-        homepage http://www.exploitationnow.com/
-        type search
-        searchpattern <IMG(.*?)SRC="(/comics/rb\d+.jpg)"
-        matchpart 2
-        baseurl http://www.exploitationnow.com/
-        updated semidaily
-        provides latest
+	name Exploitation Now
+	homepage http://www.exploitationnow.com/
+	type search
+	searchpattern <IMG(.*?)SRC="(/comics/rb\d+.jpg)"
+	matchpart 2
+	baseurl http://www.exploitationnow.com/
+	updated semidaily
+	provides latest
 end
 
 strip coolcat
-        name Cool Cat Studio
-        homepage http://www.coolcatstudio.com/
-        type search
-        searchpattern <IMG(.*?)SRC="(/comics/ccs\d+.jpg)"
-        matchpart 2
-        baseurl http://www.coolcatstudio.com/
-        updated semidaily
-        provides latest
+	name Cool Cat Studio
+	homepage http://www.coolcatstudio.com/
+	type search
+	searchpattern <IMG(.*?)SRC="(/comics/ccs\d+.jpg)"
+	matchpart 2
+	baseurl http://www.coolcatstudio.com/
+	updated semidaily
+	provides latest
 end
 
 strip classm
-        name The Class Menagerie
-        homepage http://www.theclassm.com/
-        type search
-        searchpattern <IMG(.*?)SRC="(/comics/cm\d+.gif)"
-        matchpart 2
-        baseurl http://www.theclassm.com/
-        updated semidaily
-        provides latest
+	name The Class Menagerie
+	homepage http://www.theclassm.com/
+	type search
+	searchpattern <IMG(.*?)SRC="(/comics/cm\d+.gif)"
+	matchpart 2
+	baseurl http://www.theclassm.com/
+	updated semidaily
+	provides latest
 end
 
 strip bruno
-        name The Bruno Daily Times
-        homepage http://www.brunostrip.com/bruno.html
-        type generate
-        imageurl http://www.brunostrip.com/%Ypics/%Y%m%d.gif
-        updated semidaily
-        provides any
+	name The Bruno Daily Times
+	homepage http://www.brunostrip.com/bruno.html
+	type generate
+	imageurl http://www.brunostrip.com/%Ypics/%Y%m%d.gif
+	updated semidaily
+	provides any
 end
 
 strip thinhline
@@ -401,33 +393,33 @@ strip thinhline
 end
 
 strip nukees
-        name Nukees
-        homepage http://www.nukees.com
-        type search
-        searchpattern <IMG(.*?)SRC="(/comics/\d+.gif)"
-        matchpart 2
-        baseurl http://www.nukees.com/
-        updated semidaily
-        provides latest
+	name Nukees
+	homepage http://www.nukees.com
+	type search
+	searchpattern <IMG(.*?)SRC="(/comics/\d+.gif)"
+	matchpart 2
+	baseurl http://www.nukees.com/
+	updated semidaily
+	provides latest
 end
 
 strip joeaverage
-        name Joe Average
-        homepage http://www.joeaverage.org
-        type search
-        searchpattern <IMG(.*?)SRC="(/comics/\d+.gif)"
-        matchpart 2
-        baseurl http://www.joeaverage.org/
-        updated semidaily
-        provides latest
+	name Joe Average
+	homepage http://www.joeaverage.org
+	type search
+	searchpattern <IMG(.*?)SRC="(/comics/\d+.gif)"
+	matchpart 2
+	baseurl http://www.joeaverage.org/
+	updated semidaily
+	provides latest
 end
 
 strip hotzp
-        name Bad Boys of Computer Science
-        homepage http://hotzp.com/badboys/
-        type generate
-        imageurl http://hotzp.com/badboys/new.jpg
-        provides latest
+	name Bad Boys of Computer Science
+	homepage http://hotzp.com/badboys/
+	type generate
+	imageurl http://hotzp.com/badboys/new.jpg
+	provides latest
 end
 
 strip flem
@@ -439,82 +431,82 @@ strip flem
 end
 
 strip angst
-        name Angst Technology
-        homepage http://www.inktank.com/
-        type generate
-        imageurl http://www.inktank.com/images/cartoons/%m-%d-%y.gif
-        provides any
+	name Angst Technology
+	homepage http://www.inktank.com/
+	type generate
+	imageurl http://www.inktank.com/images/cartoons/%m-%d-%y.gif
+	provides any
 end
 
 strip zapiro
-        name Zapiro
-        homepage http://www.mg.co.za/mg/zapiro/
-        type search
-        searchpattern (/mg/zapiro/(.*?)\.(gif|jpg))(.*?)ALT="cartoon"
-        matchpart 1
-        updated semidaily
-        baseurl http://www.mg.co.za
-        provides latest
+	name Zapiro
+	homepage http://www.mg.co.za/mg/zapiro/
+	type search
+	searchpattern (/mg/zapiro/(.*?)\.(gif|jpg))(.*?)ALT="cartoon"
+	matchpart 1
+	updated semidaily
+	baseurl http://www.mg.co.za
+	provides latest
 end
 
 strip madameve
-        name Madam and Eve
-        homepage http://www.mg.co.za/mg/m&e/today.htm
-        type search
-        searchpattern <IMG SRC="((.*?)\.gif)(.*)ALT="cartoon"
-        matchpart 1
-        updated semidaily
-        baseurl http://www.mg.co.za/mg/m&e/
-        provides latest
+	name Madam and Eve
+	homepage http://www.mg.co.za/mg/m&e/today.htm
+	type search
+	searchpattern <IMG SRC="((.*?)\.gif)(.*)ALT="cartoon"
+	matchpart 1
+	updated semidaily
+	baseurl http://www.mg.co.za/mg/m&e/
+	provides latest
 end
 
 strip clanofthecats
-        name Clan of the cats
-        homepage http://www.clanofthecats.com/
-        type generate
-        imageurl http://www.clanofthecats.com/comics/%Y%m%da.gif
-        provides any
+	name Clan of the cats
+	homepage http://www.clanofthecats.com/
+	type generate
+	imageurl http://www.clanofthecats.com/comics/%Y%m%da.gif
+	provides any
 end
 
 strip gpf
-        name General Protection Fault
-        homepage http://www.gpf-comics.com/
-        type search
-        searchpattern <IMG(.*?)SRC="(/comics/gpf\d+\.gif)"
-        matchpart 2
-        baseurl http://www.gpf-comics.com
-        updated semidaily
-        provides latest
+	name General Protection Fault
+	homepage http://www.gpf-comics.com/
+	type search
+	searchpattern <IMG(.*?)SRC="(/comics/gpf\d+\.gif)"
+	matchpart 2
+	baseurl http://www.gpf-comics.com
+	updated semidaily
+	provides latest
 end
 
 strip in2it
-        name In2It Online
-        homepage http://www.in2itonline.com/
-        type search
-        searchpattern <IMG(.*)SRC=(archive/\d+/comics/\d+\.gif)
-        matchpart 2
-        baseurl http://www.in2itonline.com/
-        updated semidaily
-        provides latest
+	name In2It Online
+	homepage http://www.in2itonline.com/
+	type search
+	searchpattern <IMG(.*)SRC=(archive/\d+/comics/\d+\.gif)
+	matchpart 2
+	baseurl http://www.in2itonline.com/
+	updated semidaily
+	provides latest
 end
 
 strip crfh
-          name College Roomies from Hell
-          homepage http://www.crfh.net
-          type generate
-          imageurl http://www.crfh.net/comics/crfh%Y%m%d\.jpg
-          provides any
+	name College Roomies from Hell
+	homepage http://www.crfh.net
+	type generate
+	imageurl http://www.crfh.net/comics/crfh%Y%m%d\.jpg
+	provides any
 end
 
 strip striptease
-        name Strip Tease Comic
-        homepage http://www.stripteasecomic.com/
-        type search
-        searchpattern <img(.*?)src="(strips\d+/\d\+.gif)"
-        matchpart 2
-        baseurl $homepage
-        updated semidaily
-        provides latest
+	name Strip Tease Comic
+	homepage http://www.stripteasecomic.com/
+	type search
+	searchpattern <img(.*?)src="(strips\d+/\d\+.gif)"
+	matchpart 2
+	baseurl $homepage
+	updated semidaily
+	provides latest
 end
 
 strip dorktower
@@ -537,12 +529,29 @@ strip thenorm
 end
 
 strip jerkcity
-  name Jerkcity
-  homepage http://www.jerkcity.com/
-  type generate
-  imageurl http://www.jerkcity.com/today.gif
-  updated daily
-  provides latest
+	name Jerkcity
+	homepage http://www.jerkcity.com/
+  	type generate
+	imageurl http://www.jerkcity.com/today.gif
+  	updated daily
+	provides latest
+end
+
+strip kevinandkell
+	name Kevin and Kell
+	homepage http://www.kevinandkell.com/
+	type generate
+	imageurl http://www.kevinandkell.com/%Y/strips/kk%Y%m%d.gif
+	provides any
+end
+
+strip freefall
+	name Freefall
+	homepage http://www.purrsia.com/freefall/
+	type generate
+	imageurl $homepage<code:use POSIX;my $w=strftime("%u",localtime($time_today));my $s=517+3*floor(($time_today-995839200)/604800);$s++if$w\>2;$s++if$w\>4;my$c=int(($s+99)/100);"ff${c}00/fv00$s.gif">
+	updated semidaily
+	provides any
 end
 
 # ucomics.com strips
@@ -900,6 +909,7 @@ strip lilabner
 	searchpattern (/comics/lilabner/archive/images/lilabner(.*?)\.gif)
 	matchpart 1
 	baseurl http://www.unitedmedia.com
+	provides latest
 end
 
 strip luann
@@ -915,6 +925,7 @@ strip lupo
 	searchpattern (/comics/lupo/archive/images/lupo(.*?)\.gif)
 	matchpart 1
 	baseurl http://www.unitedmedia.com
+	provides latest
 end
 
 strip marmaduke
@@ -946,6 +957,7 @@ strip motley
 	searchpattern (/comics/motley/archive/images/motley(.*?)\.gif)
 	matchpart 1
 	baseurl http://www.unitedmedia.com
+	provides latest
 end
 
 strip mrlowe
@@ -989,8 +1001,8 @@ strip pcnpixel
 end
 
 strip peanuts
-        name Peanuts
-        useclass unitedmedia-srch-comics
+	name Peanuts
+	useclass unitedmedia-srch-comics
 end
 
 strip pearls
@@ -1083,6 +1095,7 @@ strip stockcartoons
 	searchpattern (/comics/stockcartoons/archive/images/stockcartoons(.*?)\.(gif|jpg))
 	matchpart 1
 	baseurl http://www.unitedmedia.com
+	provides latest
 end
 
 strip strangebrew
@@ -1132,285 +1145,285 @@ end
 
 # sfgate strips
 strip babyblues
-        name Baby Blues
-        useclass sfgate-gen
-        $1 Baby_Blues
+	name Baby Blues
+	useclass sfgate-gen
+	$1 Baby_Blues
 end
 
 strip beetlebailey
-        name Beetle Bailey
-        useclass sfgate-gen
-        $1 Beetle_Bailey
+	name Beetle Bailey
+	useclass sfgate-gen
+	$1 Beetle_Bailey
 end
 
 strip blondie
-        name Blondie
-        useclass sfgate-gen
-        $1 $name
+	name Blondie
+	useclass sfgate-gen
+	$1 $name
 end
 
 strip crock
-        name Crock
-        useclass sfgate-gen
-        $1 $name
+	name Crock
+	useclass sfgate-gen
+	$1 $name
 end
 
 strip curtis
-        name Curtis
-        useclass sfgate-gen
-        $1 $name
+	name Curtis
+	useclass sfgate-gen
+	$1 $name
 end
 
 strip dennisthemenace
-        name Dennis the Menace
-        useclass sfgate-gen
-        $1 Dennis_The_Menace
+	name Dennis the Menace
+	useclass sfgate-gen
+	$1 Dennis_The_Menace
 end
 
 strip farley
-        name Farley
-        useclass sfgate-srch
-        $1 $name
-        $2 farley
+	name Farley
+	useclass sfgate-srch
+	$1 $name
+	$2 farley
 end
 
 strip funkywinkerbean
-        name Funky Winkerbean
-        useclass sfgate-gen
-        $1 Funky_Winkerbean
+	name Funky Winkerbean
+	useclass sfgate-gen
+	$1 Funky_Winkerbean
 end
 
 strip hagarthehorrible
-        name Hagar the Horrible
-        useclass sfgate-gen
-        $1 Hagar_The_Horrible
+	name Hagar the Horrible
+	useclass sfgate-gen
+	$1 Hagar_The_Horrible
 end
 
 strip mallardfillmore
-        name Mallard Fillmore
-        useclass sfgate-gen
-        $1 Mallard_Fillmore
+	name Mallard Fillmore
+	useclass sfgate-gen
+	$1 Mallard_Fillmore
 end
 
 strip mutts
-        name Mutts
-        useclass sfgate-gen
-        $1 $name
+	name Mutts
+	useclass sfgate-gen
+	$1 $name
 end
 
 strip newbreed
-        name New Breed
-        useclass sfgate-gen
-        $1 New_Breed
+	name New Breed
+	useclass sfgate-gen
+	$1 New_Breed
 end
 
 strip thephantom
-        name The Phantom
-        useclass sfgate-gen
-        $1 Phantom
+	name The Phantom
+	useclass sfgate-gen
+	$1 Phantom
 end
 
 strip piranhaclub
-        name Piranha Club
-        useclass sfgate-gen
-        $1 Piranha
+	name Piranha Club
+	useclass sfgate-gen
+	$1 Piranha
 end
 
 strip popeye
-        name Popeye
-        useclass sfgate-gen
-        $1 $name
+	name Popeye
+	useclass sfgate-gen
+	$1 $name
 end
 
 strip rhymeswithorange
-        name Rhymes with Orange
-        useclass sfgate-gen
-        $1 Rhymes_with_Orange
+	name Rhymes with Orange
+	useclass sfgate-gen
+	$1 Rhymes_with_Orange
 end
 
 strip sallyforth
-        name Sally Forth
-        useclass sfgate-gen
-        $1 Sally_Forth
+	name Sally Forth
+	useclass sfgate-gen
+	$1 Sally_Forth
 end
 
 strip shermanslagoon
-        name Sherman's Lagoon
-        useclass sfgate-gen
-        $1 Shermans_Lagoon
+	name Sherman's Lagoon
+	useclass sfgate-gen
+	$1 Shermans_Lagoon
 end
 
 strip sixchix
-        name Six Chix
-        useclass sfgate-gen
-        $1 6Chix
+	name Six Chix
+	useclass sfgate-gen
+	$1 6Chix
 end
 
 strip willynethel
-        name Willy 'n' Ethel
-        useclass sfgate-gen
-        $1 Willy_n_Ethel
+	name Willy 'n' Ethel
+	useclass sfgate-gen
+	$1 Willy_n_Ethel
 end
 
 strip zippythecolorpinhead
-        name Zippy the Pinhead (in color)
-        useclass sfgate-gen-zippycolor
-        $1 Zippy_the_Color_Pinhead
-        $2 Zippy_the_Pinhead
+	name Zippy the Pinhead (in color)
+	useclass sfgate-gen-zippycolor
+	$1 Zippy_the_Color_Pinhead
+	$2 Zippy_the_Pinhead
 end
 
 strip zippythepinhead
-        name Zippy the Pinhead
-        useclass sfgate-srch
-        $1 Zippy_the_Pinhead
-        $2 zippy
+	name Zippy the Pinhead
+	useclass sfgate-srch
+	$1 Zippy_the_Pinhead
+	$2 zippy
 end
 
 strip zits
-        name Zits
-        useclass sfgate-gen
-        $1 $name
+	name Zits
+	useclass sfgate-gen
+	$1 $name
 end
 
 #comicspage.com strips
 strip animal
-        name Animal Crackers
-        useclass comicspage-strips-srch
-        $1 animal
-        $2 ack
+	name Animal Crackers
+	useclass comicspage-strips-srch
+	$1 animal
+	$2 ack
 end
 
 strip annie
-        name Annie
-        useclass comicspage-strips-srch
-        $1 annie
-        $2 ann
+	name Annie
+	useclass comicspage-strips-srch
+	$1 annie
+	$2 ann
 end
 
 strip bound
-        name Bound and Gagged
-        useclass comicspage-strips-srch
-        $1 bound
-        $2 bgg
+	name Bound and Gagged
+	useclass comicspage-strips-srch
+	$1 bound
+	$2 bgg
 end
 
 strip brenda
-        name Brenda Starr
-        useclass comicspage-strips-srch
-        $1 brenda
-        $2 bsr
+	name Brenda Starr
+	useclass comicspage-strips-srch
+	$1 brenda
+	$2 bsr
 end
 
 strip broomhilda
-        name Broom Hilda
-        useclass comicspage-strips-srch
-        $1 broomhilda
-        $2 bhl
+	name Broom Hilda
+	useclass comicspage-strips-srch
+	$1 broomhilda
+	$2 bhl
 end
 
 strip cats
-        name Cats with Hands
-        useclass comicspage-strips-srch
-        $1 cats
-        $2 cwh
+	name Cats with Hands
+	useclass comicspage-strips-srch
+	$1 cats
+	$2 cwh
 end
 
 strip deardudley
-        name Dear Dudley
-        useclass comicspage-strips-srch
-        $1 deardudley
-        $2 drd
+	name Dear Dudley
+	useclass comicspage-strips-srch
+	$1 deardudley
+	$2 drd
 end
 
 strip dicktracy
-        name Dick Tracy
-        useclass comicspage-strips-srch
-        $1 dicktracy
-        $2 dty
+	name Dick Tracy
+	useclass comicspage-strips-srch
+	$1 dicktracy
+	$2 dty
 end
 
 strip fred
-        name Fred Basset
-        useclass comicspage-strips-srch
-        $1 fred
-        $2 fbt
+	name Fred Basset
+	useclass comicspage-strips-srch
+	$1 fred
+	$2 fbt
 end
 
 strip gasolinealley
-        name Gasoline Alley
-        useclass comicspage-strips-srch
-        $1 gasolinealley
-        $2 gas
+	name Gasoline Alley
+	useclass comicspage-strips-srch
+	$1 gasolinealley
+	$2 gas
 end
 
 strip gilthorp
-        name Gil Thorp
-        useclass comicspage-strips-srch
-        $1 gilthorp
-        $2 gtp
+	name Gil Thorp
+	useclass comicspage-strips-srch
+	$1 gilthorp
+	$2 gtp
 end
 
 strip grimmy
-        name Mother Goose and Grimm
-        useclass comicspage-strips-srch
-        $1 grimmy
-        $2 mgg
+	name Mother Goose and Grimm
+	useclass comicspage-strips-srch
+	$1 grimmy
+	$2 mgg
 end
 
 strip helen
-        name Helen, Sweetheart of the Internet
-        useclass comicspage-strips-srch
-        $1 helen
-        $2 hln
+	name Helen, Sweetheart of the Internet
+	useclass comicspage-strips-srch
+	$1 helen
+	$2 hln
 end
 
 strip herb
-        name Herb and Jamaal
-        useclass comicspage-strips-srch
-        $1 herb
-        $2 hjl
+	name Herb and Jamaal
+	useclass comicspage-strips-srch
+	$1 herb
+	$2 hjl
 end
 
 strip kudzu
-        name Kudzu
-        useclass comicspage-strips-srch
-        $1 kudzu
-        $2 kdz
+	name Kudzu
+	useclass comicspage-strips-srch
+	$1 kudzu
+	$2 kdz
 end
 
 strip lola
-        name Lola
-        useclass comicspage-strips-srch
-        $1 lola
-        $2 lol
+	name Lola
+	useclass comicspage-strips-srch
+	$1 lola
+	$2 lol
 end
 
 strip meehan
-        name Meehan Streak
-        useclass comicspage-strips-srch
-        $1 meehan
-        $2 mst
+	name Meehan Streak
+	useclass comicspage-strips-srch
+	$1 meehan
+	$2 mst
 end
 
 strip middletons
-        name The Middletons
-        useclass comicspage-strips-srch
-        $1 middletons
-        $2 mid
+	name The Middletons
+	useclass comicspage-strips-srch
+	$1 middletons
+	$2 mid
 end
 
 strip mixedmedia
-        name Mixed Media
-        useclass comicspage-strips-srch
-        $1 mixedmedia
-        $2 mix
+	name Mixed Media
+	useclass comicspage-strips-srch
+	$1 mixedmedia
+	$2 mix
 end
 
 strip monkeyhouse
-        name Monkeyhouse
-        useclass comicspage-strips-srch
-        $1 monkeyhouse
-        $2 mhs
+	name Monkeyhouse
+	useclass comicspage-strips-srch
+	$1 monkeyhouse
+	$2 mhs
 end
 
 #not updated regularly
@@ -1422,242 +1435,243 @@ strip profdoodles
 	searchpattern <img(.*?)src="(http://www.comicspage.com/daily/csdod/\d+csdod((-\w)?).gif)"
 	matchpart 2
 	updated semidaily
+	provides latest
 end
 
 strip ribman
-        name Captain Ribman
-        useclass comicspage-strips-srch
-        $1 ribman
-        $2 rib
+	name Captain Ribman
+	useclass comicspage-strips-srch
+	$1 ribman
+	$2 rib
 end
 
 strip shoe
-        name Shoe
-        useclass comicspage-strips-srch
-        $1 shoe
-        $2 sho
+	name Shoe
+	useclass comicspage-strips-srch
+	$1 shoe
+	$2 sho
 end
 
 strip spooner
-        name Spooner
-        useclass comicspage-strips-srch
-        $1 spooner
-        $2 spn
+	name Spooner
+	useclass comicspage-strips-srch
+	$1 spooner
+	$2 spn
 end
 
 strip sylvia
-        name Sylvia
-        useclass comicspage-strips-srch
-        $1 sylvia
-        $2 syl
+	name Sylvia
+	useclass comicspage-strips-srch
+	$1 sylvia
+	$2 syl
 end
 
 strip 9to5
-        name 9 to 5
-        useclass comicspage-panels-srch
-        $1 9to5
-        $2 ntf
+	name 9 to 5
+	useclass comicspage-panels-srch
+	$1 9to5
+	$2 ntf
 end
 
 strip bottomliners
-        name Bottom Liners
-        useclass comicspage-panels-srch
-        $1 bottomliners
-        $2 bls
+	name Bottom Liners
+	useclass comicspage-panels-srch
+	$1 bottomliners
+	$2 bls
 end
 
 strip charlie
-        name Charlie
-        useclass comicspage-panels-srch
-        $1 charlie
-        $2 chr
+	name Charlie
+	useclass comicspage-panels-srch
+	$1 charlie
+	$2 chr
 end
 
 strip computoon
-        name Compu-toon
-        useclass comicspage-panels-srch
-        $1 computoon
-        $2 cpt
+	name Compu-toon
+	useclass comicspage-panels-srch
+	$1 computoon
+	$2 cpt
 end
 
 strip dunagin
-        name Dunagin's People
-        useclass comicspage-panels-srch
-        $1 dunagin
-        $2 dpe
+	name Dunagin's People
+	useclass comicspage-panels-srch
+	$1 dunagin
+	$2 dpe
 end
 
 strip looseparts
-        name Loose Parts
-        useclass comicspage-panels-srch
-        $1 looseparts
-        $2 lsp
+	name Loose Parts
+	useclass comicspage-panels-srch
+	$1 looseparts
+	$2 lsp
 end
 
 strip loveis
-        name Love Is...
-        useclass comicspage-panels-srch
-        $1 loveis
-        $2 lis
+	name Love Is...
+	useclass comicspage-panels-srch
+	$1 loveis
+	$2 lis
 end
 
 strip pluggers
-        name Pluggers
-        useclass comicspage-panels-srch
-        $1 pluggers
-        $2 plg
+	name Pluggers
+	useclass comicspage-panels-srch
+	$1 pluggers
+	$2 plg
 end
 
 strip quigmans
-        name The Quiqmans
-        useclass comicspage-panels-srch
-        $1 quigmans
-        $2 qgm
+	name The Quiqmans
+	useclass comicspage-panels-srch
+	$1 quigmans
+	$2 qgm
 end
 
 strip singleslices
-        name Single Slices
-        useclass comicspage-panels-srch
-        $1 singleslices
-        $2 slc
+	name Single Slices
+	useclass comicspage-panels-srch
+	$1 singleslices
+	$2 slc
 end
 
 strip thatsjake
-        name That's Jake
-        useclass comicspage-panels-srch
-        $1 thatsjake
-        $2 tjk
+	name That's Jake
+	useclass comicspage-panels-srch
+	$1 thatsjake
+	$2 tjk
 end
 
 strip conrad
-        name Paul Conrad
-        useclass comicspage-editorial-srch
-        $1 conrad
-        $2 con
+	name Paul Conrad
+	useclass comicspage-editorial-srch
+	$1 conrad
+	$2 con
 end
 
 strip danziger
-        name Jeff Danziger
-        useclass comicspage-editorial-srch
-        $1 danziger
-        $2 dan
+	name Jeff Danziger
+	useclass comicspage-editorial-srch
+	$1 danziger
+	$2 dan
 end
 
 strip davies
-        name Matt Davies
-        useclass comicspage-editorial-srch
-        $1 davies
-        $2 dav
+	name Matt Davies
+	useclass comicspage-editorial-srch
+	$1 davies
+	$2 dav
 end
 
 strip handelsman
-        name Walt Handelsman
-        useclass comicspage-editorial-srch
-        $1 handelsman
-        $2 han
+	name Walt Handelsman
+	useclass comicspage-editorial-srch
+	$1 handelsman
+	$2 han
 end
 
 strip horsey
-        name David Horsey
-        useclass comicspage-editorial-srch
-        $1 horsey
-        $2 hor
+	name David Horsey
+	useclass comicspage-editorial-srch
+	$1 horsey
+	$2 hor
 end
 
 strip jones
-        name Taylor Jones
-        useclass comicspage-editorial-srch
-        $1 jones
-        $2 jon
+	name Taylor Jones
+	useclass comicspage-editorial-srch
+	$1 jones
+	$2 jon
 end
 
 strip locher
-        name Dick Locher
-        useclass comicspage-editorial-srch
-        $1 locher
-        $2 dik
+	name Dick Locher
+	useclass comicspage-editorial-srch
+	$1 locher
+	$2 dik
 end
 
 strip lowe
-        name Chan Lowe
-        useclass comicspage-editorial-srch
-        $1 lowe
-        $2 low
+	name Chan Lowe
+	useclass comicspage-editorial-srch
+	$1 lowe
+	$2 low
 end
 
 strip marlette
-        name Doug Marlette
-        useclass comicspage-editorial-srch
-        $1 marlette
-        $2 mar
+	name Doug Marlette
+	useclass comicspage-editorial-srch
+	$1 marlette
+	$2 mar
 end
 
 strip ohman
-        name Jack Ohman
-        useclass comicspage-editorial-srch
-        $1 ohman
-        $2 ohm
+	name Jack Ohman
+	useclass comicspage-editorial-srch
+	$1 ohman
+	$2 ohm
 end
 
 strip peters
-        name Mike Peters
-        useclass comicspage-editorial-srch
-        $1 peters
-        $2 pet
+	name Mike Peters
+	useclass comicspage-editorial-srch
+	$1 peters
+	$2 pet
 end
 
 strip powell
-        name Dwane Powell
-        useclass comicspage-editorial-srch
-        $1 powell
-        $2 pow
+	name Dwane Powell
+	useclass comicspage-editorial-srch
+	$1 powell
+	$2 pow
 end
 
 strip sack
-        name Steve Sack
-        useclass comicspage-editorial-srch
-        $1 sack
-        $2 sak
+	name Steve Sack
+	useclass comicspage-editorial-srch
+	$1 sack
+	$2 sak
 end
 
 strip stayskal
-        name Wayne Stayskal
-        useclass comicspage-editorial-srch
-        $1 stayskal
-        $2 sty
+	name Wayne Stayskal
+	useclass comicspage-editorial-srch
+	$1 stayskal
+	$2 sty
 end
 
 strip summers
-        name Dana Summers
-        useclass comicspage-editorial-srch
-        $1 summers
-        $2 sum
+	name Dana Summers
+	useclass comicspage-editorial-srch
+	$1 summers
+	$2 sum
 end
 
 strip telnaes
-        name Ann Telnaes
-        useclass comicspage-editorial-srch
-        $1 telnaes
-        $2 tel
+	name Ann Telnaes
+	useclass comicspage-editorial-srch
+	$1 telnaes
+	$2 tel
 end
 
 strip wasserman
-        name Dan Wasserman
-        useclass comicspage-editorial-srch
-        $1 wasserman
-        $2 was
+	name Dan Wasserman
+	useclass comicspage-editorial-srch
+	$1 wasserman
+	$2 was
 end
 
 strip wrightd
-        name Dick Wright
-        useclass comicspage-editorial-srch
-        $1 wrightd
-        $2 dwr
+	name Dick Wright
+	useclass comicspage-editorial-srch
+	$1 wrightd
+	$2 dwr
 end
 
 strip wright
-        name Don Wright
-        useclass comicspage-editorial-srch
-        $1 wright
-        $2 wrt
+	name Don Wright
+	useclass comicspage-editorial-srch
+	$1 wright
+	$2 wrt
 end

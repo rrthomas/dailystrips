@@ -47,3 +47,7 @@ as the script instead of the current directory
 
 Rene Weber <rene_dailyst@elvenlord.com>
 --useragent option, Debian packaging.
+
+Peter De Wachter <pdewacht@vub.ac.be>
+Addeed Kevin and Kell, Freefall
+Fixed --date option

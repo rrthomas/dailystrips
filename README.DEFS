@@ -100,7 +100,7 @@ First, the class is declared:
 This is just like a strip definition, except 'class' is the first line. The
 value for 'class' must be unique among other classes but will not conflict with
 the names of strips. Strip-specific elements are specified using special
-variables '$x', where 'x' is a number from 1 to 9. When the definition file is
+variables '$x', where 'x' is a number from 0 to 9. When the definition file is
 parsed, these variables are retrieved from the strip definition, shown below.
 
 strip calvinandhobbes

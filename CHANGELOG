@@ -8,6 +8,14 @@
   provide the strip for the requested date are downloaded when using the
   --date option.
 
+  Fixed the --date option yet again. (Peter De Wachter)
+
+  Misc code cleanups
+
+  Better error reporting in the definition parser
+
+  Misc bug fixes
+
 1.0.15
   13 July 2001
   Major change: now installs to system directories instead of one dir.

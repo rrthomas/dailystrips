@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    23 July 2001 12:24 EST
-# Current Revision: 1.0.16-pre1
+# Last Modified:    23 July 2001 20:23 EST
+# Current Revision: 1.0.16-pre2
 #
 
 # Set up
@@ -82,11 +82,9 @@ eval "use Date::Parse";
 if ($@ ne "") {
 	warn "Warning: Could not load Date::Parse module. --date option cannot be used\n";
 	$no_dateparse = 1;
-} else {
-	use Date::Parse;
 }
 
-$version = "1.0.16-pre1";
+$version = "1.0.16-pre2";
 
 $time_today = time;
 
@@ -96,12 +94,20 @@ $options{'defs_file'} = "/usr/share/dailystrips/strips.def";
 # Parse options - the must be checked first because others depend on their values
 for (@ARGV)	{
 	if (/^--basedir=(.*)$/o) {
-		unless (chdir $1) { die "Error: could not change directory to $1\n" }
+		unless (chdir $1) {
+			die "Error: could not change directory to $1\n";
+		}
 	} elsif (/^--defs=(.*)$/o) {
 		$options{'defs_file'} = $1;
 	} elsif (/^--date=(.*)$/o) {
-		if ($no_dateparse) {die "Error: cannot use --date - Date::Parse not installed\n"}
-		unless ($time_today = str2time $1) {die "Error: invalid date specified\n"}
+		if ($no_dateparse) {
+			die "Error: cannot use --date - Date::Parse not installed\n";
+		}
+		
+		unless ($time_today = str2time($1)) {
+			die "Error: invalid date specified\n";
+		}
+		
 		$options{'alt_date'} = 1;
 	} elsif (/^--nopersonal$/o) {
 		$no_personal_defs = 1;
@@ -154,12 +160,18 @@ $_, $val
 	} elsif (/^(--archive|-a)$/o) {
 		$options{'make_archive'} = 1;
 	} elsif (/^(--dailydir|-d)$/o) {
-		if (defined $options{'stripdir'}) {die "Error: --dailydir and --stripdir cannot be used together\n"}
+		if (defined $options{'stripdir'}) {
+			die "Error: --dailydir and --stripdir cannot be used together\n";
+		}
+		
 		$options{'dailydir'} = 1;
 	} elsif (/^(--save|-s)$/o) {
 		$options{'save_existing'} = 1;
 	} elsif ($_ =~ m/^--stripdir$/o) {
-		if (defined $options{'dailydir'}) {die "Error: --dailydir and --stripdir cannot be used together\n"}
+		if (defined $options{'dailydir'}) {
+			die "Error: --dailydir and --stripdir cannot be used together\n";
+		}
+		
 		$options{'stripdir'} = 1;
 	} elsif (/^--output=(.*)$/o) {
 		$options{'output_file'} = $1;
@@ -170,7 +182,7 @@ $_, $val
 	} elsif (/^(--version|-v)$/o) {
 		print "dailystrips version $version\n";
 		exit;
-	} elsif ($_ =~ m/^(--defs=.*|--basedir=(.*)|--date=.*|--verbose|--quiet|-q)$/o) {
+	} elsif ($_ =~ m/^(--defs=.*|--basedir=(.*)|--date=.*|--verbose|--quiet|-q|--nopersonal)$/o) {
 		# nothing done here - just prevent an "unknown option" error (all the more reason to switch to Getopts)
 	} elsif (/^($known_strips|all)$/io) {
 		if ($_ eq "all") {
@@ -187,10 +199,16 @@ $_, $val
 	} elsif (/^--noenvproxy$/o) {
 		$options{'no_env_proxy'} = 1;
 	} elsif (/^--proxyauth/o) {
-		unless (/^--proxyauth=((.*?):(.*?))$/o) {die "Error: incorrectly formatted proxy username/password\n"}
+		unless (/^--proxyauth=((.*?):(.*?))$/o) {
+			die "Error: incorrectly formatted proxy username/password\n";
+		}
+		
 		$options{'http_proxy_auth'} = $1;
 	} elsif (/^--proxy/o) {
-		unless (/^--proxy=http:\/\/(.*?):(.*?)(\/)?$/o) {die "Error: incorrectly formatted proxy server ('http://server:port' expected)\n"}
+		unless (/^--proxy=http:\/\/(.*?):(.*?)(\/)?$/o) {
+			die "Error: incorrectly formatted proxy server ('http://server:port' expected)\n";
+		}
+		
 		$options{'http_proxy'} = $1;
 	} elsif (/^--useragent=(.*)$/) {
 		$options{'user_agent'} = $1;
@@ -200,12 +218,16 @@ $_, $val
 }
 
 # verbose overrides quiet
-if ($options{'verbose'} and $options{'quiet'}) {undef $options{'quiet'}}
+if ($options{'verbose'} and $options{'quiet'}) {
+	undef $options{'quiet'};
+}
 
 # Un-needed vars
 undef $known_strips; undef $known_groups; undef $val;
 
-unless ($options{'quiet'}) {warn "dailystrips $version starting:\n"}
+unless ($options{'quiet'}) {
+	warn "dailystrips $version starting:\n"
+}
 
 unless (@get) {
 	die "Error: no strip specified (--list to list available strips)\n";
@@ -213,30 +235,51 @@ unless (@get) {
 
 #Set proxy
 if (!defined $options{'no_env_proxy'} and !defined $options{'http_proxy'} and defined $ENV{'http_proxy'} ) {
-	unless ($ENV{'http_proxy'} =~ m/^http:\/\/((.*?):(.*?))(\/)?$/o) {die "Error: incorrectly formatted proxy server environment variable\n('http://server:port' expected)\n"}
+	unless ($ENV{'http_proxy'} =~ m/^http:\/\/((.*?):(.*?))(\/)?$/o) {
+		die "Error: incorrectly formatted proxy server environment variable\n('http://server:port' expected)\n";
+	}
+	
 	$options{'http_proxy'} = $ENV{'http_proxy'};
 }
 if ($options{'http_proxy'}) {
-	unless ($options{'http_proxy'} =~ m/^http:\/\//io) {$options{'http_proxy'} = "http://" . $options{'http_proxy'}}
-	if ($options{'verbose'}) { warn "Using proxy server $options{'http_proxy'}\n" }
-	if ($options{'verbose'} and $options{'http_proxy_auth'}) { warn "Using proxy server authentication\n" }
+	unless ($options{'http_proxy'} =~ m/^http:\/\//i) {
+		$options{'http_proxy'} = "http://" . $options{'http_proxy'};
+	}
+	
+	if ($options{'verbose'}) {
+		warn "Using proxy server $options{'http_proxy'}\n";
+	}
+	
+	if ($options{'verbose'} and $options{'http_proxy_auth'}) {
+		warn "Using proxy server authentication\n";
+	}
 }
 
 if ($options{'local_mode'}) {
-	unless ($options{'quiet'}) { warn "Operating in local mode\n" }
+	unless ($options{'quiet'}) {
+		warn "Operating in local mode\n";
+	}
 	
 	if (defined $options{'dailydir'}) {
-		unless ($options{'quiet'}) { warn "Operating in daily directory mode\n" }
-		
-		unless (-d $short_date) {
-			mkdir ($short_date, 0755) or die "Error: could not create today's directory ($short_date/)\n"
+		unless ($options{'quiet'}) {
+			warn "Operating in daily directory mode\n";
 		}
 		
-		open(STDOUT, ">$short_date/dailystrips-$short_date.html") or die "Error: could not open HTML file ($short_date/dailystrips-$short_date.html) for writing\n";
+		unless (-d $short_date) {
+			unless(mkdir ($short_date, 0755)) {
+				die "Error: could not create today's directory ($short_date/)\n";
+			}
+		}
+		
+		unless(open(STDOUT, ">$short_date/dailystrips-$short_date.html")) {
+			die "Error: could not open HTML file ($short_date/dailystrips-$short_date.html) for writing\n";
+		}
 		
 		system("rm -f dailystrips-$short_date.html;ln -s $short_date/dailystrips-$short_date.html dailystrips-$short_date.html");
 	} else {
-		open(STDOUT, ">dailystrips-$short_date.html") or die "Error: could not open HTML file (dailystrips-$short_date.html) for writing\n";
+		unless(open(STDOUT, ">dailystrips-$short_date.html")) {
+			die "Error: could not open HTML file (dailystrips-$short_date.html) for writing\n";
+		}
 	}
 
 	unless ($options{'alt_date'}) {
@@ -282,7 +325,10 @@ if ($options{'local_mode'}) {
 		unless (grep(/<a href="dailystrips-$short_date.html">/, @archive)) {
 			for (@archive) {
 				if (s/(<!--insert below-->)/$1\n<a href="dailystrips-$short_date.html">$long_date<\/a><br>/) {
-					open(ARCHIVE, ">archive.html") or die "Error: could open archive.html for writing\n";
+					unless(open(ARCHIVE, ">archive.html")) {
+						die "Error: could open archive.html for writing\n";
+					}
+					
 					print ARCHIVE @archive;
 					close(ARCHIVE);
 					last;
@@ -322,8 +368,13 @@ if ($options{'local_mode'}) {
 
 
 } elsif (defined $options{'output_file'}) {
-	unless ($options{'quiet'}) { warn "Writing to file $options{'output_file'}\n" }
-	open(STDOUT, ">$options{'output_file'}") or die "Could not open output file ($options{'output_file'}) for writing\n";
+	unless ($options{'quiet'}) {
+		warn "Writing to file $options{'output_file'}\n";
+	}
+	
+	unless (open(STDOUT, ">$options{'output_file'}")) {
+		die "Could not open output file ($options{'output_file'}) for writing\n";
+	}
 }
 
 
@@ -380,7 +431,7 @@ if ($options{'local_mode'} and !$options{'quiet'}) {
 	if ($options{'verbose'}) {
 		warn "\nDownloading strip files:\n"
 	} else {
-		print STDERR "Downloading strip files..."
+		print STDERR "Downloading strip files...";
 	}
 }
 
@@ -389,10 +440,15 @@ for (@strips) {
 	my ($img_line, $local_name, $image, $ext);
 	my ($local_name_yesterday);
 	
-	if ($options{'verbose'} and $options{'local_mode'}) { warn "Downloading strip file for " . lc((split(/;/, $_))[0]) . "\n" }
+	if ($options{'verbose'} and $options{'local_mode'}) {
+		warn "Downloading strip file for " . lc((split(/;/, $_))[0]) . "\n";
+	}
 	
 	if ($img_addr =~ "^unavail") {
-		if ($options{'verbose'}) { warn "Error: $strip: could not retrieve URL\n" }
+		if ($options{'verbose'}) {
+			warn "Error: $strip: could not retrieve URL\n";
+		}
+		
 		$img_line = "[Error - unable to retrieve URL]";
 	} else {
 		if ($options{'local_mode'}) {
@@ -403,7 +459,9 @@ for (@strips) {
 			if ($options{'stripdir'}) {
  				$local_name_yesterday = "$name/$short_date_yesterday$ext";
  				$local_name = "$name/$short_date$ext";
- 				unless ( -d $strip) { mkdir $name, 0755; }
+ 				unless ( -d $strip) {
+ 					mkdir $name, 0755;
+ 				}
  			} elsif ($options{'dailydir'}) {
 				$local_name_yesterday = "$short_date_yesterday/$name-$short_date_yesterday$ext";
 				$local_name = "$short_date/$name-$short_date$ext";
@@ -430,11 +488,17 @@ for (@strips) {
 				$image = &http_get($img_addr, $referer, $prefetch);
 				
 				if ($image =~ m/^ERROR/o) {
-					if ($options{'verbose'}) { warn "Error: $strip: could not download strip\n" }
+					if ($options{'verbose'}) {
+						warn "Error: $strip: could not download strip\n";
+					}
+					
 					$img_line = "[Error - unable to download image]";
 				} else {
-					if (-l $local_name) {unlink $local_name} # in case today's file is a symlink to yesterday's
-					
+					if (-l $local_name) {
+						# in case today's file is a symlink to yesterday's
+						unlink $local_name;
+					}
+
 					open(IMAGE, ">$local_name");
 					print IMAGE $image;
 					close(IMAGE);
@@ -491,7 +555,7 @@ END_STRIP
 #"#kwrite's syntax highlighting is buggy.. this preserves my sanity
 if ($options{'local_mode'} and !$options{'quiet'}) {
 	if ($options{'verbose'}) {
-		warn "\nDownloading strip files: done\n"
+		warn "Downloading strip files: done\n"
 	} else {
 		warn "done\n"
 	}
@@ -533,7 +597,10 @@ sub http_get {
 		($status = $response->status_line()) =~ s/^(\d+)/$1:/;
 
 		if ($response->is_error()) {
-			if ($options{'verbose'}) { warn "Error: could not download prefetch URL $prefetch: $status\n" }
+			if ($options{'verbose'}) {
+				warn "Error: could not download prefetch URL $prefetch: $status\n";
+			}
+			
 			return "ERROR: $status";
 		}
 	}
@@ -544,7 +611,10 @@ sub http_get {
 	($status = $response->status_line()) =~ s/^(\d+)/$1:/;
 
 	if ($response->is_error()) {
-		if ($options{'verbose'}) { warn "Error: could not download $url: $status\n" }
+		if ($options{'verbose'}) {
+			warn "Error: could not download $url: $status\n";
+		}
+		
 		return "ERROR: $status";
 	} else {
 		return $response->content;
@@ -556,7 +626,10 @@ sub get_strip {
 	my ($page, $addr);
 	
 	if ($options{'alt_date'} and $defs{$strip}{'provides'} eq "latest") {
-		if ($options{'verbose'}) { warn "Warning: strip $strip not compatible with --date, skipping\n" }
+		if ($options{'verbose'}) {
+			warn "Warning: strip $strip not compatible with --date, skipping\n";
+		}
+		
 		next;
 	}
 	
@@ -564,13 +637,19 @@ sub get_strip {
 		$page = &http_get($defs{$strip}{'searchpage'});
 
 		if ($page =~ m/^ERROR/) {
-			if ($options{'verbose'}) { warn "Error: $strip: could not download searchpage $defs{$strip}{'searchpage'}\n" }
+			if ($options{'verbose'}) {
+				warn "Error: $strip: could not download searchpage $defs{$strip}{'searchpage'}\n";
+			}
+			
 			$addr = "unavail-server";
 		} else {
 			$page =~ m/$defs{$strip}{'searchpattern'}/i;
 			
 			unless (${$defs{$strip}{'matchpart'}}) {
-				if ($options{'verbose'}) { warn "Error: $strip: searchpattern $defs{$strip}{'searchpattern'} did not match anything in searchpage $defs{$strip}{'searchpage'}\n" }
+				if ($options{'verbose'}) {
+					warn "Error: $strip: searchpattern $defs{$strip}{'searchpattern'} did not match anything in searchpage $defs{$strip}{'searchpage'}\n";
+				}
+				
 				$addr = "unavail-nomatch";
 			} else {
 				$addr = $defs{$strip}{'baseurl'} . "${$defs{$strip}{'matchpart'}}";
@@ -593,22 +672,27 @@ sub get_defs {
 	my (@strips, %nostrips, @okstrips);
 	my $line;
 	
-	open(DEFS, "<$defs_file") or die "Error: could not open strip definitions file $defs_file\n";
+	unless(open(DEFS, "<$defs_file")) {
+		"Error: could not open strip definitions file $defs_file\n";
+	}
+	
 	my @defs_file = <DEFS>;
 	close(DEFS);
 	
-	if ($options{'verbose'}) { warn "Loading definitions from file $defs_file\n" }
+	if ($options{'verbose'}) {
+		warn "Loading definitions from file $defs_file\n";
+	}
 	
 	for (@defs_file) {
 		$line++;
 		
 		chomp;
-		s/#(.*)//o; s/^\s+//o; s/\s+$//o; #s/^\s*#(.*)$//; s/^\s*$/o;
+		s/#(.*)//; s/^\s+//; s/\s+$//;
 		
 		next if $_ eq "";
 		
 		if (!$sectype) {
-			if (/^strip\s+(\w+)$/io)
+			if (/^strip\s+(\w+)$/i)
 			{
 				if (defined ($defs{$1}))
 				{
@@ -618,7 +702,7 @@ sub get_defs {
 				$strip = $1;
 				$sectype = "strip";
 			}
-			elsif (/^class\s+(.*)$/io)
+			elsif (/^class\s+(.*)$/i)
 			{
 				if (defined ($classes{$1}))
 				{
@@ -628,7 +712,7 @@ sub get_defs {
 				$class = $1;
 				$sectype = "class";
 			}
-			elsif (/^group\s+(.*)$/io)
+			elsif (/^group\s+(.*)$/i)
 			{
 				if (defined ($groups{$1}))
 				{
@@ -638,12 +722,12 @@ sub get_defs {
 				$group = $1;
 				$sectype = "group";
 			}
-			elsif (/^(.*)/o)
+			elsif (/^(.*)/)
 			{
 				die "Error: Unknown keyword '$1' at $defs_file line $line\n";
 			}
 		}
-		elsif (/^end$/io)
+		elsif (/^end$/i)
 		{
 			if ($sectype eq "class")
 			{
@@ -654,6 +738,7 @@ sub get_defs {
 				if ($defs{$strip}{'useclass'}) {
 					my $using_class = $defs{$strip}{'useclass'};
 					
+					# import vars from class
 					for (qw(homepage searchpage searchpattern baseurl imageurl referer prefetch)) {
 						if ($classes{$using_class}{$_} and !$defs{$strip}{$_}) {
 							my $classvar = $classes{$using_class}{$_};
@@ -663,7 +748,7 @@ sub get_defs {
 						}
 					}
 				
-					for (qw(type matchpart updated)) {
+					for (qw(type matchpart updated provides)) {
 						if ($classes{$using_class}{$_} and !$defs{$strip}{$_}) {
 							$defs{$strip}{$_} = $classes{$using_class}{$_};
 						}
@@ -683,22 +768,30 @@ sub get_defs {
 				
 				#other vars in definition
 				for (qw(homepage searchpage searchpattern imageurl baseurl referer prefetch)) {
-					if ($defs{$strip}{$_}) {$defs{$strip}{$_} =~ s/\$(name|homepage|searchpage|searchpattern|imageurl|baseurl|referer|prefetch)/$defs{$strip}{$1}/g}
+					if ($defs{$strip}{$_}) {
+						$defs{$strip}{$_} =~ s/\$(name|homepage|searchpage|searchpattern|imageurl|baseurl|referer|prefetch)/$defs{$strip}{$1}/g;
+					}
 				}			
 		
 				#dates		
 				for (qw(homepage searchpage searchpattern imageurl baseurl referer prefetch)) {
-					if ($defs{$strip}{$_}) { $defs{$strip}{$_} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge }
+					if ($defs{$strip}{$_}) {
+						$defs{$strip}{$_} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge;
+					}
 				}
 				
 				# <code:> stuff
 				for (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
-					if ($defs{$strip}{$_}) { $defs{$strip}{$_} =~ s/<code:(.*?)(?<!\\)>/&my_eval($1)/ge }
+					if ($defs{$strip}{$_}) {
+						$defs{$strip}{$_} =~ s/<code:(.*?)(?<!\\)>/&my_eval($1)/ge;
+					}
 				}
 				
 				#sanity check vars
 				for (qw(name homepage type)) {
-					unless ($defs{$strip}{$_})     { die "Error: strip $strip has no '$_' value\n" }
+					unless ($defs{$strip}{$_}) {
+						die "Error: strip $strip has no '$_' value\n";
+					}
 				}
 				
 				for (qw(homepage searchpage baseurl imageurl)){	
@@ -708,10 +801,21 @@ sub get_defs {
 				}
 				
 				if ($defs{$strip}{'type'} eq "search") {
-					unless ($defs{$strip}{'searchpattern'}) { die "Error: strip $strip has no 'searchpattern' value\n" }
-					unless ($defs{$strip}{'matchpart'})     { die "Error: strip $strip has no 'matchpart' value\n" }
+					unless ($defs{$strip}{'searchpattern'}) {
+						die "Error: strip $strip has no 'searchpattern' value in $defs_file\n";
+					}
+					
+					unless ($defs{$strip}{'matchpart'}) {
+						die "Error: strip $strip has no 'matchpart' value in $defs_file\n";
+					}
 				} else {
-					unless ($defs{$strip}{'imageurl'})      { die "Error: strip $strip has no 'imageurl' value\n" }
+					unless ($defs{$strip}{'imageurl'}) {
+						die "Error: strip $strip has no 'imageurl' value in $defs_file\n";
+					}
+				}
+				
+				unless ($defs{$strip}{'provides'}) {
+					die "Error: strip $strip has no 'provides' value in $defs_file\n";
 				}
 				
 				#debugger
@@ -728,7 +832,9 @@ sub get_defs {
 			{
 				chop $groups{$group}{'strips'};
 				
-				unless ($groups{$group}{'desc'}) { $groups{$group}{'desc'} = "[No description]"}
+				unless ($groups{$group}{'desc'}) {
+					$groups{$group}{'desc'} = "[No description]";
+				}
 				
 				undef $group;
 			}
@@ -736,60 +842,62 @@ sub get_defs {
 			undef $sectype;
 		}
 		elsif ($sectype eq "class") {
-			if (/^homepage\s+(.+)$/io) {
-				my $val = $1;
-				$classes{$class}{'homepage'} = $val;
+			if (/^homepage\s+(.+)$/i) {
+				$classes{$class}{'homepage'} = $1;
 			}
-			elsif (/^type\s+(.+)$/io)
+			elsif (/^type\s+(.+)$/i)
 			{
-				my $val = $1;
-				unless ($val =~ m/^(search|generate)$/io) { die "Error: invalid types at $defs_file line $line\n" }
-				$classes{$class}{'type'} = $val;
+				unless ($1 =~ m/^(search|generate)$/io) {
+					die "Error: invalid type at $defs_file line $line\n";
+				}
+				
+				$classes{$class}{'type'} = $1;
 			}
-			elsif (/^searchpage\s+(.+)$/io)
+			elsif (/^searchpage\s+(.+)$/i)
 			{
-				my $val = $1;
-				$classes{$class}{'searchpage'} = $val;
+				$classes{$class}{'searchpage'} = $1;
 			}
-			elsif (/^searchpattern\s+(.+)$/io)
+			elsif (/^searchpattern\s+(.+)$/i)
 			{
 				$classes{$class}{'searchpattern'} = $1;
 			}
-			elsif (/^matchpart\s+(.+)$/o)
+			elsif (/^matchpart\s+(.+)$/)
 			{
-				my $val = $1;
-				unless ($val =~ m/^\d+$/io) { die "Error: invalid matchpart at $defs_file line $line\n" }
-				$classes{$class}{'matchpart'} = $val;
+				unless ($1 =~ m/^(\d)$/) {
+					die "Error: invalid 'matchpart' at $defs_file line $line\n";
+				}
+				
+				$classes{$class}{'matchpart'} = $1;
 			}
-			elsif (/^baseurl\s+(.+)$/io)
+			elsif (/^baseurl\s+(.+)$/i)
 			{
-				my $val = $1;
-				$classes{$class}{'baseurl'} = $val;
+				$classes{$class}{'baseurl'} = $1;
 			}
-			elsif (/^imageurl\s+(.+)$/io)
+			elsif (/^imageurl\s+(.+)$/i)
 			{
-				my $val = $1;
-				$classes{$class}{'imageurl'} = $val;
+				$classes{$class}{'imageurl'} = $1;
 			}
 			elsif (/^referer\s+(.+)$/io)
 			{
 				$classes{$class}{'referer'} = $1;
 			}
-			elsif (/^prefetch\s+(.+)$/io)
+			elsif (/^prefetch\s+(.+)$/i)
 			{
 				$classes{$class}{'prefetch'} = $1;
 			}
-			elsif (/^updated\s+(.+)$/io)
+			elsif (/^updated\s+(.+)$/i)
 			{
 				$classes{$class}{'updated'} = $1;
 			}
-			elsif (/^provides\s+(.+)$/io)
+			elsif (/^provides\s+(.+)$/i)
 			{
-				#my $val = $1;
-				unless ($1 =~ m/^(any|latest)$/io) { die "Error: invalid provides at $defs_file line $line\n" }
+				unless ($1 =~ m/^(any|latest)$/i) {
+					die "Error: invalid 'provides' at $defs_file line $line\n";
+				}
+				
 				$classes{$class}{'provides'} = $1;
 			}
-			elsif (/^(.+)(\s+?)/io)
+			elsif (/^(.+)\s+?/io)
 			{
 				die "Unknown keyword '$1' at $defs_file line $line\n";
 			}
@@ -799,85 +907,87 @@ sub get_defs {
 			{
 				$defs{$strip}{'name'} = $1;
 			}
-			elsif (/^useclass\s+(.+)$/io)
+			elsif (/^useclass\s+(.+)$/i)
 			{
 				$defs{$strip}{'useclass'} = $1;
 			}
-			elsif (/^homepage\s+(.+)$/io) {
-				my $val = $1;
-				$defs{$strip}{'homepage'} = $val;
+			elsif (/^homepage\s+(.+)$/i) {
+				$defs{$strip}{'homepage'} = $1;
 			}
-			elsif (/^type\s+(.+)$/io)
+			elsif (/^type\s+(.+)$/i)
 			{
-				my $val = $1;
-				unless ($val =~ m/^(search|generate)$/io) { die "Error: invalid type at $defs_file line $line\n" }
-				$defs{$strip}{'type'} = $val;
+				unless ($1 =~ m/^(search|generate)$/i) {
+					die "Error: invalid 'type' at $defs_file line $line\n";
+				}
+				
+				$defs{$strip}{'type'} = $1;
 			}
-			elsif (/^searchpage\s+(.+)$/io)
+			elsif (/^searchpage\s+(.+)$/i)
 			{
-				my $val = $1;
-				$defs{$strip}{'searchpage'} = $val;
+				$defs{$strip}{'searchpage'} = $1;
 			}
-			elsif (/^searchpattern\s+(.+)$/io)
+			elsif (/^searchpattern\s+(.+)$/i)
 			{
 				$defs{$strip}{'searchpattern'} = $1;
 			}
-			elsif (/^matchpart\s+(.+)$/o)
+			elsif (/^matchpart\s+(.+)$/i)
 			{
-				my $val = $1;
-				unless ($val =~ m/^\d+$/io) { die "Error: invalid matchpart at $defs_file line $line\n" }
-				$defs{$strip}{'matchpart'} = $val;
+				unless ($1 =~ m/^(\d+)$/) {
+					die "Error: invalid 'matchpart' at $defs_file line $line\n";
+				}
+				
+				$defs{$strip}{'matchpart'} = $1;
 			}
-			elsif (/^baseurl\s+(.+)$/io)
+			elsif (/^baseurl\s+(.+)$/i)
 			{
-				my $val = $1;
-				$defs{$strip}{'baseurl'} = $val;
+				$defs{$strip}{'baseurl'} = $1;
 			}
-			elsif (/^imageurl\s+(.+)$/io)
+			elsif (/^imageurl\s+(.+)$/i)
 			{
-				my $val = $1;
-				$defs{$strip}{'imageurl'} = $val;
+				$defs{$strip}{'imageurl'} = $1;
 			}
-			elsif (/^updated\s+(.+)$/io)
+			elsif (/^updated\s+(.+)$/i)
 			{
 				$defs{$strip}{'updated'} = $1;
 			}
-			elsif (/^referer\s+(.+)$/io)
+			elsif (/^referer\s+(.+)$/i)
 			{
 				$defs{$strip}{'referer'} = $1;
 			}
-			elsif (/^prefetch\s+(.+)$/io)
+			elsif (/^prefetch\s+(.+)$/i)
 			{
 				$defs{$strip}{'prefetch'} = $1;
 			}
-			elsif (/^(\$[0-9])\s+(.+)$/io)
+			elsif (/^(\$\d)\s+(.+)$/i)
 			{
 				$defs{$strip}{$1} = $2;
 			}
-			elsif (/^provides\s+(.+)$/io)
+			elsif (/^provides\s+(.+)$/i)
 			{
-				#my $val = $1;
-				unless ($1 =~ m/^(any|latest)$/io) { die "Error: invalid provides at $defs_file line $line\n" }
+				unless ($1 =~ m/^(any|latest)$/i) {
+					die "Error: invalid 'provides' at $defs_file line $line\n";
+				}
+				
 				$defs{$strip}{'provides'} = $1;
 			}
-			elsif (/^(.+)(\s+?)/io)
+			elsif (/^(.+)\s+?/i)
 			{
 				die "Error: Unknown keyword '$1' at $defs_file line $line, in strip $strip\n";
 			}
-		} elsif ($sectype eq "group") {
-			if (/^desc\s+(.+)$/io)
+		} elsif ($sectype eq  "group") {
+			if (/^desc\s+(.+)$/i)
 			{
 				$groups{$group}{'desc'} = $1;
 			}
-			elsif (/^include\s+(.+)$/io)
+			elsif (/^include\s+(.+)$/i)
 			{
 				$groups{$group}{'strips'} .= join(';', split(/\s+/, $1)) . ";";
 			}
-			elsif (/^exclude\s+(.+)$/io)
+			elsif (/^exclude\s+(.+)$/i)
 			{
 				$groups{$group}{'nostrips'} .= join(';', split(/\s+/, $1)) . ";";
 			}
-			elsif (/^(.+)(\s+?)/io)
+			elsif (/^(.+)\s+?/i)
 			{
 				die "Error: Unknown keyword '$1' at $defs_file line $line, in group $group\n";
 			}
@@ -897,7 +1007,10 @@ sub get_defs {
 		}
 		
 		foreach (@strips) {
-			unless ($defs{$_}) { warn "Warning: group $group references non-existant strip $_\n" }
+			unless ($defs{$_}) {
+				warn "Warning: group $group references non-existant strip $_\n";
+			}
+			
 			next if ($nostrips{$_});
 			push (@okstrips,$_);
 		}
