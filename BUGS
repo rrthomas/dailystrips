@@ -1,4 +1,9 @@
 1.0.13
+  04 June 2001
+  The new <code:> feature seems to be ok. The only issue may be the escaping of
+  > symbols in the code. I think I've handled it properly - let me know if there
+  are any problems or if there's a better way.
+
   15 May 2001
   sfgate still isn't working right. They seem to have devised some way of
   only allowing strip images to be downloaded when you're actually looking
