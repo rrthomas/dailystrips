@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    29 Aug 2001, 19:57 EST
+# Last Modified:    29 Aug 2001, 20:48 EST
 # Current Revision: 1.0.18-pre3
 #
 
