@@ -4543,3 +4543,75 @@ strip grimmy
 	imageurl http://www.grimmy.com/images/%Y/MGG%m%d%y.gif
 	provides any
 end
+
+strip biloynano
+	name Tira ecol de Bilo y Nano
+	homepage http://tira.escomposlinux.org/
+	type generate
+	imageurl http://tira.escomposlinux.org/tira.png
+	provides latest
+end
+
+strip gallegoyrey
+	name Gallego Y Rey
+	homepage http://www.elmundo.es/diario/opinion/humor.html
+	type generate
+	imageurl http://estaticos.elmundo.es/diario/Library/chiste1.gif
+	provides latest
+end
+
+strip ricardomundo
+	name Ricardo (El Mundo)
+	homepage http://www.elmundo.es/diario/opinion/humor2.html
+	type generate
+	imageurl http://estaticos.elmundo.es/diario/Library/%dchiste2.gif
+	provides latest
+end
+
+strip idigoras
+	name Idigoras
+	homepage http://www.diariosur.es/edicion/actualidad/vinnetas/idigoras.gif
+	type generate
+	imageurl http://www.diariosur.es/edicion/actualidad/vinnetas/idigoras.gif
+	provides latest
+end
+
+strip zulet
+	name Zulet
+	homepage http://www.diariosur.es/edicion/actualidad/vinnetas/zulet.gif
+	type generate
+	imageurl http://www.diariosur.es/edicion/actualidad/vinnetas/zulet.gif
+	provides latest
+end
+
+strip elgar
+	name Elgar
+	homepage http://www.diariosur.es/edicion/actualidad/vinnetas/elgar.gif
+	type generate
+	imageurl http://www.diariosur.es/edicion/actualidad/vinnetas/elgar.gif
+	provides latest
+end
+
+strip pachideportes
+	name Pachi
+	homepage http://www.diariosur.es/edicion/actualidad/vinnetas/pachideportes.gif
+	type generate
+	imageurl http://www.diariosur.es/edicion/actualidad/vinnetas/pachideportes.gif
+	provides latest
+end
+
+strip biloynanoenglish
+	name Tira ecol de Bilo y Nano (english)
+	homepage http://comic.escomposlinux.org/
+	type generate
+	imageurl http://comic.escomposlinux.org/strip.png
+	provides latest
+end
+
+
+strip amores
+	name Amor es...
+	useclass comicspage-panels-gen
+	$1 amores
+	$2 amr
+end
