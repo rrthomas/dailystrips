@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    02 Jan 2002, 02:19 EST
+# Last Modified:    07 Jan 2002, 17:25 EST
 # Current Revision: 1.0.21pre1
 #
 
@@ -320,21 +320,25 @@ if ($options{'local'}) {
 			}
 		}
 		
-		unless(open(STDOUT, ">$short_date/dailystrips-$short_date.html")) {
-			die "Error: could not open HTML file ($short_date/dailystrips-$short_date.html) for writing\n";
-		}
+		#unless(open(STDOUT, ">dailystrips-$short_date.html")) {
+		#	die "Error: could not open HTML file (dailystrips-$short_date.html) for writing\n";
+		#}
 		
-		unlink("dailystrips-$short_date.html");
+		#unlink("dailystrips-$short_date.html");
 		
-		unless ($^O =~ /Win32/) {
-			system("ln -s $short_date/dailystrips-$short_date.html dailystrips-$short_date.html");
-		} else {
-			# any suitable hack for Win32? (create duplicate files, etc)
-		}
-	} else {
-		unless(open(STDOUT, ">dailystrips-$short_date.html")) {
-			die "Error: could not open HTML file (dailystrips-$short_date.html) for writing\n";
-		}
+		#unless ($^O =~ /Win32/) {
+		#	system("ln -s $short_date/dailystrips-$short_date.html dailystrips-$short_date.html");
+		#} else {
+		#	# any suitable hack for Win32? (create duplicate files, etc)
+		#}
+	}# else {
+		#unless(open(STDOUT, ">dailystrips-$short_date.html")) {
+		#	die "Error: could not open HTML file (dailystrips-$short_date.html) for writing\n";
+		#}
+	#}
+	
+	unless(open(STDOUT, ">dailystrips-$short_date.html")) {
+		die "Error: could not open HTML file (dailystrips-$short_date.html) for writing\n";
 	}
 
 	unless ($options{'date'}) {
@@ -384,7 +388,7 @@ if ($options{'local'}) {
 			for (@archive) {
 				if (s/(<!--insert below-->)/$1\n<a href="dailystrips-$short_date.html">$long_date<\/a><br>/) {
 					unless(open(ARCHIVE, ">archive.html")) {
-						die "Error: could open archive.html for writing\n";
+						die "Error: could now open archive.html for writing\n";
 					}
 					
 					print ARCHIVE @archive;
@@ -415,7 +419,7 @@ if ($options{'local'}) {
 				print PREVIOUS @previous_page;
 				close(PREVIOUS);
 			} else {
-				 warn "Warning: could open dailystrips-$short_date_yesterday.html for writing\n";
+				 warn "Warning: could not open dailystrips-$short_date_yesterday.html for writing\n";
 			}
 		} else {
 			warn "Warning: did not find any tag in previous day's file to make today's link\n";
