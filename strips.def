@@ -1057,6 +1057,14 @@ strip thenorm
 	provides any
 end
 
+strip somethingpositive
+	name Something Positive
+	homepage http://www.somethingpositive.net/
+	type generate
+	imageurl http://www.somethingpositive.net/arch/sp%m%d%Y.gif
+	provides latest
+end
+
 # ucomics.com strips
 strip adamathome
 	name Adam@home
