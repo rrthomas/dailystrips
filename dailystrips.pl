@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@calug.net>
 # Created:          23 Nov 2000, 23:33
-# Last Modified:    26 Feb 2001, 16:40
+# Last Modified:    26 Feb 2001, 19:02
 # Current Revision: 1.0.10
 #
 
@@ -22,7 +22,7 @@ use POSIX qw(strftime);
 my (%options, $version, @localtime_today, @localtime_yesterday, $long_date, $short_date, $short_date_yesterday, @get, @strips, %defs,
     $known_strips, %groups, $known_groups, $val);
 
-$version = "1.0.9";
+$version = "1.0.10";
 
 $options{'defs_file'} = "strips.def";
 
@@ -56,31 +56,32 @@ STRIPS can be a mix of strip names and group names
 'all' may be used to retrieve all known strips,
 or use option --list to list available strips
 Options:
-  -q  --quiet            turns off progress messages		
-      --output=FILE      outputs HTML to FILE instead of STDOUT
-                         (does not apply to local mode
-  -l  --local            outputs HTML to file and saves strips locally
-      --noindex          disables symlinking current page to index.html
-                         (local mode only)
-  -a  --archive          generates archive.html as a list of all days,
-                         (local mode only)
-  -d  --dailydir         creates a separate directory for each day's files
-                         (local mode only)
-  -s  --save             if it appears that a particular strip has been
-                         downloaded, does not attempt to re-download it
-                         (local mode only)
-  -n  --new              if today's file and yesterday's file for a strip are the
-                         same, does not symlink to save space
-                         (local mode only, required on non-*NIX platforms
-      --defs=FILE        use alternate strips definition file
-      --basedir=DIR      work in specified directory instead of current directory
-                         (program will look here for strip definitions, previous
-                         HTML files, etc. and save new files here)
-      --list             list available strips
-      --proxy=host:port  Uses specified HTTP proxy server (overrides environment
-                         proxy,if set)
-      --noenvproxy       Ignores the http_proxy environment variable, if set
-  -v  --version          Prints version number
+  -q  --quiet                turns off progress messages		
+      --output=FILE          outputs HTML to FILE instead of STDOUT
+                             (does not apply to local mode
+  -l  --local                outputs HTML to file and saves strips locally
+      --noindex              disables symlinking current page to index.html
+                             (local mode only)
+  -a  --archive              generates archive.html as a list of all days,
+                             (local mode only)
+  -d  --dailydir             creates a separate directory for each day's files
+                             (local mode only)
+  -s  --save                 if it appears that a particular strip has been
+                             downloaded, does not attempt to re-download it
+                             (local mode only)
+  -n  --new                  if today's file and yesterday's file for a strip are the
+                             same, does not symlink to save space
+                             (local mode only, required on non-*NIX platforms
+      --defs=FILE            use alternate strips definition file
+      --basedir=DIR          work in specified directory instead of current directory
+                             (program will look here for strip definitions, previous
+                             HTML files, etc. and save new files here)
+      --list                 list available strips
+      --proxy=host:port      Uses specified HTTP proxy server (overrides environment
+                             proxy,if set)
+      --proxyauth=user:pass  Sets username and password for proxy server
+      --noenvproxy           Ignores the http_proxy environment variable, if set
+  -v  --version              Prints version number
 
 Bugs and comments to amedico\@calug.net
 END_HELP
@@ -134,8 +135,11 @@ $_, $val
 	} elsif ($_ =~ m/^--noenvproxy$/o) {
 		$options{'no_env_proxy'} = 1;
 	} elsif ($_ =~ m/^--proxy=/o) {
-		unless ($_ =~ m/^--proxy=((.*?):(.*?))$/o) {die "Invalid proxy server\n"}
+		unless ($_ =~ m/^--proxy=((.*?):(.*?))$/o) {die "Error: invalid proxy server\n"}
 		$options{'http_proxy'} = $1;
+	} elsif ($_ =~ m/^--proxyauth=/o) {
+		unless ($_ =~ m/^--proxy=((.*?):(.*?))$/o) {die "Error: incorrectly formatted proxy username/password\n"}
+		$options{'http_proxy_auth'} = $1;
 	} else {
 		die "Unknown option: $_\n";
 	}
@@ -373,19 +377,19 @@ END_FOOTER
 
 sub http_get {
 	my ($url, $referer) = @_;
-	my $headers;
+	my $headers = new HTTP::Headers;;
 	
-	if (defined $referer) {
-		$headers = new HTTP::Headers;
-		$headers->referer($referer);
-	}
-	
+	if (defined $referer) {	$headers->referer($referer) }
+		
 	my $request = HTTP::Request->new('GET', $url, $headers);
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("dailystrips $version: " . $ua->agent());
 	
 	# could do without 'if defined..' if not running under -w -- maybe
-	if (defined $options{'http_proxy'}) { $ua->proxy('http', $options{'http_proxy'}) }
+	if (defined $options{'http_proxy'}) {
+		$ua->proxy('http', $options{'http_proxy'});
+		if (defined $options{'http_proxy_auth'}) { $headers->authorization_basic($options{'http_proxy_auth'}) }
+	}
 	
 	my $response = $ua->request($request);
 	(my $status = $response->status_line()) =~ s/^(\d+)/$1:/;
