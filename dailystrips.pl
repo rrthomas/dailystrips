@@ -39,7 +39,7 @@ GetOptions(\%options, 'quiet|q','verbose','output=s','lite','local|l','noindex',
 	'new|n','defs=s','nopersonal','basedir=s','list','proxy=s',
 	'proxyauth=s','noenvproxy','nospaces','useragent=s','version|v','help|h',
 	'avantgo', 'random','nosystem','stripnav','nosymlinks','titles=s',
-	'retries=s','clean=s') or exit 1;
+	'retries=s','clean=s','updates=s','noupdates') or exit 1;
 
 # Process options:
 #  Note: Blocks have been ordered so that we only do as much as absolutely
