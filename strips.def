@@ -1060,6 +1060,31 @@ strip flem
         provides latest
 end
 
+# Updated Mon - Fri
+strip reallife
+        name Real Life
+        homepage http://www.reallifecomics.com/
+        type generate
+        imageurl http://www.reallifecomics.com/comics/%Y%m%d.gif
+        provides any
+end
+
+# Updated Mon - Sat
+strip sheldon
+        name Sheldon
+        useclass unitedmedia-srch-comics
+end
+
+# Updated Mon
+strip weakendwarriors
+        name Weak-end Warriors
+        homepage http://www.inktank.com/WW/
+        type generate
+        imageurl http://www.inktank.com/images/WW/cartoons/%m-%d-%y.gif
+        provides any
+end
+
+
 # ucomics.com strips
 strip adamathome
 	name Adam@home

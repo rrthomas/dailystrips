@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    16 Apr 2002, 12:30 EST
-# Current Revision: 1.0.23
+# Last Modified:    07 May 2002, 20:15 EST
+# Current Revision: 1.0.24pre1
 #
 
 
@@ -28,7 +28,7 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-$version = "1.0.23";
+$version = "1.0.24pre1";
 
 $time_today = time;
 
@@ -813,7 +813,7 @@ if ($options{'clean'}) {
 		print STDERR "Cleaning files older than $options{'clean'} days...";
 	}
 	
-	unless (system("perl dailystrips-clean --quiet $options{'clean'}")) {
+	unless (system("perl -S dailystrips-clean --quiet $options{'clean'}")) {
 		unless ($options{'quiet'}) {
 			print STDERR "done\n";
 		}
