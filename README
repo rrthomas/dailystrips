@@ -24,8 +24,8 @@ Usage:
 	'./dailystrips.pl [stripname(s)]' will print to STDOUT an HTML page with image
 links to the latest strip. These links are to the strip's webserver.
 dailystrips.pl --help lists all available options. --list shows the available
-strips and groups (specify strips as listed, preceed group names with an '@'
-symbol)
+strips and groups. Strip names can specified as listed. Group must be
+preceeded with an '@' symbol.
 
 Adding new strips:
 	The strips.defs file should be relatively self-explanatory. (see README.DEFS

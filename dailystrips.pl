@@ -50,6 +50,8 @@ $known_groups = join('|', sort keys %groups);
 for (@ARGV)	{
 	if ($_ eq "" or $_ =~ m/^(--help|-h)$/o) {
 		print "Usage: $0 [OPTION] STRIPS\n";
+		print "STRIPS can be a mix of strip names and group names\n";
+		print "(group names must be predeeded by an '\@' symbol)\n";
 		print "'all' may be used to retrieve all known strips,\n";
 		print "or use option --list to list available strips\n";
 		print "\nOptions:\n";
