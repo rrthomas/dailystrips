@@ -1014,7 +1014,7 @@ strip pcnpixel
 	homepage http://www.pccomix.com/PCandPixel/
         type search
         searchpage http://www.pccomix.com/PCandPixel/pc_dailystrip/PCdaily.html
-        searchpattern <p><img SRC="pc(\w+).gif" WIDTH=
+        searchpattern <p><img SRC="pc(\w+).gif".+?WIDTH=
         matchpart 1
         imageurl http://www.pccomix.com/PCandPixel/pc_dailystrip/pc$match.gif
         provides latest	
