@@ -60,7 +60,6 @@ class comicspage-strips-srch
 	searchpage http://www.comicspage.com/%1/main.html
 	searchpattern <img(.*?)src="(http://www.comicspage.com/daily/cs%2/\d+cs%2((-a)?).gif)"
 	matchpart 2
-	referer %searchpage
 end
 
 class comicspage-panels-srch
@@ -71,7 +70,6 @@ class comicspage-panels-srch
 	searchpage http://www.comicspage.com/%1/main.html
 	searchpattern <img(.*?)src="(http://www.comicspage.com/daily/cp%2/\d+cp%2((-a)?).gif)"
 	matchpart 2
-	referer %searchpage
 end
 
 class comicspage-editorial-srch
@@ -82,7 +80,6 @@ class comicspage-editorial-srch
 	searchpage http://www.comicspage.com/%1/main.html
 	searchpattern <img(.*?)src="(http://www.comicspage.com/daily/ed%2/\d+ed%2((-a)?).gif)"
 	matchpart 2
-	referer %searchpage
 end
 
 # Non-standard strips
@@ -1160,7 +1157,7 @@ strip sylvia
         %1 sylvia
         %2 syl
 end
-#####################
+
 strip 9to5
         name 9 to 5
         useclass comicspage-panels-srch
@@ -1237,7 +1234,7 @@ strip thatsjake
         %1 thatsjake
         %2 tjk
 end
-###############3
+
 strip conrad
         name Paul Conrad
         useclass comicspage-editorial-srch
