@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    07 Jan 2002, 17:25 EST
+# Last Modified:    12 Jan 2002, 01:24 EST
 # Current Revision: 1.0.21pre1
 #
 
@@ -72,10 +72,10 @@ Options:
                              (local mode only)
   -a  --archive              Generates archive.html as a list of all days,
                              (local mode only)
-  -d  --dailydir             Creates a separate directory for each day's files
+  -d  --dailydir             Creates a separate directory for each day's images
                              (local mode only)
-      --stripdir             Creates a separate directory for each strip's files
-                             (local mode only)
+      --stripdir             Creates a separate directory for each strip's
+                             images (local mode only)
   -s  --save                 If it appears that a particular strip has been
                              downloaded, does not attempt to re-download it
                              (local mode only)
@@ -104,6 +104,7 @@ END_HELP
 
 	if ($^O =~ /Win32/ ) {
 		print <<END_HELP_WIN32;
+
 Additional Win32 Notes:
 
 Windows lacks a number of features and programs found on *NIX, so a number of
@@ -319,32 +320,18 @@ if ($options{'local'}) {
 				die "Error: could not create today's directory ($short_date/)\n";
 			}
 		}
-		
-		#unless(open(STDOUT, ">dailystrips-$short_date.html")) {
-		#	die "Error: could not open HTML file (dailystrips-$short_date.html) for writing\n";
-		#}
-		
-		#unlink("dailystrips-$short_date.html");
-		
-		#unless ($^O =~ /Win32/) {
-		#	system("ln -s $short_date/dailystrips-$short_date.html dailystrips-$short_date.html");
-		#} else {
-		#	# any suitable hack for Win32? (create duplicate files, etc)
-		#}
-	}# else {
-		#unless(open(STDOUT, ">dailystrips-$short_date.html")) {
-		#	die "Error: could not open HTML file (dailystrips-$short_date.html) for writing\n";
-		#}
-	#}
+	}
 	
 	unless(open(STDOUT, ">dailystrips-$short_date.html")) {
 		die "Error: could not open HTML file (dailystrips-$short_date.html) for writing\n";
 	}
 
-	unless ($options{'date'}) {
-		unless ($options{'noindex'}) {
-			unlink("index.html");
-			system("ln -s dailystrips-$short_date.html index.html")
+	unless ($^O =~ /Win32/) {
+		unless ($options{'date'}) {
+			unless ($options{'noindex'}) {
+				unlink("index.html");
+				system("ln -s dailystrips-$short_date.html index.html")
+			}
 		}
 	}
 
@@ -361,7 +348,7 @@ if ($options{'local'}) {
 </head>
 
 <body bgcolor=\"#ffffff\" text=\"#000000\" link=\"#0000ff\" vlink=\"#ff00ff\" alink=\"#ff0000\">
-
+w
 <p align=\"center\">\n
 
 <font face=\"helvetica,arial\" size=\"14pt\">$options{'titles'}dailystrips archive</font>
@@ -625,6 +612,10 @@ for (@strips) {
 				
 				if ($image =~ /^ERROR/) {
 					# couldn't get the image
+					# FIXME: what to do if a file for the day has already been
+					# downloaded, but downloading fails when script is run again
+					# that day? maybe reuse existing file instead of throwing
+					# error?
 					if ($options{'verbose'}) {
 						warn "Error: $strip: could not download strip\n";
 					}
@@ -647,6 +638,7 @@ for (@strips) {
 							$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 						}
 					} else {
+						# FIXME: only download to .tmp if earlier file exists
 						open(IMAGE, ">$local_name.tmp");
 						print IMAGE $image;
 						close(IMAGE);
