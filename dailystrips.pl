@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    26 Oct 2001, 20:49 EST
-# Current Revision: 1.0.20pre2
+# Last Modified:    27 Oct 2001, 12:58 EST
+# Current Revision: 1.0.20pre3
 #
 
 
@@ -27,7 +27,7 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-$version = "1.0.20pre2";
+$version = "1.0.20pre3";
 
 $time_today = time;
 
@@ -37,7 +37,7 @@ GetOptions(\%options, 'quiet|q','verbose','output=s','lite','local|l','noindex',
 	'archive|a','dailydir|d','stripdir','save|s','date=s',
 	'new|n','defs=s','nopersonal','basedir=s','list','proxy=s',
 	'proxyauth=s','noenvproxy','nospaces','useragent=s','version|v','help|h','avantgo',
-	'random','nosystem','stripnav') or exit 1;
+	'random','nosystem','stripnav','nosymlinks','titles=s') or exit 1;
 
 	
 # Process options:
@@ -66,6 +66,7 @@ Options:
                              (does not apply to local mode)
       --lite                 Outputs a reduced HTML page
       --stripnav             Add links for navigation within the page
+      --titles STRING        Customizes HTML output
   -l  --local                Outputs HTML to file and saves strips locally
       --noindex              Disables symlinking current page to index.html
                              (local mode only)
@@ -80,6 +81,7 @@ Options:
                              (local mode only)
       --nostale              If a new strip is not available, displays an error
                              in the HTML output instead of showing the old image
+      --nosymlinks           Doesn't use symlinks for day-to-day duplicates
       --date DATE            Use value DATE instead of local time
                              (DATE is parsed by Date::Parse function)
                              Note: not available on Win32
@@ -260,6 +262,10 @@ if ($options{'basedir'}) {
 	}
 }
 
+if ($options{'titles'}) {
+	$options{'titles'} .= " ";
+}
+
 unless (@get) {
 	die "Error: no strip specified (--list to list available strips)\n";
 }
@@ -347,13 +353,15 @@ if ($options{'local'}) {
 "<html>
 
 <head>
-        <title>dailystrips archive</title>
+	<title>$options{'titles'}dailystrips archive</title>
 </head>
 
 <body bgcolor=\"#ffffff\" text=\"#000000\" link=\"#0000ff\" vlink=\"#ff00ff\" alink=\"#ff0000\">
 
-<p align=\"center\">
-<font face=\"helvetica,arial\" size=\"14pt\">dailystrips archive</font>
+<p align=\"center\">\n
+
+<font face=\"helvetica,arial\" size=\"14pt\">$options{'titles'}dailystrips archive</font>
+
 </p>
 
 <p>
@@ -454,52 +462,51 @@ if (-e "dailystrips-$short_date_tomorrow.html") {
 	$link_tomorrow = "<!--nextday-->"
 }
 
-if ($options{'lite'}) {
-	# Generate HTML page
-	print <<END_HEADER;
-<font face=\"helvetica\" size=\"+2\"><b><u>dailystrips for $long_date</u></b></font><br><br>
-END_HEADER
 
-#"#kwrite's syntax higlighting is buggy.. this preserves my sanity
+# Generate HTML page
+if ($options{'lite'}) {
+	print "<font face=\"helvetica\" size=\"+2\"><b><u>$options{'titles'}dailystrips for $long_date</u></b></font><br><br>\n";
 } else {
 	my $topanchor;
 	if ($options{'stripnav'}) {
 		$topanchor = "\n<a name=\"top\">\n";
 	}
-	
-	# Generate HTML page
-	print <<END_HEADER;
-<html>
+
+	print
+"<html>
 
 <head>
-	<title>dailystrips for $long_date</title>
+	<title>$options{'titles'}dailystrips for $long_date</title>
 </head>
 
 <body bgcolor=\"#ffffff\" text=\"#000000\" link=\"#ff00ff\">
 $topanchor
 <center>
-	<font face=\"helvetica\" size=\"+2\"><b><u>dailystrips for $long_date</u></b></font>
+	<font face=\"helvetica\" size=\"+2\"><b><u>$options{'titles'}dailystrips for $long_date</u></b></font>
 </center>
 
 <p><font face=\"helvetica\">
-&lt; <a href=\"dailystrips-$short_date_yesterday.html\">Previous day</a>$link_tomorrow &gt;
-</font></p>
-END_HEADER
-
-#"#kwrite's syntax higlighting is buggy.. this preserves my sanity
-if ($options{'stripnav'}) {
-	print "<font face=\"helvetica\">Strips:</font><br>\n";
-	for (@strips) {
-		my ($strip, $name) = (split(/;/, $_))[0,1];
-		#print "<a href=\"#$strip\">&lt;$name&gt;</A>\n";
-		print "<a href=\"#$strip\">$name</A>&nbsp;&nbsp;";
+&lt; <a href=\"dailystrips-$short_date_yesterday.html\">Previous day</a>$link_tomorrow";
+	
+	if ($options{'archive'}) {
+		print " | <a href=\"archive.html\">Archives</a>";
 	}
-	print "\n<br><br>";
-}
+	
+	print
+" &gt;
+</font></p>
+";
 
-print "\n\n<table border=\"0\">\n";
+	if ($options{'stripnav'}) {
+		print "<font face=\"helvetica\">Strips:</font><br>\n";
+		for (@strips) {
+			my ($strip, $name) = (split(/;/, $_))[0,1];
+			print "<a href=\"#$strip\">$name</A>&nbsp;&nbsp;";
+		}
+		print "\n<br><br>";
+	}
 
-#"#kwrite's syntax higlighting is buggy.. this preserves my sanity
+	print "\n\n<table border=\"0\">\n";
 }
 
 
@@ -653,12 +660,18 @@ for (@strips) {
 							}
 						} elsif (system("diff \"$local_name_yesterday\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
 							# same strip as yesterday
-							unlink("$local_name.tmp");
-							if ($options{'stripdir'} or $options{'dailydir'}) {
-								system("ln -s \"../$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
+							if ($options{'nosymlinks'}) {
+								system("mv","$local_name.tmp","$local_name");
 							} else {
-								system("ln -s \"$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
+								unlink("$local_name.tmp");
+								if ($options{'stripdir'} or $options{'dailydir'}) {
+									system("ln -s \"../$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
+								} else {
+									system("ln -s \"$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
+								}
+							
 							}
+							
 							if ($options{'nostale'}) {
 								$img_line = "[Error - new strip not available]";
 							} else {
@@ -702,21 +715,19 @@ for (@strips) {
 	}
 		
 	if ($options{'lite'}){
-		print <<END_STRIP;
-<font face=\"helvetica\" size=\"+1\"><b><a href=\"$homepage\">$name</a></b></font><br>
+		print
+"<font face=\"helvetica\" size=\"+1\"><b><a href=\"$homepage\">$name</a></b></font><br>
 $img_line<br>
 <br>
-END_STRIP
-	
-	#"#kwrite's syntax highlighting is buggy.. this preserves my sanity	
+";
 	} else {
 		my $stripanchor;
 		if ($options{'stripnav'}) {
 			$stripanchor = "<a name=\"$strip\">";
 		}
 		
-		print <<END_STRIP;
-	<tr>
+		print
+"	<tr>
 		<td>
 			<font face=\"helvetica\" size=\"+1\"><b>$stripanchor<a href=\"$homepage\">$name</a></b></font>
 		</td>
@@ -727,9 +738,7 @@ END_STRIP
 			<p>&nbsp;</p>
 		</td>
 	</tr>
-END_STRIP
-	
-	#"#kwrite's syntax highlighting is buggy.. this preserves my sanity	
+";
 	}
 }
 
@@ -742,11 +751,18 @@ if ($options{'local'} and !$options{'quiet'}) {
 }
 
 unless ($options{'lite'}) {
-	print <<END_FOOTER;
-</table>
+	print
+"</table>
 
 <p><font face=\"helvetica\">
-&lt; <a href=\"dailystrips-$short_date_yesterday.html\">Previous day</a>$link_tomorrow &gt;
+&lt; <a href=\"dailystrips-$short_date_yesterday.html\">Previous day</a>$link_tomorrow";
+
+	if ($options{'archive'}) {
+		print " | <a href=\"archive.html\">Archives</a>";
+	}
+	
+	print
+" &gt;
 </font></p>
 
 <font face=\"helvetica\">Generated by dailystrips $version</font>
@@ -754,9 +770,7 @@ unless ($options{'lite'}) {
 </body>
 
 </html>
-END_FOOTER
-
-#"// # kwrite's syntax highlighting is buggy.. this preserves my sanity
+";
 }
 
 sub http_get {

@@ -20,6 +20,11 @@
   Added --stripnav option to insert links for jumping to specific strips on a
   large page of comics (Joseph Blough)
 
+  27 Oct 2001
+  Added --nosymlinks, --titles options and links to archive on strip pages
+  Added sevtrek, fotr, sevgate, bluffy, sevfiles, sevwars, sevylon5, sevscifi
+  (Douglas Riga)
+
 1.0.19
   07 Sep 2001
   Removed some Win32 code that no longer applied to anything

@@ -120,6 +120,13 @@ class mercurycenter
         provides any
 end
 
+class sev-comics
+        homepage http://www.sev.com.au/toonzone/$strip.asp
+        type generate
+        imageurl http://www.sev.com.au/toonzone/$strip.jpg
+        provides latest
+end
+
 # Non-standard strips
 # should be possible to generate?
 # sometimes multi-image - need a new way to handle this
@@ -576,12 +583,12 @@ strip brunothebandit
 end
 
 
-# Diesel sweeties
+# Diesel Sweeties
 strip dieselsweeties
 	name Diesel Sweeties
 	homepage http://www.dieselsweeties.com/
 	type search
-	searchpattern <img.+?src="?(/?strips/sw.+?\.png)"?
+	searchpattern <img.+?src="?(/?strips/sw.+?\.png)
 	provides latest
 	baseurl http://www.dieselsweeties.com/
 end
@@ -703,7 +710,7 @@ strip spiderman
 	#imageurl http://est.rbma.com/content/Spiderman?date=%Y%m0<code:int(strftime("\%\d", localtime($time_today - 1209600)))>
 	type search
 	searchpage http://www.kingfeatures.com/features/comics/spidermn/aboutMaina.php
-	searchpattern <img.+?src='(http://est.rbma.com/content/Spiderman\?date=20011012)'
+	searchpattern <img.+?src='(http://est.rbma.com/content/Spiderman\?date=\d{8})'
 	provides latest
 end
 
@@ -1942,4 +1949,50 @@ strip bfriends
         useclass mercurycenter
         $1 14
         $2 bfriends
+end
+
+
+# sev.com.au strips
+strip sevtrek
+        name Sev Trek
+        useclass sev-comics
+end
+
+strip fotr
+        name Fraud of the Rings
+        useclass sev-comics
+end
+
+strip sevgate
+        name Sevgate SEV1
+        useclass sev-comics
+end
+
+strip bluffy
+        name Bluffy the Vampedup Stunner
+        useclass sev-comics
+end
+
+strip sevfiles
+        name The Sev Files
+        useclass sev-comics
+end
+
+strip sevwars
+        name Sev Wars
+        useclass sev-comics
+end
+
+strip sevylon5
+        name Sevylon 5
+        useclass sev-comics
+end
+
+# doesn't fit class
+strip sevscifi
+        name Sev Sci-Fi TV
+        homepage http://www.sev.com.au/toonzone/
+        type generate
+        imageurl http://www.sev.com.au/toonzone/scifitv.jpg
+        provides latest
 end
