@@ -4,7 +4,7 @@ tackle..
 1.0.18
   04 Sep 2001
   Add a method for handling strips that are made up of more than one image
-  (for example, Avalon High). This may get complicated for strips that have
+  (for example, Avalon High and CRFH). This may get complicated for strips that have
   one scheme for single images one some days and another for multiple images
   on other days. Related to this, add a method for trying several different
   search options - some strips (e.g. dorktower) seem to rotate between a few
