@@ -9,6 +9,8 @@
 
   Fixed a bug that was causing problems with image files that have no extension
 
+  With the completion of the above two items, SFGate strips should now work properly.
+
   Fixed the Avalon High definition
 
   Cleaned up the definition file parsing code somewhat
