@@ -1,3 +1,9 @@
+1.0.21
+  12 Jan 2002
+  --dailydir does not work on Win32
+
+  Script does not seem to work on Perl 5.0 due to <code:> parser
+
 1.0.13
   04 June 2001
   The new <code:> feature seems to be ok. The only issue may be the escaping of
