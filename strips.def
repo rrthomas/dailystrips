@@ -417,6 +417,51 @@ strip madameve
         baseurl http://www.mg.co.za/mg/m&e/
 end
 
+strip clanofthecats
+        name Clan of the cats
+        homepage http://www.clanofthecats.com/
+        type generate
+        imageurl http://www.clanofthecats.com/comics/%Y%m%da.gif
+end
+
+strip gpf
+        name General Protection Fault
+        homepage http://www.gpf-comics.com/
+        #type search
+        #searchpattern <IMG(.*?)SRC="(/comics/%Y%m%d\.gif)"
+        #matchpart 2
+        #baseurl http://www.gpf-comics.com
+        type generate
+	  imageurl http://www.gpf-comics.com/comics/%Y%m%d\.gif
+end
+
+strip in2it
+        name In2It Online
+        homepage http://www.in2itonline.com/
+        type search
+        searchpattern <IMG(.*)SRC=(archive/\d+/comics/\d+\.gif)
+        matchpart 2
+        baseurl http://www.in2itonline.com/
+        updated semidaily
+end
+
+strip crfh
+          name College Roomies from Hell
+          homepage http://www.crfh.net
+          type generate
+          imageurl http://www.crfh.net/comics/crfh%Y%m%d\.jpg
+end
+
+strip striptease
+        name Strip Tease Comic
+        homepage http://www.stripteasecomic.com/
+        type search
+        searchpattern <img(.*?)src="(strips\d+/\d\+.gif)"
+        matchpart 2
+        baseurl http://www.stripteasecomic.com/
+        updated semidaily
+end
+
 # ucomics.com strips
 strip adamathome
 	name Adam@home
