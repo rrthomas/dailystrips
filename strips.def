@@ -528,7 +528,7 @@ strip crfh
 	name College Roomies from Hell
 	homepage http://www.crfh.net
 	type generate
-	imageurl http://www.crfh.net/comics/crfh%Y%m%d.jpg
+	imageurl http://www.crfh.net/comics/crfh%Y%m%d.png
 	provides any
 end
 
