@@ -1,3 +1,11 @@
+1.0.13
+  14 May 2001
+  Fixed User Friendly definition
+
+  Fixed routine that checks for presence of Date::Parse module
+
+  Added Dork Tower definition (Mark Larimer)
+
 1.0.12
   11 Mar 2001
   Added --stripdir option to put the files for each strip in a separate directory

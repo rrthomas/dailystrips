@@ -2,14 +2,14 @@
 group andrews
 	desc Andrew's Favorite Strips
 	include userfriendly dilbert sinfest foxtrot badtech
-	include pennyarcade joyoftech thefifthwave robotman bc
+	include pennyarcade joyoftech thefifthwave monty bc
 	include wizardofid garfield adamathome
 end	
 
 group michael
 	desc Michael's Favorite Strips
 	include liberty foxtrot boondocks doonesbury zits dilbert babyblues 
-	include robotman bc blondie calvinandhobbes funkywinkerbean 
+	include monty bc blondie calvinandhobbes funkywinkerbean 
 	include zippythecolorpinhead peanuts adamathome forbetter bizarro
 	include userfriendly geech shoe wizardofid 
 end	
@@ -305,7 +305,8 @@ strip userfriendly
 	homepage http://www.userfriendly.org/static/
 	type search
 	searchpage http://ars.userfriendly.org/cartoons/?id=%Y%m%d&mode=classic
-	searchpattern <img(.*?)alt="Cartoon for(.*?)src="(.*?)"
+	#searchpattern <img(.*?)alt="Cartoon for(.*?)src="(.*?)"
+	searchpattern <img(.*?)border="0"(.*?)src="(http://www.userfriendly.org/cartoons/archives/%y(.*?)/uf(.*?).gif)"(.*?)>
 	matchpart 3
 end
 
@@ -340,7 +341,7 @@ strip classm
 end
 
 strip bruno
-        name The Bruno Daily times
+        name The Bruno Daily Times
         homepage http://www.brunostrip.com/bruno.html
         type generate
         imageurl http://www.brunostrip.com/%Ypics/%Y%m%d.gif
@@ -433,8 +434,6 @@ strip gpf
         matchpart 2
         baseurl http://www.gpf-comics.com
         updated semidaily
-	#type generate
-	#imageurl http://www.gpf-comics.com/comics/gpf%Y%m%d.gif
 end
 
 strip in2it
@@ -460,7 +459,17 @@ strip striptease
         type search
         searchpattern <img(.*?)src="(strips\d+/\d\+.gif)"
         matchpart 2
-        baseurl http://www.stripteasecomic.com/
+        baseurl $homepage
+        updated semidaily
+end
+
+strip dorktower
+        name Dork Tower
+        homepage http://www.gamespy.com/comics/dorktower/
+        type search
+        searchpattern <IMG(.*?)src="(comics/gamespy/GameSpy\d+\.jpg)"(.*?)>
+        matchpart 2
+        baseurl $homepage
         updated semidaily
 end
 
@@ -958,8 +967,9 @@ strip ripleys
 	useclass unitedmedia-srch-comics
 end
 
-strip robotman
-	name Robotman
+#was Robotman
+strip monty
+	name Monty
 	useclass unitedmedia-srch-comics
 end
 
@@ -1186,7 +1196,7 @@ end
 
 strip zits
         name Zits
-        useclass sfgate-gen
+        useclass sfgate-srch
         $1 $name
 end
 
@@ -1334,14 +1344,12 @@ end
 #not updated regularly
 strip profdoodles
 	name Doodles
-	#useclass comicspage-strips-srch
-	#$1 profdoodles
-	#$2 dod
 	homepage http://www.comicspage.com/$1/index.html
 	type search
 	searchpage http://www.comicspage.com/profdoodles/main.html
 	searchpattern <img(.*?)src="(http://www.comicspage.com/daily/csdod/\d+csdod((-\w)?).gif)"
 	matchpart 2
+	updated semidaily
 end
 
 strip ribman

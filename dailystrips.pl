@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@calug.net>
 # Created:          23 Nov 2000, 23:33
-# Last Modified:    19 Mar 2001, 17:18
+# Last Modified:    14 May 2001, 17:23
 # Current Revision: 1.0.13
 #
 
@@ -23,50 +23,7 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, $val, $link_tomorrow,
     $no_dateparse);
 
-BEGIN {
-	unless (eval "use Date::Parse") {
-		print STDERR "Warning: Could not load Date::Parse module. --date option can not be used\n";
-		$no_dateparse = 1;
-	}
-}
-#use Date::Parse;
-
-$version = "1.0.13";
-
-$options{'defs_file'} = "strips.def";
-
-$time_today = time;
-
-# Parse options - the must be checked first because others depend on their values
-for (@ARGV)	{
-	if (/^--basedir=(.*)$/o) {
-		unless (chdir $1) { die "Error: could not change directory to $1\n" }
-	}
-	if (/^--defs=(.*)$/o) {
-		$options{'defs_file'} = $1;
-	}
-	
-	if ($_=~ m/^--date=(.*)$/o) {
-		if ($no_dateparse) {die "Error: cannot use --date - Date::Parse not installed\n"}
-		unless ($time_today = str2time $1) {die "Error: invalid date specified\n"}
-	}
-}
-
-
-# setup time variables...
-@localtime_today = localtime $time_today;
-$long_date = strftime("\%A, \%B \%-e, \%Y", @localtime_today);
-$short_date = strftime("\%Y.\%m.\%d", @localtime_today);
-@localtime_yesterday = localtime($time_today - ( 24 * 60 * 60 ));
-$short_date_yesterday = strftime("\%Y.\%m.\%d", @localtime_yesterday);
-@localtime_tomorrow = localtime ($time_today + 24 * 60 * 60);
-$short_date_tomorrow = strftime("\%Y.\%m.\%d", @localtime_tomorrow);
-
-#get strip definitions (do it now because info is used below)
-&get_defs;
-$known_strips = join('|', sort keys %defs);
-$known_groups = join('|', sort keys %groups);
-
+# Help overrides anything else
 for (@ARGV)	{
 	if ($_ eq "" or /^(--help|-h)$/o) {
 		print <<END_HELP;
@@ -113,7 +70,52 @@ Options:
 Bugs and comments to amedico\@calug.net
 END_HELP
 		exit;
-	} elsif (/^--list$/o) {
+	}
+}
+eval "use Date::Parse";
+if ($@ ne "") {
+	warn "Warning: Could not load Date::Parse module. --date option cannot be used\n";
+	$no_dateparse = 1;
+}
+
+$version = "1.0.13";
+
+$options{'defs_file'} = "strips.def";
+
+$time_today = time;
+
+# Parse options - the must be checked first because others depend on their values
+for (@ARGV)	{
+	if (/^--basedir=(.*)$/o) {
+		unless (chdir $1) { die "Error: could not change directory to $1\n" }
+	}
+	if (/^--defs=(.*)$/o) {
+		$options{'defs_file'} = $1;
+	}
+	
+	if ($_=~ m/^--date=(.*)$/o) {
+		if ($no_dateparse) {die "Error: cannot use --date - Date::Parse not installed\n"}
+		unless ($time_today = str2time $1) {die "Error: invalid date specified\n"}
+	}
+}
+
+
+# setup time variables...
+@localtime_today = localtime $time_today;
+$long_date = strftime("\%A, \%B \%-e, \%Y", @localtime_today);
+$short_date = strftime("\%Y.\%m.\%d", @localtime_today);
+@localtime_yesterday = localtime($time_today - ( 24 * 60 * 60 ));
+$short_date_yesterday = strftime("\%Y.\%m.\%d", @localtime_yesterday);
+@localtime_tomorrow = localtime ($time_today + 24 * 60 * 60);
+$short_date_tomorrow = strftime("\%Y.\%m.\%d", @localtime_tomorrow);
+
+#get strip definitions (do it now because info is used below)
+&get_defs;
+$known_strips = join('|', sort keys %defs);
+$known_groups = join('|', sort keys %groups);
+
+for (@ARGV)	{
+	if (/^--list$/o) {
 format =
 @<<<<<<<<<<<<<<<<<<<<<<<< 	@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 $_, $val
@@ -333,7 +335,6 @@ if ($options{'local_mode'} and !$options{'quiet'}) {
 		print STDERR "Downloading strip files..."
 	}
 }
-#if ($options{'local_mode'} and !$options{'quiet'}) { print STDERR "\nDownloading strip files:\n" }
 
 for (@strips) {
 	my ($strip, $name, $homepage, $img_addr, $updated, $referer) = split(/;/, $_);
@@ -466,11 +467,11 @@ END_FOOTER
 sub http_get {
 	my ($url, $referer) = @_;
 
-	my $headers = new HTTP::Headers;;
+	my $headers = new HTTP::Headers;
 	my $request = HTTP::Request->new('GET', $url, $headers);
 	my $ua = LWP::UserAgent->new;
 	#$$ua->agent("dailystrips $version: " . $ua->agent());
-	$ua->agent("");
+	$ua->agent("Mozilla/4.76 [en] (X11; U; Linux 2.2.14-15mdk i586)");
 	$ua->proxy('http', $options{'http_proxy'});
 	$headers->authorization_basic(split(/:/, $options{'http_proxy_auth'}));
 	$headers->referer($referer);
