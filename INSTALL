@@ -1,5 +1,6 @@
 dailystrips Installation Instructions:
 
+*NIX:
 To install dailystrips, run the following as root:
 
 perl install.pl
@@ -17,6 +18,12 @@ For personal installations (no root access), copy dailystrips.pl and
 strips.def to the directory of your choice. Since dailystrips uses
 /usr/share/dailystrips/strips.def by default, you will need to specify the
 definition file with the "--defs=FILE" option.
+
+
+Win32:
+Copy the script and strips.def to the directory of your choice. When run,
+the script will check the current directory for strips.def, so always
+'cd' the appropriate or use the --defs option.
 
 If you have any questions, please contact me.
 
