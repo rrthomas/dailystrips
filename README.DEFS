@@ -1,4 +1,4 @@
-This file describes in further detail how the strips.defs file is contsructed.
+This file describes in further detail how the strips.def file is contsructed.
 
 Strips can be defined in one of two ways. The first is standalone. Also, strips
 can be provide the image URL by generating it (as from the current date) or by
