@@ -135,7 +135,7 @@ strip avalonhigh
 	name Avalon High
 	homepage http://www.avalonhigh.com/
 	type search
-	searchpattern <IMG.+?SRC="(/comics/avalon\d{8}.+?\.gif)"
+	searchpattern <IMG.+?SRC="(/comics/avalon\d{8}.*?\.gif)"
 	baseurl $homepage
 	provides latest
 end
