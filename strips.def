@@ -1060,6 +1060,14 @@ strip melonpool
 	provides any
 end
 
+strip flem
+        name FLEM!
+        homepage http://www.flemcomics.com/
+        type generate
+        imageurl http://flem.dhs.org/new.jpg
+        provides latest
+end
+
 # ucomics.com strips
 strip adamathome
 	name Adam@home
