@@ -7,28 +7,31 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@calug.net>
 # Created:          23 Nov 2000, 23:33
-# Last Modified:    11 Mar 2001, 14:04
-# Current Revision: 1.0.12
+# Last Modified:    19 Mar 2001, 17:18
+# Current Revision: 1.0.13
 #
 
 # Set up
 use strict;
 no strict qw(refs);
 
-use HTTP::Request;
 use LWP::UserAgent;
+use HTTP::Request;
 use POSIX qw(strftime);
 
 my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @localtime_tomorrow, $long_date, $short_date,
-    $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs,$known_strips, %groups, $known_groups, $val, $link_tomorrow,
+    $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, $val, $link_tomorrow,
     $no_dateparse);
 
-unless (eval "use Date::Parse") {
-	print STDERR "Warning: Date::Parse not installed. --date option can not be used\n";
-	$no_dateparse = 1;
+BEGIN {
+	unless (eval "use Date::Parse") {
+		print STDERR "Warning: Could not load Date::Parse module. --date option can not be used\n";
+		$no_dateparse = 1;
+	}
 }
+#use Date::Parse;
 
-$version = "1.0.12";
+$version = "1.0.13";
 
 $options{'defs_file'} = "strips.def";
 
@@ -466,7 +469,8 @@ sub http_get {
 	my $headers = new HTTP::Headers;;
 	my $request = HTTP::Request->new('GET', $url, $headers);
 	my $ua = LWP::UserAgent->new;
-	$ua->agent("dailystrips $version: " . $ua->agent());
+	#$$ua->agent("dailystrips $version: " . $ua->agent());
+	$ua->agent("");
 	$ua->proxy('http', $options{'http_proxy'});
 	$headers->authorization_basic(split(/:/, $options{'http_proxy_auth'}));
 	$headers->referer($referer);
