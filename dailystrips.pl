@@ -845,12 +845,14 @@ if ($options{'clean'}) {
 sub http_get {
 	my ($url, $referer) = @_;
 	my ($request, $response, $status);
-	
+
 	# default value
 	#unless ($retries) {
 	#	$retries = 3;
-	#}	
-	
+	#}
+
+	if ($referer eq "") {$referer = $url;}
+
 	my $headers = new HTTP::Headers;
 	$headers->proxy_authorization_basic(split(/:/, $options{'proxyauth'}));
 	$headers->referer($referer);
