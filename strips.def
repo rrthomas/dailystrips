@@ -217,6 +217,15 @@ class kingfeatures
 	provides latest
 end
 
+class kingfeatures-alt
+        homepage http://www.kingfeatures.com/features/comics/$1/about.htm
+        type search  
+        searchpage http://www.kingfeatures.com/features/comics/$1/aboutMaina.php
+        searchpattern <img.+?src='($2\d+\..+?)'
+	baseurl http://www.kingfeatures.com/features/comics/$1/
+        provides latest
+end
+
 # Non-standard strips
 
 # should be possible to generate?
@@ -4789,4 +4798,119 @@ strip crankshaft
 	$1 crank
 	$2 Crankshaft
 	artist Tom Batiuk and Chuck Ayers
+end
+
+strip apartment3g
+	name Apartment 3-G
+	artist Frank Bolle and Lisa Trusiani
+        useclass kingfeatures
+	$1 apt3g
+	$2 Apartment_3-G
+end
+
+strip familycircus
+        name Family Circus
+        artist Bil Keane
+        useclass kingfeatures
+        $1 familyc
+        $2 Family_Circus
+end
+
+strip flashgordon
+        name Flash Gordon
+        artist Jim Keefe
+        useclass kingfeatures
+        $1 fgordon
+        $2 Flash
+end
+
+#needs different class:
+# babs hazel henry katzkids mandrake moose sam_silo trudy
+
+strip hots
+	name The Hots
+	artist Stephen Hersh and Nina Paley
+	useclass kingfeatures
+	$1 hots
+	$2 The_Hots
+end
+
+strip princevaliant
+	name Prince Valiant
+	artist John Cullen Murphy and Cullen Murphy
+	useclass kingfeatures
+	$1 pvaliant
+	$2 Prince_Valiant
+end
+
+strip slylock
+	name Slylock Fox
+	artist Bob Weber Jr.
+	useclass kingfeatures
+	$1 slylock
+	$2 Slylock
+end 
+
+strip babsandaldo
+	name Babs and Aldo
+	artist Buddy Valentine
+	useclass kingfeatures-alt
+	$1 babs
+	$2 bvt
+end
+
+strip hazel
+	name Hazel
+	artist Ted Key
+	useclass kingfeatures-alt
+	$1 hazel
+	$2 hat
+end
+
+strip henry
+	name Henry
+	artist Carl Anderson
+	useclass kingfeatures-alt
+	$1 henry
+	$2 het
+end
+
+strip katzkids
+	name The Katzenjammer Kids
+	artist Hy Eisman
+	useclass kingfeatures-alt
+	$1 katzkids
+	$2 kk
+end
+
+strip mandrake
+	name Mandrake the Magician
+	artist Fred Fredericks -- Created by Lee Falk
+	useclass kingfeatures-alt
+	$1 mandrake
+	$2 mmt
+end
+
+strip moose
+        name Moose & Molly
+        artist Bob Weber Sr.
+        useclass kingfeatures-alt
+        $1 moosemol
+        $2 mot
+end
+
+strip samsilo
+	name Sam and Silo
+        artist Jerry Dumas
+        useclass kingfeatures-alt
+        $1 sam_silo
+        $2 sst
+end	
+
+strip trudy
+	name Trudy
+	artist Jerry Marcus
+	useclass kingfeatures-alt
+	$1 trudy
+	$2 trt
 end
