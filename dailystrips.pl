@@ -7,9 +7,10 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    26 July 2001 23:33 EST
-# Current Revision: 1.0.16-pre3
+# Last Modified:    27 July 2001 01:23 EST
+# Current Revision: 1.0.16-pre4
 #
+
 
 # Set up
 use strict;
@@ -18,15 +19,33 @@ no strict qw(refs);
 use LWP::UserAgent;
 use HTTP::Request;
 use POSIX qw(strftime);
+use Getopt::Long;
 
+
+# Variables
 my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @localtime_tomorrow, $long_date, $short_date,
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-# Help overrides anything else
-for (@ARGV)	{
-	if ($_ eq "" or /^(--help|-h)$/o) {
-		print <<END_HELP;
+$version = "1.0.16-pre4";
+
+$time_today = time;
+
+
+# Get options
+GetOptions(\%options, 'quiet|q','verbose','output=s','local|l','noindex',
+	'archive|a','dailydir|d','stripdir','save|s','date=s',
+	'new|n','defs=s','nopersonal','basedir=s','list','proxy=s',
+	'proxyauth=s','noenvproxy','nospaces','useragent=s','version|v','help|h') or exit 1;
+
+	
+# Process options:
+#  Note: Blocks have been ordered so that we only do as much as absolutely
+#  necessary if an error is encountered (i.e. do not load defs if --version
+#  specified)
+
+# Help and version override anything else
+if ($options{'help'}) { print <<END_HELP;
 Usage: $0 [OPTION] STRIPS
 STRIPS can be a mix of strip names and group names
 (group names must be predeeded by an '\@' symbol)
@@ -72,58 +91,35 @@ Options:
 
 Bugs and comments to amedico\@amedico.dhs.org
 END_HELP
-		exit;
-	}
+#/#kwrite's syntax higlighting is buggy.. this preserves my sanity	
+	exit;
 }
-#/#kwrite's syntax higlighting is bit off.. this preserves my sanity
 
-# Set up
+if ($options{'version'}) {
+		print "dailystrips version $version\n";
+		exit;
+}
+
+
+# Date::Parse must be loaded before using --date
 eval "use Date::Parse";
 if ($@ ne "") {
 	warn "Warning: Could not load Date::Parse module. --date option cannot be used\n";
 	$no_dateparse = 1;
 }
 
-$version = "1.0.16-pre3";
-
-$time_today = time;
-
-$options{'defs_file'} = "/usr/share/dailystrips/strips.def";
-
-
-# Parse options - the must be checked first because others depend on their values
-for (@ARGV)	{
-	if (/^--basedir=(.*)$/) {
-		unless (chdir $1) {
-			die "Error: could not change directory to $1\n";
-		}
-	} elsif (/^--defs/) {
-		unless (/^--defs=(.*)$/) {
-			die "Error: no argument given for --defs\n";
-		}
-		
-		$options{'defs_file'} = $1;
-	} elsif (/^--date=(.*)$/) {
-		if ($no_dateparse) {
-			die "Error: cannot use --date - Date::Parse not installed\n";
-		}
-		
-		unless ($time_today = str2time($1)) {
-			die "Error: invalid date specified\n";
-		}
-		
-		$options{'alt_date'} = 1;
-	} elsif (/^--nopersonal$/) {
-		$options{'no_personal_defs'} = 1;
-	} elsif (/^(--quiet|-q)$/) {
-		$options{'quiet'} = 1;
-	} elsif (/^--verbose$/) {
-		$options{'verbose'} = 1;
+if ($options{'date'}) {
+	if ($no_dateparse) {
+		die "Error: cannot use --date - Date::Parse not installed\n";
+	}
+	
+	unless ($time_today = str2time($options{'date'})) {
+		die "Error: invalid date specified\n";
 	}
 }
 
 
-# setup time variables...
+# setup time variables (needed during defs parsing)
 @localtime_today = localtime $time_today;
 $long_date = strftime("\%A, \%B \%-e, \%Y", @localtime_today);
 $short_date = strftime("\%Y.\%m.\%d", @localtime_today);
@@ -132,150 +128,139 @@ $short_date_yesterday = strftime("\%Y.\%m.\%d", @localtime_yesterday);
 @localtime_tomorrow = localtime ($time_today + 24 * 60 * 60);
 $short_date_tomorrow = strftime("\%Y.\%m.\%d", @localtime_tomorrow);
 
-#get strip definitions (do it now because info is used below)
-&get_defs($options{'defs_file'});
-unless ($options{'no_personal_defs'}) {
+
+# Get strip definitions now - info used below
+unless ($options{'defs'}) {
+	$options{'defs'} = '/usr/share/dailystrips/strips.def';
+}
+
+&get_defs($options{'defs'});
+
+unless ($options{'nopersonal'}) {
 	my $personal_defs = ((getpwuid($>))[7]) . "/.dailystrips.defs";
 	if (-e $personal_defs) {
 		&get_defs($personal_defs);
 	}
 }
+
 $known_strips = join('|', sort keys %defs);
 $known_groups = join('|', sort keys %groups);
 
-for (@ARGV)	{
-	#already handled
-	next if /^(--defs=.*|--basedir=.*|--date=.*|--verbose|--quiet|-q|--nopersonal)$/;
-	
-	if (/^--list$/) {
-format =
-@<<<<<<<<<<<<<<<<<<<<<<<< 	@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-$_, $val
-.
-		print "Available strips:\n";
-		for (split(/\|/, $known_strips)) {
-			$val = $defs{$_}{'name'};
-			write;
-		}
-		
-		print "\nAvailable groups:\n";
-		for (split(/\|/, $known_groups)) {
-			$val = $groups{$_}{'desc'};
-			write;
-		}
-		exit;
-	} elsif (/^-(-archive|a)$/) {
-		$options{'make_archive'} = 1;
-	} elsif (/^-(-dailydir|d)$/) {
-		if (defined $options{'stripdir'}) {
-			die "Error: --dailydir and --stripdir cannot be used together\n";
-		}
-		
-		$options{'dailydir'} = 1;
-	} elsif (/^-(-save|s)$/) {
-		$options{'save_existing'} = 1;
-	} elsif ($_ =~ m/^--stripdir$/) {
-		if (defined $options{'dailydir'}) {
-			die "Error: --dailydir and --stripdir cannot be used together\n";
-		}
-		
-		$options{'stripdir'} = 1;
-	} elsif (/^--output/) {
-		unless (/^--output=.+$/) {
-			die "Error: no argument given for --output\n";
-		}
-		
-		$options{'output_file'} = $1;
-	} elsif (/^-(-new|n)$/) {
-		$options{'new'} = 1;
-	} elsif (/^--nospaces$/) {
-		$options{'nospaces'} = 1;
-	} elsif (/^-(-version|v)$/) {
-		print "dailystrips version $version\n";
-		exit;
-	} elsif (/^($known_strips|all)$/i) {
+
+# Only strips/groups to download remain in @ARGV
+# Unconfigured options were already trapped by Getopts with an 'unknown option'
+# error
+for (@ARGV) {
+	if (/^($known_strips|all)$/io) {
 		if ($_ eq "all") {
 			push (@get, split(/\|/, $known_strips));
 		} else {
 			push(@get, $_);
 		}
-	} elsif (/^@($known_groups)$/i) {
-		push(@get, split(/;/, $groups{$1}{'strips'}));
-	} elsif (/^-(-local|l)$/) {
-		$options{'local_mode'} = 1;
-	} elsif (/^--noindex$/) {
-		$options{'no_index'} = 1;
-	} elsif (/^--noenvproxy$/) {
-		$options{'no_env_proxy'} = 1;
-	} elsif (/^--proxyauth/) {
-		unless (/^--proxyauth=(.+:.+)$/) {
-			die "Error: incorrectly formatted proxy credentials ('user:pass' expected)\n";
+	} elsif (/^@/) {
+		if (/^@($known_groups)$/io) {
+			push(@get, split(/;/, $groups{$1}{'strips'}));
+		} else {
+			die "Error: unknown group: $_\n";
 		}
-		
-		$options{'http_proxy_auth'} = $1;
-	} elsif (/^--proxy/) {
-		$_ =~ m/--proxy=(http:\/\/)?(.+?):(.+?)\/?$/i;
+	} else {
+		die "Error: unknown strip: $_\n";
+	}
+}
+
+if ($options{'list'}) {
+format =
+@<<<<<<<<<<<<<<<<<<<<<<<< 	@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+$_, $val
+.
+	print "Available strips:\n";
+	for (split(/\|/, $known_strips)) {
+		$val = $defs{$_}{'name'};
+		write;
+	}
+	
+	print "\nAvailable groups:\n";
+	for (split(/\|/, $known_groups)) {
+		$val = $groups{$_}{'desc'};
+		write;
+	}
+	exit;
+}
+
+if ($options{'dailydir'} and $options{'stripdir'}) {
+		die "Error: --dailydir and --stripdir cannot be used together\n";
+}
+
+if ($options{'proxyauth'}) {
+	unless ($options{'proxyauth'} =~ m/^.+?:.+?$/) {
+			die "Error: incorrectly formatted proxy credentials ('user:pass' expected)\n";
+	}		
+}
+
+#Set proxy
+if ($options{'proxy'}) {
+		$options{'proxy'} =~ m/^(http:\/\/)?(.*?):(.+?)\/?$/i;
 		unless ($2 and $3) {
 			die "Error: incorrectly formatted proxy server ('http://server:port' expected)\n";
 		}
 				
-		$options{'http_proxy'} = "http://$2:$3";
-		
-		print STDERR "DEBUG: setting proxy to: http://$2:$3 (1)\n";
-	} elsif (/^--useragent/) {
-		unless (/^--useragent=(.+)/) {
-			die "Error: no argument given for --useragent\n";
-		}
-		
-		$options{'user_agent'} = $1;
- 	} else {
-		die "Unknown option: $_\n";
+		$options{'proxy'} = "http://$2:$3";
+}
+
+if (!$options{'noenvproxy'} and !$options{'proxy'} and $ENV{'http_proxy'} ) {
+	$ENV{'http_proxy'} =~ m/(http:\/\/)?(.*?):(.+?)\/?$/i;
+	unless ($2 and $3) {
+		die "Error: incorrectly formatted proxy server environment variable\n('http://server:port' expected)\n";
 	}
+			
+	$options{'proxy'} = "http://$2:$3";
 }
 
-# verbose overrides quiet
-if ($options{'verbose'} and $options{'quiet'}) {
-	undef $options{'quiet'};
-}
-
-# Un-needed vars
-undef $known_strips; undef $known_groups; undef $val;
-
-unless ($options{'quiet'}) {
-	warn "dailystrips $version starting:\n"
+if ($options{'basedir'}) {
+	unless (chdir $options{'basedir'}) {
+		die "Error: could not change directory to $options{'basedir'}\n";
+	}
 }
 
 unless (@get) {
 	die "Error: no strip specified (--list to list available strips)\n";
 }
 
-#Set proxy
-if (!defined $options{'no_env_proxy'} and !defined $options{'http_proxy'} and defined $ENV{'http_proxy'} ) {
-	$ENV{'http_proxy'} =~ m/(http:\/\/)?(.+?):(.+?)\/?$/i;
-	unless ($2 and $3) {
-		die "Error: incorrectly formatted proxy server environment variable\n('http://server:port' expected)\n";
-	}
-			
-	$options{'http_proxy'} = "http://$2:$3";
-	
-	print STDERR "DEBUG: setting proxy to: http://$2:$3 (2)\n";
+
+# verbose overrides quiet
+if ($options{'verbose'} and $options{'quiet'}) {
+	undef $options{'quiet'};
 }
-if ($options{'http_proxy'}) {
+
+
+# Un-needed vars
+undef $known_strips; undef $known_groups; undef $val;
+
+
+# Go
+unless ($options{'quiet'}) {
+	warn "dailystrips $version starting:\n"
+}
+
+
+# Report proxy settings
+if ($options{'proxy'}) {
 	if ($options{'verbose'}) {
-		warn "Using proxy server $options{'http_proxy'}\n";
+		warn "Using proxy server $options{'proxy'}\n";
 	}
 	
-	if ($options{'verbose'} and $options{'http_proxy_auth'}) {
+	if ($options{'verbose'} and $options{'proxy_auth'}) {
 		warn "Using proxy server authentication\n";
 	}
 }
 
-if ($options{'local_mode'}) {
+
+if ($options{'local'}) {
 	unless ($options{'quiet'}) {
 		warn "Operating in local mode\n";
 	}
 	
-	if (defined $options{'dailydir'}) {
+	if ($options{'dailydir'}) {
 		unless ($options{'quiet'}) {
 			warn "Operating in daily directory mode\n";
 		}
@@ -297,13 +282,13 @@ if ($options{'local_mode'}) {
 		}
 	}
 
-	unless ($options{'alt_date'}) {
-		unless (defined $options{'no_index'}) {
+	unless ($options{'date'}) {
+		unless ($options{'noindex'}) {
 			system("rm -f index.html;ln -s dailystrips-$short_date.html index.html")
 		}
 	}
 
-	if (defined $options{'make_archive'}) {
+	if ($options{'archive'}) {
 	
 		unless (-e "archive.html") {
 			# Doesn't exist.. create
@@ -382,13 +367,13 @@ if ($options{'local_mode'}) {
 	}
 
 
-} elsif (defined $options{'output_file'}) {
+} elsif ($options{'output'}) {
 	unless ($options{'quiet'}) {
-		warn "Writing to file $options{'output_file'}\n";
+		warn "Writing to file $options{'output'}\n";
 	}
 	
-	unless (open(STDOUT, ">$options{'output_file'}")) {
-		die "Could not open output file ($options{'output_file'}) for writing\n";
+	unless (open(STDOUT, ">$options{'output'}")) {
+		die "Could not open output file ($options{'output'}) for writing\n";
 	}
 }
 
@@ -440,9 +425,9 @@ print <<END_HEADER;
 <table border=\"0\">
 END_HEADER
 
-#"#kwrite's syntax higlighting is bit off.. this preserves my sanity
+#"#kwrite's syntax higlighting is buggy.. this preserves my sanity
 
-if ($options{'local_mode'} and !$options{'quiet'}) {
+if ($options{'local'} and !$options{'quiet'}) {
 	if ($options{'verbose'}) {
 		warn "\nDownloading strip files:\n"
 	} else {
@@ -455,7 +440,7 @@ for (@strips) {
 	my ($img_line, $local_name, $image, $ext);
 	my ($local_name_yesterday);
 	
-	if ($options{'verbose'} and $options{'local_mode'}) {
+	if ($options{'verbose'} and $options{'local'}) {
 		warn "Downloading strip file for " . lc((split(/;/, $_))[0]) . "\n";
 	}
 	
@@ -466,9 +451,9 @@ for (@strips) {
 		
 		$img_line = "[Error - unable to retrieve URL]";
 	} else {
-		if ($options{'local_mode'}) {
+		if ($options{'local'}) {
 			# local mode - download strips
-			$img_addr =~ m/http:\/\/(.*)\/(.*)\.(.*)$/o;
+			$img_addr =~ m/http:\/\/(.*)\/(.*)\.(.*)$/;
 			if (defined $3) { $ext = ".$3" }
 			
 			if ($options{'stripdir'}) {
@@ -493,7 +478,7 @@ for (@strips) {
 				$local_name =~ s/\s+//g;
 			}
 
-			if ($options{'save_existing'} and  -e $local_name) {
+			if ($options{'save'} and  -e $local_name) {
 				# strip already exists - skip download
 				$img_addr = $local_name;
 				$img_addr =~ s/ /\%20/go;
@@ -502,7 +487,7 @@ for (@strips) {
 				# need to download
 				$image = &http_get($img_addr, $referer, $prefetch);
 				
-				if ($image =~ m/^ERROR/o) {
+				if ($image =~ m/^ERROR/) {
 					if ($options{'verbose'}) {
 						warn "Error: $strip: could not download strip\n";
 					}
@@ -568,7 +553,7 @@ for (@strips) {
 END_STRIP
 }
 #"#kwrite's syntax highlighting is buggy.. this preserves my sanity
-if ($options{'local_mode'} and !$options{'quiet'}) {
+if ($options{'local'} and !$options{'quiet'}) {
 	if ($options{'verbose'}) {
 		warn "Downloading strip files: done\n"
 	} else {
@@ -590,19 +575,19 @@ print <<END_FOOTER;
 </html>
 END_FOOTER
 
-#"// # kwrite's syntax highlighting is a bit off.. this preserves my sanity
+#"// # kwrite's syntax highlighting is buggy.. this preserves my sanity
 
 sub http_get {
 	my ($url, $referer, $prefetch) = @_;
 	my ($request, $response, $status);
 	
 	my $headers = new HTTP::Headers;
-	$headers->proxy_authorization_basic(split(/:/, $options{'http_proxy_auth'}));
+	$headers->proxy_authorization_basic(split(/:/, $options{'proxyauth'}));
 	$headers->referer($referer);
 	
 	my $ua = LWP::UserAgent->new;
-	$ua->agent($options{'user_agent'});
-	$ua->proxy('http', $options{'http_proxy'});
+	$ua->agent($options{'useragent'});
+	$ua->proxy('http', $options{'proxy'});
 	
 	#get prefetch url first
 	if ($prefetch ne "") {
@@ -640,7 +625,7 @@ sub get_strip {
 	my ($strip) = @_;
 	my ($page, $addr);
 	
-	if ($options{'alt_date'} and $defs{$strip}{'provides'} eq "latest") {
+	if ($options{'date'} and $defs{$strip}{'provides'} eq "latest") {
 		if ($options{'verbose'}) {
 			warn "Warning: strip $strip not compatible with --date, skipping\n";
 		}
@@ -688,7 +673,7 @@ sub get_defs {
 	my $line;
 	
 	unless(open(DEFS, "<$defs_file")) {
-		"Error: could not open strip definitions file $defs_file\n";
+		die "Error: could not open strip definitions file $defs_file\n";
 	}
 	
 	my @defs_file = <DEFS>;
@@ -876,7 +861,7 @@ sub get_defs {
 			{
 				$classes{$class}{'searchpattern'} = $1;
 			}
-			elsif (/^matchpart\s+(.+)$/)
+			elsif (/^matchpart\s+(.+)$/i)
 			{
 				unless ($1 =~ m/^(\d)$/) {
 					die "Error: invalid 'matchpart' at $defs_file line $line\n";
@@ -896,7 +881,7 @@ sub get_defs {
 			{
 				$classes{$class}{'imageurl'} = $1;
 			}
-			elsif (/^referer\s+(.+)$/io)
+			elsif (/^referer\s+(.+)$/i)
 			{
 				$classes{$class}{'referer'} = $1;
 			}
@@ -916,13 +901,13 @@ sub get_defs {
 				
 				$classes{$class}{'provides'} = $1;
 			}
-			elsif (/^(.+)\s+?/io)
+			elsif (/^(.+)\s+?/)
 			{
 				die "Unknown keyword '$1' at $defs_file line $line\n";
 			}
 		}
 		elsif ($sectype eq "strip") {
-			if (/^name\s+(.+)$/io)
+			if (/^name\s+(.+)$/i)
 			{
 				$defs{$strip}{'name'} = $1;
 			}
@@ -981,7 +966,7 @@ sub get_defs {
 			{
 				$defs{$strip}{'prefetch'} = $1;
 			}
-			elsif (/^(\$\d)\s+(.+)$/i)
+			elsif (/^(\$\d)\s+(.+)$/)
 			{
 				$defs{$strip}{$1} = $2;
 			}
@@ -993,7 +978,7 @@ sub get_defs {
 				
 				$defs{$strip}{'provides'} = $1;
 			}
-			elsif (/^(.+)\s+?/i)
+			elsif (/^(.+)\s+?/)
 			{
 				die "Error: Unknown keyword '$1' at $defs_file line $line, in strip $strip\n";
 			}
@@ -1010,7 +995,7 @@ sub get_defs {
 			{
 				$groups{$group}{'nostrips'} .= join(';', split(/\s+/, $1)) . ";";
 			}
-			elsif (/^(.+)\s+?/i)
+			elsif (/^(.+)\s+?/)
 			{
 				die "Error: Unknown keyword '$1' at $defs_file line $line, in group $group\n";
 			}
