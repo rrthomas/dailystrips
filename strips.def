@@ -236,6 +236,32 @@ end
 
 class graphicsmash
         type search
+	homepage http://www.graphicsmash.com/series.php?name=$1
+        searchpage http://www.moderntales.com/tooncast.php?series=$1
+        searchpattern <img.+?src=(.+?)>
+        provides latest
+end
+
+class graphicsmash-serializer
+        type search
+        homepage http://www.serializer.net/series.php?name=$1&view=current
+        searchpage http://www.moderntales.com/tooncast.php?series=$1
+        searchpattern <img.+?src=(.+?)>
+        provides latest
+end
+
+
+class graphicsmash-girlamatic
+        type search
+        homepage http://girlamatic.com/series.php?name=$1
+        searchpage http://www.moderntales.com/tooncast.php?series=$1
+        searchpattern <img.+?src=(.+?)>
+        provides latest
+end
+
+class graphicsmash-moderntales
+        type search
+        homepage http://www.moderntales.com/series2.php?name=$1&view=current
         searchpage http://www.moderntales.com/tooncast.php?series=$1
         searchpattern <img.+?src=(.+?)>
         provides latest
