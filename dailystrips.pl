@@ -196,7 +196,7 @@ if (defined $options{'local_mode'}) {
 			my $match_count;
 		
 			for (@previous_page) {
-				if ($_ =~ s/<!--nextday-->/ | <a href="dailystrips-$short_date.html">Next Day<\/a>/) {
+				if ($_ =~ s/<!--nextday-->/ | <a href="dailystrips-$short_date.html">Next day<\/a>/) {
 					$match_count++;
 					last if ($match_count == 2);
 				}
