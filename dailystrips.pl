@@ -126,7 +126,7 @@ $_, $defs{$_}{'name'}
 	} elsif ($_ =~ m/^--proxy=/o) {
 		unless ($_ =~ m/^--proxy=((.*?):(.*?))$/o) {die "Invalid proxy server\n"}
 		$options{'http_proxy'} = $1;
-		print STDERR "DEBUG: proxy is now $options{'http_proxy'}\n";
+		#print STDERR "DEBUG: proxy is now $options{'http_proxy'}\n";
 	} else {
 		die "Unknown option: $_\n";
 	}
@@ -141,13 +141,13 @@ if (!defined $options{'no_env_proxy'} && !defined $options{'http_proxy'} ) {
 	if (defined $ENV{'http_proxy'} ) {
 		my $env_proxy = $ENV{'http_proxy'};
 		$options{'http_proxy'} = $env_proxy;
-		print STDERR "\nDEBUG: setting proxy to $env_proxy from env\n";
+		#print STDERR "\nDEBUG: setting proxy to $env_proxy from env\n";
 	}
 }
 if (defined $options{'http_proxy'}) {
 	unless ($options{'http_proxy'} =~ m/^http:\/\//io) {$options{'http_proxy'} = "http://" . $options{'http_proxy'}}
 }
-print STDERR "\nDEBUG: proxy is, finally, $options{'http_proxy'}\n";
+#print STDERR "\nDEBUG: proxy is, finally, $options{'http_proxy'}\n";
 
 if (defined $options{'local_mode'}) {
 	unless (defined $options{'quiet'}) { print STDERR "Operating in local mode\n" }
@@ -255,8 +255,8 @@ END_HEADER
 if ((defined $options{'local_mode'}) and (not defined $options{'quiet'})) { print STDERR "Saving strips locally..." }
 
 for (@strips) {
-	my ($strip, $homepage, $img_addr, $updated) = split(/;/, $_);
-	my ($img_line, $local_name, $image);
+	my ($strip, $homepage, $img_addr, $updated, $referer) = split(/;/, $_);
+	my ($img_line, $local_name, $image, $ext);
 	my ($local_name_yesterday);
 	
 	if ($img_addr =~ "^unavail") {
@@ -264,14 +264,16 @@ for (@strips) {
 	} else {
 		if (defined $options{'local_mode'}) {
 			# local mode - download strips
-			$img_addr =~ m/(.*)\.(.*)$/o;
+			$img_addr =~ m/http:\/\/(.*)\/(.*)\.(.*)$/o;
+			if (defined $3) { $ext = ".$3" } else { $ext = ""}
 			
+			#print STDERR "DEBUG: extenstion is: $ext\n";
 			if (defined $options{'dailydir'}) {
-				$local_name_yesterday = "$short_date_yesterday/$strip-$short_date_yesterday.$2";
-				$local_name = "$short_date/$strip-$short_date.$2";
+				$local_name_yesterday = "$short_date_yesterday/$strip-$short_date_yesterday$ext";
+				$local_name = "$short_date/$strip-$short_date$ext";
 			} else {
-				$local_name_yesterday = "$strip-$short_date_yesterday.$2";				
-				$local_name = "$strip-$short_date.$2";
+				$local_name_yesterday = "$strip-$short_date_yesterday$ext";				
+				$local_name = "$strip-$short_date$ext";
 			}
 			
 			if (defined $options{'save_existing'} and  -e $local_name) {
@@ -280,8 +282,10 @@ for (@strips) {
 				$img_addr =~ s/ /\%20/go;
 				$img_line = "<img src=\"$img_addr\" alt=\"$strip\">";
 			} else {
-			   # need to download
-				$image = &http_get($img_addr);
+				# need to download
+				print STDERR "here?\n";
+				print STDERR "DEBUG: specifying referer " . $referer . "\n";
+				$image = &http_get($img_addr,$referer);
 				if ($image =~ m/^ERROR/o) {
 					$img_line = "[Error - unable to download image]";
 				} else {
@@ -360,10 +364,14 @@ END_FOOTER
 #"// # kwrite's syntax highlighting is a bit off.. this fixes things
 
 sub http_get {
-	my ($url) = @_;
+	my ($url, $referer) = @_;
+	my $headers;
 	
-	my $headers = new HTTP::Headers;
-	$headers->referer("http://foo.bar");
+	if (defined $referer) {
+		$headers = new HTTP::Headers;
+		$headers->referer($referer);
+		print STDERR "DEBUG: using referer $referer\n";
+	}
 	
 	my $request = HTTP::Request->new('GET', $url, $headers);
 	my $ua = LWP::UserAgent->new;
@@ -412,7 +420,7 @@ sub get_strip {
 	
 	#print STDERR "DEBUG: finished generating info for strip $strip\n";
 	
-	push(@strips,"$defs{$strip}{'name'};$defs{$strip}{'homepage'};$addr;$defs{$strip}{'updated'}")
+	push(@strips,"$defs{$strip}{'name'};$defs{$strip}{'homepage'};$addr;$defs{$strip}{'updated'};$defs{$strip}{'referer'}")
 }
 
 sub get_defs {
@@ -446,7 +454,7 @@ sub get_defs {
 		elsif ($sectype eq "class") {
 			if ($_ =~ m/^homepage\s+(.+)$/io) {
 				my $val = $1;
-				unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted homepage at $options{'defs_file'} line $line\n" }
+				#unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted homepage at $options{'defs_file'} line $line\n" }
 				$classes{$class}{'homepage'} = $val;
 			}
 			elsif ($_ =~ m/^type\s+(.+)$/io)
@@ -458,7 +466,7 @@ sub get_defs {
 			elsif ($_ =~ m/^searchpage\s+(.+)$/io)
 			{
 				my $val = $1;
-				unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted searchpage at $options{'defs_file'} line $line\n" }
+				#unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted searchpage at $options{'defs_file'} line $line\n" }
 				$classes{$class}{'searchpage'} = $val;
 			}
 			elsif ($_ =~ m/^searchpattern\s+(.+)$/io)
@@ -474,13 +482,13 @@ sub get_defs {
 			elsif ($_ =~ m/^baseurl\s+(.+)$/io)
 			{
 				my $val = $1;
-				unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted baseurl at $options{'defs_file'} line $line\n" }
+				#unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted baseurl at $options{'defs_file'} line $line\n" }
 				$classes{$class}{'baseurl'} = $val;
 			}
 			elsif ($_ =~ m/^imageurl\s+(.+)$/io)
 			{
 				my $val = $1;
-				unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted imageurl at $options{'defs_file'} line $line\n" }
+				#unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted imageurl at $options{'defs_file'} line $line\n" }
 				$classes{$class}{'imageurl'} = $val;
 			}
 			elsif ($_ =~ m/^referer\s+(.+)$/io)
@@ -503,7 +511,8 @@ sub get_defs {
 			}
 			elsif ($_ =~ m/^homepage\s+(.+)$/io) {
 				my $val = $1;
-				unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted homepage at $options{'defs_file'} line $line\n" }
+				#doesn't handle %..
+				#unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted homepage at $options{'defs_file'} line $line\n" }
 				$defs{$strip}{'homepage'} = $val;
 			}
 			elsif ($_ =~ m/^type\s+(.+)$/io)
@@ -515,7 +524,8 @@ sub get_defs {
 			elsif ($_ =~ m/^searchpage\s+(.+)$/io)
 			{
 				my $val = $1;
-				unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted searchpage at $options{'defs_file'} line $line\n" }
+				#doesn't handle %..
+				#unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted searchpage at $options{'defs_file'} line $line\n" }
 				$defs{$strip}{'searchpage'} = $val;
 			}
 			elsif ($_ =~ m/^searchpattern\s+(.+)$/io)
@@ -531,13 +541,15 @@ sub get_defs {
 			elsif ($_ =~ m/^baseurl\s+(.+)$/io)
 			{
 				my $val = $1;
-				unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted baseurl at $options{'defs_file'} line $line\n" }
+				#doesn't handle %..
+				#unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted baseurl at $options{'defs_file'} line $line\n" }
 				$defs{$strip}{'baseurl'} = $val;
 			}
 			elsif ($_ =~ m/^imageurl\s+(.+)$/io)
 			{
 				my $val = $1;
-				unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted imageurl at $options{'defs_file'} line $line\n" }
+				#doesn't handle %..
+				#unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted imageurl at $options{'defs_file'} line $line\n" }
 				$defs{$strip}{'imageurl'} = $val;
 			}
 			elsif ($_ =~ m/^updated\s+(.+)$/io)
@@ -550,6 +562,7 @@ sub get_defs {
 			}
 			elsif ($_ =~ m/^(\%[0-9])\s+(.+)$/io)
 			{
+				#print STDERR "DEBUG: substituting for autovar $1 value \"$2\" for strip $strip\n";
 				$defs{$strip}{$1} = $2;
 			}
 		}
@@ -562,7 +575,7 @@ sub get_defs {
 				if (defined $defs{$strip}{'useclass'}) {
 					my $using_class = $defs{$strip}{'useclass'};
 					
-					for (qw(homepage searchpage searchpattern baseurl imageurl)) {
+					for (qw(homepage searchpage searchpattern baseurl imageurl referer)) {
 						if (defined $classes{$using_class}{$_} and not defined $defs{$strip}{$_}) {
 							my $classvar = $classes{$using_class}{$_};
 							$classvar =~ s/(\%[0-9])/$defs{$strip}{$1}/g;
@@ -571,39 +584,48 @@ sub get_defs {
 						}
 					}
 				
-					for (qw(type matchpart updated referer)) {
+					for (qw(type matchpart updated)) {
 						if (defined $classes{$using_class}{$_} and not defined $defs{$strip}{$_}) {
 							$defs{$strip}{$_} = $classes{$using_class}{$_};
 						}
 					}	
 				}	
 						
-				#sanity-check current strip's values
-				unless (defined $defs{$strip}{'name'})     { die "Error: strip $strip has no 'name' value\n" }
-				unless (defined $defs{$strip}{'homepage'}) { die "Error: strip $strip has no 'homepage' value\n" }
-				unless (defined $defs{$strip}{'type'})     { die "Error: strip $strip has no 'type' value\n" }
+				#substitute auto vars for real vals here/set defaults
+				unless (defined $defs{$strip}{'updated'}) { $defs{$strip}{'updated'} = "daily" }
+				unless (defined $defs{$strip}{'searchpage'}) {$defs{$strip}{'searchpage'} = $defs{$strip}{'homepage'}}
+				unless (defined $defs{$strip}{'referer'}) {$defs{$strip}{'referer'} = $defs{$strip}{'homepage'}}
+				
+				for (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
+					#other vars in definition
+					if (defined $defs{$strip}{$_}) { $defs{$strip}{$_} =~ s/%(\w{2,})/$defs{$strip}{$1}/g }
+				}			
+				
+				for (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
+					#dates
+					if (defined $defs{$strip}{$_}) { $defs{$strip}{$_} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge }
+				}
+				
+				#sanity check vars
+				for (qw(name homepage type)) {
+					unless (defined $defs{$strip}{$_})     { die "Error: strip $strip has no '$_' value\n" }
+				}
+				
+				for (qw(homepage searchpage baseurl imageurl)){	
+					if (defined $defs{$strip}{$_}) {
+						unless ($defs{$strip}{$_} =~ m/^http:\/\//io) { die "Error: strip $strip has invalid $_\n" }
+					}
+				}
 				
 				if ($defs{$strip}{'type'} eq "search") {
 					unless (defined $defs{$strip}{'searchpattern'}) { die "Error: strip $strip has no 'searchpattern' value\n" }
 					unless (defined $defs{$strip}{'matchpart'})     { die "Error: strip $strip has no 'matchpart' value\n" }
-				} elsif ($defs{$strip}{'type'} eq "generate") {
+				} else {
 					unless (defined $defs{$strip}{'imageurl'})      { die "Error: strip $strip has no 'imageurl' value\n" }
 				}
 				
-				#substitute auto vars for real vals here/set defaults
-				unless (defined $defs{$strip}{'updated'}) { $defs{$strip}{'updated'} = "daily" }
-				unless (defined $defs{$strip}{'searchpage'}) {$defs{$strip}{'searchpage'} = $defs{$strip}{'homepage'}}
-				
-				for (qw(imageurl baseurl homepage searchpage searchpattern referer)) {
-					if (defined $defs{$strip}{$_}) { $defs{$strip}{$_} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge }
-				}
-				
-				for (qw(imageurl baseurl homepage searchpage searchpattern referer)) {
-					if (defined $defs{$strip}{$_}) { $defs{$strip}{$_} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge }
-				}			
-				
 				#foreach my $strip (keys %defs) {
-				#	foreach my $key (qw(imageurl baseurl homepage searchpage searchpattern referer)) {
+				#	foreach my $key (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
 				#		print STDERR "DEBUG: $strip:$key=$defs{$strip}{$key}\n";
 				#	}
 				#}
