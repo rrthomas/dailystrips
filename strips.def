@@ -1341,11 +1341,11 @@ strip baldo
 	$1 ba
 end
 
-strip bizarro
-	name Bizarro
-	useclass ucomics-gen
-	$1 bz
-end
+#strip bizarro
+#	name Bizarro
+#	useclass ucomics-gen
+#	$1 bz
+#end
 
 strip thebigpicture
 	name The Big Picture
@@ -4662,5 +4662,35 @@ strip dela
 	searchpage http://www.delathehooda.com
 	searchpattern <img SRC="(<code:<"Delac" if %w==0><code:"dela" if %w!=0>~[^"]+)"
 	baseurl http://www.delathehooda.com/
+	provides latest
+end
+
+strip extralife
+	name Extra Life
+	homepage http://dynamic5.gamespy.com/~extralife/
+	type search
+	searchpattern <img.+?src="(strips/\d+-\d+-\d+.+?)"
+	baseurl $homepage
+	provides latest
+end
+
+strip forcemonkeys
+	name Force Monkeys
+	homepage http://www.gamespy.com/comics/forcemonkeys/
+	type search
+	searchpage http://www.gamespy.com/comics/forcemonkeys/latest.html
+	searchpattern <img.+?src="(comics/\d+-\d+-\d+/.+?)"
+	baseurl $homepage
+	provides latest
+end
+
+strip bizarro
+	name Bizarro
+	homepage http://www.kingfeatures.com/features/comics/bizarro/about.htm
+	type search
+	prefetch $searchpage
+	referer $searchpage
+	searchpage http://www.kingfeatures.com/features/comics/bizarro/aboutMaina.php
+	searchpattern <img.+?src='(http://est.rbma.com/content/Bizarro\?date=\d{8})'
 	provides latest
 end
