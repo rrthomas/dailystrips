@@ -4,15 +4,15 @@ group andrews
 	include userfriendly dilbert foxtrot badtech
 	include pennyarcade joyoftech thefifthwave monty bc
 	include wizardofid garfield adamathome
-end	
+end
 
 group michael
 	desc Michael's Favorite Strips
-	include liberty foxtrot boondocks doonesbury zits dilbert babyblues 
-	include monty bc blondie calvinandhobbes funkywinkerbean 
+	include liberty foxtrot boondocks doonesbury zits dilbert babyblues
+	include monty bc blondie calvinandhobbes funkywinkerbean
 	include zippythecolorpinhead peanuts adamathome forbetter bizarro
-	include userfriendly geech shoe wizardofid 
-end	
+	include userfriendly geech shoe wizardofid
+end
 
 # Class definitions
 class ucomics-srch
@@ -28,16 +28,24 @@ class ucomics-gen
 	type generate
 	imageurl http://images.ucomics.com/comics/$1/%Y/$1%y%m%d.gif
 	provides any
-	
+
 end
 
 class unitedmedia-srch-comics
 	homepage http://www.unitedmedia.com/comics/$strip/index.html
 	type search
-	searchpage http://www.unitedmedia.com/comics/$strip/archive/$strip-%Y%m%d.html	
+	searchpage http://www.unitedmedia.com/comics/$strip/archive/$strip-%Y%m%d.html
 	searchpattern <img.+?src="(/comics/$strip/archive/images/$strip.+?)"
 	baseurl http://www.unitedmedia.com
 	provides any
+end
+
+class unitedmedia-srch-comics-lag
+	homepage http://www.unitedmedia.com/comics/$strip/index.html
+	type search
+	searchpattern <img.+?src="(/comics/$strip/archive/images/$strip.+?)"
+	baseurl http://www.unitedmedia.com
+	provides latest
 end
 
 class unitedmedia-srch-creators
@@ -1105,6 +1113,16 @@ strip cheapthrills
 	useclass unitedmedia-srch-wash
 end
 
+strip charlie
+	name Charlie
+	useclass unitedmedia-srch-creators
+end
+
+strip chickweed
+	name 9 Chickweed Lane
+	useclass unitedmedia-srch-comics
+end
+
 strip committed
 	name Committed
 	useclass unitedmedia-srch-comics
@@ -1122,6 +1140,11 @@ end
 
 strip fatcats
 	name Fat Cats
+	useclass unitedmedia-srch-comics-lag
+end
+
+strip ferdnand
+	name Ferd'nand
 	useclass unitedmedia-srch-comics
 end
 
@@ -1145,6 +1168,21 @@ strip franknernest
 	useclass unitedmedia-srch-comics
 end
 
+strip frazz
+        name Frazz
+        useclass unitedmedia-srch-comics
+end
+
+#can't use the class - dates are 66 years ago
+strip freckles
+	name Freckles and His Friends
+	homepage http://www.unitedmedia.com/comics/freckles/index.html
+	type search
+	searchpattern (/comics/freckles/archive/images/freckles.+?\.gif)
+	baseurl http://www.unitedmedia.com
+	provides latest
+end
+
 strip geech
 	name Geech
 	useclass unitedmedia-srch-comics
@@ -1155,14 +1193,19 @@ strip getfuzzy
 	useclass unitedmedia-srch-comics
 end
 
-strip grandave
-	name Grand Avenue
+strip gingermeggs
+	name Ginger Meggs
 	useclass unitedmedia-srch-comics
 end
 
-strip grandfathersclause
-	name Grandfather Clause
-	useclass unitedmedia-srch-creators
+strip graffiti
+	name Graffiti
+	useclass unitedmedia-srch-comics
+end
+
+strip grandave
+	name Grand Avenue
+	useclass unitedmedia-srch-comics
 end
 
 strip grizzwells
@@ -1175,9 +1218,24 @@ strip heathcliff
 	useclass unitedmedia-srch-creators
 end
 
+strip hedge
+	name Over the Hedge
+	useclass unitedmedia-srch-comics
+end
+
+strip herbnjamaal
+	name Herb and Jamaal
+	useclass unitedmedia-srch-creators
+end
+
 strip herman
 	name Herman
 	useclass unitedmedia-srch-comics
+end
+
+strip janesworld
+        name Jane's World
+        useclass unitedmedia-srch-comics
 end
 
 strip jumpstart
@@ -1210,17 +1268,10 @@ strip luann
 	useclass unitedmedia-srch-comics
 end
 
-# can't use class - strip lags 1 day (current html page exists, but not strip image
-# update: seems to be up to date as of 31 july 2001
-# changed again - only weekly? (16 august 2001)
+# last updated 22 oct 2001?
 strip lupo
 	name Lupo Alberto
 	useclass unitedmedia-srch-comics
-	#homepage http://www.unitedmedia.com/comics/lupo/index.html
-	#type search
-	#searchpattern (/comics/lupo/archive/images/lupo.+?\.gif)
-	#matchpart 1
-	#baseurl http://www.unitedmedia.com
 	searchpage $homepage
 	provides latest
 end
@@ -1237,7 +1288,7 @@ end
 
 strip meg
 	name Meg!
-	useclass unitedmedia-srch-comics
+	useclass unitedmedia-srch-comics-lag
 end
 
 strip momma
@@ -1245,17 +1296,10 @@ strip momma
 	useclass unitedmedia-srch-creators
 end
 
-# can't use class - site lags several days
-# update: seems to be current on 31 july 2001
+# lags ~1 week
 strip motley
 	name Motley
-	useclass unitedmedia-srch-comics
-	#homepage http://www.unitedmedia.com/comics/motley/index.html
-	#type search
-	#searchpattern (/comics/motley/archive/images/motley.+?\.gif)
-	#matchpart 1
-	#baseurl http://www.unitedmedia.com
-	#provides latest
+	useclass unitedmedia-srch-comics-lag
 end
 
 strip mspeach
@@ -1268,14 +1312,9 @@ strip nancy
 	useclass unitedmedia-srch-comics
 end
 
-strip chickweed
-	name 9 Chickweed Lane
-	useclass unitedmedia-srch-comics
-end
-
-strip hedge
-	name Over the Hedge
-	useclass unitedmedia-srch-comics
+strip naturalselection
+	name Natural Selection
+	useclass unitedmedia-srch-creators
 end
 
 strip offsides
@@ -1285,6 +1324,11 @@ end
 
 strip onebighappy
 	name One Big Happy
+	useclass unitedmedia-srch-creators
+end
+
+strip othercoast
+	name The Other Coast
 	useclass unitedmedia-srch-creators
 end
 
@@ -1298,14 +1342,14 @@ strip pearls
 	useclass unitedmedia-srch-comics
 end
 
-strip penmen
-	name Penmen
-	useclass unitedmedia-srch-creators
-end
-
 strip pickles
 	name Pickles
 	useclass unitedmedia-srch-wash
+end
+
+strip potluck
+	name Potluck Parish
+	useclass unitedmedia-srch-comics
 end
 
 strip raisingduncan
@@ -1318,18 +1362,13 @@ strip randolphitch
 	useclass unitedmedia-srch-comics
 end
 
-strip rawmaterial
-	name Raw Material
-	useclass unitedmedia-srch-creators
-end
-
 strip reality
 	name Reality Check
 	useclass unitedmedia-srch-comics
 end
 
 strip redandrover
-	name Red & Rover
+	name Red and Rover
 	useclass unitedmedia-srch-wash
 end
 
@@ -1338,7 +1377,6 @@ strip ripleys
 	useclass unitedmedia-srch-comics
 end
 
-#was Robotman
 strip monty
 	name Monty
 	useclass unitedmedia-srch-comics
@@ -1369,16 +1407,6 @@ strip soup2nutz
 	useclass unitedmedia-srch-comics
 end
 
-strip frazz
-        name Frazz
-        useclass unitedmedia-srch-comics
-end
-
-strip janesworld
-        name Jane's World
-        useclass unitedmedia-srch-comics
-end
-
 strip spooner
         name Spooner
         useclass unitedmedia-srch-comics
@@ -1389,7 +1417,7 @@ strip speedbump
 	useclass unitedmedia-srch-creators
 end
 
-# updated less than weekly (as of 17 aug 2001).
+# only once-weekly
 strip stockcartoons
 	name StockcarToons
 	useclass unitedmedia-srch-comics
@@ -1420,6 +1448,11 @@ end
 
 strip topofworld
 	name Top of the World!
+	useclass unitedmedia-srch-comics-lag
+end
+
+strip usplay
+	name The US of Play
 	useclass unitedmedia-srch-comics
 end
 
@@ -1437,12 +1470,6 @@ strip wizardofid
 	name Wizard of Id
 	useclass unitedmedia-srch-creators
 end
-
-#not updated any more
-#strip zorro
-#	name Zorro
-#	useclass unitedmedia-srch-creators
-#end
 
 # sfgate strips
 strip babyblues
