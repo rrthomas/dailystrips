@@ -472,8 +472,8 @@ sub get_defs {
 					for (qw(homepage searchpage searchpattern baseurl imageurl referer)) {
 						if (defined $classes{$using_class}{$_} and not defined $defs{$strip}{$_}) {
 							my $classvar = $classes{$using_class}{$_};
-							$classvar =~ s/(\%[0-9])/$defs{$strip}{$1}/g;
-							$classvar =~ s/\%strip/$strip/g;
+							$classvar =~ s/(\$[0-9])/$defs{$strip}{$1}/g;
+							$classvar =~ s/\$strip/$strip/g;
 							$defs{$strip}{$_} = $classvar;
 						}
 					}
@@ -499,7 +499,7 @@ sub get_defs {
 				for (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
 					#other vars in definition
 					# could do without 'if defined..' if not running under -w
-					if (defined $defs{$strip}{$_}) {$defs{$strip}{$_} =~ s/%(\w{2,})/$defs{$strip}{$1}/g}
+					if (defined $defs{$strip}{$_}) {$defs{$strip}{$_} =~ s/\$(homepage|searchpage|searchpattern|imageurl|baseurl|referer)/$defs{$strip}{$1}/g}
 				}			
 				
 				for (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
@@ -507,6 +507,7 @@ sub get_defs {
 					# could do without 'if defined..' if not running under -w
 					if (defined $defs{$strip}{$_}) { $defs{$strip}{$_} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge }
 				}
+				
 				
 				#sanity check vars
 				for (qw(name homepage type)) {
@@ -554,7 +555,7 @@ sub get_defs {
 			elsif ($_ =~ m/^type\s+(.+)$/io)
 			{
 				my $val = $1;
-				unless ($val =~ m/^(search|generate)$/io) { die "Error: invalid type at $options{'defs_file'} line $line\n" }
+				unless ($val =~ m/^(search|generate)$/io) { die "Error: invalid types at $options{'defs_file'} line $line\n" }
 				$classes{$class}{'type'} = $val;
 			}
 			elsif ($_ =~ m/^searchpage\s+(.+)$/io)
@@ -647,13 +648,13 @@ sub get_defs {
 			{
 				$defs{$strip}{'referer'} = $1;
 			}
-			elsif ($_ =~ m/^(\%[0-9])\s+(.+)$/io)
+			elsif ($_ =~ m/^(\$[0-9])\s+(.+)$/io)
 			{
 				$defs{$strip}{$1} = $2;
 			}
 			elsif ($_ =~ m/^(.+)(\s+?)/io)
 			{
-				die "Unknown keyword '$1' at $options{'defs_file'} line $line\n";
+				die "Unknown keyword '$1' at $options{'defs_file'} line $line, in strip $strip\n";
 			}
 		} elsif ($sectype eq "group") {
 			if ($_ =~ m/^desc\s+(.+)$/io)
@@ -666,7 +667,7 @@ sub get_defs {
 			}
 			elsif ($_ =~ m/^(.+)(\s+?)/io)
 			{
-				die "Unknown keyword '$1' at $options{'defs_file'} line $line\n";
+				die "Unknown keyword '$1' at $options{'defs_file'} line $line, in group $group\n";
 			}
 		}
 			

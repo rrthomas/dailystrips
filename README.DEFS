@@ -17,12 +17,12 @@ name of the strip to display in the HTML output. 'homepage' is the address of
 the strip's homepage, use for the link in the output. 'type' can be either
 'generate' or 'search'. Here we are using 'generate' to generate a URL.
 'imageurl' is the address of the image. You are allowed to use a number of
-special variables beginning with the '%' symbol. Single letters such as "%Y",
+special variables. Single letters preceeded by the '%' symbol, such as "%Y",
 "%d", "%m", etc. are interpreted as date variables and passed to the strftime
 function for conversion. 'date --help' provides a reference that is compatible.
-You can also use a "%" followed by any of the above variables, such as
-'%homepage'. This will simply subsititute 'http://www.badtech.com' in place of
-'%homepage'.
+You can also use a "$" followed by any of the above variables, such as
+'$homepage'. This will simply subsititute 'http://www.badtech.com' in place of
+'$homepage'.
 
 
 The other type of URL generation, searching, is as follows:
@@ -40,7 +40,7 @@ end
 'strip', 'name', and 'homepage' all function as above. The difference is the
 'type search' line and the lines that follow. 'searchpattern' is a Perl regular
 expression that must be written to match the strip's URL. Not shown is
-'searchpage', which would ordinarily go above 'searchpatter'. This is a URL to
+'searchpage', which would ordinarily go above 'searchpattern'. This is a URL to
 a web page and is only needed if the URL to the strip image is not found on the
 homepage. The same special variables listed above for 'imageurl' may also be
 used here. 'matchpart' tells the script witch parenthetical section (there must
@@ -70,9 +70,9 @@ follows:
 
 First, the class is declared:
 >class ucomics-srch
->	homepage http://www.ucomics.com/%strip/view%1.htm
+>	homepage http://www.ucomics.com/$strip/view$1.htm
 >	type search
->	searchpattern (/%1/(\d+)/%1(\d+)\.(gif|jpg))
+>	searchpattern (/$1/(\d+)/$1(\d+)\.(gif|jpg))
 >	matchpart 1
 >	baseurl http://images.ucomics.com/comics
 >end
@@ -80,17 +80,17 @@ First, the class is declared:
 This is just like a strip definition, except 'class' is the first line. The
 value for 'class' must be unique among other classes but will not conflict with
 the names of strips. Strip-specific elements are specified using special
-variables '%x', where 'x' is a number from 1 to 9. When the definition file is
+variables '$x', where 'x' is a number from 1 to 9. When the definition file is
 parsed, these variables are retrieved from the strip definition, shown below.
 
 strip calvinandhobbes
 	name Calvin and Hobbes
 	useclass ucomics-srch
-	%1 ch
+	$1 ch
 end
 
 This definition is like a normal definition except the second line is 'useclass'
-followed by the name of the class to use. Below that, the strip-specific '%x'
+followed by the name of the class to use. Below that, the strip-specific '$x'
 variables must be specified. Values already declared in the class can be
 overridden (if necessary) by simply specifying them in the strip definition.
 
@@ -115,12 +115,15 @@ the name (bare words not preceeded by an '@' symbol will be considered strips).
 
 Notes:
 
+* As of 1.0.10, only date variables use the '%' symbol - everything else now
+  uses '$'
+
 * For classes, variables declared in the strip definition take precedence over
   those specified in the class, if there is any conflict
 
-* You cannot use '%varaiablename' to refer to a variable below the current line
+* You cannot use '$variablename' to refer to a variable below the current line
   (assuming that you use the standard order) if the referenced variable is a
-  reference itself - the script only parses '%variablename' references once.
+  reference itself - the script only parses '$variablename' references once.
   This is a bug and is scheduled to be fixed.
 
 * If no 'searchpage' is specified for definitions of type 'search', the value of
