@@ -1049,6 +1049,14 @@ strip swamp
 	provides any
 end
 
+strip thenorm
+	name The Norm
+	homepage http://www.thenorm.com/
+	type generate
+	imageurl http://www.thenorm.com/arch/%y%m%d.gif
+	provides any
+end
+
 # ucomics.com strips
 strip adamathome
 	name Adam@home
@@ -2285,18 +2293,11 @@ strip captainribman
 end
 
 #mercury center strips
-strip thenorm
-        name The Norm
-        useclass mercurycenter
-        $1 79
-        $2 norm
-end
-
 strip bfriends
-        name Between Friends
-        useclass mercurycenter
-        $1 14
-        $2 bfriends
+	name Between Friends
+	useclass mercurycenter
+	$1 14
+	$2 bfriends
 end
 
 
