@@ -12,13 +12,10 @@ file README.LOCAL for more information and examples)
 
 Requirements:
 	dailystrips.pl requires a reasonably current version of Perl - it was
-developed with 5.005_03. It also requires the "wget" and "date" commands (these
-will be replaced with Perl builtins/modules ASAP to enhance portability to other
-platforms). dailystrips.pl was developed on Linux, should be able to run on any
-*nix with that has wget installed.
-
-	As of 1.0.1, the HTTP::Request, LWP::UserAgent, and POSIX modules are needed.
-See www.cpan.org if you don't have them installed already.
+developed with 5.005_03. The HTTP::Request, LWP::UserAgent, and POSIX modules
+are needed. See www.cpan.org if you don't have them installed already.
+dailystrips.pl was developed on Linux but should be able to run on any *nix
+with that has the necessary Perl modules installed.
 
 Installation:
 	dailystrips.pl can be copied to whichever directory suits you.
