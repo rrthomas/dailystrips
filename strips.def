@@ -424,8 +424,7 @@ strip zapiro
 	#provides any
 	#matchpart 1
 	type generate
-	imageurl http://www.mg.co.za/mg/zapiro/%Y/<code:lc(strftime("\%b", @localtime_today))>/<code:lc(strftime("\%b", @localtime_today))>%d.gif)
-	#imageurl http://<code:lc(strftime("\%b", @localtime_today))>
+	imageurl http://www.mg.co.za/mg/zapiro/%Y/<code:lc(strftime("\%b", @localtime_today))>/<code:lc(strftime("\%b", @localtime_today))>%d.gif
 	provides any
 end
 
