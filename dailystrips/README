@@ -1,0 +1,42 @@
+Description:
+	This Perl script downloads the URL for the current comic of various strips
+that are available online, and outputs these URLs to an HTML file. This enables
+you to view all of your favorite strips at once, instead of visiting a dozen
+different websites.
+	One feature that sets this program apart from the rest is the ability to
+operate in 'local' mode. This mode, instead of writing the addresses to images
+in the HTML file, actually downloads the image and saves it locally. This way,
+you do not have to wait for each image to download - it's already on your hard
+drive. This is most useful when dailystrips.pl is run from a cron script. (See
+file README.LOCAL for more information and examples)
+
+Requirements:
+	dailystrips.pl requires a reasonably current version of Perl - it was
+developed with 5.005_03. It also requires the "wget" and "date" commands (these
+will be replaced with Perl builtins/modules ASAP to enhance portability to other
+platforms). dailystrips.pl was developed on Linux, should be able to run on any
+*nix with that has wget installed.
+
+	As of 1.0.1, the HTTP::Request, LWP::UserAgent, and POSIX modules are needed.
+See www.cpan.org if you don't have them installed already.
+
+Installation:
+	dailystrips.pl can be copied to whichever directory suits you.
+	
+Usage:
+	'./dailystrips.pl [stripname(s)]' will print to STDOUT an HTML page with image
+links to the latest strip. These links are to the strip's webserver.
+dailystrips.pl --help lists all available options
+
+Adding new strips:
+	The strips.defs file should be relatively self-explanatory. (real docs
+coming soon). If you are adding several strips from the same site that share a
+common format, please create a class for that site. In addition, please try to
+pick a method of determining the most current URL possible (i.e. don't search if
+it's possible to predict - we don't want to get old strips if running early in
+the morning and a site hasn't updated the static page yet)
+
+Copyright info:
+	This program copyright (C) 2001 Andrew Medico <amedico@calug.net>.
+All rights reserved.  This program is free software; you may redistribute it
+and/or modify it under the terms of the GNU GPL, Version 2.

@@ -1,0 +1,17 @@
+Joaquín Perez <joaquin@mondongo.com.ar>
+Finished implementing every strip at ucomics.com & unitedmedia.com
+
+Marc Doumayrou <mad@oxyan.com>
+Implemented --dailydir option and link to previous day's strip
+
+Scott Carlson <ScottCarlson@email.com>
+Implemented detection and symlinking for duplicate strip files
+
+Dave Tweed <dtweed@acm.org>
+Added sfgate strips & others
+
+Itai Zukerman <zukerman@math-hat.com>
+Added Avalon High
+
+Russell Keppner <rkeppner@idiglobal.com>
+Added Sluggy Freelance

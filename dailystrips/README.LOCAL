@@ -1,0 +1,50 @@
+This file describes in further detail dailystrips.pl's 'local' mode of
+operation.
+
+Normally, dailystrips.pl generates the URLs to the selected strips and
+displays them on STDOUT for redirection into a file (--output lets you
+specify a file to save the HTML into automatically).  However, this is
+usually inconvenient as you must first run the program  manually,  and
+then wait for your browser to download the images. Local mode, instead
+of putting the address of each image in the generated page,  downloads
+the image and save a copy of it locally. The address in  the generated
+page then refers to that downloaded image. With this,  you do not have
+to wait for your browser to download the images from the 'net  -  they
+are already on your hard drive (or your own webserver - another way to
+set it up).  The time savings really add up when you want to view  the
+page more than once.
+
+Method 1: (one system)
+
+Create a directory (such as /home/user/dailystrips/) in which to store
+the downloaded images and output files.  Copy dailystrips.pl  to  this
+directory.
+
+Create a cron script like the following and put it in  /etc/cron.daily
+(call it dailystrips.sh, etc)
+
+#!/bin/sh
+echo "dailystrips running:"
+su user -c "./dailystrips.pl --basedir /home/user/dailystrips --local all"
+
+Of course, change /home/user/dailystrips to the exact  directory  that
+you created.  Also, change "su user.." to reflect an appropriate login
+(your own is  best if you created a  directory in your home directory)
+Don't forget to make dailystrips.pl  and the cron script executable by
+the necessary users.
+
+By default, the program calls the output file 'dailystrips-YYYY.MM.DD'
+and creates 'index.html' as a symlink to this, so that you can make a
+bookmark to index.html  in your web browser that will always take you
+to the latest page.  If you need to change this,  you'll have to edit
+the script.
+
+
+Method 2: (webserver/intranet)
+
+This is the same as above  -  just locate the directory somewhere  in
+your webserver's document root.  Keep in mind that this should be for
+personal use only, as making it publicly available on the internet is
+probably not legal. As far as I know, though, it's within your rights
+to use this for personal use.
+

@@ -1,0 +1,828 @@
+# Class definitions
+class ucomics-srch
+	homepage http://www.ucomics.com/%strip/view%1.htm
+	type search
+	searchpattern (/%1/(\d+)/%1(\d+)\.(gif|jpg))
+	matchpart 1
+	baseurl http://images.ucomics.com/comics
+end
+
+class ucomics-gen
+	homepage http://www.ucomics.com/%strip/view%1.htm
+	type generate
+	imageurl http://images.ucomics.com/comics/%1/%Y/%1%y%m%d.gif
+end
+
+class unitedmedia-srch-comics
+	homepage http://www.unitedmedia.com/comics/%strip/index.html
+	type search
+	searchpage http://www.unitedmedia.com/comics/%strip/archive/%strip-%Y%m%d.html	
+	searchpattern (/comics/%strip/archive/images/%strip(.*?)\.(gif|jpg))
+	matchpart 1
+	baseurl http://www.unitedmedia.com
+end
+
+class unitedmedia-srch-creators
+	homepage http://www.unitedmedia.com/creators/%strip/index.html
+	type search
+	searchpattern (/creators/%strip/archive/images/(.*?)\.(gif|jpg))
+	matchpart 1
+	baseurl http://www.unitedmedia.com
+end
+
+class unitedmedia-srch-wash
+	homepage http://www.unitedmedia.com/wash/%strip/index.html
+	type search
+	searchpattern (/wash/%strip/archive/images/(.*?)\.(gif|jpg))
+	matchpart 1
+	baseurl http://www.unitedmedia.com
+end
+
+class sfgate-gen
+        homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/%1.dtl
+        type generate
+        imageurl http://pst.rbma.com/content/%1
+end
+
+class sfgate-srch
+        homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/%1.dtl
+        type search
+        searchpattern (/comics/graphics/%2/.*\.(gif|jpg))
+        matchpart 1
+        baseurl http://www.sfgate.com
+end
+
+# Non-standard strips
+strip avalonhigh
+        name Avalon High
+        homepage http://www.avalonhigh.com/
+        type generate
+        imageurl http://www.avalonhigh.com/comics/avalon%Y%m%d.gif
+end
+
+strip badtech
+	name Badtech
+	homepage http://www.badtech.com/
+	type generate
+	imageurl http://www.badtech.com/a/%-y/%-m/%-d.jpg
+end
+
+strip joyoftech
+	name The Joy of Tech
+	homepage http://www.joyoftech.com/joyoftech/
+	type search
+	searchpattern <IMG(.*?)src="(joyimages/\d+\.gif)\"(.*?)>
+	matchpart 2
+	baseurl http://www.joyoftech.com/joyoftech/
+	updated semidaily
+end
+
+strip markfiore
+        name Mark Fiore
+        homepage http://www.sfgate.com/columnists/fiore/
+        type search
+        searchpattern (http://www.sfgate.com/gate/graphics/\d+/\d+/\d+/fiore.*\.(gif|jpg))
+        matchpart 1
+end
+
+strip pennyarcade
+	name Penny Arcade
+	homepage http://www.penny-arcade.com/
+	type search
+	searchpage http://www.penny-arcade.com/view.php3
+	searchpattern <IMG(.*)src=\"(images/(.*)\.gif)\"><BR>
+	matchpart 2
+	baseurl http://www.penny-arcade.com/
+	updated semidaily
+end
+
+strip redmeat
+	name Redmeat
+	homepage http://www.redmeat.com/redmeat/current/
+	type generate
+	imageurl http://www.redmeat.com/redmeat/current/index-1.gif
+	updated semidaily
+end
+
+strip rudypark
+        name Rudy Park
+        homepage http://www.rudypark.com/
+        type generate
+        imageurl http://www.rudypark.com/cartoons/rudypark.jpg
+	updated semidaily
+end
+
+strip sinfest
+	name Sinfest
+	homepage http://sinfest.net
+	type generate
+	imageurl http://sinfest.net/comics/sf%Y%m%d.gif
+end
+
+strip sluggy
+        name Sluggy Freelance
+        homepage http://www.sluggy.com/
+        type generate
+        imageurl http://pics.sluggy.com/comics/%y%m%da.gif
+end
+
+strip userfriendly
+	name User Friendly
+	homepage http://www.userfriendly.org/static/
+	type search
+	searchpattern <img(.*?)alt="latest strip"(.*?)src="(.*?)"
+	matchpart 3
+end
+
+# ucomics.com strips
+strip adamathome
+	name Adam@home
+	useclass ucomics-gen
+	%1 ad
+end
+
+strip baldo
+	name Baldo
+	useclass ucomics-gen
+	%1 ba
+end
+
+strip bizarro
+	name Bizarro
+	useclass ucomics-gen
+	%1 bz
+end
+
+strip thebigpicture
+	name The Big Picture
+	useclass ucomics-gen
+	%1 bi
+end
+
+strip boondocks
+	name The Boondocks
+	useclass ucomics-gen
+	%1 bo
+end
+
+strip calvinandhobbes
+	name Calvin and Hobbes
+	useclass ucomics-srch
+	%1 ch
+end
+
+strip cathy
+	name Cathy
+	useclass ucomics-gen
+	%1 ca
+end
+
+strip citizendog
+	name Citizen Dog
+	useclass ucomics-gen
+	%1 cd
+end
+
+strip closetohome
+	name Close to Home
+	useclass ucomics-gen
+	%1 cl
+end
+
+strip cornered
+	name Cornered
+	useclass ucomics-gen
+	%1 co
+end
+
+strip crabbyroad
+	name Crabby Road
+	useclass ucomics-gen
+	%1 cr
+end
+
+strip crankshaft
+	name Crankshaft
+	useclass ucomics-gen
+	%1 cs
+end
+
+strip doonesbury
+	name Doonesbury
+	useclass ucomics-gen
+	%1 db
+end
+
+strip thefifthwave
+	name The 5th Wave
+	useclass ucomics-srch
+	%1 fw
+	updated semidaily
+end
+
+strip foxtrot
+	name FoxTrot
+	useclass ucomics-gen
+	%1 ft
+end
+
+strip thefuscobrothers
+	name The Fusco Brothers
+	useclass ucomics-gen
+	%1 fu
+end
+
+strip garfield
+	name Garfield
+	useclass ucomics-gen
+	%1 ga
+end
+
+strip heartofthecity
+	name Heart of the City
+	useclass ucomics-gen
+	%1 hc
+end
+
+strip inthebleachers
+	name In the Bleachers
+	useclass ucomics-gen
+	%1 bl
+end
+
+strip james
+	name James
+	useclass ucomics-gen
+	%1 jm
+end
+
+strip misterboffo
+	name Mister Boffo
+	useclass ucomics-gen
+	%1 mb
+end
+
+strip nonsequitur
+	name Non Sequitur
+	useclass ucomics-gen
+	%1 nq
+end
+
+strip oddlyenough
+	name Oddly Enough
+	useclass ucomics-gen
+	%1 oe
+end
+
+strip overboard
+	name Overboard
+	useclass ucomics-gen
+	%1 ob
+end
+
+strip reallifeadventures
+	name Real Life Adventures
+	useclass ucomics-gen
+	%1 rl
+end
+
+strip reynoldsunwrapped
+	name Reynolds Unwrapped
+	useclass ucomics-gen
+	%1 rw
+end
+
+strip stonesoup
+	name Stone Soup
+	useclass ucomics-gen
+	%1 ss
+end
+
+strip tankmcnamara
+	name Tank McNamara
+	useclass ucomics-gen
+	%1 tm
+end
+
+strip tomthedancingbug
+	name Tom the Dancing Bug
+	useclass ucomics-srch
+	%1 td
+	updated semidaily
+end
+
+strip ziggy
+	name Ziggy
+	useclass ucomics-gen
+	%1 zi
+end
+
+# unitedmedia.com strips
+strip agnes
+	name Agnes
+	useclass unitedmedia-srch-creators
+end
+
+strip alleyoop
+	name Alley Oop
+	useclass unitedmedia-srch-comics
+end
+
+strip andycapp
+	name Andy Capp
+	useclass unitedmedia-srch-creators
+end
+
+strip arlonjanis
+	name Arlo & Janis
+	useclass unitedmedia-srch-comics
+end
+
+strip askshagg
+	name Ask Shagg
+	useclass unitedmedia-srch-creators
+	updated semidaily
+end
+
+strip bc
+	name B.C.
+	useclass unitedmedia-srch-creators
+end
+
+strip ballardst
+	name Ballard Street
+	useclass unitedmedia-srch-creators
+end
+
+strip betty
+	name Betty
+	useclass unitedmedia-srch-comics
+end
+
+strip bignate
+	name Big Nate
+	useclass unitedmedia-srch-comics
+end
+
+strip bornloser
+	name The Born Loser
+	useclass unitedmedia-srch-comics
+end
+
+strip buckets
+	name The Buckets
+	useclass unitedmedia-srch-comics
+end
+
+strip bullsnbears
+	name Bull\$ 'N' Bear\$
+	useclass unitedmedia-srch-comics
+end
+
+strip cheapthrills
+	name Cheap Thrills
+	useclass unitedmedia-srch-wash
+	updated semidaily
+end
+
+strip committed
+	name Committed
+	useclass unitedmedia-srch-comics
+end
+
+strip drabble
+	name Drabble
+	useclass unitedmedia-srch-comics
+end
+
+strip dilbert
+	name Dilbert
+	useclass unitedmedia-srch-comics
+end
+
+strip fatcats
+	name Fat Cats
+	useclass unitedmedia-srch-comics
+end
+
+strip flightdeck
+	name Flight Deck
+	useclass unitedmedia-srch-creators
+end
+
+strip forbetter
+	name For Better or For Worse
+	useclass unitedmedia-srch-comics
+end
+
+strip forheavens
+	name For Heaven's Sake
+	useclass unitedmedia-srch-creators
+	updated semidaily
+end
+
+strip franknernest
+	name Frank & Ernest
+	useclass unitedmedia-srch-comics
+end
+
+strip geech
+	name Geech
+	useclass unitedmedia-srch-comics
+end
+
+strip getfuzzy
+	name Get Fuzzy
+	useclass unitedmedia-srch-comics
+end
+
+strip grandave
+	name Grand Avenue
+	useclass unitedmedia-srch-comics
+end
+
+strip grandfathersclause
+	name Grandfather Clause
+	useclass unitedmedia-srch-creators
+end
+
+strip grizzwells
+	name The Grizzwells
+	useclass unitedmedia-srch-comics
+end
+
+strip heathcliff
+	name Heathcliff
+	useclass unitedmedia-srch-creators
+end
+
+strip herman
+	name Herman
+	useclass unitedmedia-srch-comics
+end
+
+strip jumpstart
+	name Jump Start
+	useclass unitedmedia-srch-comics
+end
+
+strip katies
+	name Katies Wee Do Puzzles
+	useclass unitedmedia-srch-creators
+end
+
+strip kitncarlyle
+	name Kit 'N' Carlyle
+	useclass unitedmedia-srch-comics
+end
+
+strip liberty
+	name Liberty Meadows
+	useclass unitedmedia-srch-creators
+end
+
+strip lilabner
+	name Li'l Abner
+	useclass unitedmedia-srch-comics
+end
+
+strip luann
+	name Luann
+	useclass unitedmedia-srch-comics
+end
+
+strip lupo
+	name Lupo Alberto
+	useclass unitedmedia-srch-comics
+end
+
+strip marmaduke
+	name Marmaduke
+	useclass unitedmedia-srch-comics
+end
+
+strip meatloaf
+	name Meatloaf Night
+	useclass unitedmedia-srch-comics
+end
+
+strip meg
+	name Meg!
+	useclass unitedmedia-srch-comics
+end
+
+strip momma
+	name Momma
+	useclass unitedmedia-srch-creators
+end
+
+strip motley
+	name Motley
+	useclass unitedmedia-srch-comics
+end
+
+strip mrlowe
+	name Mr. Lowe
+	useclass unitedmedia-srch-creators
+end
+
+strip mspeach
+	name Ms. Peach
+	useclass unitedmedia-srch-creators
+end
+
+strip nancy
+	name Nancy
+	useclass unitedmedia-srch-comics
+end
+
+strip chickweed
+	name 9 Chickweed Lane
+	useclass unitedmedia-srch-comics
+end
+
+strip hedge
+	name Over the Hedge
+	useclass unitedmedia-srch-comics
+end
+
+strip offsides
+	name Offsides
+	useclass unitedmedia-srch-comics
+end
+
+strip onebighappy
+	name One Big Happy
+	useclass unitedmedia-srch-creators
+end
+
+strip pcnpixel
+	name PC and Pixel
+	useclass unitedmedia-srch-wash
+end
+
+strip pearls
+	name Pearls Before Swine
+	useclass unitedmedia-srch-comics
+end
+
+strip penmen
+	name Penmen
+	useclass unitedmedia-srch-creators
+	updated semidaily
+end
+
+strip pickles
+	name Pickles
+	useclass unitedmedia-srch-wash
+end
+
+strip raisingduncan
+	name Raising Duncan
+	useclass unitedmedia-srch-comics
+end
+
+strip randolphitch
+	name Randolph Itch 2 a.m.
+	useclass unitedmedia-srch-comics
+end
+
+strip rawmaterial
+	name Raw Material
+	useclass unitedmedia-srch-creators
+end
+
+strip reality
+	name Reality Check
+	useclass unitedmedia-srch-comics
+end
+
+strip redandrover
+	name Red & Rover
+	useclass unitedmedia-srch-wash
+end
+
+strip ripleys
+	name Ripley's Believe It or Not!
+	useclass unitedmedia-srch-comics
+end
+
+strip robotman
+	name Robotman
+	useclass unitedmedia-srch-comics
+end
+
+strip roseisrose
+	name Rose Is Rose
+	useclass unitedmedia-srch-comics
+end
+
+strip rubes
+	name Rubes
+	useclass unitedmedia-srch-creators
+end
+
+strip rugrats
+	name Rugrats
+	useclass unitedmedia-srch-creators
+end
+
+strip shirleynson
+	name Shirley And Son
+	useclass unitedmedia-srch-comics
+end
+
+strip soup2nutz
+	name Soup To Nutz
+	useclass unitedmedia-srch-comics
+end
+
+strip speedbump
+	name Speed Bump
+	useclass unitedmedia-srch-creators
+end
+
+strip stockcartoons
+	name StockcarToons
+	useclass unitedmedia-srch-comics
+end
+
+strip strangebrew
+	name Strange Brew
+	useclass unitedmedia-srch-creators
+end
+
+strip tarzan
+	name Tarzan
+	useclass unitedmedia-srch-comics
+end
+
+strip tmnt
+	name Teenage Mutant Ninja Turtles
+	useclass unitedmedia-srch-creators
+end
+
+strip thatslife
+	name That's Life
+	useclass unitedmedia-srch-wash
+end
+
+strip topofworld
+	name Top of the World!
+	useclass unitedmedia-srch-comics
+end
+
+strip warped
+	name Warped
+	useclass unitedmedia-srch-comics
+end
+
+strip weepals
+	name Wee Pals
+	useclass unitedmedia-srch-creators
+end
+
+strip wizardofid
+	name Wizard of Id
+	useclass unitedmedia-srch-creators
+end
+
+strip zorro
+	name Zorro
+	useclass unitedmedia-srch-creators
+end
+
+# sfgate strips
+strip babyblues
+        name Baby Blues
+        useclass sfgate-gen
+        %1 Baby_Blues
+end
+
+strip beetlebailey
+        name Beetle Bailey
+        useclass sfgate-gen
+        %1 Beetle_Bailey
+end
+
+strip blondie
+        name Blondie
+        useclass sfgate-gen
+        %1 Blondie
+end
+
+strip crock
+        name Crock
+        useclass sfgate-gen
+        %1 Crock
+end
+
+strip curtis
+        name Curtis
+        useclass sfgate-gen
+        %1 Curtis
+end
+
+strip dennisthemenace
+        name Dennis the Menace
+        useclass sfgate-gen
+        %1 Dennis_The_Menace
+end
+
+strip farley
+        name Farley
+        useclass sfgate-srch
+        %1 Farley
+        %2 farley
+end
+
+strip funkywinkerbean
+        name Funky Winkerbean
+        useclass sfgate-gen
+        %1 Funky_Winkerbean
+end
+
+strip hagarthehorrible
+        name Hagar the Horrible
+        useclass sfgate-gen
+        %1 Hagar_The_Horrible
+end
+
+strip mallardfillmore
+        name Mallard Fillmore
+        useclass sfgate-gen
+        %1 Mallard_Fillmore
+end
+
+strip mutts
+        name Mutts
+        useclass sfgate-gen
+        %1 Mutts
+end
+
+strip newbreed
+        name New Breed
+        useclass sfgate-gen
+        %1 New_Breed
+end
+
+strip thephantom
+        name The Phantom
+        useclass sfgate-gen
+        %1 Phantom
+end
+
+strip piranhaclub
+        name Piranha Club
+        useclass sfgate-gen
+        %1 Piranha
+end
+
+strip popeye
+        name Popeye
+        useclass sfgate-gen
+        %1 Popeye
+end
+
+strip rhymeswithorange
+        name Rhymes with Orange
+        useclass sfgate-gen
+        %1 Rhymes_with_Orange
+end
+
+strip sallyforth
+        name Sally Forth
+        useclass sfgate-gen
+        %1 Sally_Forth
+end
+
+strip shermanslagoon
+        name Sherman's Lagoon
+        useclass sfgate-gen
+        %1 Shermans_Lagoon
+end
+
+strip sixchix
+        name Six Chix
+        useclass sfgate-gen
+        %1 6Chix
+end
+
+strip willynethel
+        name Willy 'n' Ethel
+        useclass sfgate-gen
+        %1 Willy_n_Ethel
+end
+
+strip zippythepinhead
+        name Zippy the Pinhead
+        useclass sfgate-srch
+        %1 Zippy_the_Pinhead
+        %2 zippy
+end
+
+strip zits
+        name Zits
+        useclass sfgate-gen
+        %1 Zits
+end
