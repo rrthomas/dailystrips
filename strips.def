@@ -1041,16 +1041,16 @@ strip winter
 	provides latest
 end
 
-strip pcnpixel
-	name PC and Pixel
-	homepage http://www.pccomix.com/PCandPixel/
-        type search
-        searchpage http://www.pccomix.com/PCandPixel/pc_dailystrip/PCdaily.html
-        searchpattern <p><img SRC="pc(\w+).gif".+?WIDTH=
-        matchpart 1
-        imageurl http://www.pccomix.com/PCandPixel/pc_dailystrip/pc$match.gif
-        provides latest	
-end
+#strip pcnpixel
+#	name PC and Pixel
+#	homepage http://www.pccomix.com/PCandPixel/
+#	type search
+#	searchpage http://www.pccomix.com/PCandPixel/pc_dailystrip/PCdaily.html
+#	searchpattern <p><img SRC="pc(\w+).gif".+?WIDTH=
+#	matchpart 1
+#	imageurl http://www.pccomix.com/PCandPixel/pc_dailystrip/pc$match.gif
+#	provides latest
+#end
 
 #discontinued may 2002
 #strip bobbins
@@ -1791,6 +1791,12 @@ end
 strip workingdaze
 	name Working Daze
 	useclass unitedmedia-srch-comics
+end
+
+strip pcnpixel
+	name PC and Pixel
+	useclass unitedmedia-srch-wash
+	provides latest
 end
 
 strip billday
