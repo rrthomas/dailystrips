@@ -39,25 +39,28 @@ class unitedmedia-srch-wash
 end
 
 class sfgate-gen
-        homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/%1.dtl
-        type generate
-        imageurl http://pst.rbma.com/content/%1
+	homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/%1.dtl
+	type generate
+	imageurl http://pst.rbma.com/content/%1
 end
 
 class sfgate-srch
-        homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/%1.dtl
-        type search
-        searchpattern (/comics/graphics/%2/.*\.(gif|jpg))
-        matchpart 1
-        baseurl http://www.sfgate.com
+	homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/%1.dtl
+	type search
+	searchpattern (/comics/graphics/%2/.*\.(gif|jpg))
+	matchpart 1
+	baseurl http://www.sfgate.com
 end
 
 # Non-standard strips
 strip avalonhigh
         name Avalon High
         homepage http://www.avalonhigh.com/
-        type generate
-        imageurl http://www.avalonhigh.com/comics/avalon%Y%m%d.gif
+        type search
+        searchpattern <IMG(.*?)ALT="comic"(.*?)SRC="(/comics/avalon20010219.gif)"
+        matchpart 3
+        baseurl %homepage
+        updated semidaily
 end
 
 strip badtech
@@ -90,7 +93,7 @@ strip jokesonyou
 	type search
 	searchpattern <img(.*?)src="(http://www.thefunnypages.com/archives/(.*?).gif"(.*?)border="2"(.*?)>
 	matchpart 3
-	#updated daily or not? - check
+	#updated daily or not? - check - seems to be, but check weekend
 end
 
 strip innies
@@ -133,7 +136,7 @@ strip mostlybusiness
 	name Mostly Business
 	homepage http://www.tedgoff.com/
 	type generate
-	#fix to use more precise addr
+	#fix to use more precise addr - maybe not possible?
 	imageurl http://www.tedgoff.com/mb/images/today.gif
 end
 
@@ -825,19 +828,19 @@ end
 strip blondie
         name Blondie
         useclass sfgate-gen
-        %1 Blondie
+        %1 %name
 end
 
 strip crock
         name Crock
         useclass sfgate-gen
-        %1 Crock
+        %1 %name
 end
 
 strip curtis
         name Curtis
         useclass sfgate-gen
-        %1 Curtis
+        %1 %name
 end
 
 strip dennisthemenace
@@ -849,7 +852,7 @@ end
 strip farley
         name Farley
         useclass sfgate-srch
-        %1 Farley
+        %1 %name
         %2 farley
 end
 
@@ -874,7 +877,7 @@ end
 strip mutts
         name Mutts
         useclass sfgate-gen
-        %1 Mutts
+        %1 %name
 end
 
 strip newbreed
@@ -898,7 +901,7 @@ end
 strip popeye
         name Popeye
         useclass sfgate-gen
-        %1 Popeye
+        %1 %name
 end
 
 strip rhymeswithorange
@@ -941,5 +944,5 @@ end
 strip zits
         name Zits
         useclass sfgate-gen
-        %1 Zits
+        %1 %name
 end
