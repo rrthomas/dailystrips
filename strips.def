@@ -64,6 +64,14 @@ class unitedmedia-srch-wash
 	provides latest
 end
 
+class unitedmedia-srch-editoons
+	homepage http://www.unitedmedia.com/editoons/$1/index.html
+	type search
+	searchpattern <img src="(/editoons/$1/archive/images/$1\d+\..+?)"
+	baseurl http://www.unitedmedia.com
+	provides latest
+end
+
 class sfgate-gen-zippycolor
 	homepage http://www.sfgate.com/cgi-bin/article.cgi?file=/comics/$1.dtl
 	type generate
@@ -1469,6 +1477,90 @@ end
 strip wizardofid
 	name Wizard of Id
 	useclass unitedmedia-srch-creators
+end
+
+strip billday
+	name Bill Day
+	useclass unitedmedia-srch-editoons
+	$1 day
+end
+
+strip billschorr
+	name Bill Schorr
+	useclass unitedmedia-srch-editoons
+	$1 schorr
+end
+
+strip claybennett
+	name Clay Bennett
+	useclass unitedmedia-srch-editoons
+	$1 bennett
+end
+
+strip drewlitton
+	name Drew Litton
+	useclass unitedmedia-srch-editoons
+	$1 litton
+end
+
+strip edstein
+	name Ed Stein
+	useclass unitedmedia-srch-editoons
+	$1 stein
+end
+
+strip ettahulme
+	name Etta Hulme
+	useclass unitedmedia-srch-editoons
+	$1 hulme
+end
+
+strip henrypayne
+	name Henry Payne
+	useclass unitedmedia-srch-editoons
+	$1 payne
+end
+
+strip jeffstahler
+	name Jeff Stahler
+	useclass unitedmedia-srch-editoons
+	$1 stahler
+end
+
+strip jerryholbert
+	name Jerry Holbert
+	useclass unitedmedia-srch-editoons
+	$1 holbert
+end
+
+strip jimberry
+	name Jim Berry
+	useclass unitedmedia-srch-editoons
+	$1 berry
+end
+
+strip mikesmith
+	name Mike Smith
+	useclass unitedmedia-srch-editoons
+	$1 smith
+end
+
+strip robrogers
+	name Rob Rogers
+	useclass unitedmedia-srch-editoons
+	$1 rogers
+end
+
+strip robertariail
+	name Robert Ariail
+	useclass unitedmedia-srch-editoons
+	$1 ariail
+end
+
+strip stevebenson
+	name Steve Benson
+	useclass unitedmedia-srch-editoons
+	$1 benson
 end
 
 # sfgate strips
