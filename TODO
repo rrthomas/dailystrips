@@ -1,6 +1,12 @@
 This is mostly my rambling, but feel free to implement anything you want to
 tackle..
 
+1.0.19
+  13 Sep 2001
+  Make 'provides' information in definitions more specific than 'every day' or
+  'some days'. A more useful solution would be to allow the specification of
+  which days of the week strips are provided.
+
 1.0.18
   04 Sep 2001
   Add a method for handling strips that are made up of more than one image
