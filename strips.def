@@ -406,7 +406,7 @@ strip classm
 	name The Class Menagerie
 	homepage http://www.theclassm.com/
 	type search
-	searchpattern <IMG.+?SRC="(/comics/tcm\d+\..+?)"
+	searchpattern <IMG.+?SRC="(/comics/cmc\d+\..+?)"
 	baseurl http://www.theclassm.com/
 	provides latest
 end
@@ -622,9 +622,10 @@ end
 
 strip dieselsweeties
 	name Diesel Sweeties
-	homepage http://www.dieselsweeties.com/
+	homepage http://www.dieselsweeties.com/gif.php
 	type search
 	searchpattern <img.+?src="(http://images.clango.org/strips/sw\d+\..+?)"
+	#<img src="http://images.clango.org/strips/sw625.gif" border="0" alt="newest cartoon">
 	provides latest
 end
 
@@ -1149,13 +1150,13 @@ strip lcd
 	provides latest
 end
 
-
+# could easily generate
 strip devilspanties
 	name The Devil's Panties
 	homepage http://thedevilspanties.keenspace.com
 	type search
-	searchpattern <IMG.+?SRC="(/comics/.+?\..+?)"
-	baseurl http://thedevilspanties.keenspace.com
+	searchpattern <IMG.+?SRC="(http://thedevilspanties.keenspace.com/comics/.+?\..+?)"
+	#baseurl http://thedevilspanties.keenspace.com
 	provides latest
 end
 
@@ -1191,7 +1192,8 @@ strip fans
 	name Fans!
 	homepage http://faans.com
 	type search
-	searchpattern <IMG.+?SRC="(http://faans.com/images/%Y/.+?\..+?)"
+	searchpattern <IMG.+?SRC="(http://faans.com/images/.+?\..+?)"
+	#<IMG SRC="http://faans.com/images/mad1.gif" WIDTH=650 HEIGHT=300>
 	provides latest
 end
 
