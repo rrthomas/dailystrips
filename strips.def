@@ -428,12 +428,13 @@ end
 strip gpf
         name General Protection Fault
         homepage http://www.gpf-comics.com/
-        #type search
-        #searchpattern <IMG(.*?)SRC="(/comics/%Y%m%d\.gif)"
-        #matchpart 2
-        #baseurl http://www.gpf-comics.com
-        type generate
-	  imageurl http://www.gpf-comics.com/comics/%Y%m%d\.gif
+        type search
+        searchpattern <IMG(.*?)SRC="(/comics/gpf\d+\.gif)"
+        matchpart 2
+        baseurl http://www.gpf-comics.com
+        updated semidaily
+	#type generate
+	#imageurl http://www.gpf-comics.com/comics/gpf%Y%m%d.gif
 end
 
 strip in2it
