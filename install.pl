@@ -18,7 +18,7 @@ use strict;
 
 # Misc vars
 my (%options, $prog_version);
-$prog_version = "1.0.21pre1";
+$prog_version = "1.0.21";
 
 
 # Editable paths

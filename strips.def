@@ -8,7 +8,7 @@ end
 
 group michael
 	desc Michael's Favorite Strips
-	include liberty foxtrot boondocks doonesbury zits dilbert babyblues
+	include foxtrot boondocks doonesbury zits dilbert babyblues
 	include monty bc blondie calvinandhobbes funkywinkerbean
 	include zippythecolorpinhead peanuts adamathome forbetter bizarro
 	include userfriendly geech shoe wizardofid
@@ -1340,10 +1340,10 @@ strip kitncarlyle
 end
 
 # appears to be gone - 2002-01-12
-strip liberty
-	name Liberty Meadows
-	useclass unitedmedia-srch-creators
-end
+#strip liberty
+#	name Liberty Meadows
+#	useclass unitedmedia-srch-creators
+#end
 
 #can't use the class - dates are 53 years ago
 strip lilabner
@@ -2005,12 +2005,12 @@ strip quigmans
 	$2 qgm
 end
 
-strip singleslices
-	name Single Slices
-	useclass comicspage-panels-srch
-	$1 singleslices
-	$2 slc
-end
+#strip singleslices
+#	name Single Slices
+#	useclass comicspage-panels-srch
+#	$1 singleslices
+#	$2 slc
+#end
 
 strip thatsjake
 	name That's Jake

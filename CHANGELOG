@@ -44,6 +44,9 @@
 
   Removed 'In2It Online'
 
+  When running under --dailydir, no longer puts the HTML output in the
+  dailydir directory since the IMG tags would be wrong from there anyway.
+
 1.0.20
   08 Oct 2001
   Added spiderman, tuma, nowak, asay, lang, shelton (Jeff Brown)
