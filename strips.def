@@ -639,7 +639,7 @@ strip dieselsweeties
 	name Diesel Sweeties
 	homepage http://www.dieselsweeties.com/
 	type search
-	searchpattern <img.+?src="(/strips/sw\d+\..+?)"
+	searchpattern <img.+?src="(/hstrips/.+?)"
 	baseurl $homepage
 	provides latest
 end
