@@ -5135,3 +5135,14 @@ strip oots
 	provides latest
 end
 
+strip phdcomics
+	name Piled Higher & Deeper
+	artist Jorge Cham
+	homepage http://www.phdcomics.com/
+	type search
+	searchpage http://www.phdcomics.com/comics/comics.php
+	searchpattern <img.+?src=http://www.phdcomics.com(/comics/archive/\S+.gif)
+	baseurl $homepage
+	provides latest
+end
+
