@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    9 August 2001 22:19 EST
+# Last Modified:    10 August 2001 22:04 EST
 # Current Revision: 1.0.17-pre2
 #
 
@@ -120,14 +120,14 @@ if ($options{'version'}) {
 
 
 # Date::Parse must be loaded before using --date
-eval "use Date::Parse" unless $^O ~ /Win32/;
+eval "use Date::Parse" unless ($^O =~ /Win32/);
 if ($@ ne "") {
 	warn "Warning: Could not load Date::Parse module. --date option cannot be used\n";
 	$no_dateparse = 1;
 }
 
 if ($options{'date'}) {
-	if ($^O ~ /Win32/) {
+	if ($^O =~ /Win32/) {
 		die "Error: cannot use --date on Win32\n";
 	}
 	
@@ -576,7 +576,7 @@ for (@strips) {
 					# any issues with print()ing binary data to a file on Win32?
 					open(IMAGE, ">$local_name");
 					
-					if ($^O =~ /Win32/ ) {
+					if ($^O =~ /Win32/) {
 						binmode(IMAGE);
 					}
 					
