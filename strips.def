@@ -545,13 +545,14 @@ strip kevinandkell
 	provides any
 end
 
-strip freefall
-	name Freefall
-	homepage http://www.purrsia.com/freefall/
-	type generate
-	imageurl $homepage<code:use POSIX;my $w=strftime("\%"."u",localtime($time_today));my $s=517+3*floor(($time_today-995839200)/604800);$s++if$w\>2;$s++if$w\>4;my$c=int(($s+99)/100);"ff${c}00/fv00$s.gif">
-	provides any
-end
+# superceded
+#strip freefall
+#	name Freefall
+#	homepage http://www.purrsia.com/freefall/
+#	type generate
+#	imageurl $homepage<code:use POSIX;my $w=strftime("\%"."u",localtime($time_today));my $s=517+3*floor(($time_today-995839200)/604800);$s++if$w\>2;$s++if$w\>4;my$c=int(($s+99)/100);"ff${c}00/fv00$s.gif">
+#	provides any
+#end
 
 strip 8bit
 	name 8-Bit Theater
@@ -762,15 +763,16 @@ strip ozyandmillie
 	provides any
 end
 
-strip suburbanjungle
-	name Suburban Jungle
-	homepage http://www.suburbanjungle.com/
-	type search
-	searchpage http://suburbanjungle.com/d/%Y%m%d.html
-	searchpattern <img.+?SRC="(/comics/sj%Y%m%d\..+?)"
-	baseurl http://www.suburbanjungle.com
-	provides any
-end
+# superceded
+#strip suburbanjungle
+#	name Suburban Jungle
+#	homepage http://www.suburbanjungle.com/
+#	type search
+#	searchpage http://suburbanjungle.com/d/%Y%m%d.html
+#	searchpattern <img.+?SRC="(/comics/sj%Y%m%d\..+?)"
+#	baseurl http://www.suburbanjungle.com
+#	provides any
+#end
 
 strip acidreflux
 	name Acid Reflux
@@ -4992,4 +4994,110 @@ strip ubersoft
 	type generate
 	imageurl http://www.ubersoft.net/comics/hd%Y%m%d.png
 	provides any
+end
+
+#works
+strip statsministeren
+	name Statsministeren
+	homepage http://www.bt.dk/statsministeren:year=%Y:month=%m:day=%d
+	artist Carsten Graabæk
+	type search
+	searchpattern <img.+?src="(http://images.bt2.metropol.dk/.+_large.jpg)\"
+	provides any
+end
+
+# subscribers only. needs cookies to work?
+#strip blacktapsdonate
+#    name Black Tapestries (Donators)
+#    homepage http://donators.drakkolupen.com
+#    type generate
+#    imageurl http://donators.drakkolupen.com/pages/%Y%m%d.jpg
+#    provides any
+#end
+
+strip talesquestor
+    name Tales of the Questor
+    homepage http://npc.keenspace.com 
+    type generate
+    imageurl http://npc.keenspace.com/comics/npc%Y%m%d.png
+    provides any
+end
+
+# works. current.
+strip antiherohire
+    name Anti-hero for Hire
+    homepage http://antihero.keenspot.com
+    type generate
+    imageurl http://antihero.keenspot.com/comics/afh%Y%m%da.gif
+    provides any
+end
+
+# works. current.
+strip bobgeorge
+    name Bob and George
+    homepage http://www.bobandgeorge.com 
+    type generate
+    imageurl http://www.bobandgeorge.com/%y%m%d.gif
+    provides any
+end
+
+strip danmabfur
+    name Dan and Mab's Furry Adventures
+    homepage http://www.missmab.com/ 
+    type search
+    searchpattern <img.+?src="(comics/Vol\d+\..+?)"
+    baseurl $homepage
+    provides latest
+end
+
+strip perfectworld
+    name In a Perfect World
+    homepage http://iapw.keenspace.com 
+    type generate
+    imageurl http://iapw.keenspace.com/comics/iapw%Y%m%d.gif
+    provides any
+end
+
+strip kaerwyn
+    name The Realm of Kaerwyn
+    homepage http://comic.kaerwyn.com 
+    type generate
+    imageurl http://comic.kaerwyn.com/pages/%Y%m%d.jpg
+    provides any
+end
+
+# works. current
+strip vgcats
+    name VG Cats
+    homepage http://www.vgcats.com
+    type generate
+    imageurl http://www.vgcats.com/vgc_comics/images/%y%m%d.jpg
+    provides any
+end
+
+# hasn't been updated since 12/02/2003
+#strip ghostcat
+#    name Ghost Cat
+#    homepage http://www.ghostcat.cycomics.com
+#    type generate
+#    imageurl http://www.ghostcat.cycomics.com/newcomics/%m%d%Yghostcat.png
+#    provides any
+#end
+
+# works. current.
+strip suburbanjungle
+    name Suburban Jungle
+    homepage http://www.suburbanjungle.com/
+    type generate
+    imageurl http://http://www.suburbanjungle.com/comics/sj%Y%m%d.gif
+    provides any
+end
+
+strip freefall
+    name Freefall
+    homepage http://freefall.purrsia.com
+    type search
+    searchpattern <img.+?src="(/ff.+?/.+?\..+?)"
+    baseurl $homepage
+    provides latest
 end
