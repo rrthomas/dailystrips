@@ -53,6 +53,17 @@
   8 Aug 2003
   Added README.dailystrips-update file
 
+  23 Aug 2003
+  Fixed "As If"
+
+  24 Aug 2003
+  Fixed "John Cole", "Farley", "GPF", "Bob Lang", "Lowest Common
+  Denominator", "Under the Lemon Tree", "Megatokyo", "Nip and Tuck", "Paul
+  Nowak", "Pathetic Geek Stories"
+
+  Added support for multiple match parts in defs
+
+
 1.0.27
   24 Feb 2003
   Added 180 new strips (Kim Scarborough)
@@ -79,6 +90,7 @@
   16 Mar 2003
   Fixed "Scary Go Round"
 
+
 1.0.26
   02 Jul 2002
   Added "Achewood"
@@ -97,6 +109,7 @@
   23 Feb 2003
   Fixed "The Devil's Panties", "The Class Menagerie", "Diesel Sweeties",
   "Fans"
+
 
 1.0.25
   26 May 2002
@@ -124,6 +137,7 @@
   30 Jun 2002
   Added "Marvin", Moved "Andy Capp", "BC", "Wizard of ID" to Washington Post
   (Kenneth Ballard)
+
 
 1.0.24
   24 Apr 2002
@@ -153,6 +167,7 @@
   Fixed comicspage.com strips to work on Sundays.
 
   Added several new strips (Marcie Alana Lovell)
+
 
 1.0.23
   02 Apr 2002
@@ -203,6 +218,7 @@
   20 Apr 2002
   Fixed "As If"
 
+
 1.0.22
   12 Jan 2002
   Added 'Off the Mark'
@@ -246,6 +262,7 @@
   Fixed PC and Pixel, Liberty Meadows (Jeff Brown)
 
   Added "Bobbins" (Robert Jagger)
+
 
 1.0.21
   28 Oct 2001
@@ -296,6 +313,7 @@
   When running under --dailydir, no longer puts the HTML output in the
   dailydir directory since the IMG tags would be wrong from there anyway.
 
+
 1.0.20
   08 Oct 2001
   Added spiderman, tuma, nowak, asay, lang, shelton (Jeff Brown)
@@ -326,6 +344,7 @@
   Added sevtrek, fotr, sevgate, bluffy, sevfiles, sevwars, sevylon5, sevscifi
   (Douglas Riga)
 
+
 1.0.19
   07 Sep 2001
   Removed some Win32 code that no longer applied to anything
@@ -350,6 +369,7 @@
   Added frazz, janesworld, bfriends; revised spooner, pcnpixel, thenorm (Chris Hoover)
 
   Fixed boasas, glasbergen, striptease
+
 
 1.0.18
   18 Aug 2001
@@ -384,6 +404,7 @@
 
   scragends seems to be gone - removed
 
+
 1.0.17
   01 Aug 2001
   Small fix to Avantgo table generation
@@ -414,6 +435,7 @@
 
   17 Aug 2001
   Continued cleaning up definitions. New total of working strips: 220
+
 
 1.0.16
   23 Jul 2001
@@ -461,6 +483,7 @@
   31 Jul 2001
   Updated several unitedmedia.com strips to use the class again
 
+
 1.0.15
   13 Jul 2001
   Major change: now installs to system directories instead of one dir.
@@ -499,6 +522,7 @@
 
    Misc changes
 
+
 1.0.14
   12 Jul 2001
   Now uses the strips.def file located in the same directory as the script,
@@ -507,6 +531,7 @@
   Added 'exclude' keyword for defs file (Francesco Chemolli)
 
   Personal definition files are now supported (~/.dailystrips.defs)
+
 
 1.0.13
   04 June 2001
@@ -520,6 +545,7 @@
   Fixed routine that checks for presence of Date::Parse module
 
   Added Dork Tower definition (Mark Larimer)
+
 
 1.0.12
   11 Mar 2001
@@ -539,11 +565,13 @@
 
   Fixed the Dr. Fun definition -  the strip is not updated daily
 
+
 1.0.11
   07 Mar 2001
   Output no longer contains my name and email, so as not to confuse the
   lawyers.
  
+
 1.0.10
   27 Feb 2001
   Documentation now better explains usage of groups
@@ -560,6 +588,7 @@
   Added --nospaces option (Michael Lewis)
 
   Added proxy authentication support
+
 
 1.0.9
   24 Feb 2001
@@ -579,6 +608,7 @@
 
   Added documentation for the strip definition file
 
+
 1.0.8
   20 Feb 2001
   Added HTTP proxy server support
@@ -597,6 +627,7 @@
 
   Cleaned up the definition file parsing code somewhat
 
+
 1.0.7
   19 Feb 2001
   Added several new strips (total is now 148)
@@ -606,6 +637,7 @@
   symlinks for duplicate files
 
   Fixed the sample code in README.LOCAL
+
 
 1.0.6
   02 Feb 2001
@@ -629,12 +661,14 @@
   time that day,the old file would get overwritten - this has been fixed by
   deleting the symlink before downloading a new strip and doing the comparison.
 
+
 1.0.5
   29 Jan 2001
   Added sfgate strips & misc others (Dave Tweed)
 
   28 Jan 2001
   Implemented detection and symlinking for duplicate strip files (Scott Carlson)
+
 
 1.0.4
   26 Jan 2001
@@ -643,6 +677,7 @@
   Implemented strip definitions file to describe strips (instead of having a
   separate subroutine for each strip in the program). See strips.def to see how
   this works
+
 
 1.0.3
   24 Jan 2001
@@ -653,6 +688,7 @@
 
   Added warning/error messages if various operations fail that the user should
   know about
+
 
 1.0.2
   24 Jan 2001
@@ -670,6 +706,7 @@
   'index.html'
 
   Various other cleanups
+
 
 1.0.1
   22 Jan 2001
@@ -689,6 +726,7 @@
   No longer uses wget - replaced with LWP
   This enhances portability and also allows for better error handling of failed
   downloads
+
 
 1.0.0:
   20 Jan 2001
