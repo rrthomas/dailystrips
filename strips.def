@@ -947,9 +947,13 @@ end
 
 strip downtoearth
 	name Down To Earth
-	homepage http://downtoearth.ncbuy.com
-	type generate
-	imageurl http://downtoearth.ncbuy.com/img/syndicate/nav1_dte_today.gif
+	homepage http://www.downtoearthcomic.com/
+	artist Gavin Chafin and Steve Wood
+	#type generate
+	#imageurl http://downtoearth.ncbuy.com/img/syndicate/nav1_dte_today.gif
+	type search
+	searchpattern <img.+?src="(strips/\d+_72dpi.gif)"
+	baseurl $homepage
 	provides latest
 end
 
