@@ -538,7 +538,8 @@ for (@strips) {
 			# local mode - download strips
 			$img_addr =~ /http:\/\/(.*)\/(.*)\.(.*)$/;
 			if (defined $3) { $ext = ".$3" }
-			
+
+			# prepare file names
 			if ($options{'stripdir'}) {
  				$local_name_yesterday = "$name/$short_date_yesterday$ext";
  				$local_name_yesterday_dir = "$name/";
@@ -549,11 +550,6 @@ for (@strips) {
  				$local_name_dir = "$name/";
  				$local_name_file = "$short_date";
  				$local_name_ext = "$ext";
- 				
- 				unless ( -d $strip) {
- 				# any issues with masks and Win32?
- 					mkdir $name, 0755;
- 				}
  			} elsif ($options{'dailydir'}) {
 				$local_name_yesterday = "$short_date_yesterday/$name-$short_date_yesterday$ext";
 				$local_name_yesterday_dir = "$short_date_yesterday/";	
@@ -587,8 +583,16 @@ for (@strips) {
 				$local_name =~ s/\s+//g;
 				$local_name_dir =~ s/\s+//g;
 				$local_name_file =~ s/\s+//g;
-			}
-
+ 			}
+			
+			# do ops that depend on file name
+			if ($options{'stripdir'}) {
+ 				unless (-d $local_name_dir) {
+	 				# any issues with masks and Win32?
+ 					mkdir $local_name_dir, 0755;
+ 				}
+ 			}
+									
 			if ($options{'save'} and  -e $local_name) {
 				# already have a suitable local file - skip downloading
 				if ($options{'avantgo'}) {
