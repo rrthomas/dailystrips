@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@calug.net>
 # Created:          23 Nov 2000, 23:33
-# Last Modified:    14 May 2001, 17:23
+# Last Modified:    15 May 2001, 18:58
 # Current Revision: 1.0.13
 #
 
@@ -471,7 +471,7 @@ sub http_get {
 	my $request = HTTP::Request->new('GET', $url, $headers);
 	my $ua = LWP::UserAgent->new;
 	#$$ua->agent("dailystrips $version: " . $ua->agent());
-	$ua->agent("Mozilla/4.76 [en] (X11; U; Linux 2.2.14-15mdk i586)");
+	$ua->agent("");
 	$ua->proxy('http', $options{'http_proxy'});
 	$headers->authorization_basic(split(/:/, $options{'http_proxy_auth'}));
 	$headers->referer($referer);
