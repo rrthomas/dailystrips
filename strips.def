@@ -171,10 +171,6 @@ strip redmeat
 	updated semidaily
 end
 
-#strip rottenapples
-#	name Rotten Apples
-#	homepage
-
 strip rudypark
 	name Rudy Park
       homepage http://www.rudypark.com/

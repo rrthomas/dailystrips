@@ -1,3 +1,8 @@
+1.0.8
+  20 Feb 2001
+  Need better error handling with the LWP::UserAgent module (if there's a problem,
+  report exactly *what* went wrong - proxy, etc..)
+
 1.0.6
   02 Feb 2001
   It's not actually a bug in the program, but I'd like to advise users anyway
