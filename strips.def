@@ -110,15 +110,6 @@ class sfgate-srch
 	provides latest
 end
 
-#use POSIX;my $d=strftime("\%"."w",localtime($time_today));$l = "s" if$w==0;$l = "a" if$w!=0;"foo$l"
-
-#use POSIX;
-#if (strftime("\%"."w",localtime($time_today)) == 0)
-#{$l = "s"}
-#else
-#{$l = "a"}
-#"$a"
-
 class comicspage-strips-gen
         # $1 - more or less the real name
         # $2 - 3-letter abbreviation of $1
@@ -179,8 +170,6 @@ class washpost-creators
         provides any
 end
 
-
-
 class washpost-king
         homepage http://www.washingtonpost.com/wp-srv/style/comics/king.htm?$1
         prefetch $homepage
@@ -189,6 +178,20 @@ class washpost-king
         provides latest
 end
 
+class washpost-uclick
+	homepage http://www2.uclick.com/client/wpc/$1/
+	type search
+	searchpattern <IMG.+?SRC="(http://images.ucomics.com/comics/$1/\d+/$1\d+.gif)">
+	provides latest
+end
+
+class slate-cagle
+	homepage http://cagle.slate.msn.com/politicalcartoons/PCcartoons/$1.asp
+	type search
+	searchpattern <IMG.+?SRC=.+?(/comics/updating/$2\.(gif|jpg))"
+	baseurl http://cagle.slate.msn.com
+	provides latest
+end
 
 # Non-standard strips
 
@@ -454,13 +457,14 @@ strip angst
 	provides any
 end
 
-strip zapiro
-	name Zapiro
-	homepage http://www.mg.co.za/mg/zapiro/
-	type generate
-	imageurl http://www.chico.mweb.co.za/images/zapiro/%y-<code:lc(strftime("\%b", @localtime_today))>%d.gif
-	provides any
-end
+# superceded by kscarborough's
+#strip zapiro
+#	name Zapiro
+#	homepage http://www.mg.co.za/mg/zapiro/
+#	type generate
+#	imageurl http://www.chico.mweb.co.za/images/zapiro/%y-<code:lc(strftime("\%b", @localtime_today))>%d.gif
+#	provides any
+#end
 
 strip clanofthecats
 	name Clan of the cats
@@ -603,7 +607,7 @@ strip btaf
 	homepage http://angryflower.com/
 	type search
 	searchpage http://angryflower.com/archive.html
-	searchpattern <a href="(.+?.gif)" 
+	searchpattern <a href="(.+?.gif)"
 	provides latest
 	baseurl http://angryflower.com/
 end
@@ -2310,12 +2314,13 @@ strip marlette
 	$2 mar
 end
 
-strip ohman
-	name Jack Ohman
-	useclass comicspage-editorial-gen
-	$1 ohman
-	$2 ohm
-end
+# superceded by kscarborough's
+#strip ohman
+#	name Jack Ohman
+#	useclass comicspage-editorial-gen
+#	$1 ohman
+#	$2 ohm
+#end
 
 strip peters
 	name Mike Peters
@@ -2347,12 +2352,13 @@ strip stayskal
 end
 
 
-strip summers
-	name Dana Summers
-	useclass comicspage-editorial-gen
-	$1 summers
-	$2 sum
-end
+# superceded by kscarborough's
+#strip summers
+#	name Dana Summers
+#	useclass comicspage-editorial-gen
+#	$1 summers
+#	$2 sum
+#end
 
 strip telnaes
 	name Ann Telnaes
@@ -2834,4 +2840,1282 @@ strip catandgirl
         searchpattern <img.+?src="(archive/cg.+?\.gif)"
         baseurl http://www.catandgirl.com/
         provides latest
+end
+
+strip scarygoround
+      name Scary Go Round
+      artist John A
+      homepage http://bobbins.clango.org/cgi-bin/pngtokeenlite.cgi
+      type search
+      searchpattern <IMG.+?ALT="Today's Comics".+?SRC="(http://bobbins.clango.org/.+?)"
+      provides latest
+end
+
+strip erniepook
+      name Ernie Pook's Comeek
+      artist Lynda Barry
+      homepage http://www.marlysmagazine.com/
+      type search
+      searchpage http://www.marlysmagazine.com/main.html
+      searchpattern <img.+?src='(strips/comeek..\.gif)'
+      baseurl $homepage
+      provides latest
+end
+
+strip erniepookbig
+      name Ernie Pook's Comeek (big image)
+      artist Lynda Barry
+      homepage http://www.marlysmagazine.com/
+      type search
+      searchpage http://www.marlysmagazine.com/main.html
+      searchpattern <a.+?href='(strips/bigcomeek..\.gif)'
+      baseurl $homepage
+      provides latest
+end
+
+strip raeside
+      name Adrian Raeside
+      homepage http://www.raesidecartoon.com/
+      type generate
+      imageurl http://www.raesidecartoon.com/images/today.gif
+      provides latest
+end
+
+strip chappatte
+      name Patrick Chappatte
+      homepage http://www.globecartoon.com/
+      type generate
+      imageurl http://www.globecartoon.com/Images/week.gif
+      provides latest
+end
+
+strip cranandlerma
+      name Cran and Lerma
+      artist Nik Scott
+      homepage http://toons.net/
+      type generate
+      imageurl http://toons.net/toon.gif
+      provides latest
+end
+
+strip curiousmoments
+      name Curious Moments
+      artist Nik Scott
+      homepage http://toons.net/
+      type generate
+      imageurl http://www.toons.net/cur.gif
+      provides latest
+end
+
+strip wolvertoon
+      name The Wolvertoon
+      artist Monte Wolverton
+      homepage http://www.pacificnet.net/toons/
+      type generate
+      imageurl http://www.pacificnet.net/toons/wolvertoon.gif
+      provides latest
+end
+
+strip toles
+	name Tom Toles
+	useclass washpost-uclick
+	$1 tt
+end
+
+strip auth
+	name Tony Auth
+	useclass washpost-uclick 
+	$1 ta
+end
+
+strip carlson
+	name Stuart Carlson
+	useclass washpost-uclick 
+	$1 sc
+end
+
+strip deore
+	name Bill Deore
+	useclass washpost-uclick 
+	$1 bd
+end
+
+strip oliphant
+	Name Pat Oliphant
+	useclass washpost-uclick 
+	$1 po
+end
+
+strip rall
+	name Ted Rall
+	useclass washpost-uclick 
+	$1 tr
+end
+
+strip sargent
+	name Ben Sargent
+	useclass washpost-uclick
+	$1 bs
+end
+
+#cagle strips
+strip topsyturvey
+	name Topsy Turvey
+	artist Peter Kuper
+	useclass slate-cagle
+	$1 kuper
+	$2 kuper
+end
+
+strip toomuchcoffeeman
+	name Too Much Coffee Man
+	artist Shannon Wheeler
+	useclass slate-cagle
+	$1 wheeler
+	$2 wheeler
+end
+
+strip alcarez
+	name Lalo Alcarez
+	useclass slate-cagle
+	$1 lalo
+	$2 lalo
+end
+
+strip andersonk
+	name Kirk Anderson
+	useclass slate-cagle
+	$1 anderson
+	$2 kirk
+end
+
+strip andersonn
+	name Nick Anderson
+	useclass slate-cagle
+	$1 andersonNICK
+	$2 nick
+end
+
+strip asay
+	name Chuck Asay
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip ariail
+	name Robert Ariail
+	useclass slate-cagle
+	# Yes, they misspell his name in the URL
+	$1 arial
+	$2 arial
+end
+
+strip babin
+	name Rex Babin
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip bateman
+	name Scott Bateman
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip beattie
+	name Bruce Beattie
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip bish
+	name Randy Bish
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip bok
+	name Chip Bok
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip breen
+	name Steve Breen
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip britt
+	name Chris Britt
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip brookins
+	name Gary Brookins
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip brown
+	name Jonathan Brown
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip cagle
+	name Daryl Cagle
+	useclass slate-cagle
+	$1 $strip
+	$2 cagle00
+end
+
+strip casciari
+	name James Casciari
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip catalino
+	name Ken Catalino
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip catrow
+	name David Catrow
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip cole
+	name John Cole
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip crowe
+	name J.D. Crowe
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip curry
+	name Tom Curry
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip day
+	name Jim Day
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip deering
+	name John Deering
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip duffy
+	name Brian Duffy
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip englehart
+	name Bob Englehart
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip gorrell
+	name Bob Gorrell
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip greenberg
+	name Steve Greenberg
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip harville
+	name Vic Harville
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip heller
+	name Joe Heller
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip jacobson
+	name David Jacobson
+	useclass slate-cagle
+	$1 davidjacobson
+	$2 davidjacobson
+end
+
+strip jonesc
+	name Clay Jones
+	useclass slate-cagle
+	$1 jones
+	$2 jones
+end
+
+strip kallaugher
+	name Kevin Kallaugher
+	useclass slate-cagle
+	$1 $strip
+	$2 kal
+end
+
+strip keefe
+	name Mike Keefe
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip koterba
+	name Jeff Koterba
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip lane
+	name Mike Lane
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip macgregor
+	name Doug MacGregor
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip markstein
+	name Gary Markstein
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip matson
+	name R.J. Matson
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip mccloskey
+	name Jim McCloskey
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip mckee
+	name Rick McKee
+	useclass slate-cagle
+	$1 $strip
+	# I have no idea where they get "wells" from.
+	$2 wells
+end
+
+strip menees
+	name Tim Menees
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip morin
+	name Jim Morin
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip ohman
+	name Jack Ohman
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip parker
+	name Jeff Parker
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip plante
+	name Bruce Plante
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip powell
+	name Dwane Powell
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip priggee
+	name Milt Priggee
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip ramirez
+	name Mike Ramirez
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip ramsey
+	name Marshall Ramsey
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip reddick
+	name David Reddick
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip ritter
+	name Mike Ritter
+	useclass slate-cagle
+	$1 $strip
+	$2 ritter00
+end
+
+strip sherffius
+	name John Sherffius
+	useclass slate-cagle
+	$1 $strip
+	$2 sherffius21
+end
+
+strip siers
+	name Kevin Siers
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip stantis
+	name Scott Stantis
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip summers
+	name Dana Summers
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip streeter
+	name Mark Streeter
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip thompson
+	name Mike Thompson
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip trever
+	name John Trever
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip trinidad
+	name Corky Trinidad
+	useclass slate-cagle
+	$1 corky
+	$2 corky
+end
+
+strip varvel
+	name Gary Varvel
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip walters
+	name Kirk Walters
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip wilkinson
+	name Signe Wilkinson
+	useclass slate-cagle
+	$1 signe
+	$2 signe
+end
+
+strip wrightl
+	name Larry Wright
+	useclass slate-cagle
+	$1 wright
+	$2 wright
+end
+
+strip bizwit
+	name Bizwit
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip troubletown
+	name Troubletown
+	artist Lloyd Dangle
+	useclass slate-cagle
+	$1 dangle
+	$2 dangle
+end
+
+strip grondahl
+	name Cal Grondahl
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip huffaker
+	name Sandy Huffaker
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip randompropaganda
+	name Random Propaganda
+	artist Ryan Inzana
+	useclass slate-cagle
+	$1 inzana
+	$2 inzana
+end
+
+strip swill
+	name Swill
+	artist Peter Kohlsaat
+	useclass slate-cagle
+	$1 kohlsaat
+	$2 kohlsaat
+end
+
+strip cartoonfix
+	name Cartoonfix
+	artist John Kurtz
+	useclass slate-cagle
+	$1 kurtz
+	$2 kurtz
+end
+
+strip incontempt
+	name In Contempt
+	artist Kevin Moore
+	useclass slate-cagle
+	$1 moore
+	$2 moore
+end
+
+strip noexit
+	name No Exit
+	artist Andy Singer
+	useclass slate-cagle
+	$1 singer
+	$2 singer
+end
+
+strip slowpoke
+	name Slowpoke
+	artist Jen Sorenson
+	useclass slate-cagle
+	$1 sorenson
+	$2 sorenson
+end
+
+strip snibbe
+	name Kurt Snibbe
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip spencer
+	name John Spencer
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip wallace
+	name Russ Wallace
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip linttrap
+	name Lint Trap
+	artist Matt Wuerker
+	useclass slate-cagle
+	$1 wuerker
+	$2 wuerker
+end
+
+strip aislin
+	name Aislin
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip bado
+	name Bado
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip cardow
+	name Cameron Cardow
+	useclass slate-cagle
+	$1 cam
+	$2 cam
+end
+
+strip corrigan
+	name Patrick Corrigan
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip clement
+	name Gary Clement
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip cummings
+	name Dale Cummings
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip deadder
+	name Michael DeAdder
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip dolighan
+	name Tim Dolighan
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip donato
+	name Andy Donato
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip gable
+	name Brian Gable
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip graston
+	name Michael Graston
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip mackay
+	name Graeme MacKay
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip mackinnon
+	name Bruce MacKinnon
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip moudakis
+	name Theo Moudakis
+	useclass slate-cagle
+	$1 $strip
+	$2 mou
+end
+
+strip peterson
+	name Roy Peterson
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip rodewalt
+	name Vance Rodewalt
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip ammer
+	name Wolfgang Ammer
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip anjornooz
+	name Sepideh Anjornooz
+	useclass slate-cagle
+	$1 sepideh
+	$2 sepideh
+end
+
+strip esquivel
+	name Arcadio Esquivel
+	useclass slate-cagle
+	$1 arcadio
+	$2 arcadio
+end
+
+strip ares
+	name Ares
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip mitropoulos
+	name Bas Mitropoulos
+	useclass slate-cagle
+	$1 bas
+	$2 bas
+end
+
+strip behrendt
+	name Fritz Behrendt
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip bertrams
+	name Joep Bertrams
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip boligan
+	name Angel Boligan
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip boyle
+	name Francis Boyle
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip cajas
+	name Pancho Cajas
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip carlucho
+	name Carlucho
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip cherepanov
+	name Yuri Cherepanov
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip coco
+	name Coco
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip corax
+	name Corax
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip deangelis
+	name Marco DeAngelis
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip doloricon
+	name Doloricon
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip drybones
+	name Dry Bones
+	artist Yaakov Kirschen
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip emmerson
+	name Rod Emmerson
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip evans
+	name Malcolm Evans
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip gado
+	name Gado
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip garrincha
+	name Garrincha
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip gomaa
+	name Gomaa
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip graff
+	name Finn Graff
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip hachfeld
+	name Rainer Hachfeld
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip hajjaj
+	name Emad Hajjaj
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip hansson
+	name Riber Hansson
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip hervi
+	name Hervi
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip kazanevsky
+	name Vladmir Kazanevsky
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip heng
+	name Heng Kim Song
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip olle
+	name Olle
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip keshav
+	name Keshav
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip christo
+	name Christo
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip kowsar
+	name Nik Kowsar
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip langer
+	name Langer
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip leahy
+	name Sean Leahy
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip moir
+	name Alan Moir
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip medi
+	name Medi
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip molina
+	name Pedro Molina
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip miel
+	name Deng Coy Miel
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip alimov
+	name Murat Alimov
+	useclass slate-cagle
+	$1 murat
+	$2 murat
+end
+
+strip paresh
+	name Paresh
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip nicholson
+	name Peter Nicholson
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip ofarrell
+	name Vince O'Farrell
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip obi
+	name Obi
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip palomo
+	name Palomo
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip pancho
+	name Pancho
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip peel
+	name Peel
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip pismestrovic
+	name Petar Pismestrovic
+	useclass slate-cagle
+	$1 petar
+	$2 petar
+end
+
+strip plantu
+	name Jean Plantu
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip persitoons
+	name Persitoons
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip ricardo
+	name Ricaro
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip ronnen
+	name Meir Ronnen
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip rowe
+	name David Rowe
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip sakurai
+	name Heiko Sakurai
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip schopf
+	name Oliver Schopf
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip schot
+	name Bas van der Schot
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip serguei
+	name Serguei
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip slane
+	name Chris Slane
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip kim
+	name Kim Gyung Soo
+	useclass slate-cagle
+	$1 soo
+	$2 soo
+end
+
+strip stavro
+	name Stavro
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip tayo
+	name Tayo
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip tom
+	name Tom
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip touka
+	name Touka
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip turner
+	name Martyn Turner
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip wonsoo
+	name Wonsoo Li
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip zapiro
+	name Zapiro
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip zeev
+	name Ze'ev
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip zetterling
+	name Leif Zetterling
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
+end
+
+strip zudin
+	name Alexandr Zudin
+	useclass slate-cagle
+	$1 $strip
+	$2 $strip
 end
