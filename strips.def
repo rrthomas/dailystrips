@@ -975,7 +975,8 @@ strip slowwave
         name Slow Wave
         homepage http://www.slowwave.com/
         type generate
-        imageurl $homepage/img.cgi?thisweek.gif
+        #imageurl $homepage/img.cgi?thisweek.gif
+	imageurl $homepage/cgi-bin/archive.cgi?thisweek.gif
         provides latest
 end
 
