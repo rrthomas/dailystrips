@@ -1126,7 +1126,7 @@ strip thenorm
 	name The Norm
 	homepage http://www.thenorm.com/
 	type generate
-	imageurl http://www.thenorm.com/arch/%y%m%d.gif
+	imageurl http://www.thenorm.com/arch/%Y/%y%m%d.gif
 	provides any
 end
 
@@ -1992,11 +1992,12 @@ strip hagarthehorrible
 	$1 Hagar_The_Horrible
 end
 
-strip ineedhelp
-	name I Need Help
-	useclass sfgate-gen
-	$1 Hagar_The_Horrible
-end
+# gone?
+#strip ineedhelp
+#	name I Need Help
+#	useclass sfgate-gen
+#	$1 I_Need_Help
+#end
 
 strip mallardfillmore
 	name Mallard Fillmore
