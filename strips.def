@@ -2499,12 +2499,26 @@ strip captainribman
 end
 
 #mercury center strips
+
+#moved?
+#strip bfriends
+#	name Between Friends
+#	useclass mercurycenter
+#	$1 14
+#	$2 bfriends
+#end
+
+#could possibly provide any with a code block to calculate the right date, but i'm lazy.
+#email me if you want it.
 strip bfriends
 	name Between Friends
-	useclass mercurycenter
-	$1 14
-	$2 bfriends
+	artist Sandra Bell-lundy
+	homepage http://www.betweenfriendscartoons.com/
+	type search
+	searchpattern <img.+?src='(http://est.rbma.com/content/Between_Friends\?date=\d+)'
+	provides latest
 end
+
 
 
 # sev.com.au strips
