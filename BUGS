@@ -1,6 +1,5 @@
 1.0.21
   12 Jan 2002
-  --dailydir does not work on Win32
 
   Script does not seem to work on Perl 5.0 due to <code:> parser
 
