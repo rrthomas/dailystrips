@@ -19,6 +19,8 @@ www.cpan.org if you don't have them installed already. dailystrips was
 developed on Linux but should be able to run on any *nix with that has the
 necessary Perl modules installed. Running on Win32 is also possible.
 
+For the AvantGo mode, ImageMagick is required.
+
 Installation:
 See the INSTALL file.
 	
