@@ -253,7 +253,7 @@ strip pennyarcade
 	homepage http://www.penny-arcade.com/
 	type search
 	searchpage http://www.penny-arcade.com/view.php3
-	searchpattern <IMG.+?src="(images/.+?\.gif)"><BR>
+	searchpattern <IMG.+?src="(images/200.+?\.gif)"></TD>
 	baseurl http://www.penny-arcade.com/
 	provides latest
 end
