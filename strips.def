@@ -5157,3 +5157,33 @@ strip coxandforkum
 	provides latest
 end
 
+strip questionablecontent
+	name Questionable Content
+	artist Jeph Jacques
+	homepage http://www.questionablecontent.net/
+	type search
+	provides latest
+	searchpattern <img.+?src="\./(comics/\d+\..{3})">
+	baseurl $homepage
+end
+
+strip gucomics
+	name GU Comics
+	artist Woody Hearn
+	homepage http://www.gucomics.com/
+	type generate
+	provides any
+	imageurl http://www.gucomics.com/comics/gu_%Y%m%d.jpg
+end
+
+strip mrwiggles
+	name Rehabilitating Mr. Wiggles
+	artist Neal Swaab
+	homepage http://neilswaab.com/comics/wiggles/
+	type search
+	provides latest
+	searchpage http://neilswaab.com/comics/wiggles/wiggles_content.html
+	searchpattern <IMG.+?SRC="(images/rehab\d+\..{3})"
+	baseurl $homepage
+end
+
