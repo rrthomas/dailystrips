@@ -332,7 +332,7 @@ strip pvp
 end
 
 strip pvpcurrent
-	name Player vs. Player
+	name Player vs. Player - Current
 	homepage http://www.pvponline.com/
 	type search
 	searchpattern <img SRC="(archive/%Y/pvp%Y\d{4}\.gif)">
@@ -654,15 +654,13 @@ strip brunothebandit
 end
 
 strip brunothebanditcurrent
-	name Bruno the Bandit
+	name Bruno the Bandit - Current
 	homepage http://www.brunothebandit.com
 	type search
 	searchpattern <IMG ALT="comic" BORDER=0 SRC="(/comics/%Y\d{4}[a-z]{0,1}\.GIF)"
 	baseurl $homepage
 	provides latest
 end
-
-
 
 strip dieselsweeties
 	name Diesel Sweeties
@@ -3389,12 +3387,13 @@ strip plante
 	$2 $strip
 end
 
-strip powell
-	name Dwane Powell
-	useclass slate-cagle
-	$1 $strip
-	$2 $strip
-end
+#redundant - see dwanepowell entry
+#strip powell
+#	name Dwane Powell
+#	useclass slate-cagle
+#	$1 $strip
+#	$2 $strip
+#end
 
 strip priggee
 	name Milt Priggee
