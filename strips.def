@@ -346,8 +346,7 @@ strip pennyarcade
 	homepage http://www.penny-arcade.com/
 	type search
 	searchpage http://www.penny-arcade.com/view.php3
-	searchpattern <img.+?src="(images/\d{4}/\d{8}l\..{3})"
-	baseurl http://www.penny-arcade.com/
+	searchpattern <img.+?src="(http://img.penny-arcade.com/\d{4}/\d{8}[lh]\..{3})
 	provides latest
 end
 
