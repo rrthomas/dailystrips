@@ -2623,3 +2623,11 @@ strip dtte
 	baseurl http://www.zole.org/extremist/comics/
 	provides latest
 end
+strip jack
+	name Jack
+	artist David Hopkins
+	homepage http://jack.keenspace.com
+	type generate
+	imageurl $homepage/comics/Jack%Y%m%d.jpg
+	provides any
+end
