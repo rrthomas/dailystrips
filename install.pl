@@ -18,7 +18,7 @@ use strict;
 
 # Misc vars
 my (%options, $prog_version);
-$prog_version = "1.0.26";
+$prog_version = "1.0.27";
 
 
 # Not for Win32
@@ -57,18 +57,29 @@ END_HELP
 
 
 # Parse options
-for (@ARGV)	{
-	if (/^--sharedir=(.+)$/o) {
+for (@ARGV)
+{
+	if (/^--sharedir=(.+)$/)
+	{
 		$options{'sharedir'} = $1;
-	} elsif (/^--scriptdir=(.+)$/o) {
+	}
+	elsif (/^--scriptdir=(.+)$/)
+	{
 		$options{'scriptdir'} = $1;
-	} elsif (/^--docdir=(.+)$/o) {
+	}
+	elsif (/^--docdir=(.+)$/)
+	{
 		$options{'docdir'} = "$1/dailystrips-$prog_version";
-	} elsif (/^(--quiet|-q)$/o) {
+	}
+	elsif (/^(--quiet|-q)$/)
+	{
 		$options{'quiet'} = 1;
-	} elsif (/^--verbose$/o) {
+	}
+	elsif (/^--verbose$/)
+	{
 		$options{'verbose'} = 1;
-	} else {
+	}
+	else {
 		die "Unknown option: $_\n";
 	}
 }
