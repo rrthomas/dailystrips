@@ -4791,6 +4791,14 @@ strip warbucket
 	provides latest
 end
 
+strip ghastly
+	name Ghastly's Ghastly Comic
+	homepage http://ghastly.keenspace.com
+	type search
+	searchpattern <img.+?SRC="(http://www.ghastlycomic.com/comics/\d+\.jpg)"
+	provides latest
+end
+
 # kingfeatures
 strip crankshaft
 	name Crankshaft

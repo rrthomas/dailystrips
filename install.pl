@@ -18,7 +18,7 @@ use strict;
 
 # Misc vars
 my (%options, $prog_version);
-$prog_version = "1.0.28";
+$prog_version = "1.0.29pre1";
 
 
 # Not for Win32
