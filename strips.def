@@ -816,6 +816,40 @@ strip whenigrowup
 	provides any
 end
 
+strip walky
+    name It's Walky
+    homepage http://www.itswalky.com/
+    baseurl $homepage
+    type search
+    searchpattern <IMG.+?ALT="".+?SRC="(.+?)".+?> <br>
+    provides latest
+end
+
+strip jackiesfridge
+    name Jackie's Fridge
+    type generate
+    homepage http://jackiesfridge.keenspace.com/
+    imageurl http://jackiesfridge.keenspace.com/comics/jf%Y%m%da.jpg
+    provides any
+end
+
+strip schlockmercenary
+    name Schlock Mercenary
+    type generate
+    homepage http://www.schlockmercenary.com/
+    imageurl http://www.schlockmercenary.com/comics/schlock%Y%m%d.png
+    provides any
+end
+
+strip unicornjelly
+    name Unicorn Jelly
+    type search
+    homepage http://unicornjelly.com/
+    searchpattern <IMG.+?SRC="(images\/uni\d+\.gif)"
+    baseurl $homepage
+    provides latest
+end
+
 # ucomics.com strips
 strip adamathome
 	name Adam@home
