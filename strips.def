@@ -280,7 +280,7 @@ strip pennyarcade
 	homepage http://www.penny-arcade.com/
 	type search
 	searchpage http://www.penny-arcade.com/view.php3
-	searchpattern <img.+?src="(images/\d{4}/\d{8}l\..{3})"></td>
+	searchpattern <img.+?src="(images/\d{4}/\d{8}l\..{3})"
 	#searchpattern <IMG.+?src="(images/200.+?\.gif)"></TD>
 	baseurl http://www.penny-arcade.com/
 	provides latest
@@ -1268,6 +1268,15 @@ strip touche
         searchpattern <img.+?src='(.+?)'
         baseurl http://www.drive-in-cartoons.de/touche/
         provides latest
+end
+
+strip achewood
+	name Achewood
+	artist Chris Onstad
+	homepage http://www.achewood.com
+	type generate
+	imageurl $homepage/i/%m%d%Y.gif
+	provides any
 end
 
 # ucomics.com strips
