@@ -1229,41 +1229,41 @@ strip nekobox
 end
 
 strip perscheid
-        name Perscheids Abgruende
-        artist Martin Perscheid -> www.martin-perscheid.de
-        homepage http://portale.web.de/Boulevard/Comics/Perscheid/
-        type search
-        searchpattern <img.+?src=".+?(img.web.de/c/00.+?)"
-	#baseurl http://
-        provides latest
+	name Perscheids Abgruende
+	artist Martin Perscheid -> www.martin-perscheid.de
+	homepage http://portale.web.de/Boulevard/Comics/Perscheid/
+	type search
+	searchpattern <img.+?src="[h]*[t]*[t]*[p]*[:]*//(img.web.de/c/00.+?)"
+	provides latest
 end
 
 strip harmbengen
-        name Harm Bengen's Alltagsskizzen
-        artist Harm Bergen -> www.harmbengen.de
-        homepage http://portale.web.de/Boulevard/Comics/Bengen/
-        type search
-        searchpattern <img.+?src=".+?(img.web.de/c/00.+?)"
-	#baseurl http://
-        provides latest
+	name Harm Bengen's Alltagsskizzen
+	artist Harm Bergen -> www.harmbengen.de
+	homepage http://portale.web.de/Boulevard/Comics/Bengen/
+	type search
+	searchpattern <img.+?src="[h]*[t]*[t]*[p]*[:]*//(img.web.de/c/00.+?)"
+	provides latest
 end
+
 strip weyershausenwelt
-        name Weyershausen - Wunderbare Welt
-        artist Karsten Weyershausen -> www.weyershausen.de
-        homepage http://portale.web.de/Boulevard/Comics/Weyershausen/
-        type search
-        searchpattern <img.+?src=".+?(img.web.de/c/00.+?)"
-        provides latest
+	name Weyershausen - Wunderbare Welt
+	artist Karsten Weyershausen -> www.weyershausen.de
+	homepage http://portale.web.de/Boulevard/Comics/Weyershausen/
+	type search
+	searchpattern <img.+?src="[h]*[t]*[t]*[p]*[:]*//(img.web.de/c/00.+?)"
+	provides latest
 end
 
 strip quirit
-        name Quirit - alltaegliches auf den Punkt gebracht
-        artist Quirit -> www.quirit.com
-        homepage http://portale.web.de/Boulevard/Comics/Quirit/
-        type search
-        searchpattern <img.+?src=".+?(img.web.de/c/00.+?)"
-        provides latest
+	name Quirit - alltaegliches auf den Punkt gebracht
+	artist Quirit -> www.quirit.com
+	homepage http://portale.web.de/Boulevard/Comics/Quirit/
+	type search
+	searchpattern <img.+?src="[h]*[t]*[t]*[p]*[:]*//(img.web.de/c/00.+?)"
+	provides latest
 end
+
 
 strip touche
         name Touche
