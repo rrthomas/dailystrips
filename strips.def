@@ -381,6 +381,26 @@ strip angst
         imageurl http://www.inktank.com/images/cartoons/%m-%d-%y.gif
 end
 
+strip zapiro
+        name Zapiro
+        homepage http://www.mg.co.za/mg/zapiro/
+        type search
+        searchpattern (/mg/zapiro/(.*?)\.(gif|jpg))(.*?)ALT="cartoon"
+        matchpart 1
+        updated semidaily
+        baseurl http://www.mg.co.za
+end
+
+strip madameve
+        name Madam and Eve
+        homepage http://www.mg.co.za/mg/m&e/today.htm
+        type search
+        searchpattern <IMG SRC="((.*?)\.gif)(.*)ALT="cartoon"
+        matchpart 1
+        updated semidaily
+        baseurl http://www.mg.co.za/mg/m&e/
+end
+
 # ucomics.com strips
 strip adamathome
 	name Adam@home
