@@ -1,3 +1,29 @@
+1.0.23
+  02 Apr 2002
+  'Diesel Sweeties' fixed
+
+  Disabled Liberty Meadows again
+
+  'PC and Pixel' fixed (Jeff Brown)
+
+  'Bottom Liners' restored
+
+  'Brainbuzz' and 'The Duplex' added (Robert Fleming)
+
+  Typo in help fixed (Rene Weber)
+
+  'Sexy Losers' fixed (Matt Hucke)
+
+  'Swamp' added (David Findlay)
+
+  install.pl updated to be more configurable
+
+  Fixed bug with --stripnav option
+
+  Removed 'Wee Pals', 'Dear Dudley', 'Punc and Mark', 'Spooner', 'Jack Ohman'
+
+  Fixed 'Dork Tower', 'Under the Lemon Tree'
+
 1.0.22
   12 Jan 2002
   Added 'Off the Mark'

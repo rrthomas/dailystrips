@@ -266,15 +266,16 @@ strip plif
       provides latest
 end
 
-strip punc
-	name Punc & Mark
-	homepage http://byteus.com/pm/
-	type search
-	searchpage http://artiztik.com/cgi-bin/pmviewer.cgi?list=pm&config=pm.cfg&slide=999&style=pm
-	searchpattern <img.+?src=(/pm/strips/.+?\.jpg)
-	baseurl http://artiztik.com/
-	provides latest
-end
+# gone? 2002-04-02
+#strip punc
+#	name Punc & Mark
+#	homepage http://byteus.com/pm/
+#	type search
+#	searchpage http://artiztik.com/cgi-bin/pmviewer.cgi?list=pm&config=pm.cfg&slide=999&style=pm
+#	searchpattern <img.+?src=(/pm/strips/.+?\.jpg)
+#	baseurl http://artiztik.com/
+#	provides latest
+#end
 
 strip pvp
 	name Player vs. Player
@@ -1614,10 +1615,11 @@ strip soup2nutz
 	useclass unitedmedia-srch-comics
 end
 
-strip spooner
-        name Spooner
-        useclass unitedmedia-srch-comics
-end
+#gone? 2002-04-02
+#strip spooner
+#       name Spooner
+#        useclass unitedmedia-srch-comics
+#end
 
 strip speedbump
 	name Speed Bump
@@ -2199,12 +2201,13 @@ strip marlette
 	$2 mar
 end
 
-strip ohman
-	name Jack Ohman
-	useclass comicspage-editorial-srch
-	$1 ohman
-	$2 ohm
-end
+# gone? 2002-04-02
+#strip ohman
+#	name Jack Ohman
+#	useclass comicspage-editorial-srch
+#	$1 ohman
+#	$2 ohm
+#end
 
 strip peters
 	name Mike Peters
@@ -2235,12 +2238,13 @@ strip stayskal
 	$2 sty
 end
 
-strip summers
-	name Dana Summers
-	useclass comicspage-editorial-srch
-	$1 summers
-	$2 sum
-end
+# gone? 2002-04-02
+#strip summers
+#	name Dana Summers
+#	useclass comicspage-editorial-srch
+#	$1 summers
+#	$2 sum
+#end
 
 strip telnaes
 	name Ann Telnaes
