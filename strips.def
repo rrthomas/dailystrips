@@ -1340,7 +1340,7 @@ strip achewood
 	artist Chris Onstad
 	homepage http://www.achewood.com
 	type generate
-	imageurl $homepage/i/%m%d%Y.gif
+	imageurl $homepage/dat/comic/%m%d%Y.gif
 	provides any
 end
 
