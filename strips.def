@@ -4159,9 +4159,9 @@ end
 
 strip grimmy
 	name Mother Goose and Grimm
-	homepage http://www.grimmy.com/daycartoon.asp
+	homepage http://www.grimmy.com/comics.php
 	type generate
-	imageurl http://www.grimmy.com/images/%Y/MGG%m%d%y.gif
+	imageurl http://www.grimmy.com/images/MGG_Archive/MGG_%Y/MGG%m%d.gif
 	provides any
 end
 
@@ -4281,7 +4281,7 @@ strip dela
 	homepage http://www.delathehooda.com/
 	type search
 	searchpage http://www.delathehooda.com
-	searchpattern <img SRC="(<code:<"Delac" if %w==0><code:"dela" if %w!=0>~[^"]+)"
+	searchpattern <img SRC="(<code:"Delac" if %w==0><code:"dela" if %w!=0>~[^"]+)"
 	baseurl http://www.delathehooda.com/
 	provides latest
 end
@@ -5102,3 +5102,12 @@ strip freefall
     baseurl $homepage
     provides latest
 end
+
+strip daybyday
+	name Day by Day
+	homepage http://www.daybydaycartoon.com/
+	type generate
+	imageurl http://www.daybydaycartoon.com/Cartoons/%m-%d-%Y.gif
+	provides any
+end
+
