@@ -539,7 +539,7 @@ for (@strips) {
 	} else {
 		if ($options{'local'}) {
 			# local mode - download strips
-			$img_addr =~ /http:\/\/(.*)\/(.*)\.(.*?)(\?.+)?$/;
+			$img_addr =~ /http:\/\/(.*)\/(.*)\.(.*?)([?&].+)?$/;
 			if (defined $3) { $ext = ".$3" }
 
 			# prepare file names
@@ -630,7 +630,7 @@ for (@strips) {
 					# error?
 					if (-e $local_name) {
 						# an image file for today already exists.. jump to outputting code
-						#warn "DEBGUG: couldn't download strip, but we already have it\n";
+						#warn "DEBUG: couldn't download strip, but we already have it\n";
 						goto HAVE_IMAGE;
 					} else {
 						if ($options{'verbose'}) {
