@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    23 July 2001 20:23 EST
-# Current Revision: 1.0.16-pre2
+# Last Modified:    26 July 2001 12:36 EST
+# Current Revision: 1.0.16-pre3
 #
 
 # Set up
@@ -21,7 +21,7 @@ use POSIX qw(strftime);
 
 my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @localtime_tomorrow, $long_date, $short_date,
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
-    $link_tomorrow, $no_dateparse, @base_dirparts, $no_personal_defs);
+    $link_tomorrow, $no_dateparse, @base_dirparts);
 
 # Help overrides anything else
 for (@ARGV)	{
@@ -93,13 +93,17 @@ $options{'defs_file'} = "/usr/share/dailystrips/strips.def";
 
 # Parse options - the must be checked first because others depend on their values
 for (@ARGV)	{
-	if (/^--basedir=(.*)$/o) {
+	if (/^--basedir=(.*)$/) {
 		unless (chdir $1) {
 			die "Error: could not change directory to $1\n";
 		}
-	} elsif (/^--defs=(.*)$/o) {
+	} elsif (/^--defs/) {
+		unless (/^--defs=(.*)$/) {
+			die "Error: no argument given for --defs\n";
+		}
+		
 		$options{'defs_file'} = $1;
-	} elsif (/^--date=(.*)$/o) {
+	} elsif (/^--date=(.*)$/) {
 		if ($no_dateparse) {
 			die "Error: cannot use --date - Date::Parse not installed\n";
 		}
@@ -109,11 +113,11 @@ for (@ARGV)	{
 		}
 		
 		$options{'alt_date'} = 1;
-	} elsif (/^--nopersonal$/o) {
-		$no_personal_defs = 1;
-	} elsif (/^(--quiet|-q)$/o) {
+	} elsif (/^--nopersonal$/) {
+		$options{'no_personal_defs'} = 1;
+	} elsif (/^(--quiet|-q)$/) {
 		$options{'quiet'} = 1;
-	} elsif (/^--verbose$/o) {
+	} elsif (/^--verbose$/) {
 		$options{'verbose'} = 1;
 	}
 }
@@ -130,7 +134,7 @@ $short_date_tomorrow = strftime("\%Y.\%m.\%d", @localtime_tomorrow);
 
 #get strip definitions (do it now because info is used below)
 &get_defs($options{'defs_file'});
-unless ($no_personal_defs) {
+unless ($options{'no_personal_defs'}) {
 	my $personal_defs = ((getpwuid($>))[7]) . "/.dailystrips.defs";
 	if (-e $personal_defs) {
 		&get_defs($personal_defs);
@@ -140,7 +144,10 @@ $known_strips = join('|', sort keys %defs);
 $known_groups = join('|', sort keys %groups);
 
 for (@ARGV)	{
-	if (/^--list$/o) {
+	#already handled
+	next if /^(--defs=.*|--basedir=.*|--date=.*|--verbose|--quiet|-q|--nopersonal)$/;
+	
+	if (/^--list$/) {
 format =
 @<<<<<<<<<<<<<<<<<<<<<<<< 	@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 $_, $val
@@ -157,60 +164,66 @@ $_, $val
 			write;
 		}
 		exit;
-	} elsif (/^(--archive|-a)$/o) {
+	} elsif (/^-(-archive|a)$/) {
 		$options{'make_archive'} = 1;
-	} elsif (/^(--dailydir|-d)$/o) {
+	} elsif (/^-(-dailydir|d)$/) {
 		if (defined $options{'stripdir'}) {
 			die "Error: --dailydir and --stripdir cannot be used together\n";
 		}
 		
 		$options{'dailydir'} = 1;
-	} elsif (/^(--save|-s)$/o) {
+	} elsif (/^-(-save|s)$/) {
 		$options{'save_existing'} = 1;
-	} elsif ($_ =~ m/^--stripdir$/o) {
+	} elsif ($_ =~ m/^--stripdir$/) {
 		if (defined $options{'dailydir'}) {
 			die "Error: --dailydir and --stripdir cannot be used together\n";
 		}
 		
 		$options{'stripdir'} = 1;
-	} elsif (/^--output=(.*)$/o) {
+	} elsif (/^--output/) {
+		unless (/^--output=.+$/) {
+			die "Error: no argument given for --output\n";
+		}
+		
 		$options{'output_file'} = $1;
-	} elsif (/^(--new|-n)$/o) {
+	} elsif (/^-(-new|n)$/) {
 		$options{'new'} = 1;
-	} elsif (/^(--nospaces)$/o) {
+	} elsif (/^--nospaces$/) {
 		$options{'nospaces'} = 1;
-	} elsif (/^(--version|-v)$/o) {
+	} elsif (/^-(-version|v)$/) {
 		print "dailystrips version $version\n";
 		exit;
-	} elsif ($_ =~ m/^(--defs=.*|--basedir=(.*)|--date=.*|--verbose|--quiet|-q|--nopersonal)$/o) {
-		# nothing done here - just prevent an "unknown option" error (all the more reason to switch to Getopts)
-	} elsif (/^($known_strips|all)$/io) {
+	} elsif (/^($known_strips|all)$/i) {
 		if ($_ eq "all") {
 			push (@get, split(/\|/, $known_strips));
 		} else {
 			push(@get, $_);
 		}
-	} elsif (/^@($known_groups)$/io) {
+	} elsif (/^@($known_groups)$/i) {
 		push(@get, split(/;/, $groups{$1}{'strips'}));
-	} elsif (/^(--local|-l)$/o) {
+	} elsif (/^-(-local|l)$/) {
 		$options{'local_mode'} = 1;
-	} elsif (/^--noindex$/o) {
+	} elsif (/^--noindex$/) {
 		$options{'no_index'} = 1;
-	} elsif (/^--noenvproxy$/o) {
+	} elsif (/^--noenvproxy$/) {
 		$options{'no_env_proxy'} = 1;
-	} elsif (/^--proxyauth/o) {
-		unless (/^--proxyauth=((.*?):(.*?))$/o) {
-			die "Error: incorrectly formatted proxy username/password\n";
+	} elsif (/^--proxyauth/) {
+		unless (/^--proxyauth=(.+:.+)$/) {
+			die "Error: incorrectly formatted proxy credentials ('user:pass' expected)\n";
 		}
 		
 		$options{'http_proxy_auth'} = $1;
-	} elsif (/^--proxy/o) {
-		unless (/^--proxy=http:\/\/(.*?):(.*?)(\/)?$/o) {
+	} elsif (/^--proxy/) {
+		unless (/^--proxy=(http:\/\/.+:.+)\/?$/) {
 			die "Error: incorrectly formatted proxy server ('http://server:port' expected)\n";
 		}
 		
 		$options{'http_proxy'} = $1;
-	} elsif (/^--useragent=(.*)$/) {
+	} elsif (/^--useragent/) {
+		unless (/^--useragent=(.+)/) {
+			die "Error: no argument given for --useragent\n";
+		}
+		
 		$options{'user_agent'} = $1;
  	} else {
 		die "Unknown option: $_\n";
@@ -235,17 +248,13 @@ unless (@get) {
 
 #Set proxy
 if (!defined $options{'no_env_proxy'} and !defined $options{'http_proxy'} and defined $ENV{'http_proxy'} ) {
-	unless ($ENV{'http_proxy'} =~ m/^http:\/\/((.*?):(.*?))(\/)?$/o) {
+	unless ($ENV{'http_proxy'} =~ m/^http:\/\/.+:.+\/?$/) {
 		die "Error: incorrectly formatted proxy server environment variable\n('http://server:port' expected)\n";
 	}
 	
 	$options{'http_proxy'} = $ENV{'http_proxy'};
 }
 if ($options{'http_proxy'}) {
-	unless ($options{'http_proxy'} =~ m/^http:\/\//i) {
-		$options{'http_proxy'} = "http://" . $options{'http_proxy'};
-	}
-	
 	if ($options{'verbose'}) {
 		warn "Using proxy server $options{'http_proxy'}\n";
 	}
