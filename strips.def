@@ -592,9 +592,8 @@ strip cathy
 	$1 ca
 end
 
-# not updated daily any more, but
-# left in so previous strips
-# can still be retrieved
+# not updated daily any more, but left in so previous strips can still be
+# retrieved
 strip citizendog
 	name Citizen Dog
 	useclass ucomics-gen
@@ -911,14 +910,16 @@ strip luann
 end
 
 # can't use class - strip lags 1 day (current html page exists, but not strip image
+# update: seems to be up to date as of 31 july 2001
 strip lupo
 	name Lupo Alberto
-	homepage http://www.unitedmedia.com/comics/lupo/index.html
-	type search
-	searchpattern (/comics/lupo/archive/images/lupo(.*?)\.gif)
-	matchpart 1
-	baseurl http://www.unitedmedia.com
-	provides latest
+	useclass unitedmedia-srch-comics
+	#homepage http://www.unitedmedia.com/comics/lupo/index.html
+	#type search
+	#searchpattern (/comics/lupo/archive/images/lupo(.*?)\.gif)
+	#matchpart 1
+	#baseurl http://www.unitedmedia.com
+	#provides latest
 end
 
 strip marmaduke
@@ -941,16 +942,17 @@ strip momma
 	useclass unitedmedia-srch-creators
 end
 
-#can't use class - site lags several days
+# can't use class - site lags several days
+# update: seems to be current on 31 july 2001
 strip motley
 	name Motley
-	name Lupo Alberto
-	homepage http://www.unitedmedia.com/comics/motley/index.html
-	type search
-	searchpattern (/comics/motley/archive/images/motley(.*?)\.gif)
-	matchpart 1
-	baseurl http://www.unitedmedia.com
-	provides latest
+	useclass unitedmedia-srch-comics
+	#homepage http://www.unitedmedia.com/comics/motley/index.html
+	#type search
+	#searchpattern (/comics/motley/archive/images/motley(.*?)\.gif)
+	#matchpart 1
+	#baseurl http://www.unitedmedia.com
+	#provides latest
 end
 
 strip mspeach
@@ -1075,15 +1077,11 @@ strip speedbump
 	useclass unitedmedia-srch-creators
 end
 
-#can't use class - 1 week behind
+#1 week behind
 strip stockcartoons
 	name StockcarToons
-	homepage http://www.unitedmedia.com/comics/stockcartoons/index.html
-	type search
-	searchpattern (/comics/stockcartoons/archive/images/stockcartoons(.*?)\.(gif|jpg))
-	matchpart 1
-	baseurl http://www.unitedmedia.com
-	provides latest
+	useclass unitedmedia-srch-comics
+	searchpage http://www.unitedmedia.com/comics/stockcartoons/archive/stockcartoons-<code:strftime("\%\Y\%\m\%\d", localtime($time_today - 604800))>.html
 end
 
 strip strangebrew
