@@ -343,6 +343,7 @@ end
 
 strip pennyarcade
 	name Penny Arcade
+	artist Mike Krahulik and Jerry Holkins
 	homepage http://www.penny-arcade.com/
 	type search
 	searchpage http://www.penny-arcade.com/view.php3
