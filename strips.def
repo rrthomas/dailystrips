@@ -195,7 +195,7 @@ end
 class slate-cagle
         homepage http://cagle.slate.msn.com/politicalcartoons/PCcartoons/$1.asp
         type search
-        searchpattern <IMG.+?SRC=.+?(/working/\d+/$2.+?\.(gif|jpg))"
+        searchpattern <IMG.+?SRC=".+?(/working/\d+/$2\d*\.(gif|jpg))"
         baseurl http://cagle.slate.msn.com
         provides latest
 end
@@ -203,7 +203,7 @@ end
 class slate-cagle-alt
         homepage http://cagle.slate.msn.com/politicalcartoons/PCcartoons/$1.asp
         type search
-        searchpattern <IMG.+?SRC=.+?(/comics/updating/$2.+?\.(gif|jpg))"
+        searchpattern <IMG.+?SRC=.+?(/comics/updating/$2\d*\.(gif|jpg))"
         baseurl http://cagle.slate.msn.com
         provides latest
 end
@@ -851,10 +851,10 @@ end
 
 strip sexylosers
 	name Sexy Losers
-	homepage http://sexylosers.keenspace.com/
+	homepage http://sexylosers.com/
 	type search
-	searchpattern <A.+?HREF="http://sexylosers\.keenspace\.com/(\d+).html"
-	imageurl http://sexylosers.keenspace.com/comics/sl$match_1.jpg
+	searchpattern <A.+?HREF="/(\d+).html"
+	imageurl http://sexylosers.com/comics/sl$match_1.jpg
 	provides latest
 end
 
@@ -3088,7 +3088,7 @@ end
 
 strip summers
 	name Dana Summers
-	useclass slate-cagle-alt
+	useclass slate-cagle
 	$1 $strip
 	$2 $strip
 end
