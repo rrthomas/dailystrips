@@ -997,7 +997,8 @@ strip asif
 	name As If
 	homepage http://www.asifcomic.com/
 	type search
-	searchpattern img src="_left\.jpg" width=\d+ height=\d+ border=0"><img src="(.+?\.jpg)"
+	searchpage http://www.asifcomic.com/current.html
+	searchpattern <img.+?src=".*?_left\.jpg".+?><img.+?src="(\d+\..{3})".+?alt="Strip
 	baseurl $homepage
 	provides latest
 end
