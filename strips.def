@@ -4397,3 +4397,11 @@ strip dicebox
 	searchpattern <img src=(http://www.girlamatic.com/jmlee/\w+?\.jpg)
 	provides latest
 end
+
+strip nothingnice
+	name Nothing Nice to Say
+	homepage http://www.nothingnice.com/
+	type generate
+	imageurl http://www.nothingnice.com/strips/%y/%m-%d-%y.gif
+	provides any
+end
