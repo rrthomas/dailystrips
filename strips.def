@@ -625,7 +625,7 @@ strip brunothebandit
 	name Bruno the Bandit
 	homepage http://www.brunothebandit.com
 	type generate
-	imageurl http://www.brunothebandit.com/comics/%Y%m%da.gif
+	imageurl http://www.brunothebandit.com/comics/%Y%m%da.GIF
 	provides any
 end
 
@@ -4136,6 +4136,138 @@ strip zudin
 	$1 $strip
 	$2 $strip
 end
+
+
+# azcentral strips
+class azcentral-srch
+	homepage http://www.azcentral.com/ent/comics/$strip.html
+	type search
+	searchpattern <img.+?SRC="(http://mst.rbma.com/content/$1)"
+	prefetch $homepage
+	provides latest
+end
+
+strip apt3g
+	name Apartment 3-G
+	useclass azcentral-srch
+	$1 Apartment_3-G
+end
+
+strip barneygoogle
+	name Barney Google
+	useclass azcentral-srch
+	$1 Barney_Google
+end
+
+strip betterhalf
+	name Better Half
+	useclass azcentral-srch
+	$1 Better_Half
+end
+
+strip buckles
+	name Buckles
+	useclass azcentral-srch
+	$1 Buckles
+end
+
+strip dinetteset
+	name Dinette Set
+	useclass azcentral-srch
+	$1 Dinette_Set
+end
+
+strip grinandbearit
+	name Grin and Bear It
+	useclass azcentral-srch
+	$1 Grin_and_Bear_It
+end
+
+strip hiandlois
+	name Hi and Lois
+	useclass azcentral-srch
+	$1 Hi_and_Lois
+end
+
+strip judgeparker
+	name Judge Parker
+	useclass azcentral-srch
+	$1 Judge_Parker
+end
+
+strip lockhorns
+	name Lockhorns
+	useclass azcentral-srch
+	$1 Lockhorns
+end
+
+strip marktrail
+	name Mark Trail
+	useclass azcentral-srch
+	$1 Mark_Trail
+end
+
+strip maryworth
+	name Mary Worth
+	useclass azcentral-srch
+	$1 Mary_Worth
+end
+
+strip pardonmyplanet
+	name Pardon My Planet
+	useclass azcentral-srch
+	$1 Pardon_My_Planet
+end
+
+strip redeye
+	name Redeye
+	useclass azcentral-srch
+	$1 Redeye
+end
+
+strip rexmorgan
+	name Rex Morgan, MD
+	useclass azcentral-srch
+	$1 Rex_Morgan
+end
+
+strip steveroper
+	name Steve Roper
+	useclass azcentral-srch
+	$1 Steve_Roper
+end
+
+strip theylldoiteverytime
+	name They'll Do It Every Time
+	useclass azcentral-srch
+	$1 TDIE
+end
+
+strip tiger
+	name Tiger
+	useclass azcentral-srch
+	$1 Tiger
+end
+
+strip tinasgroove
+	name Tina's Groove
+	useclass azcentral-srch
+	$1 Tinas_Groove
+end
+
+strip tumbleweeds
+	name Tumbleweeds
+	useclass azcentral-srch
+	$1 Tumbleweeds
+end
+
+strip edgecity
+	name Edge City
+	useclass sfgate-gen
+	$1 Edge_City
+end
+
+
 
 # more non-standard
 strip fleem
