@@ -692,39 +692,6 @@ strip rpgworld
 	baseurl $homepage
 end
 
-# Ubersoft - multi-strip
-strip ubersoft1
-	name Ubersoft-1
-	homepage http://www.ubersoft.net/
-	type generate
-	imageurl http://www.ubersoft.net/comics/hd%Y%m%da.png
-	provides any
-end
-
-strip ubersoft2
-	name Ubersoft-2
-	homepage http://www.ubersoft.net/
-	type generate
-	imageurl http://www.ubersoft.net/comics/hd%Y%m%dc.png
-	provides any
-end
-
-strip ubersoft3
-	name Ubersoft-3
-	homepage http://www.ubersoft.net/
-	type generate
-	imageurl http://www.ubersoft.net/comics/hd%Y%m%de.png
-	provides any
-end
-
-strip ubersoft4
-	name Ubersoft-4
-	homepage http://www.ubersoft.net/
-	type generate
-	imageurl http://www.ubersoft.net/comics/hd%Y%m%dg.png
-	provides any
-end
-
 strip spazlabs
 	name Spaz Labs
 	homepage http://www.stonebrokestudios.com
@@ -1007,14 +974,6 @@ strip thenorm
 	type generate
 	imageurl http://www.thenorm.com/arch/%Y/%y%m%d.gif
 	provides any
-end
-
-strip somethingpositive
-	name Something Positive
-	homepage http://www.somethingpositive.net/
-	type generate
-	imageurl http://www.somethingpositive.net/arch/sp%m%d%Y.gif
-	provides latest
 end
 
 strip melonpool
@@ -4994,4 +4953,43 @@ strip vigilanteho
 	artist Meaghan Quinn and John Troutman
 	useclass graphicsmash
 	$1 vigilanteho
+end
+
+strip krakow
+	name Krakow
+	artist Krazy Krow
+	type search
+	homepage http://www.krakowstudios.com
+	searchpattern <img.+?src="http://www.krakowstudios.com(/comicpro/strips/\d+-\d+\.jpg)
+	baseurl http://www.krakowstudios.com
+	provides latest
+end
+
+strip antihero
+	name Antihero For Hire
+	artist Mark Shallow
+	homepage http://www.antiheroforhire.com
+	type search
+	searchpattern <img.+?alt="comic".+?src="[^"]*(comics/[^/.]+\.gif)"[^>]*>
+	baseurl http://www.antiheroforhire.com/
+	provides latest
+end
+
+strip somethingpositive
+	name Something Positive
+	homepage http://www.somethingpositive.net/
+	type search
+	searchpattern <img.+?src="(arch/sp\d+\.gif)"
+	baseurl http://www.somethingpositive.net/
+	provides latest
+end
+
+# Ubersoft - we are all one strip, with Ubersoft
+strip ubersoft
+	name Ubersoft
+	artist Christopher Wright
+	homepage http://www.ubersoft.net/
+	type generate
+	imageurl http://www.ubersoft.net/comics/hd%Y%m%d.png
+	provides any
 end
