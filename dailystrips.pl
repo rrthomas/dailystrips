@@ -8,7 +8,7 @@
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
 # Last Modified:    14 August 2001 11:03 EST
-# Current Revision: 1.0.17-pre3
+# Current Revision: 1.0.17
 #
 
 
@@ -27,7 +27,7 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-$version = "1.0.17-pre3";
+$version = "1.0.17";
 
 $time_today = time;
 
