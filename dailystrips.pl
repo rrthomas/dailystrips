@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    02 Apr 2002, 19:28 EST
+# Last Modified:    16 Apr 2002, 12:30 EST
 # Current Revision: 1.0.23-pre1
 #
 
@@ -539,7 +539,7 @@ for (@strips) {
 	} else {
 		if ($options{'local'}) {
 			# local mode - download strips
-			$img_addr =~ /http:\/\/(.*)\/(.*)\.(.*)$/;
+			$img_addr =~ /http:\/\/(.*)\/(.*)\.(.*?)(\?.+)?$/;
 			if (defined $3) { $ext = ".$3" }
 
 			# prepare file names
