@@ -120,12 +120,13 @@ class comicspage-editorial-srch
 end
 
 # Non-standard strips
-# should be possible to generate
+# should be possible to generate?
+# sometimes multi-image - need a new way to handle this
 strip avalonhigh
 	name Avalon High
 	homepage http://www.avalonhigh.com/
 	type search
-	searchpattern <IMG.+?SRC="(/comics/avalon\d{8}\.gif)"
+	searchpattern <IMG.+?SRC="(/comics/avalon\d{8}.+?\.gif)"
 	matchpart 1
 	baseurl $homepage
 	provides latest
@@ -479,8 +480,8 @@ strip dorktower
 	homepage http://www.gamespy.com/comics/dorktower/
 	type search
 	#searchpattern <IMG.+src="(comics/gamespy/GameSpy\d+\.jpg)".*?>
-	searchpattern <IMG.+?src="(comics/interactiveweek/IW\d+\(\d+_\d+_\d+\)\.jpg)"
-	#searchpattern <img.+?src="(comics/dorktower/Dorktower\d+.jpg)"
+	#searchpattern <IMG.+?src="(comics/interactiveweek/IW\d+\(\d+_\d+_\d+\)\.jpg)"
+	searchpattern <img.+?src="(comics/dorktower/Dorktower\d+.jpg)"
 	matchpart 1
 	baseurl $homepage
 	provides latest

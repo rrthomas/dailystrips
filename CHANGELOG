@@ -26,16 +26,19 @@
 
   RPMs now available
 
+  04 Sep 2001
+  Fixex DorkTower (proabaly only temporarily)
+
 1.0.17
-  1 August 2001
+  01 Aug 2001
   Small fix to Avantgo table generation
 
-  8 Aug 2001
+  08 Aug 2001
   Added Astronomy Picture of the Day (Chip Marshall)
 
   Win32 fixes
 
-  9 Aug 2001
+  09 Aug 2001
   Additional Win32 fix
 
   10 Aug 2001
@@ -58,7 +61,7 @@
   Continued cleaning up definitions. New total of working strips: 220
 
 1.0.16
-  23 July 2001
+  23 Jul 2001
   Fixed reporting of line numbers for errors encountered while parsing
   definitions.
 
@@ -75,12 +78,12 @@
 
   Misc bug fixes
 
-  24 July 2001
+  24 Jul 2001
   Cleaned up some regexps in option parsing code
 
   Fixed syntax checking and error reporting in option parsing code
 
-  26 July 2001
+  26 Jul 2001
   strips.def:
   Added 8-Bit Theater
   Removed flem, madameve, katies, mrlowe, ribman
@@ -91,7 +94,7 @@
 
   Implemented urlsuffix in defs file
 
-  27 July 2001
+  27 Jul 2001
   Implemented Getopt::Long for command line argument processing (Tom Klinger)
 
   Implemented necessary changes for Win32 (Tom Klinger)
@@ -100,11 +103,11 @@
 
   Misc code tweaks
 
-  31 July 2001
+  31 Jul 2001
   Updated several unitedmedia.com strips to use the class again
 
 1.0.15
-  13 July 2001
+  13 Jul 2001
   Major change: now installs to system directories instead of one dir.
   This involves:
     -installer script install.pl
@@ -119,7 +122,7 @@
 
    Other small code fixes
 
-   15 July 2001
+   15 Jul 2001
    Proxy authentication changed. Please notify if any problems arise.
 
    Added 'prefetch' keyword to definition file (see README.DEFS for more)
@@ -128,7 +131,7 @@
 
    Other small code fixes
 
-   19 July 2001
+   19 Jul 2001
    Fixed usage of Date::Parse yet again
 
    No longer creates index.html when an alternate date is specified (so that it
@@ -136,13 +139,13 @@
 
    Fixed syntax checking of http_proxy environment variable
 
-   23 July 2001
+   23 Jul 2001
    Better errors for mis-specified proxy servers
 
    Misc changes
 
 1.0.14
-  12 July 2001
+  12 Jul 2001
   Now uses the strips.def file located in the same directory as the script,
   instead of checking the current directory (Francesco Chemolli)
 
