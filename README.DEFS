@@ -61,7 +61,8 @@ matched. Finally, "imageurl" can also be used here in place of "baseurl" and
 "urlsuffix". It is useful when addresses to the strip image must be constructed
 from a known portion and a variable portion that is searched for. Simply specify
 the URL template and insert "$match" wherever you wish the result of the search
-to be put. See the strips "8bit" and "pgs" for examples of how this works.
+to be put. To access multiple matches, use the $match[1..9] variables. See the
+strips "8bit" and "pgs" for examples of how this works.
 
 The "provides" line indicates which type of strips the definition can provide:
 either "any" for a definition that can provide the strip for any given date

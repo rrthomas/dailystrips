@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    25 Jun 2003, 12:23 EDT
+# Last Modified:    24 Aug 2003, 16:55 
 # Current Revision: 1.0.28pre1
 #
 
@@ -907,7 +907,12 @@ sub get_strip {
 			$addr = "unavail-server";
 		} else {
 			$page =~ /$defs{$strip}{'searchpattern'}/si;
-			
+			my @regexmatch;
+			for (1..9) {
+				$regexmatch[$_] = ${$_};
+				#warn "regex match #$_: ${$_}\n";	
+			}
+
 			unless (${$defs{$strip}{'matchpart'}}) {
 				if ($options{'verbose'}) {
 					warn "Error: $strip: searchpattern $defs{$strip}{'searchpattern'} did not match anything in searchpage $defs{$strip}{'searchpage'}\n";
@@ -919,6 +924,7 @@ sub get_strip {
 
 				if ($defs{$strip}{'imageurl'}) {
 					$addr = $defs{$strip}{'imageurl'};
+					$addr =~ s/\$match_(\d)/$regexmatch[$1]/ge;
 					$addr =~ s/\$match/$match/ge;
 				} else {
 					$addr = $defs{$strip}{'baseurl'} . $match . $defs{$strip}{'urlsuffix'};
