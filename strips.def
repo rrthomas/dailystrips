@@ -4694,3 +4694,22 @@ strip bizarro
 	searchpattern <img.+?src='(http://est.rbma.com/content/Bizarro\?date=\d{8})'
 	provides latest
 end
+
+strip irregular
+	name Irregular Webcomic!
+	artist David Morgan-Mar
+	homepage http://www.dangermouse.net/irregular/
+	type search
+	searchpattern <img src="/irregular/(comics/irreg\d+\.jpg)"
+	baseurl $homepage
+	provides latest
+end
+
+strip thismodernworld
+	name This Modern World
+	artist Tom Tomorrow
+	homepage http://www.thismodernworld.com
+	type generate
+	imageurl http://workingforchange.speedera.net/www.workingforchange.com/webgraphics/wfc/TMW%m-%d-%y.gif
+	provides any
+end
