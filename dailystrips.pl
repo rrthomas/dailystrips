@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@calug.net>
 # Created:          23 Nov 2000, 23:33
-# Last Modified:    20 Feb 2001, 19:59
+# Last Modified:    20 Feb 2001, 21:37
 # Current Revision: 1.0.8
 #
 
@@ -129,8 +129,7 @@ $_, $defs{$_}{'name'}
 		#print STDERR "DEBUG: proxy is now $options{'http_proxy'}\n";
 	} else {
 		die "Unknown option: $_\n";
-	}
-}
+	}}
 
 unless (@get) {
 	die "Error: no strip specified (--list to list available strips)\n";
@@ -283,8 +282,7 @@ for (@strips) {
 				$img_line = "<img src=\"$img_addr\" alt=\"$strip\">";
 			} else {
 				# need to download
-				print STDERR "here?\n";
-				print STDERR "DEBUG: specifying referer " . $referer . "\n";
+				#print STDERR "DEBUG: specifying referer " . $referer . "\n";
 				$image = &http_get($img_addr,$referer);
 				if ($image =~ m/^ERROR/o) {
 					$img_line = "[Error - unable to download image]";
@@ -370,7 +368,7 @@ sub http_get {
 	if (defined $referer) {
 		$headers = new HTTP::Headers;
 		$headers->referer($referer);
-		print STDERR "DEBUG: using referer $referer\n";
+		#print STDERR "DEBUG: using referer $referer\n";
 	}
 	
 	my $request = HTTP::Request->new('GET', $url, $headers);
@@ -598,7 +596,8 @@ sub get_defs {
 				
 				for (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
 					#other vars in definition
-					if (defined $defs{$strip}{$_}) { $defs{$strip}{$_} =~ s/%(\w{2,})/$defs{$strip}{$1}/g }
+					#print STDERR "DEBUG: on $_\n";
+					if (defined $defs{$strip}{$_}) {$defs{$strip}{$_} =~ s/%(\w{2,})/$defs{$strip}{$1}/g}
 				}			
 				
 				for (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
