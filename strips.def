@@ -473,6 +473,13 @@ strip dorktower
         updated semidaily
 end
 
+strip thenorm
+	name The Norm
+	homepage http://www.thenorm.com/
+	type generate
+	imageurl http://www.thenorm.com/daily/<code:int(strftime("\%\d", localtime($time_today - 1209600)))>.gif
+end
+
 # ucomics.com strips
 strip adamathome
 	name Adam@home
