@@ -225,7 +225,7 @@ strip drfun
 	name Doctor Fun
 	homepage http://www.ibiblio.org/Dave/Dr-Fun/html/
 	type generate
-	imageurl http://www.ibiblio.org/Dave/Dr-Fun/html/Dr-Fun/latest.jpg
+	imageurl http://www.ibiblio.org/Dave/Dr-Fun/latest.jpg
 	provides latest
 end
 
@@ -1156,14 +1156,15 @@ strip flem
         provides latest
 end
 
+#replaced
 # Updated Mon - Fri
-strip reallife
-        name Real Life
-        homepage http://www.reallifecomics.com/
-        type generate
-        imageurl http://www.reallifecomics.com/comics/%Y%m%da.jpg
-        provides any
-end
+#strip reallife
+#        name Real Life
+#        homepage http://www.reallifecomics.com/
+#        type generate
+#        imageurl http://www.reallifecomics.com/comics/%Y%m%da.jpg
+#        provides any
+#end
 
 # Updated Mon - Sat
 strip sheldon
@@ -4439,4 +4440,95 @@ strip nothingnice
 	type generate
 	imageurl http://www.nothingnice.com/strips/%y/%m-%d-%y.gif
 	provides any
+end
+strip ctrlaltdel
+	name Ctrl+Alt+Del
+	artist Tim Buckley
+	homepage http://www.ctrlaltdel-online.com/
+	type generate
+	imageurl http://www.ctrlaltdel-online.com/images/comics/%Y%m%d.jpg
+	provides any
+end
+
+strip tasteslikegravel
+	name Tastes Like Gravel
+	artist Todd Oliver
+	homepage http://www.tasteslikegravel.com/
+	type generate
+	imageurl http://www.tasteslikegravel.com/strips/%Y%m%d.png
+	provides any
+end
+
+strip instantclassic
+	name Instant Classic
+	artist Brian Carroll
+	homepage http://www.briworld.com
+	type generate
+	imageurl http://www.briworld.com/ICimages/IC%Y%m%d.jpg
+	provides any
+end
+
+strip geeksalad
+	name Geek Salad
+	artist Warwick Rendell
+	homepage http://www.geeksalad.net/
+	type generate
+	imageurl http://www.geeksalad.net/strips/%Y%m%d.png
+	provides any
+end
+
+strip reallife
+	name Real Life Comics
+	artist Greg Dean
+	homepage http://www.reallifecomics.com/
+	type search
+	searchpattern src=.(/index.php.*?00000-00000-11111-00000-00000)
+	baseurl http://www.reallifecomics.com/
+	provides latest
+end
+
+strip comet7
+	name Comet 7
+	artist David Tekiela
+	homepage http://www.comet7.moreevolved.com/index.htm
+	type search
+	searchpattern (strips/c7_\d*\.gif)
+	baseurl http://www.comet7.moreevolved.com/
+	provides latest
+end
+
+strip moviepunks
+	name Movie Punks
+	artist Carrington Vanston
+	homepage http://www.moviepunks.com/
+	type search
+	searchpattern (http://www.moviepunks.com/comics/\d*\.png)
+	provides latest
+end
+
+strip building12
+	name Building 12
+	artist Chris Hazelton
+	homepage http://www.building12.net/
+	type search
+	searchpattern (http://www.building12.net/issue\d/page\d*.jpg)
+	provides latest
+end
+
+strip sarahanddavid
+	name Sarah And David
+	artist Alex Aberle
+	homepage http://www.sara-and-david.com/comic.php?comic=latest
+	type search
+	searchpattern (comics/\d*\.jpg)
+	baseurl http://www.sara-and-david.com/
+	provides latest
+end
+strip haiopeis
+	name Haiopeis
+	homepage http://www.drive-in-cartoons.de/haiopeis/hauptteil.php
+	type search
+	searchpattern <img src=http://www.drive-in-cartoons.de/albums/haiopeis/(\S+.png)
+	baseurl http://www.drive-in-cartoons.de/albums/haiopeis/
+	provides latest
 end
