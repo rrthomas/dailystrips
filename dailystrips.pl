@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    25 Jan 2002, 21:54 EST
+# Last Modified:    25 Jan 2002, 22:02 EST
 # Current Revision: 1.0.22-pre1
 #
 
@@ -325,9 +325,6 @@ if ($options{'local'}) {
 			unless ($^O =~ /Win32/) {
 				unlink("index.html");
 				system("ln -s dailystrips-$short_date.html index.html");
-			} else {
-				# no symlinks on windows.. just make a copy of the file
-				copy("dailystrips-$short_date.html","index.html");
 			}
 		}
 	}
@@ -779,6 +776,12 @@ unless ($options{'lite'}) {
 
 </html>
 ";
+}
+
+if (!$options{'date'} and !$options{'noindex'} and $^O =~ /Win32/) {
+	# no symlinks on windows.. just make a copy of the file
+	close(STDOUT);
+	copy("dailystrips-$short_date.html","index.html");
 }
 
 sub http_get {
