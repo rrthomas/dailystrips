@@ -36,7 +36,7 @@ $time_today = time;
 GetOptions(\%options, 'quiet|q','verbose','output=s','local|l','noindex',
 	'archive|a','dailydir|d','stripdir','save|s','date=s',
 	'new|n','defs=s','nopersonal','basedir=s','list','proxy=s',
-	'proxyauth=s','noenvproxy','nospaces','useragent=s','version|v','help|h') or exit 1;
+	'proxyauth=s','noenvproxy','nospaces','useragent=s','version|v','help|h','avantgo') or exit 1;
 
 	
 # Process options:
