@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    11 Nov 2001, 19:16 EST
+# Last Modified:    12 Nov 2001, 16:43 EST
 # Current Revision: 1.0.21pre1
 #
 
@@ -531,7 +531,7 @@ for (@strips) {
 		if ($options{'verbose'}) {
 			warn "Error: $strip: could not retrieve URL\n";
 		}
-		
+
 		$img_line = "[Error - unable to retrieve URL]";
 	} else {
 		if ($options{'local'}) {
@@ -846,7 +846,7 @@ sub get_strip {
 				$addr = "unavail-nomatch";
 			} else {
 				my $match = ${$defs{$strip}{'matchpart'}};
-				
+
 				if ($defs{$strip}{'imageurl'}) {
 					$addr = $defs{$strip}{'imageurl'};
 					$addr =~ s/\$match/$match/ge;
