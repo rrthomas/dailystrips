@@ -542,11 +542,12 @@ strip pgs
 	provides latest
 end
 
+# seems to be '....a.gif' now.
 strip adventurers
 	name Adventurers!
 	homepage http://www.adventurers-comic.com/
 	type generate
-	imageurl http://www.adventurers-comic.com/comics/adventurers%Y%m%d.gif
+	imageurl http://www.adventurers-comic.com/comics/adventurers%Y%m%da.gif
 	provides any
 end
 
