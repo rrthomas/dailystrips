@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    20 Aug 2001, 23:31 EST
-# Current Revision: 1.0.18-pre2
+# Last Modified:    29 Aug 2001, 19:57 EST
+# Current Revision: 1.0.18-pre3
 #
 
 
@@ -27,7 +27,7 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-$version = "1.0.18-pre2";
+$version = "1.0.18-pre3";
 
 $time_today = time;
 
@@ -776,13 +776,19 @@ sub get_strip {
 				
 				$addr = "unavail-nomatch";
 			} else {
-				$addr = $defs{$strip}{'baseurl'} . "${$defs{$strip}{'matchpart'}}" . $defs{$strip}{'urlsuffix'};
+				my $match = ${$defs{$strip}{'matchpart'}};
+				
+				if ($defs{$strip}{'imageurl'}) {
+					$addr = $defs{$strip}{'imageurl'};
+					$addr =~ s/\$match/$match/ge;
+				} elsif ($defs{$strip}{'baseurl'} or $defs{$strip}{'urlsuffix'}) {
+					$addr = $defs{$strip}{'baseurl'} . $match . $defs{$strip}{'urlsuffix'};
+				}
 			}
 		}
 		
 	} elsif ($defs{$strip}{'type'} eq "generate") {
-		$addr = $defs{$strip}{'imageurl'};
-		$addr = $defs{$strip}{'baseurl'} . $addr;
+		$addr = $defs{$strip}{'baseurl'} . $defs{$strip}{'imageurl'};
 	}
 	
 	unless ($addr =~ /^(http:\/\/|unavail)/io) { $addr = "http://" . $addr }
@@ -931,7 +937,11 @@ sub get_defs {
 					unless ($defs{$strip}{'matchpart'}) {
 						die "Error: strip $strip has no 'matchpart' value in $defs_file\n";
 					}
-				} else {
+					
+					if ($defs{$strip}{'imageurl'} and ($defs{$strip}{'baseurl'} or $defs{$strip}{'urlsuffix'})) {
+						die "Error: strip $strip: cannot use both 'imageurl' at the same time as 'baseurl'\nor 'urlsuffix'\n";
+					}
+				} elsif ($defs{$strip}{'type'} eq "generate") {
 					unless ($defs{$strip}{'imageurl'}) {
 						die "Error: strip $strip has no 'imageurl' value in $defs_file\n";
 					}

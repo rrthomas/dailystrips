@@ -53,7 +53,12 @@ for more). 'baseurl' only needs to be specified if the 'searchpattern' regular
 expression does not match a full URL (that is, it does not start with http://
 and contain the host). If specified, it is prepended to whatever 'searchpattern'
 matched. Not shown is 'urlsuffix', which will be appended to the what
-'searchpattern' matched.
+'searchpattern' matched. Finally, 'imageurl' can also be used here in place of
+'baseurl' and 'urlsuffix'. It is useful when address to the strip image
+must be constructed from a known portion and a variable portion that
+is searched for. Simply specify the URL template and insert '$match' wherever
+you wish the result of the search to be put. See the strips '8bit' and 'pgs'
+for examples of how this works.
 
 The 'updated semidaily' line is used is a strip is not updated every
 day. If this line is not specified, the program assumes that the site provides a
