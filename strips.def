@@ -775,14 +775,15 @@ end
 #	provides any
 #end
 
-strip acidreflux
-	name Acid Reflux
-	homepage http://www.acidrefluxcomic.com/
-	type search
-	baseurl http://www.acidrefluxcomic.com/
-	searchpattern <img.+?src="(archive/c\d+\..+?)"
-	provides latest
-end
+#discontinued - removed 20050109
+#strip acidreflux
+#	name Acid Reflux
+#	homepage http://www.acidrefluxcomic.com/
+#	type search
+#	baseurl http://www.acidrefluxcomic.com/
+#	searchpattern <img.+?src="(archive/c\d+\..+?)"
+#	provides latest
+#end
 
 strip whenigrowup
 	name When I Grow Up
