@@ -452,16 +452,6 @@ strip gpf
 	provides latest
 end
 
-# gone for some time now, as of 2002-01-12
-#strip in2it
-#	name In2It Online
-#	homepage http://www.in2itonline.com/
-#	type search
-#	searchpattern <IMG.+?SRC=(archive/\d+/comics/\d+\..+?)
-#	baseurl http://www.in2itonline.com/
-#	provides latest
-#end
-
 #note: doesn't work perfectly - some strips are broken up into multiple images
 # this is not yet supported, but could be done
 strip crfh
@@ -524,10 +514,6 @@ strip 8bit
 	name 8-Bit Theater
 	homepage http://www.nuklearpower.com/comic/
 	type search
-	#searchpattern <A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>.*?<IMG.+?SRC="images/menu_03.gif"
-	#searchpattern <A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>.*?<IMG.+?SRC="images/menu_02.gif"
-	#searchpattern <IMG.+?SRC="images/menu_02.gif".*?>.*?<A.+?HREF="http://www.nuklearpower.com/comic/(\d+).htm".*?>
-	#searchpattern First.*?Comic.*?<a.*?HREF="http://www.nuklearpower.com/comic/(\d+)\.htm".*?>.*?Newest
 	searchpattern <a.+?href="(\d+)\.htm">Newest Comic</a>
 	imageurl http://www.nuklearpower.com/comic/ep$match.gif
 	provides latest
@@ -718,8 +704,6 @@ end
 strip spiderman
 	name Spider Man
 	homepage http://www.kingfeatures.com/features/comics/spidermn/about.htm
-	#type generate
-	#imageurl http://est.rbma.com/content/Spiderman?date=%Y%m0<code:int(strftime("\%\d", localtime($time_today - 1209600)))>
 	type search
 	searchpage http://www.kingfeatures.com/features/comics/spidermn/aboutMaina.php
 	searchpattern <img.+?src='(http://est.rbma.com/content/Spiderman\?date=\d{8})'
@@ -1925,7 +1909,6 @@ strip zippythepinhead
 	useclass sfgate-gen
 	$1 Zippy_the_Pinhead
 	$2 zippy
-	#http://pst.rbma.com/content/Zippy_the_Pinhead
 end
 
 strip zits
@@ -2149,12 +2132,12 @@ strip quigmans
 	$2 qgm
 end
 
-#strip singleslices
-#	name Single Slices
-#	useclass comicspage-panels-srch
-#	$1 singleslices
-#	$2 slc
-#end
+strip singleslices
+	name Single Slices
+	useclass comicspage-panels-srch
+	$1 singleslices
+	$2 slc
+end
 
 strip thatsjake
 	name That's Jake
