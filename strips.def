@@ -67,6 +67,30 @@ strip badtech
 	imageurl http://www.badtech.com/a/%-y/%-m/%-d.jpg
 end
 
+strip drfun
+	name Doctor Fun
+	homepage http://www.ibiblio.org/Dave/Dr-Fun/html/
+	type generate
+	imageurl http://www.ibiblio.org/Dave/Dr-Fun/html/Dr-Fun/df%Y%m/df%Y%m%d.jpg
+end
+
+strip jokesonyou
+	name The Joke's on You
+	homepage http://www.thefunnypages.com/
+	type search
+	searchpattern <img(.*?)src="(http://www.thefunnypages.com/archives/(.*?).gif"(.*?)border="2"(.*?)>
+	matchpart 3
+	#updated daily or not? - check
+end
+
+strip innies
+	name Innies and Outies
+	homepage http://www.inniesandoutties.com/
+	type generate
+	#updated M/W/F - no sense searching
+	imageurl http://www.inniesandoutties.com/images/front.jpg
+end
+
 strip joyoftech
 	name The Joy of Tech
 	homepage http://www.joyoftech.com/joyoftech/
@@ -95,6 +119,21 @@ strip megatokyo
 	updated semidaily
 end
 
+strip mostlybusiness
+	name Mostly Business
+	homepage http://www.tedgoff.com/
+	type generate
+	#fix to use more precise addr
+	imageurl http://www.tedgoff.com/mb/images/today.gif
+end
+
+strip notquiteright
+	name Not Quite Right
+	homepage http://www.notquiteright.com/
+	type generate
+	imageurl http://www.notquiteright.com/wow/todaystoon.gif
+end
+
 strip pennyarcade
 	name Penny Arcade
 	homepage http://www.penny-arcade.com/
@@ -113,6 +152,17 @@ strip pvp
 	imageurl http://www.pvponline.com/archive/%Y/pvp%Y%m%d.gif
 end
 
+strip punc
+	name Punc & Mark
+	homepage http://byteus.com/pm/
+	type search
+	searchpage http://artiztik.com/cgi-bin/pmviewer.cgi?list=pm&config=pm.cfg&slide=999&style=pm
+	searchpattern <img(.*?)src=/pm/strips/(.*?).jpg
+	matchpart 2
+	baseurl http://artiztik.com/
+	updated semidaily
+end
+
 strip redmeat
 	name Redmeat
 	homepage http://www.redmeat.com/redmeat/current/
@@ -122,11 +172,18 @@ strip redmeat
 end
 
 strip rudypark
-        name Rudy Park
-        homepage http://www.rudypark.com/
-        type generate
-        imageurl http://www.rudypark.com/cartoons/rudypark.jpg
+	name Rudy Park
+      homepage http://www.rudypark.com/
+      type generate
+      imageurl http://www.rudypark.com/cartoons/rudypark.jpg
 	updated semidaily
+end
+
+strip scragends
+	name Scrag Ends
+	homepage http://jarbabies.hikeeba.com/carts/carts.htm
+	type generate
+	imageurl http://jarbabies.hikeeba.com/carts/scragend.jpg
 end
 
 strip sinfest
@@ -141,6 +198,31 @@ strip sluggy
         homepage http://www.sluggy.com/
         type generate
         imageurl http://pics.sluggy.com/comics/%y%m%da.gif
+end
+
+strip squinkers
+	name Squinkers
+	homepage http://www.squinkers.com/
+	type generate
+	imageurl http://www.squinkers.com/sqkrs/Images/today.gif
+	# actually updated M-F, but no better way to handle it
+	updated semidaily
+end
+
+strip superosity
+	name Superosity
+	homepage http://www.superosity.com/
+	type generate
+	imageurl http://www.superosity.com/comics/sup%Y%m%d.gif
+end
+
+strip theweedpatch
+	name the WeedPatch
+	homepage http://www.jpjennings.com/toons/
+	type generate
+	imageurl http://www.jpjennings.com/toons/%m%d%Y.gif
+	#every day except sunday
+	updated semidaily
 end
 
 strip userfriendly
