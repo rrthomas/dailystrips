@@ -16,27 +16,29 @@ developed with 5.6.0. The HTTP::Request, LWP::UserAgent, and POSIX modules
 are needed. If you want to use --date, you will need Date::Time from the
 TimeDate package. See www.cpan.org if you don't have them installed already.
 dailystrips.pl was developed on Linux but should be able to run on any *nix
-with that has the necessary Perl modules installed.
+with that has the necessary Perl modules installed. Running on Win32 should
+also be possible.
 
 Installation:
 	See the INSTALL file.
 	
 Usage:
-	'dailystrips.pl [stripname(s)]' will print to STDOUT an HTML page with image
-links to the latest strip. These links are to the strip's webserver.
+	'dailystrips.pl [stripname(s)]' will print to STDOUT an HTML page with
+image links to the latest strip. These links are to the strip's webserver.
 dailystrips.pl --help lists all available options. --list shows the available
 strips and groups. Strip names can specified as listed. Groups must be
 preceeded with an '@' symbol.
 
 Adding new strips:
-	The strips.defs file should be relatively self-explanatory. (see README.DEFS
-for detailed information). If you are adding several strips from the same site
-that share a common format, please create a class for that site. In addition,
-please try to pick a method of determining the most current URL possible (i.e.
-don't search if it's possible to predict - we don't want to get old strips if
-running early in the morning and a site hasn't updated the static page yet)
-Also, when you add a new strip, I'd appreciate it if you could email the
-defintion to me at amedico@amedico.dhs.org so I can add it to the distribution.
+	The strips.defs file should be relatively self-explanatory. (see
+README.DEFS for detailed information). If you are adding several strips from the
+same site that share a common format, please create a class for that site. In
+addition, please try to pick a method of determining the most current URL
+possible (i.e. don't search if it's possible to predict - we don't want to get
+old strips if running early in the morning and a site hasn't updated the static
+page yet) Also, when you add a new strip, I'd appreciate it if you could email
+the defintion to me at amedico@amedico.dhs.org so I can add it to the
+distribution.
 
 Personal definition file:
 	Users may create a file called ".dailystrips.defs" in their home
