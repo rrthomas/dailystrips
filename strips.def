@@ -269,13 +269,14 @@ strip rudypark
 	provides latest
 end
 
-strip scragends
-	name Scrag Ends
-	homepage http://jarbabies.hikeeba.com/carts/carts.htm
-	type generate
-	imageurl http://jarbabies.hikeeba.com/carts/scragend.jpg
-	provides latest
-end
+#seems to be gone - 2001/09/04
+#strip scragends
+#	name Scrag Ends
+#	homepage http://jarbabies.hikeeba.com/carts/carts.htm
+#	type generate
+#	imageurl http://jarbabies.hikeeba.com/carts/scragend.jpg
+#	provides latest
+#end
 
 strip sinfest
 	name Sinfest
