@@ -1,12 +1,19 @@
 This is mostly my rambling, but feel free to implement anything you want to
 tackle..
 
+1.0.18
+  04 Sep 2001
+  Add a method for handling strips that are made up of more than one image
+  (for example, Avalon High). This may get complicated for strips that have
+  one scheme for single images one some days and another for multiple images
+  on other days.
+
 1.0.16
   27 July 2001
   Write a test script to verify that everything works as it should to cut down
   on releases of code with easily detectable bugs
 
-  Package as an RPM
+  Package as an RPM - DONE in 1.0.18
 
   Fully test Win32 changes
 
@@ -29,7 +36,8 @@ tackle..
   starting a developmemt branch shortly to get started on this.
 
   31 Jan 2001
-  Look into using the getopts perl module for getting command-line parameters.
+  Look into using the getopts perl module for getting command-line parameters. -
+  DONE in 1.0.16
 
 1.0.4
   26 Jan 2001
