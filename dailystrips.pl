@@ -113,7 +113,7 @@ $_, $val
 		print "dailystrips version $version\n";
 		exit;
 	} elsif ($_ =~ m/^--defs=(.*)$/o or $_ =~ m/^--basedir=(.*)$/o) {
-		# nothing done here - just prevent an "unknown option error (all the more reason to switch to Getopts)
+		# nothing done here - just prevent an "unknown option" error (all the more reason to switch to Getopts)
 	} elsif ($_ =~ m/^($known_strips|all)$/io) {
 		if ($_ eq "all") {
 			push (@get, split(/\|/, $known_strips));
@@ -197,7 +197,7 @@ if (defined $options{'local_mode'}) {
 		my @previous_page = <PREVIOUS>;
 		close(PREVIOUS);
 	
-		# Don't bother if no tag exists in the file (if it has already been updated)
+		# Don't bother if no tag exists in the file (because it has already been updated)
 		if (grep(/<!--nextday-->/, @previous_page)) {
 			my $match_count;
 		
@@ -379,6 +379,7 @@ sub http_get {
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("dailystrips $version: " . $ua->agent());
 	
+	# could do without 'if defined..' if not running under -w -- maybe
 	if (defined $options{'http_proxy'}) { $ua->proxy('http', $options{'http_proxy'}) }
 	
 	my $response = $ua->request($request);
@@ -403,7 +404,7 @@ sub get_strip {
 		} else {
 			$page =~ m/$defs{$strip}{'searchpattern'}/i;
 			
-			if (${$defs{$strip}{'matchpart'}} eq "") {
+			unless (defined ${$defs{$strip}{'matchpart'}}) {
 				$addr = "unavail-nomatch";
 			} else {
 				$addr = $defs{$strip}{'baseurl'} . "${$defs{$strip}{'matchpart'}}";
@@ -412,6 +413,7 @@ sub get_strip {
 		
 	} elsif ($defs{$strip}{'type'} eq "generate") {
 		$addr = $defs{$strip}{'imageurl'};
+		# could do without 'if defined..' if not running under -w
 		if (defined $defs{$strip}{'baseurl'}) { $addr = $defs{$strip}{'baseurl'} . $addr }
 	}
 	
@@ -496,11 +498,13 @@ sub get_defs {
 				
 				for (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
 					#other vars in definition
+					# could do without 'if defined..' if not running under -w
 					if (defined $defs{$strip}{$_}) {$defs{$strip}{$_} =~ s/%(\w{2,})/$defs{$strip}{$1}/g}
 				}			
 				
 				for (qw(homepage searchpage searchpattern imageurl baseurl referer)) {
 					#dates
+					# could do without 'if defined..' if not running under -w
 					if (defined $defs{$strip}{$_}) { $defs{$strip}{$_} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge }
 				}
 				

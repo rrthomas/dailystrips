@@ -33,6 +33,8 @@ that share a common format, please create a class for that site. In addition,
 please try to pick a method of determining the most current URL possible (i.e.
 don't search if it's possible to predict - we don't want to get old strips if
 running early in the morning and a site hasn't updated the static page yet)
+Also, when you add a new strip, I'd appreciate it if you could email the defintion
+to me at amedico@calug.net so I can add it to the distribution.
 
 Copyright info:
 	This program copyright (C) 2001 Andrew Medico <amedico@calug.net>.
