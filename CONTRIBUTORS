@@ -46,7 +46,7 @@ Patch to automatically use the definition file located in the same directory
 as the script instead of the current directory
 
 Rene Weber <rene_dailyst@elvenlord.com>
---useragent option, Debian packaging, system-wide definitions
+--useragent option, Debian packaging, system-wide definitions, numerous fixes
 
 Peter De Wachter <pdewacht@vub.ac.be>
 Addeed Kevin and Kell, Freefall
@@ -64,7 +64,7 @@ Pat Lashley <patl@phoenix.volant.org>
 Fixed group support
 
 Martin Feeney <martin@tuatha.org>
-Added numerous strips
+Added numerous strips, strip fixes
 
 JR Boyens <jboyens@iastate.edu>
 Added Spaz Labs
@@ -85,3 +85,6 @@ Added links for navigating between strips
 Douglas Riga <driga@san.rr.com>
 Added --nosymlinks and --notitles options
 Added sevtrek, fotr, sevgate, bluffy, sevfiles, sevwars, sevylon5, sevscifi
+
+Tucker McLean <tucker@noodleroni.com>
+Added strip 'Mr. Potato Head'

@@ -3,6 +3,18 @@
   Fixed --nostale option - code was there, but attempting to use it would result
   in a 'no such option' error.
 
+  11 Nov 2001
+  Fixed strips '8bit Theater' and 'Adventurers' (Martin Feeney)
+
+  Fixed strip 'Diesel Sweeties'
+
+  Fixed a bug in defs parsing where a lack of parentheses in searchpattern lines
+  was not reported.
+
+  Added strip 'Mr. Potato Head' (Tucker McLean)
+
+  Fixed a problem with using both --nospaces and --stripdir
+
 1.0.20
   08 Oct 2001
   Added spiderman, tuma, nowak, asay, lang, shelton (Jeff Brown)
