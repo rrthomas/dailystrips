@@ -1269,7 +1269,7 @@ strip freckles
 	name Freckles and His Friends
 	homepage http://www.unitedmedia.com/comics/freckles/index.html
 	type search
-	searchpattern (/comics/freckles/archive/images/freckles.+?\..+?)
+	searchpattern <IMG.+?SRC="(/comics/freckles/archive/images/freckles.+?\..+?)"
 	baseurl http://www.unitedmedia.com
 	provides latest
 end
@@ -1350,7 +1350,7 @@ strip lilabner
 	name Li'l Abner
 	homepage http://www.unitedmedia.com/comics/lilabner/index.html
 	type search
-	searchpattern (/comics/lilabner/archive/images/lilabner.+?\..+?)
+	searchpattern <img.+?src="(/comics/lilabner/archive/images/lilabner.+?\..+?)"
 	baseurl http://www.unitedmedia.com
 	provides latest
 end
