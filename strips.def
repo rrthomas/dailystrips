@@ -128,7 +128,6 @@ strip avalonhigh
 	searchpattern <IMG.+?SRC="(/comics/avalon\d{8}\.gif)"
 	matchpart 1
 	baseurl $homepage
-	updated semidaily
 	provides latest
 end
 
@@ -145,7 +144,6 @@ strip drfun
 	homepage http://www.ibiblio.org/Dave/Dr-Fun/html/
 	type generate
 	imageurl http://www.ibiblio.org/Dave/Dr-Fun/html/Dr-Fun/latest.jpg
-	updated semidaily
 	provides latest
 end
 
@@ -156,7 +154,6 @@ strip goats
 	searchpattern <IMG.+?SRC="(/comix/\d+/goats\d+.gif)"
 	matchpart 1
 	baseurl http://www.goats.com/
-	updated semidaily
 	provides latest
 end
 
@@ -187,7 +184,6 @@ strip joyoftech
 	searchpattern <IMG.+?src="(joyimages/\d+\.(gif|jpg))\"(.*?)>
 	matchpart 1
 	baseurl http://www.joyoftech.com/joyoftech/
-	updated semidaily
 	provides latest
 end
 
@@ -198,7 +194,6 @@ strip megatokyo
 	searchpattern <IMG.+?SRC="(strips/\d+-\d+-\d+.gif)"
 	matchpart 1
 	baseurl http://www.megatokyo.com/
-	updated semidaily
 	provides latest
 
 end
@@ -228,7 +223,6 @@ strip pennyarcade
 	searchpattern <IMG(.*)src=\"(images/(.*)\.gif)\"><BR>
 	matchpart 2
 	baseurl http://www.penny-arcade.com/
-	updated semidaily
 	provides latest
 end
 
@@ -237,7 +231,6 @@ strip plif
       homepage http://www.plif.com
       type generate
       imageurl http://www.plif.com/thisweek.gif
-      updated semidaily
       provides latest
 end
 
@@ -249,7 +242,6 @@ strip punc
 	searchpattern <img.+?src=(/pm/strips/.+?\.jpg)
 	matchpart 1
 	baseurl http://artiztik.com/
-	updated semidaily
 	provides latest
 end
 
@@ -266,7 +258,6 @@ strip redmeat
 	homepage http://www.redmeat.com/redmeat/current/
 	type generate
 	imageurl http://www.redmeat.com/redmeat/current/index-1.gif
-	updated semidaily
 	provides latest
 end
 
@@ -275,7 +266,6 @@ strip rudypark
       homepage http://www.rudypark.com/
       type generate
       imageurl http://www.rudypark.com/cartoons/rudypark.jpg
-	updated semidaily
 	provides latest
 end
 
@@ -309,7 +299,6 @@ strip squinkers
 	type generate
 	imageurl http://www.squinkers.com/sqkrs/Images/today.gif
 	# only updated M-F, but no better way to handle it
-	updated semidaily
 	provides latest
 end
 
@@ -327,7 +316,6 @@ strip theweedpatch
 	type generate
 	imageurl http://www.jpjennings.com/toons/%m%d%Y.gif
 	#every day except sunday
-	updated semidaily
 	provides any
 end
 
@@ -348,7 +336,6 @@ strip exploitnow
 	searchpattern <IMG.+?SRC="(/comics/rb\d+\.(gif|jpg))"
 	matchpart 1
 	baseurl $homepage
-	updated semidaily
 	provides latest
 end
 
@@ -359,7 +346,6 @@ strip coolcat
 	searchpattern <IMG.+?SRC="(/comics/ccs\d+\.(jpg|gif))"
 	matchpart 1
 	baseurl http://www.coolcatstudio.com/
-	updated semidaily
 	provides latest
 end
 
@@ -370,7 +356,6 @@ strip classm
 	searchpattern <IMG.+?SRC="(/comics/cm\d+\.gif)"
 	matchpart 1
 	baseurl http://www.theclassm.com/
-	updated semidaily
 	provides latest
 end
 
@@ -379,7 +364,6 @@ strip bruno
 	homepage http://www.brunostrip.com/bruno.html
 	type generate
 	imageurl http://www.brunostrip.com/%Ypics/%Y%m%d.gif
-	updated semidaily
 	provides any
 end
 
@@ -402,7 +386,6 @@ strip nukees
 	searchpattern <IMG.+?SRC="(/comics/\d+\.gif)"
 	matchpart 1
 	baseurl http://www.nukees.com/
-	updated semidaily
 	provides latest
 end
 
@@ -413,7 +396,6 @@ strip joeaverage
 	searchpattern <IMG.+?SRC="(/comics/\d+\.(gif|jpg|png))"
 	matchpart 1
 	baseurl http://www.joeaverage.org/
-	updated semidaily
 	provides latest
 end
 
@@ -439,7 +421,6 @@ strip zapiro
 	type search
 	searchpattern <img.+?src="?(/mg/zapiro/.+?\.(gif|jpg)).+?ALT="cartoon"
 	matchpart 1
-	updated semidaily
 	baseurl http://www.mg.co.za
 	provides latest
 end
@@ -459,7 +440,6 @@ strip gpf
 	searchpattern <IMG.+?SRC="(/comics/gpf\d+\.gif)"
 	matchpart 1
 	baseurl http://www.gpf-comics.com
-	updated semidaily
 	provides latest
 end
 
@@ -470,7 +450,6 @@ strip in2it
 	searchpattern <IMG.+?SRC=(archive/\d+/comics/\d+\.gif)
 	matchpart 1
 	baseurl http://www.in2itonline.com/
-	updated semidaily
 	provides latest
 end
 
@@ -492,7 +471,6 @@ strip striptease
 	searchpattern <img.+?src="(strips\d+/\d+\.(gif|jpg))"
 	matchpart 1
 	baseurl $homepage
-	updated semidaily
 	provides latest
 end
 
@@ -505,7 +483,6 @@ strip dorktower
 	#searchpattern <img.+?src="(comics/dorktower/Dorktower\d+.jpg)"
 	matchpart 1
 	baseurl $homepage
-	updated semidaily
 	provides latest
 end
 
@@ -522,7 +499,6 @@ strip jerkcity
 	homepage http://www.jerkcity.com/
   	type generate
 	imageurl http://www.jerkcity.com/today.gif
-  	updated daily
 	provides latest
 end
 
@@ -539,7 +515,6 @@ strip freefall
 	homepage http://www.purrsia.com/freefall/
 	type generate
 	imageurl $homepage<code:use POSIX;my $w=strftime("%u",localtime($time_today));my $s=517+3*floor(($time_today-995839200)/604800);$s++if$w\>2;$s++if$w\>4;my$c=int(($s+99)/100);"ff${c}00/fv00$s.gif">
-	updated semidaily
 	provides any
 end
 
@@ -553,7 +528,6 @@ end
 #	matchpart 1
 #	baseurl http://www.nuklearpower.com/comic/ep
 #	urlsuffix .gif
-#	updated semidaily
 #	provides latest
 #end
 
@@ -564,7 +538,6 @@ strip apodbig
     searchpattern <a.+?href="(image/\d{4}/.+?\.(jpg|gif))"
     matchpart 1
     baseurl $homepage
-    updated daily
     provides latest
 end
 
@@ -575,7 +548,6 @@ strip apod
     searchpattern <img.+?SRC="(image/\d{4}/.+?\.(jpg|gif))"
     matchpart 1
     baseurl $homepage
-    updated daily
     provides latest
 end
 	
@@ -664,7 +636,6 @@ strip thefifthwave
 	name The 5th Wave
 	useclass ucomics-srch
 	$1 fw
-	updated semidaily
 end
 
 strip foxtrot
@@ -755,7 +726,6 @@ strip tomthedancingbug
 	name Tom the Dancing Bug
 	useclass ucomics-srch
 	$1 td
-	updated semidaily
 end
 
 strip ziggy
@@ -788,7 +758,6 @@ end
 strip askshagg
 	name Ask Shagg
 	useclass unitedmedia-srch-creators
-	updated semidaily
 end
 
 strip bc
@@ -829,7 +798,6 @@ end
 strip cheapthrills
 	name Cheap Thrills
 	useclass unitedmedia-srch-wash
-	updated semidaily
 end
 
 strip committed
@@ -865,7 +833,6 @@ end
 strip forheavens
 	name For Heaven's Sake
 	useclass unitedmedia-srch-creators
-	updated semidaily
 end
 
 strip franknernest
@@ -1035,7 +1002,6 @@ end
 strip penmen
 	name Penmen
 	useclass unitedmedia-srch-creators
-	updated semidaily
 end
 
 strip pickles
@@ -1456,7 +1422,6 @@ strip profdoodles
 	searchpage http://www.comicspage.com/profdoodles/main.html
 	searchpattern <img.+?src="(http://www.comicspage.com/daily/csdod/\d+csdod(-\w)?\.gif)"
 	matchpart 1
-	updated semidaily
 	provides latest
 end
 

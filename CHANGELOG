@@ -1,3 +1,17 @@
+1.0.18
+  18 Aug 2001
+  Changed the behavior of the program to handle strips that don't get updated
+  daily in a more intelligent manner. Now the most current strip possible is
+  saved. By default, a strip that is the same as the previous day's is still
+  displayed but the new '--nostale' option can be used to display an message
+  in the HTML output instead when an updated strip is not available. Also, the
+  --new option has been removed.
+
+  20 July 2001
+  Added a --lite option for outputting reduced HTML
+
+  Added --random to select a random strip to get
+
 1.0.17
   1 August 2001
   Small fix to Avantgo table generation

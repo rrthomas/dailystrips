@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    14 August 2001 11:03 EST
-# Current Revision: 1.0.17
+# Last Modified:    20 Aug 2001, 23:31 EST
+# Current Revision: 1.0.18-pre2
 #
 
 
@@ -27,16 +27,17 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-$version = "1.0.17";
+$version = "1.0.18-pre2";
 
 $time_today = time;
 
 
 # Get options
-GetOptions(\%options, 'quiet|q','verbose','output=s','local|l','noindex',
+GetOptions(\%options, 'quiet|q','verbose','output=s','lite','local|l','noindex',
 	'archive|a','dailydir|d','stripdir','save|s','date=s',
 	'new|n','defs=s','nopersonal','basedir=s','list','proxy=s',
-	'proxyauth=s','noenvproxy','nospaces','useragent=s','version|v','help|h','avantgo') or exit 1;
+	'proxyauth=s','noenvproxy','nospaces','useragent=s','version|v','help|h','avantgo',
+	'random') or exit 1;
 
 	
 # Process options:
@@ -51,46 +52,47 @@ Usage: $0 [OPTION] STRIPS
 STRIPS can be a mix of strip names and group names
 (group names must be preceeded by an '\@' symbol)
 'all' may be used to retrieve all known strips,
-or use option --list to list available strips
+or use option --list to list available strips and groups
 
 Options:
-  -q  --quiet                turns off progress messages		
-      --verbose              turns on extra progress information, overrides -q
-      --output=FILE          outputs HTML to FILE instead of STDOUT
+  -q  --quiet                Turns off progress messages		
+      --verbose              Turns on extra progress information, overrides -q
+      --list                 List available strips
+      --random               Downloads a random strip
+      --defs FILE            Use alternate strips definition file
+      --nopersonal           Ignore ~/.dailystrips.defs
+      --output FILE          outputs HTML to FILE instead of STDOUT
                              (does not apply to local mode)
-  -l  --local                outputs HTML to file and saves strips locally
-      --noindex              disables symlinking current page to index.html
+      --lite                 Outputs a reduced HTML page
+  -l  --local                Outputs HTML to file and saves strips locally
+      --noindex              Disables symlinking current page to index.html
                              (local mode only)
-  -a  --archive              generates archive.html as a list of all days,
+  -a  --archive              Generates archive.html as a list of all days,
                              (local mode only)
-  -d  --dailydir             creates a separate directory for each day's files
+  -d  --dailydir             Creates a separate directory for each day's files
                              (local mode only)
-      --stripdir             creates a separate directory for each strip's files
+      --stripdir             Creates a separate directory for each strip's files
                              (local mode only)
-  -s  --save                 if it appears that a particular strip has been
+  -s  --save                 If it appears that a particular strip has been
                              downloaded, does not attempt to re-download it
                              (local mode only)
-      --date=DATE            Use value DATE instead of local time
+  	--nostale              If a new strip is not available, displays an error
+                             in the HTML output instead of showing the old image
+      --date DATE            Use value DATE instead of local time
                              (DATE is parsed by Date::Parse function)
                              Note: not available on Win32
-  -n  --new                  if today's file and yesterday's file for a strip
-                             are the same, does not symlink to save space
-                             (local mode only)
       --avantgo              Formats images for viewing with Avantgo on PDAs
                              (local mode only)
-      --defs=FILE            Use alternate strips definition file
-      --nopersonal           Ignore ~/.dailystrips.defs
-      --basedir=DIR          Work in specified directory instead of current
+      --basedir DIR          Work in specified directory instead of current
                              directory (program will look here for previous HTML
-                             files, etc. and save new files here)
-      --list                 List available strips
-      --proxy=host:port      Uses specified HTTP proxy server (overrides
+                             file and save new files here, etc.)
+      --proxy host:port      Uses specified HTTP proxy server (overrides
                              environment proxy, if set)
-      --proxyauth=user:pass  Sets username and password for proxy server
+      --proxyauth user:pass  Sets username and password for proxy server
       --noenvproxy           Ignores the http_proxy environment variable, if set
       --nospaces             Removes spaces from image filenames (local mode
                              only)
-      --useragent="STRING"   Set User-Agent: header to STRING (default is none)
+      --useragent STRING     Set User-Agent: header to STRING (default is none)
   -v  --version              Prints version number
 END_HELP
 #/#kwrite's syntax higlighting is buggy.. this preserves my sanity	
@@ -103,12 +105,13 @@ Additional Win32 Notes:
 Windows lacks a number of features and programs found on *NIX, so a number of
 changes must be made to the program's operation:
 
-1. --noindex and --new are always in effect (these require symlinks)
-2. Personal definition files are not supported
+1. --noindex is always in effect
+2. --avantgo is not available
+3. Personal definition files are not supported
 END_HELP_WIN32
 	}
 
-print "\nBugs and comments to amedico\@amedico.dhs.org\n";
+print "\nBugs and comments to dailystrips\@amedico.dhs.org\n";
 
 	exit;
 }
@@ -164,25 +167,32 @@ unless ($options{'nopersonal'} or ($^O =~ /Win32/)){
 $known_strips = join('|', sort keys %defs);
 $known_groups = join('|', sort keys %groups);
 
-
-# Only strips/groups to download remain in @ARGV
-# Unconfigured options were already trapped by Getopts with an 'unknown option'
-# error
-for (@ARGV) {
-	if (/^($known_strips|all)$/io) {
-		if ($_ eq "all") {
-			push (@get, split(/\|/, $known_strips));
+if ($options{'random'}) {
+	my @known_strips_array = keys %defs;
+	
+	push(@get, $known_strips_array[(rand $#known_strips_array)]);
+	
+	undef @known_strips_array;
+} else {
+	# Only strips/groups to download remain in @ARGV
+	# Unconfigured options were already trapped by Getopts with an 'unknown option'
+	# error
+	for (@ARGV) {
+		if (/^($known_strips|all)$/io) {
+			if ($_ eq "all") {
+				push (@get, split(/\|/, $known_strips));
+			} else {
+				push(@get, $_);
+			}
+		} elsif (/^@/) {
+			if (/^@($known_groups)$/io) {
+				push(@get, split(/;/, $groups{$1}{'strips'}));
+			} else {
+				die "Error: unknown group: $_\n";
+			}
 		} else {
-			push(@get, $_);
+			die "Error: unknown strip: $_\n";
 		}
-	} elsif (/^@/) {
-		if (/^@($known_groups)$/io) {
-			push(@get, split(/;/, $groups{$1}{'strips'}));
-		} else {
-			die "Error: unknown group: $_\n";
-		}
-	} else {
-		die "Error: unknown strip: $_\n";
 	}
 }
 
@@ -436,8 +446,16 @@ if (-e "dailystrips-$short_date_tomorrow.html") {
 	$link_tomorrow = "<!--nextday-->"
 }
 
-# Generate HTML page
-print <<END_HEADER;
+if ($options{'lite'}) {
+	# Generate HTML page
+	print <<END_HEADER;
+<font face=\"helvetica\" size=\"+2\"><b><u>dailystrips for $long_date</u></b></font><br><br>
+END_HEADER
+
+#"#kwrite's syntax higlighting is buggy.. this preserves my sanity
+} else {
+	# Generate HTML page
+	print <<END_HEADER;
 <html>
 
 <head>
@@ -458,6 +476,8 @@ print <<END_HEADER;
 END_HEADER
 
 #"#kwrite's syntax higlighting is buggy.. this preserves my sanity
+}
+
 
 if ($options{'local'} and !$options{'quiet'}) {
 	if ($options{'verbose'}) {
@@ -468,7 +488,7 @@ if ($options{'local'} and !$options{'quiet'}) {
 }
 
 for (@strips) {
-	my ($strip, $name, $homepage, $img_addr, $updated, $referer, $prefetch, $provides) = split(/;/, $_);
+	my ($strip, $name, $homepage, $img_addr, $referer, $prefetch, $provides) = split(/;/, $_);
 	my ($img_line, $local_name, $local_name_dir, $local_name_file, $local_name_ext, $image, $ext,
 	   $local_name_yesterday, $local_name_yesterday_dir, $local_name_yesterday_file, $local_name_yesterday_ext);
 	
@@ -539,7 +559,7 @@ for (@strips) {
 			}
 
 			if ($options{'save'} and  -e $local_name) {
-				# strip already exists - skip download
+				# already have a suitable local file - skip downloading
 				if ($options{'avantgo'}) {
 					$img_line = &make_avantgo_table($local_name, $ext);
 				} else {
@@ -547,94 +567,70 @@ for (@strips) {
 					$img_addr =~ s/ /\%20/go;
 					$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 				}
-			} else {
+			} else {			
 				# need to download
 				$image = &http_get($img_addr, $referer, $prefetch);
 				
 				if ($image =~ /^ERROR/) {
+					# couldn't get the image
 					if ($options{'verbose'}) {
 						warn "Error: $strip: could not download strip\n";
 					}
-					
+				
 					$img_line = "[Error - unable to download image]";
 				} else {
-					if (-l $local_name) {
-						# in case today's file is a symlink to yesterday's
-						unlink $local_name;
-						#if ($options{'avantgo'}) {
-						#	unlink "$local_name_dir$local_name_file-*";
-						#}
-					}
-					
-					open(IMAGE, ">$local_name");
-					
+					# got the image
 					if ($^O =~ /Win32/) {
+						# can't do any diff checking on windows (easily, that is - it is doable)
+						open(IMAGE, ">$local_name");
 						binmode(IMAGE);
-					}
+						print IMAGE $image;
+						close(IMAGE);
 					
-					print IMAGE $image;
-					close(IMAGE);
-					
-								
-					# Check to see if this is the same file as yesterday
-					if ($^O =~ /Win32/) {
-						# no 'diff' on Win32 - just go with what we have
 						$img_addr = $local_name;
 						$img_addr =~ s/ /\%20/go;
 						$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 					} else {
-						if ($options{'avantgo'}) {
-							&make_avantgo_files($local_name, $local_name_ext);
-						}
+						open(IMAGE, ">$local_name.tmp");
+						print IMAGE $image;
+						close(IMAGE);
+				
+						if (-e $local_name and system("diff \"$local_name\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
+							# already downloaded the same strip earlier today
+							unlink("$local_name.tmp");
 						
-						if (system("diff \"$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1") == 0) {
-						
-							if ($updated eq "daily") {
-								#don't save the same strip as yesterday if it's supposed to be updated daily
-								unlink("$local_name");
-								#if ($options{'avantgo'}) {
-								#	unlink(glob("\"$local_name_dir$local_name_file-*\""));
-								#}
-								
+							if ($options{'avantgo'}) {
+								$img_line = &make_avantgo_table($local_name, $ext);
+							} else {
+								$img_addr = $local_name;
+								$img_addr =~ s/ /\%20/go;
+								$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+							}
+						} elsif (system("diff \"$local_name_yesterday\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
+							# same strip as yesterday
+							unlink("$local_name.tmp");
+							if ($options{'stripdir'} or $options{'dailydir'}) {
+								system("ln -s \"../$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
+							} else {
+								system("ln -s \"$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
+							}
+							if ($options{'nostale'}) {
 								$img_line = "[Error - new strip not available]";
 							} else {
-								#semidaily strips are allowed to be duplicates
-								unless ($options{'new'}) {
-									unlink("$local_name");
-									if ($options{'stripdir'} or $options{'dailydir'}) {
-										system("ln -s \"../$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
-										
-										#if ($options{'avantgo'}) {
-										#	chdir("$local_name_dir");
-										#	system("ln",glob("\"../$local_name_yesterday_dir$local_name_yesterday_file-*\""),".");
-										#	chdir("..");
-										#	
-										#	print STDERR "DEBUG: Link command: cd $local_name_dir; ln ../$local_name_yesterday_dir$local_name_yesterday_file-* .\n";
-										#	#system("ln -s $local_name_yesterday_dir/$local_name_yesterday_file-* $local_name_dir/");
-										#}
-									} else {
-										system("ln -s \"$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
-										
-										#if ($options{'avantgo'}) {
-										#	system("ln",glob("\"$local_name_yesterday_file-*\""),".");
-										#	print STDERR "DEBUG: wildcard match:" . glob("\"$local_name_yesterday_file-*\"") . "\n";
-										#	print STDERR "DEBUG: Link command: ln $local_name_yesterday_file-* .\n";
-										#	#system("cd $local_name_dir/; ln -s ../$local_name_yesterday_dir/$local_name_yesterday_file-* .");
-										#}
-									}
-								}
-							
-								if ($options{'avantgo'}) {
-									$img_line = &make_avantgo_table($local_name, $ext);
-								} else {
-									$img_addr = $local_name;
-									$img_addr =~ s/ /\%20/go;
-									$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-								}
-							}
+								$img_addr = $local_name;
+								$img_addr =~ s/ /\%20/go;
+								$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+							}								
 						} else {
-							#strip is new for today
+							# completely new strip
+							#  possible to get here by:
+							#   -downloading a strip for the first time in a day
+							#   -downloading an updated strip that replaces an old one downloaded at
+							#    an earlier time on the same day
+							system("mv","$local_name.tmp","$local_name");
+						
 							if ($options{'avantgo'}) {
+								&make_avantgo_files($local_name, $local_name_ext);
 								$img_line = &make_avantgo_table($local_name, $ext);
 							} else {
 								$img_addr = $local_name;
@@ -645,13 +641,23 @@ for (@strips) {
 					}
 				}
 			}
+
 		} else {
 			# regular mode - just give addresses to strips on their webserver
 			$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 		}
 	}
 		
-	print <<END_STRIP;
+	if ($options{'lite'}){
+		print <<END_STRIP;
+<font face=\"helvetica\" size=\"+1\"><b><a href=\"$homepage\">$name</a></b></font><br>
+$img_line<br>
+<br>
+END_STRIP
+	
+	#"#kwrite's syntax highlighting is buggy.. this preserves my sanity	
+	} else {
+		print <<END_STRIP;
 	<tr>
 		<td>
 			<font face=\"helvetica\" size=\"+1\"><b><a href=\"$homepage\">$name</a></b></font>
@@ -664,8 +670,11 @@ for (@strips) {
 		</td>
 	</tr>
 END_STRIP
+	
+	#"#kwrite's syntax highlighting is buggy.. this preserves my sanity	
+	}
 }
-#"#kwrite's syntax highlighting is buggy.. this preserves my sanity
+
 if ($options{'local'} and !$options{'quiet'}) {
 	if ($options{'verbose'}) {
 		warn "Downloading strip files: done\n"
@@ -674,7 +683,8 @@ if ($options{'local'} and !$options{'quiet'}) {
 	}
 }
 
-print <<END_FOOTER;
+unless ($options{'lite'}) {
+	print <<END_FOOTER;
 </table>
 
 <p><font face=\"helvetica\">
@@ -689,6 +699,7 @@ print <<END_FOOTER;
 END_FOOTER
 
 #"// # kwrite's syntax highlighting is buggy.. this preserves my sanity
+}
 
 sub http_get {
 	my ($url, $referer, $prefetch) = @_;
@@ -776,7 +787,7 @@ sub get_strip {
 	
 	unless ($addr =~ /^(http:\/\/|unavail)/io) { $addr = "http://" . $addr }
 	
-	push(@strips,"$strip;$defs{$strip}{'name'};$defs{$strip}{'homepage'};$addr;$defs{$strip}{'updated'};$defs{$strip}{'referer'};$defs{$strip}{'prefetch'}");
+	push(@strips,"$strip;$defs{$strip}{'name'};$defs{$strip}{'homepage'};$addr;$defs{$strip}{'referer'};$defs{$strip}{'prefetch'}");
 }
 
 sub get_defs {
@@ -861,7 +872,7 @@ sub get_defs {
 						}
 					}
 				
-					for (qw(type matchpart updated provides)) {
+					for (qw(type matchpart provides)) {
 						if ($classes{$using_class}{$_} and !$defs{$strip}{$_}) {
 							$defs{$strip}{$_} = $classes{$using_class}{$_};
 						}
@@ -869,7 +880,6 @@ sub get_defs {
 				}	
 						
 				#substitute auto vars for real vals here/set defaults
-				unless ($defs{$strip}{'updated'})    {$defs{$strip}{'updated'} = "daily"}
 				unless ($defs{$strip}{'searchpage'}) {$defs{$strip}{'searchpage'} = $defs{$strip}{'homepage'}}
 				unless ($defs{$strip}{'referer'})    {
 					if ($defs{$strip}{'searchpage'}) {
@@ -1002,10 +1012,6 @@ sub get_defs {
 			{
 				$classes{$class}{'prefetch'} = $1;
 			}
-			elsif (/^updated\s+(.+)$/i)
-			{
-				$classes{$class}{'updated'} = $1;
-			}
 			elsif (/^provides\s+(.+)$/i)
 			{
 				unless ($1 =~ /^(any|latest)$/i) {
@@ -1066,10 +1072,6 @@ sub get_defs {
 			elsif (/^imageurl\s+(.+)$/i)
 			{
 				$defs{$strip}{'imageurl'} = $1;
-			}
-			elsif (/^updated\s+(.+)$/i)
-			{
-				$defs{$strip}{'updated'} = $1;
 			}
 			elsif (/^referer\s+(.+)$/i)
 			{

@@ -7,7 +7,7 @@
 # Description:      installs dailystrips
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          13 Jul 2000, 11:34 EST
-# Last Modified:    17 Aug 2001, 23:06 EST
+# Last Modified:    18 Aug 2001, 15:12 EST
 # Current Revision: 0.0.1
 #
 
@@ -18,7 +18,7 @@ use strict;
 
 # Misc vars
 my (%options, $prog_version);
-$prog_version = "1.0.17";
+$prog_version = "1.0.18-pre1";
 
 
 # Editable paths
