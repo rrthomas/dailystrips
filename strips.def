@@ -200,7 +200,7 @@ strip megatokyo
 	name MegaTokyo
 	homepage http://www.megatokyo.com/
 	type search
-	searchpattern <IMG.+?SRC="(/strips/\d+\.gif)"
+	searchpattern <IMG.+?SRC="(/?strips/\d+\.gif)"
 	matchpart 1
 	baseurl http://www.megatokyo.com/
 	provides latest
@@ -379,18 +379,6 @@ strip bruno
 	provides any
 end
 
-#gone
-#strip thinhline
-#       name The Thin H Line
-#       homepage http://thinhline.com/
-#       type search
-#       searchpattern <IMG.+?SRC = "(image.cgi\?thl\d+a\.gif)"
-#       matchpart 1
-#       baseurl http://thinhline.com/
-#       updated weekly
-#       provides latest
-#end
-
 strip nukees
 	name Nukees
 	homepage http://www.nukees.com
@@ -482,7 +470,7 @@ strip striptease
 	name Strip Tease Comic
 	homepage http://www.stripteasecomic.com/
 	type search
-	searchpattern <img.+?src="(/strips\d+/\d+\.(gif|jpg))"
+	searchpattern <img.+?src="(/?strips\d+/\d+\.(gif|jpg))"
 	matchpart 1
 	baseurl $homepage
 	provides latest
@@ -604,7 +592,7 @@ strip boasas
         name Boy on a Stick and Slither
         homepage http://www.boasas.com/
         type search
-        searchpattern <img.+?src="(boasas/boasas_.*?\.gif)"
+        searchpattern <img.+?src="(boasas/\d+\.gif)"
         matchpart 1
         provides latest
         baseurl http://www.boasas.com/
@@ -733,7 +721,7 @@ strip glasbergen
 	name Randy Glasbergen
 	homepage http://www.glasbergen.com
 	type generate
-	imageurl http://www.glasbergen.com/toon.gif
+	imageurl http://www.glasbergen.com/images/toon.gif
 	provides latest
 end
 
