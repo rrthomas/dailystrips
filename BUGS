@@ -3,6 +3,13 @@
   Need better error handling with the LWP::UserAgent module (if there's a problem,
   report exactly *what* went wrong - proxy, etc..)
 
+  The definition file parsing code needs to be re-thought and re-done. It works,
+  but gets weird in places and is generally hard to maintain.
+
+  One thing I should have mentioned for 1.0.4 is that the defs file parsing code
+  gives completely erroneous line numbers (they represent the fines of the file
+  after removing blank line and comment lines) and should be dealt with.
+
 1.0.6
   02 Feb 2001
   It's not actually a bug in the program, but I'd like to advise users anyway
