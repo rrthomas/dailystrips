@@ -481,7 +481,7 @@ strip dorktower
 	#searchpattern <img.+?src="(comics/dorktower/Dorktower\d+..+?)"
 	#searchpattern <img.+?src="(comics/backups/.+?)"
 	#searchpattern <img.+?src="(/(comics/(backups|gamespy|interactiveweek|dorktower)/.+?)"
-	searchpattern <img.+?src="(/images/comics/DorkTower\d+\..+?)"
+	searchpattern <img.+?src="(/images/comics/.+?\..+?)"
 	baseurl $homepage
 	provides latest
 end
