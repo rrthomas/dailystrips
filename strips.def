@@ -1337,6 +1337,7 @@ strip kitncarlyle
 	useclass unitedmedia-srch-comics
 end
 
+# appears to be gone - 2002-01-12
 strip liberty
 	name Liberty Meadows
 	useclass unitedmedia-srch-creators
