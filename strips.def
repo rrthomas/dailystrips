@@ -570,7 +570,7 @@ strip 8bit
 	name 8-Bit Theater
 	homepage http://www.nuklearpower.com/latest.php
 	type search
-	searchpattern <img.+?src="(http://www.nuklearpower.com/comics/\d+\..+?)">
+	searchpattern <img.+?src="(http://images.nuklearpower.com/comics/\d+\..+?)">
 	provides latest
 end
 
