@@ -2132,12 +2132,12 @@ strip quigmans
 	$2 qgm
 end
 
-strip singleslices
-	name Single Slices
-	useclass comicspage-panels-srch
-	$1 singleslices
-	$2 slc
-end
+#strip singleslices
+#	name Single Slices
+#	useclass comicspage-panels-srch
+#	$1 singleslices
+#	$2 slc
+#end
 
 strip thatsjake
 	name That's Jake
