@@ -1065,6 +1065,14 @@ strip somethingpositive
 	provides latest
 end
 
+strip melonpool
+	name Melonpool
+	homepage http://www.melonpool.com/
+	type generate
+	imageurl http://www.melonpool.com/comics/MM%Y%m%d.gif
+	provides any
+end
+
 # ucomics.com strips
 strip adamathome
 	name Adam@home
