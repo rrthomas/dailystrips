@@ -888,11 +888,13 @@ strip slowwave
 end
 
 # formerly "The Thin H Line". NC-17. Vertical format.
+# supports varying HTML configurations - maybe overkill
 strip sexylosers
         name Sexy Losers
         homepage http://www.sexylosers.com/
         type search
-        searchpattern <IMG.+?SRC = "(image.cgi\?sl\d+\.jpg)"
+        searchpattern <IMG.+?SRC.+?=.+?"(http://sexylosers.com/)?(image.cgi\?sl\d+\.jpg)"
+        matchpart 2
         provides latest
         baseurl $homepage
 end
