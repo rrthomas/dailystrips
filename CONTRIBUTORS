@@ -41,6 +41,9 @@ Added --stripdir and --date options
 Mark Larimer <larimer@fantasybowl.com
 Added Dork Tower definition
 
-Francesco Chemolli <kinkie@whistler.gruppocredit.it>
+Francesco Chemolli <kinkie@kame.usr.dsi.unimi.it>
 Patch to automatically use the definition file located in the same directory
 as the script instead of the current directory
+
+Rene Weber <rene_debmaint@elvenlord.com>
+--useragent option, Debian packaging.
