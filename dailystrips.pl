@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    29 Aug 2001, 20:48 EST
+# Last Modified:    03 Sept 2001, 14:38 EST
 # Current Revision: 1.0.18-pre3
 #
 
@@ -781,7 +781,7 @@ sub get_strip {
 				if ($defs{$strip}{'imageurl'}) {
 					$addr = $defs{$strip}{'imageurl'};
 					$addr =~ s/\$match/$match/ge;
-				} elsif ($defs{$strip}{'baseurl'} or $defs{$strip}{'urlsuffix'}) {
+				} else {
 					$addr = $defs{$strip}{'baseurl'} . $match . $defs{$strip}{'urlsuffix'};
 				}
 			}
