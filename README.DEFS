@@ -58,14 +58,20 @@ new strip every day and will not download the same strip two days in a row
 (instead, it will put an error message in place of the image). If the strip of
 only updated every few days, specify 'updated semidaily' and the script will
 download the current image, regardless of whether it is the same as a previous
-day or not. There is also an additional variable not shown: 'referer'. Some
+day or not. Two additional variables are not shown. First is 'referer'. Some
 webservers insist that the HTTP_REFERER header be set to the address of the HTML
 page that the image is on, or they will not return the image. This is to prevent
 other sites from linking to the image and (presumably) scripts like this from
 functioning. What the script does by default is set the HTTP_REFERER header to
 the searchpage (if specified), or the homepage (if no specific searchpage was
 specified). If the webserver for some reason needs a referer other than the
-searchpage or homepage, it can be specified with this variable.
+searchpage or homepage, it can be specified with this variable. The second
+keyword is 'prefetch'. This was added because it seemed at one point that
+sfgate required a certain page to be downloaded immediately before the strip
+images could be loaded.  The syntax is simply 'prefetch [URL]'. Any URL
+specified will be downloaded immediately before the strip image. If this URL
+cannot be retrieved (error 404 from the webserver, etc), no attempt will be made
+to download the strip image.
 
 New feature: you can now put little snippets of Perl code right into the
 definition. For example, the definition for The Norm uses this to generate the
