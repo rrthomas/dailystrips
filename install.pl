@@ -80,14 +80,14 @@ if ($options{'verbose'} and $options{'quiet'}) {undef $options{'quiet'}}
 # Install:
 
 # defs:
-if ($options{'verbose'}) { warn "Installing definitions file to directory $options{'sharedir'}\n" }
+if ($options{'verbose'}) { warn "Installing definitions files to directory $options{'sharedir'}\n" }
 
 if (system("install -d $options{'sharedir'}")) {
 	die "Error creating install directory. See above for reason.\n";
 }
 
-if (system("install strips.def $options{'sharedir'}/strips.def")) {
-	die "Error installing definition file. See above for reason.\n";
+if (system("install strips.def archive.def $options{'sharedir'}/")) {
+	die "Error installing definition files. See above for reason.\n";
 }
 
 
