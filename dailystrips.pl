@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    12 Feb 2002, 21:46 EST
-# Current Revision: 1.0.22
+# Last Modified:    02 Apr 2002, 19:28 EST
+# Current Revision: 1.0.23-pre1
 #
 
 
@@ -28,7 +28,7 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-$version = "1.0.22";
+$version = "1.0.23pre1";
 
 $time_today = time;
 
@@ -716,7 +716,11 @@ for (@strips) {
 							} else {
 								$img_addr = $local_name;
 								$img_addr =~ s/ /\%20/go;
-								$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+								if ($options{'stripnav'}) {
+									$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
+								} else {
+									$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+								}
 							}
 						}
 					}
