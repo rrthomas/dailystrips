@@ -564,8 +564,161 @@ strip pgs
 	provides latest
 end
 
+# Adventurers!
+strip adventurers
+        name Adventurers!
+        homepage http://www.adventurers-comic.com/
+        type search
+        searchpage http://www.fuzzyfur.net/DSOS/adv/
+        searchpattern <img.+?src="http://www.fuzzyfur.net/(DSOS/adv/strips/\d+.gif)"
+        matchpart 1
+        baseurl http://www.fuzzyfur.net/
+        provides latest
+end
 
-	
+# basement studios
+strip basement
+        name Basement Studios
+        homepage http://www.basement-studios.com/
+        type generate
+        imageurl http://www.basement-studios.com/archive/images/%m%d%y.gif
+        provides any
+end
+
+# Bob the Angry Flower Web Page
+strip btaf
+        name Bob, The Angry Flower
+        homepage http://angryflower.com/
+        type search
+        searchpattern <a href="bobsqu.gif">.*?<a href="([^"]*\.gif)">
+        matchpart 1
+        provides latest
+        baseurl http://angryflower.com/
+end
+
+# [Boy on a Stick and Slither]
+strip boasas
+        name Boy on a Stick and Slither
+        homepage http://www.boasas.com/
+        type search
+        searchpattern <img.+?src="(boasas/boasas_.*?\.gif)"
+        matchpart 1
+        provides latest
+        baseurl http://www.boasas.com/
+end
+
+# Bruno the Bandit
+strip brunothebandit
+        name Bruno the Bandit
+        homepage http://www.brunothebandit.com
+        type generate
+        imageurl http://www.brunothebandit.com/comics/%Y%m%da.gif
+        provides any
+end
+
+
+# Diesel sweeties
+strip dieselsweeties
+        name Diesel Sweeties
+        homepage http://www.dieselsweeties.com/
+        type search
+        searchpattern <img.*?src="(strips/sw.*?\.png)"
+        matchpart 1
+        provides latest
+        baseurl http://www.dieselsweeties.com/
+end
+
+# Fuzzy Logic
+strip fuzzylogic
+        name Fuzzy Logic
+        homepage http://www.bbspot.com/comics/fuzzy_logic/index.html
+        type generate
+        imageurl http://www.bbspot.com/Images/comics/fuzzy_logic/%Y/%Y%m%d.jpg
+        provides any
+end
+
+# Little Gamers
+strip littlegamers
+        name Little Gamers
+        homepage http://www.little-gamers.com/
+        type generate
+        imageurl http://www.little-gamers.com/comics/%Y%m%d.gif
+        provides any
+end
+
+# tuesdays, thursdays, sundays
+# Mac Hall
+strip machall
+        name Mac Hall
+        homepage http://machall.keenspace.com/today.html
+        type generate
+        imageurl http://machall.keenspace.com/comics/%Y%m%d.jpg
+        provides any
+end
+
+# not daily
+# The Mr. Chuck Show
+strip mrchuckshow
+        name Mr. Chuck Show
+        homepage http://www.mrchuckshow.com/
+        type generate
+        imageurl http://www.mrchuckshow.com/strips/mcs%Y%m%d.png
+        provides any
+end
+
+
+# Pentasmal
+strip pentasmal
+        name Pentasmal
+        homepage http://www.pentasmal.com/
+        type generate
+        imageurl http://www.pentasmal.com/comics/%Y%m%d.png
+        provides any
+end
+
+# RPG World
+strip rpgworld
+        name RPG World
+        homepage http://www.rpgworldcomic.com/
+        type generate
+        imageurl http://www.rpgworldcomic.com/comics/%Y%m%d.jpg
+        provides any
+end
+
+# Ubersoft - multi-strip
+strip ubersoft1
+        name Ubersoft-1
+        homepage http://www.ubersoft.net/
+        type generate
+        imageurl http://www.ubersoft.net/comics/hd%Y%m%da.png
+        provides any
+end
+
+strip ubersoft2
+        name Ubersoft-2
+        homepage http://www.ubersoft.net/
+        type generate
+        imageurl http://www.ubersoft.net/comics/hd%Y%m%dc.png
+        provides any
+end
+
+strip ubersoft3
+        name Ubersoft-3
+        homepage http://www.ubersoft.net/
+        type generate
+        imageurl http://www.ubersoft.net/comics/hd%Y%m%de.png
+        provides any
+end
+
+strip ubersoft4
+        name Ubersoft-4
+        homepage http://www.ubersoft.net/
+        type generate
+        imageurl http://www.ubersoft.net/comics/hd%Y%m%dg.png
+        provides any
+end
+
+
 # ucomics.com strips
 strip adamathome
 	name Adam@home
