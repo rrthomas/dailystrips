@@ -920,8 +920,8 @@ strip asif
 	name As If
 	homepage http://www.asifcomic.com/
 	type search
-	searchpage http://www.asifcomic.com/current.html
-	searchpattern <img.+?src=".*?_left\.jpg".+?><img.+?src="(\d+\..{3})".+?alt="Comic
+	searchpage http://www.asifcomic.com/main.html
+	searchpattern <img src="(strips/\d+.jpg)" 
 	baseurl $homepage
 	provides latest
 end
