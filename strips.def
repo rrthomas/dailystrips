@@ -945,6 +945,12 @@ strip misterboffo
 	$1 mb
 end
 
+strip mrpotatohead
+        name Mr. Potato Head
+        useclass ucomics-gen
+        $1 mrp
+end
+
 strip nonsequitur
 	name Non Sequitur
 	useclass ucomics-gen
