@@ -33,7 +33,9 @@
   Implemented urlsuffix in defs file
 
   27 July 2001
-  Implemented Getopts::Long for command line argument processing
+  Implemented Getopts::Long for command line argument processing (Tom Klinger)
+
+  Implemented necessary changes for Win32 (Tom Klinger)
 
   Misc code tweaks
 

@@ -7,8 +7,8 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    27 July 2001 01:23 EST
-# Current Revision: 1.0.16-pre4
+# Last Modified:    27 July 2001 02:26 EST
+# Current Revision: 1.0.16-pre5
 #
 
 
@@ -27,7 +27,7 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
     $link_tomorrow, $no_dateparse, @base_dirparts);
 
-$version = "1.0.16-pre4";
+$version = "1.0.16-pre5";
 
 $time_today = time;
 
@@ -45,7 +45,8 @@ GetOptions(\%options, 'quiet|q','verbose','output=s','local|l','noindex',
 #  specified)
 
 # Help and version override anything else
-if ($options{'help'}) { print <<END_HELP;
+if ($options{'help'}) {
+	print <<END_HELP;
 Usage: $0 [OPTION] STRIPS
 STRIPS can be a mix of strip names and group names
 (group names must be predeeded by an '\@' symbol)
@@ -73,7 +74,7 @@ Options:
                              (DATE is parsed by Date::Parse function)
   -n  --new                  if today's file and yesterday's file for a strip
                              are the same, does not symlink to save space
-                             (local mode only, required on non-*NIX platforms)
+                             (local mode only)
       --defs=FILE            Use alternate strips definition file
       --nopersonal           Ignore ~/.dailystrips.defs
       --basedir=DIR          Work in specified directory instead of current
@@ -88,10 +89,24 @@ Options:
       --useragent="STRING"   Set User-Agent: header to STRING (default is none)
                              only)
   -v  --version              Prints version number
-
-Bugs and comments to amedico\@amedico.dhs.org
 END_HELP
 #/#kwrite's syntax higlighting is buggy.. this preserves my sanity	
+
+
+	if ($^O =~ /Win32/ ) {
+		print <<END_HELP_WIN32;
+Additional Win32 Notes:
+
+Windows lacks a number of features and programs found on *NIX, so a number of
+changes must be made to the program's operation:
+
+1. --noindex and --new are always in effect (these require symlinks)
+2. Personal definition files are not supported
+END_HELP_WIN32
+	}
+
+print "\nBugs and comments to amedico\@amedico.dhs.org\n";
+
 	exit;
 }
 
@@ -131,12 +146,16 @@ $short_date_tomorrow = strftime("\%Y.\%m.\%d", @localtime_tomorrow);
 
 # Get strip definitions now - info used below
 unless ($options{'defs'}) {
-	$options{'defs'} = '/usr/share/dailystrips/strips.def';
+	if ($^O =~ /Win32/ ) {
+		$options{'defs_file'} = 'strips.def';
+	} else {
+		$options{'defs'} = '/usr/share/dailystrips/strips.def';
+	}
 }
 
 &get_defs($options{'defs'});
 
-unless ($options{'nopersonal'}) {
+unless ($options{'nopersonal'} or ($^O =~ /Win32/)){
 	my $personal_defs = ((getpwuid($>))[7]) . "/.dailystrips.defs";
 	if (-e $personal_defs) {
 		&get_defs($personal_defs);
@@ -193,7 +212,7 @@ if ($options{'dailydir'} and $options{'stripdir'}) {
 
 #Set proxy
 if ($options{'proxy'}) {
-		$options{'proxy'} =~ m/^(http:\/\/)?(.*?):(.+?)\/?$/i;
+		$options{'proxy'} =~ /^(http:\/\/)?(.*?):(.+?)\/?$/i;
 		unless ($2 and $3) {
 			die "Error: incorrectly formatted proxy server ('http://server:port' expected)\n";
 		}
@@ -202,7 +221,7 @@ if ($options{'proxy'}) {
 }
 
 if (!$options{'noenvproxy'} and !$options{'proxy'} and $ENV{'http_proxy'} ) {
-	$ENV{'http_proxy'} =~ m/(http:\/\/)?(.*?):(.+?)\/?$/i;
+	$ENV{'http_proxy'} =~ /(http:\/\/)?(.*?):(.+?)\/?$/i;
 	unless ($2 and $3) {
 		die "Error: incorrectly formatted proxy server environment variable\n('http://server:port' expected)\n";
 	}
@@ -211,7 +230,7 @@ if (!$options{'noenvproxy'} and !$options{'proxy'} and $ENV{'http_proxy'} ) {
 }
 
 if ($options{'proxyauth'}) {
-	unless ($options{'proxyauth'} =~ m/^.+?:.+?$/) {
+	unless ($options{'proxyauth'} =~ /^.+?:.+?$/) {
 			die "Error: incorrectly formatted proxy credentials ('user:pass' expected)\n";
 	}		
 }
@@ -257,6 +276,11 @@ if ($options{'proxy'}) {
 
 
 if ($options{'local'}) {
+	if ($^O =~ /Win32/) {
+		$options{'noindex'} = 1;
+		$options{'new'} = 1;
+	}
+	
 	unless ($options{'quiet'}) {
 		warn "Operating in local mode\n";
 	}
@@ -267,6 +291,7 @@ if ($options{'local'}) {
 		}
 		
 		unless (-d $short_date) {
+			# any issues with masks and Win32?
 			unless(mkdir ($short_date, 0755)) {
 				die "Error: could not create today's directory ($short_date/)\n";
 			}
@@ -276,7 +301,13 @@ if ($options{'local'}) {
 			die "Error: could not open HTML file ($short_date/dailystrips-$short_date.html) for writing\n";
 		}
 		
-		system("rm -f dailystrips-$short_date.html;ln -s $short_date/dailystrips-$short_date.html dailystrips-$short_date.html");
+		unlink("dailystrips-$short_date.html");
+		
+		unless ($^O =~ /Win32/) {
+			system("ln -s $short_date/dailystrips-$short_date.html dailystrips-$short_date.html");
+		} else {
+			# any suitable hack for Win32? (create duplicate files, etc)
+		}
 	} else {
 		unless(open(STDOUT, ">dailystrips-$short_date.html")) {
 			die "Error: could not open HTML file (dailystrips-$short_date.html) for writing\n";
@@ -285,7 +316,8 @@ if ($options{'local'}) {
 
 	unless ($options{'date'}) {
 		unless ($options{'noindex'}) {
-			system("rm -f index.html;ln -s dailystrips-$short_date.html index.html")
+			unlink("index.html");
+			system("ln -s dailystrips-$short_date.html index.html")
 		}
 	}
 
@@ -438,8 +470,7 @@ if ($options{'local'} and !$options{'quiet'}) {
 
 for (@strips) {
 	my ($strip, $name, $homepage, $img_addr, $updated, $referer, $prefetch, $provides) = split(/;/, $_);
-	my ($img_line, $local_name, $image, $ext);
-	my ($local_name_yesterday);
+	my ($img_line, $local_name, $image, $ext, $local_name_yesterday);
 	
 	if ($options{'verbose'} and $options{'local'}) {
 		warn "Downloading strip file for " . lc((split(/;/, $_))[0]) . "\n";
@@ -454,13 +485,14 @@ for (@strips) {
 	} else {
 		if ($options{'local'}) {
 			# local mode - download strips
-			$img_addr =~ m/http:\/\/(.*)\/(.*)\.(.*)$/;
+			$img_addr =~ /http:\/\/(.*)\/(.*)\.(.*)$/;
 			if (defined $3) { $ext = ".$3" }
 			
 			if ($options{'stripdir'}) {
  				$local_name_yesterday = "$name/$short_date_yesterday$ext";
  				$local_name = "$name/$short_date$ext";
  				unless ( -d $strip) {
+ 				# any issues with masks and Win32?
  					mkdir $name, 0755;
  				}
  			} elsif ($options{'dailydir'}) {
@@ -488,7 +520,7 @@ for (@strips) {
 				# need to download
 				$image = &http_get($img_addr, $referer, $prefetch);
 				
-				if ($image =~ m/^ERROR/) {
+				if ($image =~ /^ERROR/) {
 					if ($options{'verbose'}) {
 						warn "Error: $strip: could not download strip\n";
 					}
@@ -499,38 +531,46 @@ for (@strips) {
 						# in case today's file is a symlink to yesterday's
 						unlink $local_name;
 					}
-
+					# any issues with print() in binary data to a file on Win32?
 					open(IMAGE, ">$local_name");
 					print IMAGE $image;
 					close(IMAGE);
 					
 					# Check to see if this is the same file as yesterday
-					if (system("diff \"$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1") == 0) {
+					if ($^O =~ /Win32/) {
+						# no 'diff' on Win32 - just go with what we have
+						$img_addr = $local_name;
+						$img_addr =~ s/ /\%20/go;
+						$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+					} else {
+						if (system("diff \"$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1") == 0) {
 						
-						if ($updated eq "daily") {
-							#don't save the same strip as yesterday if it's supposed to be updated daily
-							system("rm -f \"$local_name\"");
-							$img_line = "[Error - new strip not available]";
-						} else {
-							#semidaily strips are allowed to be duplicates
-							unless ($options{'new'}) {
-								if (system("diff \"$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1") == 0) {
-									system("rm -f \"$local_name\"");
-									system("ln -s \"../$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
+							if ($updated eq "daily") {
+								#don't save the same strip as yesterday if it's supposed to be updated daily
+								unlink("$local_name");
+								$img_line = "[Error - new strip not available]";
+							} else {
+								#semidaily strips are allowed to be duplicates
+								unless ($options{'new'}) {
+									unlink("$local_name");
+									if ($options{'stripdir'} or $options{'dailydir'}) {
+										system("ln -s \"../$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
+									} else {
+										system("ln -s \"$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
+									}
 								}
-							}
 							
+								$img_addr = $local_name;
+								$img_addr =~ s/ /\%20/go;
+								$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+							}
+						} else {
+							#strip is new for today
 							$img_addr = $local_name;
 							$img_addr =~ s/ /\%20/go;
 							$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 						}
-					} else {
-						#strip is new for today
-						$img_addr = $local_name;
-						$img_addr =~ s/ /\%20/go;
-						$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 					}
-					
 				}
 			}
 		} else {
@@ -637,14 +677,14 @@ sub get_strip {
 	if ($defs{$strip}{'type'} eq "search") {
 		$page = &http_get($defs{$strip}{'searchpage'});
 
-		if ($page =~ m/^ERROR/) {
+		if ($page =~ /^ERROR/) {
 			if ($options{'verbose'}) {
 				warn "Error: $strip: could not download searchpage $defs{$strip}{'searchpage'}\n";
 			}
 			
 			$addr = "unavail-server";
 		} else {
-			$page =~ m/$defs{$strip}{'searchpattern'}/si;
+			$page =~ /$defs{$strip}{'searchpattern'}/si;
 			
 			unless (${$defs{$strip}{'matchpart'}}) {
 				if ($options{'verbose'}) {
@@ -662,7 +702,7 @@ sub get_strip {
 		$addr = $defs{$strip}{'baseurl'} . $addr;
 	}
 	
-	unless ($addr =~ m/^(http:\/\/|unavail)/io) { $addr = "http://" . $addr }
+	unless ($addr =~ /^(http:\/\/|unavail)/io) { $addr = "http://" . $addr }
 	
 	push(@strips,"$strip;$defs{$strip}{'name'};$defs{$strip}{'homepage'};$addr;$defs{$strip}{'updated'};$defs{$strip}{'referer'};$defs{$strip}{'prefetch'}");
 }
@@ -796,7 +836,7 @@ sub get_defs {
 				}
 				
 				for (qw(homepage searchpage baseurl imageurl)){	
-					if ($defs{$strip}{$_} and $defs{$strip}{$_} !~ m/^http:\/\//io) {
+					if ($defs{$strip}{$_} and $defs{$strip}{$_} !~ /^http:\/\//io) {
 						die "Error: strip $strip has invalid $_\n"
 					}
 				}
@@ -848,7 +888,7 @@ sub get_defs {
 			}
 			elsif (/^type\s+(.+)$/i)
 			{
-				unless ($1 =~ m/^(search|generate)$/io) {
+				unless ($1 =~ /^(search|generate)$/io) {
 					die "Error: invalid type at $defs_file line $line\n";
 				}
 				
@@ -864,7 +904,7 @@ sub get_defs {
 			}
 			elsif (/^matchpart\s+(.+)$/i)
 			{
-				unless ($1 =~ m/^(\d)$/) {
+				unless ($1 =~ /^(\d)$/) {
 					die "Error: invalid 'matchpart' at $defs_file line $line\n";
 				}
 				
@@ -896,7 +936,7 @@ sub get_defs {
 			}
 			elsif (/^provides\s+(.+)$/i)
 			{
-				unless ($1 =~ m/^(any|latest)$/i) {
+				unless ($1 =~ /^(any|latest)$/i) {
 					die "Error: invalid 'provides' at $defs_file line $line\n";
 				}
 				
@@ -921,7 +961,7 @@ sub get_defs {
 			}
 			elsif (/^type\s+(.+)$/i)
 			{
-				unless ($1 =~ m/^(search|generate)$/i) {
+				unless ($1 =~ /^(search|generate)$/i) {
 					die "Error: invalid 'type' at $defs_file line $line\n";
 				}
 				
@@ -937,7 +977,7 @@ sub get_defs {
 			}
 			elsif (/^matchpart\s+(.+)$/i)
 			{
-				unless ($1 =~ m/^(\d+)$/) {
+				unless ($1 =~ /^(\d+)$/) {
 					die "Error: invalid 'matchpart' at $defs_file line $line\n";
 				}
 				
@@ -973,7 +1013,7 @@ sub get_defs {
 			}
 			elsif (/^provides\s+(.+)$/i)
 			{
-				unless ($1 =~ m/^(any|latest)$/i) {
+				unless ($1 =~ /^(any|latest)$/i) {
 					die "Error: invalid 'provides' at $defs_file line $line\n";
 				}
 				
