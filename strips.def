@@ -907,6 +907,7 @@ end
 
 # formerly "The Thin H Line". NC-17. Vertical format.
 strip sexylosers
+	name Sexy Losers
 	homepage http://sexylosers.keenspace.com/
 	type search
 	searchpattern <IMG.+?SRC.+?=.+?"(http://sexylosers.keenspace.com/)?(images/sl\d+\.jpg)"
