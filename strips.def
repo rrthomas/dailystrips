@@ -125,7 +125,7 @@ class comicspage-strips-gen
         referer http://www.comicspage.com/$1/index.html
         homepage http://www.comicspage.com/$1/index.html
         type generate
-        imageurl http://www.tmsfeatures.com/tmsfeatures/servlet/com.featureserv.util.Download?file=%Y%m%dcs$2-<code:"s" if %w == 0><code:"a" if %w != 0>-p.jpg&code=cs$2
+        imageurl http://www.tmsfeatures.com/tmsfeatures/servlet/com.featureserv.util.Download?file=%Y%m%dcs$2-<code:"s" if %w==0><code:"a" if %w!=0>-p.jpg&code=cs$2
         provides any
 end
 
@@ -137,7 +137,7 @@ class comicspage-panels-gen
 	#searchpage http://www.comicspage.com/$1/main.html
 	#searchpattern <img.+?src="(http://www.comicspage.com/daily/cp$2/\d+cp$2((-\w)?)\..+?)"
 	type generate
-	imageurl http://www.tmsfeatures.com/tmsfeatures/servlet/com.featureserv.util.Download?file=%Y%m%dcp$2-<code:"s" if %w == 0><code:"a" if %w != 0>-p.jpg&code=cp$2
+	imageurl http://www.tmsfeatures.com/tmsfeatures/servlet/com.featureserv.util.Download?file=%Y%m%dcp$2-<code:"s" if %w==0><code:"a" if %w!=0>-p.jpg&code=cp$2
 	#provides latest
 	provides any
 end
@@ -175,9 +175,11 @@ class washpost-creators
         homepage http://featurepage.creators.com/washpost.html?name=$1
         type generate
 	prefetch $homepage
-        imageurl http://www.creators.com/%m%d/$1/$1%m%dg.gif
+        imageurl http://www.creators.com/<code:use POSIX;my$o=0;while(strftime("\%"."w",localtime($time_today-86400*$o))!=0){$o++}my$d=strftime("\%"."m"."\%"."d",localtime($time_today-86400*$o));"$d">/$1/$1%m%dg.gif
         provides any
 end
+
+
 
 class washpost-king
         homepage http://www.washingtonpost.com/wp-srv/style/comics/king.htm?$1
