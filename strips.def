@@ -1525,6 +1525,11 @@ strip drabble
 	useclass unitedmedia-srch-comics
 end
 
+strip drawingacrowd
+	name Drawing a Crowd
+	useclass unitedmedia-srch-creators
+end
+
 strip dilbert
 	name Dilbert
 	useclass unitedmedia-srch-comics
@@ -1747,6 +1752,11 @@ strip pearls
 	useclass unitedmedia-srch-comics
 end
 
+strip pibgorn
+	name Pibgorn
+	useclass unitedmedia-srch-comics
+end
+
 strip pickles
 	name Pickles
 	useclass unitedmedia-srch-wash
@@ -1880,6 +1890,11 @@ strip wizardofid
 	useclass unitedmedia-srch-creators
 end
 
+strip workingdaze
+	name Working Daze
+	useclass unitedmedia-srch-comics
+end
+
 strip billday
 	name Bill Day
 	useclass unitedmedia-srch-editoons
@@ -2008,6 +2023,12 @@ strip farley
 	$2 farley
 end
 
+strip fastrack
+	name On The Fast Track
+	useclass sfgate-gen
+	$1 Fast_Track
+end
+
 strip funkywinkerbean
 	name Funky Winkerbean
 	useclass sfgate-gen
@@ -2016,6 +2037,12 @@ end
 
 strip hagarthehorrible
 	name Hagar the Horrible
+	useclass sfgate-gen
+	$1 Hagar_The_Horrible
+end
+
+strip ineedhelp
+	name I Need Help
 	useclass sfgate-gen
 	$1 Hagar_The_Horrible
 end
@@ -2066,6 +2093,12 @@ strip sallyforth
 	name Sally Forth
 	useclass sfgate-gen
 	$1 Sally_Forth
+end
+
+strip safehavn
+	name Safe Havens
+	useclass sfgate-gen
+	$1 Safe_Havens
 end
 
 strip shermanslagoon
