@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    13 Jan 2002, 21:27 EST
+# Last Modified:    13 Jan 2002, 21:44 EST
 # Current Revision: 1.0.22-pre1
 #
 
@@ -616,12 +616,19 @@ for (@strips) {
 					# downloaded, but downloading fails when script is run again
 					# that day? maybe reuse existing file instead of throwing
 					# error?
-					if ($options{'verbose'}) {
-						warn "Error: $strip: could not download strip\n";
+					if (-e $local_name) {
+						# an image file for today already exists.. jump to outputting code
+						#warn "DEBGUG: couldn't download strip, but we already have it\n";
+						goto HAVE_IMAGE;
+					} else {
+						if ($options{'verbose'}) {
+							warn "Error: $strip: could not download strip\n";
+						}
 					}
 				
 					$img_line = "[Error - unable to download image]";
 				} else {
+					HAVE_IMAGE:
 					# got the image
 					if ($^O =~ /Win32/) {
 						# can't do any diff checking on windows (easily, that is - it is doable)

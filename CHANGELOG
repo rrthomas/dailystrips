@@ -2,6 +2,15 @@
   12 Jan 2002
   Added 'Off the Mark'
 
+  13 Jan 2002
+  Typo in script fixed.
+
+  Previously, if the script was run more than once in a day and downloading of a
+  strip succeeded during one run but failed in the next, an error would be
+  reported and the existence of a local strip file for the day was not
+  considered. Now, for generate-type strips, the local file will be re-used if
+  downloading fails at a later time.
+
 1.0.21
   28 Oct 2001
   Fixed --nostale option - code was there, but attempting to use it would result
