@@ -31,7 +31,7 @@ end
 
 # Class definitions
 class ucomics-srch
-	homepage http://www.ucomics.com/$strip/view$1.htm
+	homepage http://www.ucomics.com/$strip/
 	type search
 	searchpattern <img.+?src=".+?(/$1/(\d+)/$1(\d+).+?)"
 	baseurl http://images.ucomics.com/comics
@@ -39,7 +39,7 @@ class ucomics-srch
 end
 
 class ucomics-gen
-	homepage http://www.ucomics.com/$strip/view$1.htm
+	homepage http://www.ucomics.com/$strip/
 	type generate
 	imageurl http://images.ucomics.com/comics/$1/%Y/$1%y%m%d.gif
 	provides any
@@ -47,7 +47,7 @@ class ucomics-gen
 end
 
 class unitedmedia-srch-comics
-	homepage http://www.unitedmedia.com/comics/$strip/index.html
+	homepage http://www.unitedmedia.com/comics/$strip/
 	type search
 	searchpage http://www.unitedmedia.com/comics/$strip/archive/$strip-%Y%m%d.html
 	searchpattern <img.+?src="(/comics/$strip/archive/images/$strip.+?)"
@@ -56,7 +56,7 @@ class unitedmedia-srch-comics
 end
 
 class unitedmedia-srch-comics-lag
-	homepage http://www.unitedmedia.com/comics/$strip/index.html
+	homepage http://www.unitedmedia.com/comics/$strip/
 	type search
 	searchpattern <img.+?src="(/comics/$strip/archive/images/$strip.+?)"
 	baseurl http://www.unitedmedia.com
@@ -64,7 +64,7 @@ class unitedmedia-srch-comics-lag
 end
 
 class unitedmedia-srch-creators
-	homepage http://www.unitedmedia.com/creators/$strip/index.html
+	homepage http://www.unitedmedia.com/creators/$strip/
 	type search
 	searchpattern <img.+?src="?(/creators/$strip/archive/images/.+?\.(gif|jpg))"?
 	baseurl http://www.unitedmedia.com
@@ -72,7 +72,7 @@ class unitedmedia-srch-creators
 end
 
 class unitedmedia-srch-wash
-	homepage http://www.unitedmedia.com/wash/$strip/index.html
+	homepage http://www.unitedmedia.com/wash/$strip/
 	type search
 	searchpattern (/wash/$strip/archive/images/(.*?)\.(gif|jpg))
 	baseurl http://www.unitedmedia.com
@@ -80,7 +80,7 @@ class unitedmedia-srch-wash
 end
 
 class unitedmedia-srch-editoons
-	homepage http://www.unitedmedia.com/editoons/$1/index.html
+	homepage http://www.unitedmedia.com/editoons/$1/
 	type search
 	searchpattern <img src="(/editoons/$1/archive/images/$1\d+\..+?)"
 	baseurl http://www.unitedmedia.com
@@ -128,8 +128,8 @@ end
 class comicspage-strips-gen
         # $1 - more or less the real name
         # $2 - 3-letter abbreviation of $1
-        referer http://www.comicspage.com/$1/index.html
-        homepage http://www.comicspage.com/$1/index.html
+        referer http://www.comicspage.com/$1/
+        homepage http://www.comicspage.com/$1/
         type generate
         imageurl http://www.tmsfeatures.com/tmsfeatures/servlet/com.featureserv.util.Download?file=%Y%m%dcs$2-<code:"s" if %w==0><code:"a" if %w!=0>-p.jpg&code=cs$2
         provides any
@@ -138,24 +138,16 @@ end
 class comicspage-panels-gen
 	# $1 - more or less the real name
 	# $2 - 3-letter abbreviation of $1
-	homepage http://www.comicspage.com/$1/index.html
-	#type search
-	#searchpage http://www.comicspage.com/$1/main.html
-	#searchpattern <img.+?src="(http://www.comicspage.com/daily/cp$2/\d+cp$2((-\w)?)\..+?)"
+	homepage http://www.comicspage.com/$1/
 	type generate
 	imageurl http://www.tmsfeatures.com/tmsfeatures/servlet/com.featureserv.util.Download?file=%Y%m%dcp$2-<code:"s" if %w==0><code:"a" if %w!=0>-p.jpg&code=cp$2
-	#provides latest
 	provides any
 end
 
 class comicspage-editorial-gen
 	# $1 - more or less the real name
 	# $2 - 3-letter abbreviation of $1
-	homepage http://www.comicspage.com/$1/index.html
-	#type search
-	#searchpage http://www.comicspage.com/$1/main.html
-	#searchpattern <img.+?src="(http://www.comicspage.com/daily/ed$2/\d+ed$2((-\w)?)\..+?)"
-	#provides latest
+	homepage http://www.comicspage.com/$1/
 	type generate
 	imageurl http://www.tmsfeatures.com/tmsfeatures/servlet/com.featureserv.util.Download?file=%Y%m%ded$2-a-p.jpg&code=ed$2
 	provides any
@@ -664,7 +656,7 @@ strip brunothebandit
 	name Bruno the Bandit
 	homepage http://www.brunothebandit.com
 	type generate
-	imageurl http://www.brunothebandit.com/comics/%Y%m%da.GIF
+	imageurl http://www.brunothebandit.com/comics/%Y%m%da.gif
 	provides any
 end
 
@@ -672,7 +664,7 @@ strip brunothebanditcurrent
 	name Bruno the Bandit - Current
 	homepage http://www.brunothebandit.com
 	type search
-	searchpattern <IMG ALT="comic" BORDER=0 SRC="(/comics/%Y\d{4}[a-z]{0,1}\.GIF)"
+	searchpattern <IMG ALT="comic" BORDER=0 SRC="(/comics/%Y\d{4}[a-z]{0,1}\.gif)"
 	baseurl $homepage
 	provides latest
 end
@@ -1543,6 +1535,14 @@ strip misterboffo
 	$1 mb
 end
 
+strip bottomliners
+	name Bottom Liners
+	artist	Eric and Bill Teitelbaum
+        useclass ucomics-gen
+        $1 tmbot
+end
+
+
 # unitedmedia.com strips
 strip alleyoop
 	name Alley Oop
@@ -2301,12 +2301,13 @@ strip 9to5
 	$2 ntf
 end
 
-strip bottomliners
-	name Bottom Liners
-	useclass comicspage-panels-gen
-	$1 bottomliners
-	$2 bls
-end
+#moved to ucomics.com
+#strip bottomliners
+#	name Bottom Liners
+#	useclass comicspage-panels-gen
+#	$1 bottomliners
+#	$2 bls
+#end
 
 strip computoon
 	name Compu-toon
