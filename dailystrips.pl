@@ -7,7 +7,7 @@
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@calug.net>
 # Created:          23 Nov 2000, 23:33
-# Last Modified:    20 Feb 2001, 10:25
+# Last Modified:    20 Feb 2001, 19:59
 # Current Revision: 1.0.8
 #
 
@@ -135,7 +135,6 @@ $_, $defs{$_}{'name'}
 unless (@get) {
 	die "Error: no strip specified (--list to list available strips)\n";
 }
-
 
 #Set proxy
 if (!defined $options{'no_env_proxy'} && !defined $options{'http_proxy'} ) {
@@ -363,7 +362,10 @@ END_FOOTER
 sub http_get {
 	my ($url) = @_;
 	
-	my $request = HTTP::Request->new('GET', $url);
+	my $headers = new HTTP::Headers;
+	$headers->referer("http://foo.bar");
+	
+	my $request = HTTP::Request->new('GET', $url, $headers);
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("dailystrips $version: " . $ua->agent());
 	
@@ -481,6 +483,10 @@ sub get_defs {
 				unless ($val =~ m/^http:\/\//io) { die "Error: improperly formatted imageurl at $options{'defs_file'} line $line\n" }
 				$classes{$class}{'imageurl'} = $val;
 			}
+			elsif ($_ =~ m/^referer\s+(.+)$/io)
+			{
+				$classes{$class}{'referer'} = $1;
+			}
 			elsif ($_ =~ m/^updated\s+(.+)$/io)
 			{
 				$classes{$class}{'updated'} = $1;
@@ -538,6 +544,10 @@ sub get_defs {
 			{
 				$defs{$strip}{'updated'} = $1;
 			}
+			elsif ($_ =~ m/^referer\s+(.+)$/io)
+			{
+				$defs{$strip}{'referer'} = $1;
+			}
 			elsif ($_ =~ m/^(\%[0-9])\s+(.+)$/io)
 			{
 				$defs{$strip}{$1} = $2;
@@ -552,75 +562,51 @@ sub get_defs {
 				if (defined $defs{$strip}{'useclass'}) {
 					my $using_class = $defs{$strip}{'useclass'};
 					
-					if (defined $classes{$using_class}{'homepage'} and not defined $defs{$strip}{'homepage'}) {
-						my $classhomepage = $classes{$using_class}{'homepage'};
-						$classhomepage =~ s/(\%[0-9])/$defs{$strip}{$1}/g;
-						$classhomepage =~ s/\%strip/$strip/g;
-						$defs{$strip}{'homepage'} = $classhomepage;
+					for (qw(homepage searchpage searchpattern baseurl imageurl)) {
+						if (defined $classes{$using_class}{$_} and not defined $defs{$strip}{$_}) {
+							my $classvar = $classes{$using_class}{$_};
+							$classvar =~ s/(\%[0-9])/$defs{$strip}{$1}/g;
+							$classvar =~ s/\%strip/$strip/g;
+							$defs{$strip}{$_} = $classvar;
+						}
 					}
-					
-					if (defined $classes{$using_class}{'type'} and not defined $defs{$strip}{'type'}) {
-						$defs{$strip}{'type'} = $classes{$using_class}{'type'};
-					}
-					
-					if (defined $classes{$using_class}{'searchpage'} and not defined $defs{$strip}{'searchpage'}) {
-						my $searchpage = $classes{$using_class}{'searchpage'};
-						$searchpage =~ s/(\%[0-9])/$defs{$strip}{$1}/g;
-						$searchpage =~ s/\%strip/$strip/g;
-						$defs{$strip}{'searchpage'} = $searchpage;
-					}
-					
-					if (defined $classes{$using_class}{'searchpattern'} and not defined $defs{$strip}{'searchpattern'}) {
-						my $searchpattern = $classes{$using_class}{'searchpattern'};
-						$searchpattern =~ s/(\%[0-9])/$defs{$strip}{$1}/g;
-						$searchpattern =~ s/\%strip/$strip/g;
-						$defs{$strip}{'searchpattern'} = $searchpattern;
-					}
-					
-					if (defined $classes{$using_class}{'matchpart'} and not defined $defs{$strip}{'matchpart'}) {
-						$defs{$strip}{'matchpart'} = $classes{$using_class}{'matchpart'};
-					}
-					
-					if (defined $classes{$using_class}{'baseurl'} and not defined $defs{$strip}{'baseurl'}) {
-						my $baseurl = $classes{$using_class}{'baseurl'};
-						$baseurl =~ s/(\%[0-9])/$defs{$strip}{$1}/g;
-						$baseurl =~ s/\%strip/$strip/g;
-						$defs{$strip}{'baseurl'} = $baseurl;
-					}
-					
-					if (defined $classes{$using_class}{'imageurl'} and not defined $defs{$strip}{'imageurl'}) {
-						my $imageurl = $classes{$using_class}{'imageurl'};
-						$imageurl =~ s/(\%[0-9])/$defs{$strip}{$1}/g;
-						$imageurl =~ s/\%strip/$strip/g;
-						$defs{$strip}{'imageurl'} = $imageurl;
-					}
-					
-					if (defined $classes{$using_class}{'updated'} and not defined $defs{$strip}{'updated'}) {
-						$defs{$strip}{'updated'} = $classes{$using_class}{'updated'};
-					}
-				}
-			
+				
+					for (qw(type matchpart updated referer)) {
+						if (defined $classes{$using_class}{$_} and not defined $defs{$strip}{$_}) {
+							$defs{$strip}{$_} = $classes{$using_class}{$_};
+						}
+					}	
+				}	
+						
 				#sanity-check current strip's values
-				unless (defined $defs{$strip}{'name'}) { die "Error: strip $strip has no 'name' value\n" }
+				unless (defined $defs{$strip}{'name'})     { die "Error: strip $strip has no 'name' value\n" }
 				unless (defined $defs{$strip}{'homepage'}) { die "Error: strip $strip has no 'homepage' value\n" }
-				unless (defined $defs{$strip}{'type'}) { die "Error: strip $strip has no 'type' value\n" }
+				unless (defined $defs{$strip}{'type'})     { die "Error: strip $strip has no 'type' value\n" }
 				
 				if ($defs{$strip}{'type'} eq "search") {
 					unless (defined $defs{$strip}{'searchpattern'}) { die "Error: strip $strip has no 'searchpattern' value\n" }
-					unless (defined $defs{$strip}{'matchpart'}) { die "Error: strip $strip has no 'matchpart' value\n" }
+					unless (defined $defs{$strip}{'matchpart'})     { die "Error: strip $strip has no 'matchpart' value\n" }
 				} elsif ($defs{$strip}{'type'} eq "generate") {
-					unless (defined $defs{$strip}{'imageurl'}) { die "Error: strip $strip has no 'imageurl' value\n" }
+					unless (defined $defs{$strip}{'imageurl'})      { die "Error: strip $strip has no 'imageurl' value\n" }
 				}
 				
 				#substitute auto vars for real vals here/set defaults
 				unless (defined $defs{$strip}{'updated'}) { $defs{$strip}{'updated'} = "daily" }
 				unless (defined $defs{$strip}{'searchpage'}) {$defs{$strip}{'searchpage'} = $defs{$strip}{'homepage'}}
 				
-				if (defined $defs{$strip}{'imageurl'}) { $defs{$strip}{'imageurl'} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge }
-				if (defined $defs{$strip}{'baseurl'}) { $defs{$strip}{'baseurl'} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge }
-				if (defined $defs{$strip}{'homepage'}) { $defs{$strip}{'homepage'} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge }
-				if (defined $defs{$strip}{'searchpage'}) { $defs{$strip}{'searchpage'} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge }
-				if (defined $defs{$strip}{'searchpattern'}) { $defs{$strip}{'searchpattern'} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge }
+				for (qw(imageurl baseurl homepage searchpage searchpattern referer)) {
+					if (defined $defs{$strip}{$_}) { $defs{$strip}{$_} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge }
+				}
+				
+				for (qw(imageurl baseurl homepage searchpage searchpattern referer)) {
+					if (defined $defs{$strip}{$_}) { $defs{$strip}{$_} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge }
+				}			
+				
+				#foreach my $strip (keys %defs) {
+				#	foreach my $key (qw(imageurl baseurl homepage searchpage searchpattern referer)) {
+				#		print STDERR "DEBUG: $strip:$key=$defs{$strip}{$key}\n";
+				#	}
+				#}
 			
 				undef $strip;
 			}
