@@ -99,6 +99,8 @@
   21 Feb 2005
   Fixed "Penny Arcade" (Gabriel Fortuna)
 
+  Fixed dailystrips-clean to work with strip directories
+
 1.0.28
   23 Mar 2003
   Removed redundant def for "Funny Farm"

@@ -8,8 +8,8 @@
 #                   that are older than a specified number of days
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
 # Created:          12 Feb 2002, 21:44 EST
-# Last Modified:    21 Jun 2002, 03:28 EDT
-# Current Revision: 1.0.1
+# Last Modified:    21 Feb 2005, 16:38 EDT
+# Current Revision: 1.0.2
 #
 
 
@@ -22,14 +22,12 @@ use Getopt::Long;
 
 
 # Variables
-my (%options, $version, $time_today, @files);
-
-$version = "1.0.1";
-
-$time_today = time;
+my $version = "1.0.2";
+my $time_today = time;
 
 
 # Get options
+my %options;
 GetOptions(\%options, 'quiet|q','verbose|v','test|t','dir=s','archive|a','version|v','help|h')
 	or exit 1;
 
@@ -83,13 +81,44 @@ if ($options{'verbose'} and $options{'quiet'}) {
 
 
 # get list of existing files
-if ($options{'dir'} and (not $options{'dir'} =~ /\/$/)) {
-	$options{'dir'} .= "/";
+if ($options{'dir'} eq "") {
+	$options{'dir'} = ".";
 }
 
-@files = grep(/\d{4}\.\d{2}\.\d{2}/, glob("$options{'dir'}*"));
-for (@files) {
-	if ($options{'verbose'}) {
+my @files;
+for (&dir($options{'dir'})) {
+	if (/\d{4}\.\d{2}\.\d{2}/) {
+		push(@files, $_);
+	} else {
+		for my $sub (grep(/\d{4}\.\d{2}\.\d{2}/, &dir($_,1))) {
+			push(@files, $sub);
+		}
+	}
+}
+
+# dir: scalar, scalar -> list
+# gets the contents (except . and ..) of the given directory
+# if mode is 1, doesn't die on directory-open failure
+sub dir {
+	my $path = shift;
+	my $mode = shift;
+
+	$path =~ s/\/+$//;
+	$path .= "/";
+
+	(opendir(DIR,$path) or $mode)
+		or die "Error: failed to open directory $path: $!";
+	my @files;
+	for (readdir(DIR)) {
+		next if ($_ eq "." or $_ eq "..");
+		push(@files, $path . $_);
+	}
+	return @files;
+}
+
+
+if ($options{'verbose'}) {
+	for (@files) {
 		print "Existing file: $_\n";
 	}
 }
