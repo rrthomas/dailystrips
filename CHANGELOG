@@ -11,6 +11,9 @@
   considered. Now, for generate-type strips, the local file will be re-used if
   downloading fails at a later time.
 
+  14 Jan 2002
+  install.pl will now refuse to run on Win32
+
 1.0.21
   28 Oct 2001
   Fixed --nostale option - code was there, but attempting to use it would result

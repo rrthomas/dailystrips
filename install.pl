@@ -6,9 +6,9 @@
 # Name:             install.pl
 # Description:      installs dailystrips
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
-# Created:          13 Jul 2000, 11:34 EST
-# Last Modified:    11 Nov 2001, 19:57 EST
-# Current Revision: 0.0.1
+# Created:          13 Jul 2001, 11:34 EST
+# Last Modified:    14 Jan 2001, 17:10 EST
+# Current Revision: 0.0.2
 #
 
 
@@ -18,7 +18,13 @@ use strict;
 
 # Misc vars
 my (%options, $prog_version);
-$prog_version = "1.0.21";
+$prog_version = "1.0.22pre1";
+
+
+# Not for Win32
+if ($^O =~ /Win32/ ) {
+	die "install.pl is not for use on Win32 systems. Please see INSTALL file.\n";
+}
 
 
 # Editable paths
