@@ -593,6 +593,7 @@ strip apod
 end
 
 
+# grah. this this changes constantly
 strip pgs
 	name Pathetic Geek Stories
 	homepage http://www.theonionavclub.com/
@@ -600,11 +601,15 @@ strip pgs
 	#searchpattern <a.+?HREF="/avclub\d+/pgs(\d+).html"
 	#imageurl http://graphics.theonion.com/avpics_$match/pgs_$match.gif
 
-	#window.open('/comics.php?img_article_id=1192','pgs'
-        #http://www.theonionavclub.com/images/229/image_article1192.jpg
-	searchpattern issue_id=(\d+).+?window.open\('/comics.php\?img_article_id=(\d+)','pgs'
-	imageurl http://www.theonionavclub.com/images/$match_1/image_article$match_2.jpg
-	
+	# window.open('/comics.php?img_article_id=1192','pgs'
+        # http://www.theonionavclub.com/images/229/image_article1192.jpg
+	#searchpattern issue_id=(\d+).+?window.open\('/comics.php\?img_article_id=(\d+)','pgs'
+	#imageurl http://www.theonionavclub.com/images/$match_1/image_article$match_2.jpg
+
+	searchpage http://www.theonionavclub.com/current_pgs.html
+	searchpattern <IMG.+?src="(/images/\d+/image_article\d+..+?)"
+	baseurl $homepage
+
 	provides latest
 end
 
