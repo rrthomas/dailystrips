@@ -5075,7 +5075,7 @@ strip somethingpositive
 	name Something Positive
 	homepage http://www.somethingpositive.net/
 	type search
-	searchpattern <img.+?src="(/arch/sp\d+.+?)"
+	searchpattern <img.+?src="(/sp\d+.+?)"
 	baseurl http://www.somethingpositive.net/
 	provides latest
 end
@@ -5101,7 +5101,7 @@ strip dieselsweeties
 	name Diesel Sweeties
 	homepage http://www.dieselsweeties.com/
 	type search
-	searchpattern <img.+?src="(/hstrips/.+?\d+.+?)"
+	searchpattern <img.+?src="(/strips/.+?\d+.+?)"
 	baseurl $homepage
 	provides latest
 end
