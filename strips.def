@@ -269,17 +269,16 @@ end
 
 # Non-standard strips
 
-# discontinued = removed 20050109
 # should be possible to generate?
 # sometimes multi-image - need a new way to handle this
-#strip avalonhigh
-#	name Avalon High
-#	homepage http://www.avalonhigh.com/
-#	type search
-#	searchpattern <IMG.+?SRC="(/?comics/avalon\d{8}.*?\.gif)"
-#	baseurl $homepage
-#	provides latest
-#end
+strip avalonhigh
+	name Avalon High
+	homepage http://www.avalonhigh.com/
+	type search
+	searchpattern <IMG.+?SRC="(/?comics/avalon\d{8}.*?\.gif)"
+	baseurl $homepage
+	provides latest
+end
 
 strip drfun
 	name Doctor Fun
@@ -293,8 +292,8 @@ strip goats
 	name Goats
 	homepage http://www.goats.com/
 	type search
-	searchpattern <IMG.+?SRC="(/comix/\d+/goats\d+.+?)"
-	baseurl $homepage
+	searchpattern <IMG.+?SRC="(/comix/\d+/goats\d+.gif)"
+	baseurl http://www.goats.com/
 	provides latest
 end
 
@@ -318,7 +317,7 @@ strip joyoftech
 	name The Joy of Tech
 	homepage http://www.joyoftech.com/joyoftech/
 	type search
-	searchpattern <img.+?src="(joyimages/.+?\d+.+?)"
+	searchpattern <IMG.+?src="(joyimages/.+?\d+\..+?)\"
 	baseurl http://www.joyoftech.com/joyoftech/
 	provides latest
 end
@@ -341,16 +340,6 @@ strip mostlybusiness
 	provides latest
 end
 
-strip pennyarcade
-	name Penny Arcade
-	artist Mike Krahulik and Jerry Holkins
-	homepage http://www.penny-arcade.com/
-	type search
-	searchpage http://www.penny-arcade.com/view.php3
-	searchpattern <img.+?src="(http://img.penny-arcade.com/\d{4}/\d{8}[lh]\..{3})
-	provides latest
-end
-
 strip plif
       name Parking Lot is Full
       homepage http://www.plif.com
@@ -363,17 +352,8 @@ strip pvp
 	name Player vs. Player
 	homepage http://www.pvponline.com/
 	type generate
-	imageurl http://www.pvponline.com/archive/%Y/pvp%Y%m%d.gif
+	imageurl http://www.pvponline.com/comics/pvp%Y%m%d.gif
 	provides any
-end
-
-strip pvpcurrent
-	name Player vs. Player - Current
-	homepage http://www.pvponline.com/
-	type search
-	searchpattern <img SRC="(archive/%Y/pvp%Y\d{4}\.gif)">
-	baseurl $homepage
-	provides latest
 end
 
 strip redmeat
@@ -559,7 +539,7 @@ strip 8bit
 	name 8-Bit Theater
 	homepage http://www.nuklearpower.com/latest.php
 	type search
-	searchpattern <img.+?src="(http://www\.nuklearpower\.com/comics/\d+\..+?)">
+	searchpattern <img.+?src="(http://images\.nuklearpower\.com/comics/\d+\..+?)">
 	provides latest
 end
 
@@ -635,30 +615,12 @@ strip brunothebanditcurrent
 	provides latest
 end
 
-strip dieselsweeties
-	name Diesel Sweeties
-	homepage http://www.dieselsweeties.com/
-	type search
-	searchpattern <img.+?src="(/hstrips/.+?)"
-	baseurl $homepage
-	provides latest
-end
-
 strip fuzzylogic
 	name Fuzzy Logic
 	homepage http://www.bbspot.com/comics/fuzzy_logic/index.html
 	type generate
 	imageurl http://www.bbspot.com/Images/comics/fuzzy_logic/%Y/%Y%m%d.jpg
 	provides any
-end
-
-strip littlegamers
-	name Little Gamers
-	homepage http://www.little-gamers.com/
-	type search
-	searchpattern <img.+?src='/(index.php\?do_command=show_strip&strip_id=\d+.+?)'
-	baseurl $homepage
-	provides latest
 end
 
 strip machall
@@ -776,24 +738,22 @@ end
 #	provides any
 #end
 
-#discontinued - removed 20050109
-#strip acidreflux
-#	name Acid Reflux
-#	homepage http://www.acidrefluxcomic.com/
-#	type search
-#	baseurl http://www.acidrefluxcomic.com/
-#	searchpattern <img.+?src="(archive/c\d+\..+?)"
-#	provides latest
-#end
+strip acidreflux
+	name Acid Reflux
+	homepage http://www.acidrefluxcomic.com/
+	type search
+	baseurl http://www.acidrefluxcomic.com/
+	searchpattern <img.+?src="(archive/c\d+\..+?)"
+	provides latest
+end
 
-#discontinued - removed 20050227
-#strip whenigrowup
-#	name When I Grow Up
-#	homepage http://www.whenigrowup.net/
-#	type generate
-#	imageurl http://www.whenigrowup.net/comics/wigu%Y%m%d.png
-#	provides any
-#end
+strip whenigrowup
+	name When I Grow Up
+	homepage http://www.whenigrowup.net/
+	type generate
+	imageurl http://www.whenigrowup.net/comics/wigu%Y%m%d.png
+	provides any
+end
 
 strip walky
 	name It's Walky
@@ -909,21 +869,12 @@ strip bigones
         imageurl $homepage/comics/big%Y%m%d.gif
 end
 
-strip offthemark
-	name Off the Mark
-	homepage http://www.offthemark.com/
-	type search
-	provides latest
-	searchpage $homepage/daily.asp
-	searchpattern <img.+?src="(http://www\.offthemark\.com/rotate/\d+.gif)"
-end
-
 strip asif
 	name As If
 	homepage http://www.asifcomic.com/
 	type search
-	searchpage http://www.asifcomic.com/main.html
-	searchpattern <img src="(strips/\d+.jpg)" 
+	searchpage http://www.asifcomic.com/current.html
+	searchpattern <img.+?src=".*?_left\.jpg".+?><img.+?src="(\d+\..{3})".+?alt="Comic
 	baseurl $homepage
 	provides latest
 end
@@ -1408,11 +1359,6 @@ end
 
 strip drabble
 	name Drabble
-	useclass unitedmedia-srch-comics
-end
-
-strip dilbert
-	name Dilbert
 	useclass unitedmedia-srch-comics
 end
 
@@ -2315,15 +2261,14 @@ strip ballardstreet
 	provides latest
 end
 
-# apparently gone 20050126
-#strip bachelorparty
-#	name Bachelor Party
-#	homepage http://www.creators.com/comics_show.cfm?comicname=bch
-#	type search
-#	searchpattern <img.+?alt="Bachelor Party".+?src="(.+?)"
-#	baseurl http://www.creators.com/
-#	provides latest
-#end
+strip bachelorparty
+	name Bachelor Party
+	homepage http://www.creators.com/comics_show.cfm?comicname=bch
+	type search
+	searchpattern <img.+?alt="Bachelor Party".+?src="(.+?)"
+	baseurl http://www.creators.com/
+	provides latest
+end
 
 strip charlie
 	name Charlie
@@ -4067,15 +4012,6 @@ strip nothingnice
 	provides any
 end
 
-strip ctrlaltdel
-	name Ctrl+Alt+Del
-	artist Tim Buckley
-	homepage http://www.ctrlaltdel-online.com/
-	type generate
-	imageurl http://www.ctrlaltdel-online.com/images/comics/%Y%m%d.jpg
-	provides any
-end
-
 strip tasteslikegravel
 	name Tastes Like Gravel
 	artist Todd Oliver
@@ -4116,9 +4052,10 @@ end
 strip comet7
 	name Comet 7
 	artist David Tekiela
-	homepage http://www.comet7.com/
+	homepage http://www.comet7.moreevolved.com/index.htm
 	type search
-	searchpattern <img src="(http://www.comet7.com/strips/\d+.+?)"
+	searchpattern (strips/c7_\d*\.gif)
+	baseurl http://www.comet7.moreevolved.com/
 	provides latest
 end
 
@@ -4162,9 +4099,9 @@ end
 
 strip grimmy
 	name Mother Goose and Grimm
-	homepage http://www.grimmy.com/comics.php
+	homepage http://www.grimmy.com/daycartoon.asp
 	type generate
-	imageurl http://www.grimmy.com/images/MGG_Archive/MGG_%Y/MGG%m%d.gif
+	imageurl http://www.grimmy.com/images/%Y/MGG%m%d%y.gif
 	provides any
 end
 
@@ -4284,7 +4221,7 @@ strip dela
 	homepage http://www.delathehooda.com/
 	type search
 	searchpage http://www.delathehooda.com
-	searchpattern <img SRC="(<code:"Delac" if %w==0><code:"dela" if %w!=0>~[^"]+)"
+	searchpattern <img SRC="(<code:<"Delac" if %w==0><code:"dela" if %w!=0>~[^"]+)"
 	baseurl http://www.delathehooda.com/
 	provides latest
 end
@@ -4418,14 +4355,13 @@ strip slylock
 	$2 Slylock
 end 
 
-# apparently gone 20050126
-#strip babsandaldo
-#	name Babs and Aldo
-#	artist Buddy Valentine
-#	useclass kingfeatures-alt
-#	$1 babs
-#	$2 bvt
-#end
+strip babsandaldo
+	name Babs and Aldo
+	artist Buddy Valentine
+	useclass kingfeatures-alt
+	$1 babs
+	$2 bvt
+end
 
 strip hazel
 	name Hazel
@@ -4486,7 +4422,7 @@ end
 strip bizarro
 	name Bizarro
 	artist Dan Piraro
-	useclass kingfeatures
+	useclass kingfeatures-alt
 	$1 bizarro
 	$2 Bizarro
 end
@@ -4982,15 +4918,6 @@ strip antihero
 	provides latest
 end
 
-strip somethingpositive
-	name Something Positive
-	homepage http://www.somethingpositive.net/
-	type search
-	searchpattern <img.+?src="(arch/sp\d+\.gif)"
-	baseurl http://www.somethingpositive.net/
-	provides latest
-end
-
 # Ubersoft - we are all one strip, with Ubersoft
 strip ubersoft
 	name Ubersoft
@@ -5107,93 +5034,84 @@ strip freefall
     provides latest
 end
 
-strip daybyday
-	name Day by Day
-	artist Chris Muir
-	homepage http://www.daybydaycartoon.com/
-	type generate
-	imageurl http://www.daybydaycartoon.com/Cartoons/%m-%d-%Y.gif
+strip ctrlaltdel
+	name Ctrl+Alt+Del
+	artist Tim Buckley
+	homepage http://www.ctrlaltdel-online.com/
+	type search
+    searchpage http://www.ctrlaltdel-online.com/comic.php
+    searchpattern <img.+?src="(/comics/\d{8}.+?)"
+    baseurl $homepage
 	provides any
 end
 
-strip wulffmorgenthaler
-	name Wulffmorgenthaler
-	artist Mikael Wulff and Anders Morgenthaler
-	homepage http://www.wulffmorgenthaler.com
+strip pvpcurrent
+	name Player vs. Player
+	homepage http://www.pvponline.com/
 	type search
-	searchpage $homepage/thestrip.asp?cDay=%d&cMonth=%m&cYear=%Y
-        searchpattern <img.+?src="(log/\w+\.gif)"
-	imageurl $homepage/$match
-	provides any
-end
-
-strip oots
-	name Order of the Stick
-	homepage http://www.giantitp.com/cgi-bin/GiantITP/ootscript 
-	artist Rich Burlew
-	type search
-	searchpattern <IMG src="\.\./\.\./(oots/oots\d+\..+?)">
-	baseurl http://www.giantitp.com/
+	searchpattern <img.+?src=['"](http://www.pvponline.com/comics/pvp\d{8}.+?)['"]
 	provides latest
 end
 
-strip phdcomics
-	name Piled Higher & Deeper
-	artist Jorge Cham
-	homepage http://www.phdcomics.com/
+strip xkcd
+    name XKCD
+    homepage http://xkcd.com
+    type search
+    searchpattern <img.+?src="(http://imgs\.xkcd\.com/comics/.+?\.png)"
+    provides latest
+end
+
+strip pennyarcade
+	name Penny Arcade
+	homepage http://www.penny-arcade.com/
 	type search
-	searchpage http://www.phdcomics.com/comics/comics.php
-	searchpattern <img.+?src=http://www.phdcomics.com(/comics/archive/\S+.gif)
+	searchpage http://www.penny-arcade.com/comic
+	searchpattern <img.+?src="(/images/\d{4}/\d{8}.+?)"
+	baseurl http://www.penny-arcade.com/
+	provides latest
+end
+
+strip somethingpositive
+	name Something Positive
+	homepage http://www.somethingpositive.net/
+	type search
+	searchpattern <img.+?src="(/arch/sp\d+.+?)"
+	baseurl http://www.somethingpositive.net/
+	provides latest
+end
+
+strip littlegamers
+	name Little Gamers
+	homepage http://www.little-gamers.com/
+	type search
+	searchpattern <img.+?src="(http://www.little-gamers.com/comics/\d+.+?)"
+	provides latest
+end
+
+strip offthemark
+	name Off the Mark
+	homepage http://www.offthemark.com/
+	type search
+	provides latest
+	searchpage $homepage/daily.php/
+	searchpattern <img.+?src="(http://www.offthemarkcartoons.com/cartoons/\d{4}-\d{2}-\d{2}.+?)"
+end
+
+strip dieselsweeties
+	name Diesel Sweeties
+	homepage http://www.dieselsweeties.com/
+	type search
+	searchpattern <img.+?src="(/hstrips/.+?\d+.+?)"
 	baseurl $homepage
 	provides latest
 end
 
-strip coxandforkum
-	name Cox and Forkum
-	artist John Cox and Allen Forkum
-	homepage http://www.coxandforkum.com/
-	type search
-	searchpattern (/archives/(.*?)\.gif)
-	baseurl http://www.coxandforkum.com
-	provides latest
+strip dilbert
+    name Dilbert
+    homepage http://www.dilbert.com/
+    type search
+    searchpattern <img.+?src="(/dyn/str_strip/.+?.strip(.sunday)?.gif)"
+    baseurl $homepage
+    provides latest
 end
 
-strip questionablecontent
-	name Questionable Content
-	artist Jeph Jacques
-	homepage http://www.questionablecontent.net/
-	type search
-	provides latest
-	searchpattern <img.+?src="\./(comics/\d+\..{3})">
-	baseurl $homepage
-end
-
-strip gucomics
-	name GU Comics
-	artist Woody Hearn
-	homepage http://www.gucomics.com/
-	type generate
-	provides any
-	imageurl http://www.gucomics.com/comics/gu_%Y%m%d.jpg
-end
-
-strip mrwiggles
-	name Rehabilitating Mr. Wiggles
-	artist Neal Swaab
-	homepage http://neilswaab.com/comics/wiggles/
-	type search
-	provides latest
-	searchpage http://neilswaab.com/comics/wiggles/wiggles_content.html
-	searchpattern <IMG.+?SRC="(images/rehab\d+\..{3})"
-	baseurl $homepage
-end
-
-strip mais
-	name Magical Adventures in Space
-	artist Jeffrey Rowland
-	homepage http://www.wigu.com/
-	type search
-	searchpattern <img.+?src="(strips/\d{8}\.png)"
-	baseurl $homepage
-	provides latest
-end
