@@ -5040,7 +5040,7 @@ strip ctrlaltdel
 	homepage http://www.ctrlaltdel-online.com/
 	type search
     searchpage http://www.ctrlaltdel-online.com/comic.php
-    searchpattern <img.+?src="(/comics/\d{8}.+?)"
+    searchpattern <img.+?src="(/comics/cad/\d{8}.+?)"
     baseurl $homepage
 	provides any
 end
@@ -5066,8 +5066,7 @@ strip pennyarcade
 	homepage http://www.penny-arcade.com/
 	type search
 	searchpage http://www.penny-arcade.com/comic
-	searchpattern <img.+?src="(/images/\d{4}/\d{8}.+?)"
-	baseurl http://www.penny-arcade.com/
+	searchpattern <img.+?src="(http://art\.penny-arcade\.com/photos/.+?\..+?)"
 	provides latest
 end
 
@@ -5101,7 +5100,7 @@ strip dieselsweeties
 	name Diesel Sweeties
 	homepage http://www.dieselsweeties.com/
 	type search
-	searchpattern <img.+?src="(/strips/.+?\d+.+?)"
+	searchpattern <img.+?src="(/h?strips/.+?\d+.+?)"
 	baseurl $homepage
 	provides latest
 end
