@@ -53,13 +53,6 @@ and groups) in users' files with the same name as entries in the main will take
 precedence. Personal definition files can be ignored with the '--nopersonal'
 option.
 
-# System-wide definitions file
-
-Administrators may wish to create definitions, classes, or groups available to
-all users on a system. This may be done by creating a file /etc/dailystrips.defs
-and placing the definitions there. This file is loaded after the default
-definition file and so may be use to override provided definitions, if desired.
-
 # *Notice*
 
 Keep in mind that this program is for personal use only, as making

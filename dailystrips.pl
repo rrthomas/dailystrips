@@ -126,12 +126,6 @@ unless ($options{'defs'}) {
 
 &get_defs($options{'defs'});
 
-
-# Get system configurable strip definitions now
-unless (! -r '/etc/dailystrips.defs') {
-	&get_defs('/etc/dailystrips.defs');
-}
-
 unless ($options{'nopersonal'}){
 	my $personal_defs = &get_homedir()  . "/.dailystrips.defs";
 	if (-r $personal_defs) {
