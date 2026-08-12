@@ -34,7 +34,7 @@ $time_today = time;
 # Get options
 GetOptions(\%options, 'quiet|q','verbose','noindex',
 	'archive|a','dailydir|d','stripdir','nostale','date=s',
-	'new|n','defs=s','nopersonal','basedir=s','list',
+	'new|n','defs=s','basedir=s','list',
 	'useragent=s','version|v','help|h',
 	'random','stripnav','titles=s',
 	'retries=s','clean=s') or exit 1;
@@ -59,7 +59,6 @@ Options:
       --list                 List available strips
       --random               Download a random strip
       --defs FILE            Use alternate strips definition file
-      --nopersonal           Ignore ~/.dailystrips.defs
       --stripnav             Add links for navigation within the page
       --titles STRING        Customize HTML output
       --noindex              Disable symlinking current page to index.html
@@ -124,11 +123,9 @@ unless ($options{'defs'}) {
 
 &get_defs($options{'defs'});
 
-unless ($options{'nopersonal'}){
-	my $personal_defs = &get_homedir()  . "/.dailystrips.defs";
-	if (-r $personal_defs) {
-		&get_defs($personal_defs);
-	}
+my $personal_defs = &get_homedir()  . "/.dailystrips.defs";
+if (-r $personal_defs) {
+	&get_defs($personal_defs);
 }
 
 $known_strips = join('|', sort keys %defs);

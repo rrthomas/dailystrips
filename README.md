@@ -70,8 +70,7 @@ Syntax is exactly the same as the main strips.def file. Personal files will be
 processed after the main file. This means that classes set in the main file are
 available for use in users' files. Also note that any entries (classes, strips,
 and groups) in users' files with the same name as entries in the main will take
-precedence. Personal definition files can be ignored with the '--nopersonal'
-option.
+precedence.
 
 # *Notice*
 
