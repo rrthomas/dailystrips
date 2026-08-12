@@ -41,9 +41,6 @@ GetOptions(\%options, 'quiet|q','verbose','noindex',
 	'random','retries=s','clean=s') or exit 1;
 
 # Process options:
-#  Note: Blocks have been ordered so that we only do as much as absolutely
-#  necessary if an error is encountered (i.e. do not load defs if --version
-#  specified)
 
 # Help and version override anything else
 if ($options{'help'}) {
