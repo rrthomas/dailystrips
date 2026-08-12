@@ -58,8 +58,7 @@ Options:
       --noindex              Disable symlinking current page to index.html
   -a  --archive              Generate archive.html as a list of all days
   -d  --dailydir             Create a separate directory for each day's images
-      --stripdir             Create a separate directory for each strip's
-			     images
+      --stripdir             Create a separate directory for each strip's images
       --nostale              If a new strip is not available, displays an error
 			     in the HTML output instead of showing the old image
       --date DATE            Use DATE instead of local time
