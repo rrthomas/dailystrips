@@ -27,7 +27,7 @@ my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @lo
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %classes, $val,
     $link_tomorrow, @base_dirparts);
 
-$version = "1.0.29pre1";
+$version = "2.0";
 
 $time_today = time;
 
