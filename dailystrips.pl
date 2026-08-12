@@ -552,7 +552,7 @@ sub dir {
 # Clean out old files, if requested
 if ($options{'clean'}) {
 	unless ($options{'quiet'}) {
-		warn "Cleaning files older than $options{'clean'} days...";
+		warn "Cleaning files older than $options{'clean'} days...\n";
 	}
 
 	# get list of existing files
