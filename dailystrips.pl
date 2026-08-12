@@ -643,8 +643,9 @@ sub http_get {
 		$request = HTTP::Request->new('GET', $url, $headers);				
 		$response = $ua->request($request);
 		($status = $response->status_line()) =~ s/^(\d+)/$1:/;
-
 		if ($response->is_error()) {
+			# FIXME: Need better error handling with the LWP::UserAgent module (if there's a
+			# problem, report exactly *what* went wrong - proxy, etc..)
 			if ($options{'verbose'}) {
 				warn "Warning: could not download $url: $status (attempt $_ of $options{'retries'})\n";
 			}
