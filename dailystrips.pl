@@ -19,7 +19,6 @@ use LWP::UserAgent;
 use HTTP::Request;
 use POSIX qw(strftime);
 use Getopt::Long;
-use File::Copy;
 
 
 # Variables
