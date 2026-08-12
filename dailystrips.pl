@@ -33,7 +33,7 @@ $time_today = time;
 
 
 # Get options
-GetOptions(\%options, 'quiet|q','verbose','lite','noindex',
+GetOptions(\%options, 'quiet|q','verbose','noindex',
 	'archive|a','dailydir|d','stripdir','save|s','nostale','date=s',
 	'new|n','defs=s','nopersonal','basedir=s','list',
 	'nospaces','useragent=s','version|v','help|h',
@@ -65,7 +65,6 @@ Options:
       --updates              Read updated defs from FILE instead of
                              ~/.dailystrips-updates.def
       --noupdates            Ignore updated defs file 
-      --lite                 Output a reduced HTML page
       --stripnav             Add links for navigation within the page
       --titles STRING        Customize HTML output
       --noindex              Disable symlinking current page to index.html
@@ -394,15 +393,12 @@ if (-e "dailystrips-$short_date_tomorrow.html") {
 
 
 # Generate HTML page
-if ($options{'lite'}) {
-	print "<font face=\"helvetica\" size=\"+2\"><b><u>$options{'titles'}dailystrips for $long_date</u></b></font><br><br>\n";
-} else {
-	my $topanchor;
-	if ($options{'stripnav'}) {
-		$topanchor = "\n<a name=\"top\">\n";
-	}
+my $topanchor;
+if ($options{'stripnav'}) {
+	$topanchor = "\n<a name=\"top\">\n";
+}
 
-	print
+print
 "<html>
 
 <head>
@@ -418,27 +414,25 @@ $topanchor
 <p><font face=\"helvetica\">
 &lt; <a href=\"dailystrips-$short_date_yesterday.html\">Previous day</a>$link_tomorrow";
 	
-	if ($options{'archive'}) {
-		print " | <a href=\"archive.html\">Archives</a>";
-	}
-	
-	print
+if ($options{'archive'}) {
+	print " | <a href=\"archive.html\">Archives</a>";
+}
+
+print
 " &gt;
 </font></p>
 ";
 
-	if ($options{'stripnav'}) {
-		print "<font face=\"helvetica\">Strips:</font><br>\n";
-		for (@strips) {
-			my ($strip, $name) = (split(/;/, $_))[0,1];
-			print "<a href=\"#$strip\">$name</A>&nbsp;&nbsp;";
-		}
-		print "\n<br><br>";
+if ($options{'stripnav'}) {
+	print "<font face=\"helvetica\">Strips:</font><br>\n";
+	for (@strips) {
+		my ($strip, $name) = (split(/;/, $_))[0,1];
+		print "<a href=\"#$strip\">$name</A>&nbsp;&nbsp;";
 	}
-
-	print "\n\n<table border=\"0\">\n";
+	print "\n<br><br>";
 }
 
+print "\n\n<table border=\"0\">\n";
 
 if (!$options{'quiet'}) {
 	if ($options{'verbose'}) {
@@ -622,19 +616,12 @@ for (@strips) {
 		$artist = " by $artist";
 	}
 	
-	if ($options{'lite'}){
-		print
-"<font face=\"helvetica\" size=\"+1\"><b><a href=\"$homepage\">$name</a>$artist</b></font><br>
-$img_line<br>
-<br>
-";
-	} else {
-		my $stripanchor;
-		if ($options{'stripnav'}) {
-			$stripanchor = "<a name=\"$strip\">";
-		}
-		
-		print
+	my $stripanchor;
+	if ($options{'stripnav'}) {
+		$stripanchor = "<a name=\"$strip\">";
+	}
+
+	print
 "	<tr>
 		<td>
 			<font face=\"helvetica\" size=\"+1\"><b>$stripanchor<a href=\"$homepage\">$name</a>$artist</b></font>
@@ -647,7 +634,6 @@ $img_line<br>
 		</td>
 	</tr>
 ";
-	}
 }
 
 if (!$options{'quiet'}) {
@@ -658,18 +644,17 @@ if (!$options{'quiet'}) {
 	}
 }
 
-unless ($options{'lite'}) {
-	print
+print
 "</table>
 
 <p><font face=\"helvetica\">
 &lt; <a href=\"dailystrips-$short_date_yesterday.html\">Previous day</a>$link_tomorrow";
 
-	if ($options{'archive'}) {
-		print " | <a href=\"archive.html\">Archives</a>";
-	}
-	
-	print
+if ($options{'archive'}) {
+	print " | <a href=\"archive.html\">Archives</a>";
+}
+
+print
 " &gt;
 </font></p>
 
@@ -679,7 +664,6 @@ unless ($options{'lite'}) {
 
 </html>
 ";
-}
 
 # Clean out old files, if requested
 if ($options{'clean'}) {
