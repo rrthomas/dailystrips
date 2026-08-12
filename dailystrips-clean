@@ -41,7 +41,7 @@ DAYS is the number of days to keep.
 Options:
   -q  --quiet                Turn off progress messages		
   -v  --verbose              Turn on extra progress information, overrides -q
-  -t  --test                 Do not acutally remove files
+  -t  --test                 Do not actually remove files
   -d  --dir DIR              Work in specified directory instead of current
                              directory
   -a  --archive              Update archive.html file
