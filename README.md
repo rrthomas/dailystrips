@@ -59,7 +59,6 @@ Administrators may wish to create definitions, classes, or groups available to
 all users on a system. This may be done by creating a file /etc/dailystrips.defs
 and placing the definitions there. This file is loaded after the default
 definition file and so may be use to override provided definitions, if desired.
-The system-wide definitions file can be ignored with the --nosystem option.
 
 # Definition upgrades
 

@@ -37,7 +37,7 @@ GetOptions(\%options, 'quiet|q','verbose','noindex',
 	'archive|a','dailydir|d','stripdir','save|s','nostale','date=s',
 	'new|n','defs=s','nopersonal','basedir=s','list',
 	'nospaces','useragent=s','version|v','help|h',
-	'random','nosystem','stripnav','titles=s',
+	'random','stripnav','titles=s',
 	'retries=s','clean=s','updates=s','noupdates') or exit 1;
 
 # Process options:
@@ -61,7 +61,6 @@ Options:
       --random               Download a random strip
       --defs FILE            Use alternate strips definition file
       --nopersonal           Ignore ~/.dailystrips.defs
-      --nosystem             Ignore system-wide definitions
       --updates              Read updated defs from FILE instead of
                              ~/.dailystrips-updates.def
       --noupdates            Ignore updated defs file 
@@ -148,10 +147,8 @@ unless($options{'noupdates'})
 }
 
 # Get system configurable strip definitions now
-unless ($options{'nosystem'}) {
-	unless (! -r '/etc/dailystrips.defs') {
-		&get_defs('/etc/dailystrips.defs');
-	}
+unless (! -r '/etc/dailystrips.defs') {
+	&get_defs('/etc/dailystrips.defs');
 }
 
 unless ($options{'nopersonal'}){
