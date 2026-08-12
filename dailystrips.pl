@@ -20,11 +20,13 @@ use HTTP::Request;
 use POSIX qw(strftime);
 use Getopt::Long;
 
+use Date::Parse;
+
 
 # Variables
 my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @localtime_tomorrow, $long_date, $short_date,
     $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
-    $link_tomorrow, $no_dateparse, @base_dirparts);
+    $link_tomorrow, @base_dirparts);
 
 $version = "1.0.29pre1";
 
@@ -67,8 +69,7 @@ Options:
 			     images
       --nostale              If a new strip is not available, displays an error
 			     in the HTML output instead of showing the old image
-      --date DATE            Use value DATE instead of local time
-			     (DATE is parsed by Date::Parse function)
+      --date DATE            Use DATE instead of local time
       --basedir DIR          Work in specified directory instead of current
 			     directory (program will look here for previous HTML
 			     file and save new files here, etc.)
@@ -92,13 +93,6 @@ if ($options{'version'}) {
 
 
 if ($options{'date'}) {
-	eval "require Date::Parse";
-	if ($@ ne "") {
-		die "Error: cannot use --date - Date::Parse not installed\n";
-	} else {
-		import Date::Parse;
-	}
-
 	unless ($time_today = str2time($options{'date'})) {
 		die "Error: invalid date specified\n";
 	}

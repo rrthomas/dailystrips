@@ -34,15 +34,28 @@ then a few hours later if the strips aren't all available at one time.
 
 # Requirements
 
-dailystrips requires the `HTTP::Request`, `LWP::UserAgent` and `POSIX`
-modules. If you want to use `--date`, you will need `Date::Time` from the
-`TimeDate` package. See www.cpan.org if you don't have them installed
-already. dailystrips was developed on Linux but should be able to run on any
-*nix with that has the necessary Perl modules installed.
+dailystrips requires the `HTTP::Request`, `Date::Time`, `LWP::UserAgent`,
+and `POSIX` modules. See www.cpan.org if you don't have them installed
+already.
 
 # Installation
 
-See the INSTALL file.
+Run the following as root:
+
+`perl install.pl`
+
+This will install the definitions file to `/usr/share/dailystrips`, the
+documentation to `/usr/share/doc/dailystrips-VERSION`, and the scripts to
+`/usr/bin`. Use `perl install.pl --help` for more info and options.
+
+Once dailystrips is installed, you may run the program by typing:
+
+`dailystrips`
+
+For personal installations (no root access), copy `dailystrips` and
+`strips.def` to the directory of your choice. Since dailystrips uses
+`/usr/share/dailystrips/strips.def` by default, you will need to specify the
+definition file with the `--defs FILE` option.
 	
 # Usage
 
