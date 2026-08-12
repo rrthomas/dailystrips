@@ -27,10 +27,10 @@ page.  If you need to change this, you'll have to edit the script.
 
 For scheduling the time that dailystrips runs, you'll have to consider your
 time zone.  I have found that running at 0600 EST (-0500) works well for my
-strips (see the contents of group 'andrew').  You may have to experiment a
-little to find the best time for the specific strips you download. One idea
-is to create a crontab entry to run dailystrips early in the morning and
-then a few hours later if the strips aren't all available at one time.
+strips.  You may have to experiment a little to find the best time for the
+specific strips you download. One idea is to create a crontab entry to run
+dailystrips early in the morning and then a few hours later if the strips
+aren't all available at one time.
 
 # Requirements
 
@@ -62,8 +62,7 @@ definition file with the `--defs FILE` option.
 'dailystrips [stripname(s)]' will print to STDOUT an HTML page with image links
 to the latest strip. These links are to the strip's webserver.
 'dailystrips --help' lists all available options. --list shows the available
-strips and groups. Strip names can specified as listed. Groups must be preceeded
-with an '@' symbol.
+strips.
 
 # Adding new strips
 
@@ -78,11 +77,11 @@ I can add it to the distribution.
 
 # Personal definition file
 
-Users may create a file called ".dailystrips.defs" in their home directory.
+Users may create a file called `.dailystrips.defs` in their home directory.
 Syntax is exactly the same as the main strips.def file. Personal files will be
 processed after the main file. This means that classes set in the main file are
-available for use in users' files. Also note that any entries (classes, strips,
-and groups) in users' files with the same name as entries in the main will take
+available for use in users' files. Also note that any entries (classes and
+strips) in users' files with the same name as entries in the main will take
 precedence.
 
 # *Notice*

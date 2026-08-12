@@ -119,26 +119,6 @@ variables must be specified. Values already declared in the class can be
 overridden (if necessary) by simply specifying them in the strip definition.
 
 
-For your convenience, "groups" of strips may also be defined. These allow you to
-use a single keyword on the command line to refer to a whole set of strips. The
-construct is as follows:
-
->group favorites
->	desc My Favorite Comics
->	include peanuts
->	include foxtrot, userfriendly
->end
-
-The group name must be unique among all groups, but will not conflict with
-strips or classes (in fact it might be useful to have a group for each class - I
-might even make that automatic). "desc" is a description of the group that will
-be shown by --list. Everything after an "include" is added to the list of
-strips. You may specify one or more strips per "include" line, whatever you
-prefer. Groups are referenced on the command line by an "@" symbol followed by
-the name (bare words not preceeded by an "@" symbol will be considered strips).
-Finally, you may use "exclude [strips]" lines instead of "include" lines to
-make the group contain everystrip except those specified.
-
 Notes:
 
 * As of 1.0.10, only date variables use the "%" symbol - everything else now
@@ -163,5 +143,5 @@ Notes:
 * There may be additional problems lurking in the defintion file-parsing code.
   It currently works fairly well, but needs to be re-written properly.
 
-* Group, strip, and class names can contain pretty much any character except
+* Strip and class names can contain pretty much any character except
   semicolon, space, and pipe.

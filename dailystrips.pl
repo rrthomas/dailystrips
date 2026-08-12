@@ -25,7 +25,7 @@ use Date::Parse;
 
 # Variables
 my (%options, $version, $time_today, @localtime_today, @localtime_yesterday, @localtime_tomorrow, $long_date, $short_date,
-    $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %groups, $known_groups, %classes, $val,
+    $short_date_yesterday, $short_date_tomorrow, @get, @strips, %defs, $known_strips, %classes, $val,
     $link_tomorrow, @base_dirparts);
 
 $version = "1.0.29pre1";
@@ -48,11 +48,9 @@ GetOptions(\%options, 'quiet|q','verbose','noindex',
 # Help and version override anything else
 if ($options{'help'}) {
 	print
-"Usage: $0 [OPTION] STRIPS
-STRIPS can be a mix of strip names and group names
-(group names must be preceded by an '\@' symbol)
-'all' may be used to retrieve all known strips,
-or use option --list to list available strips and groups
+"Usage: $0 [OPTION] STRIP...
+Each STRIP is a strip name; 'all' may be used to retrieve all known strips,
+or use option --list to list available strips.
 
 Options:
   -q  --quiet                Turn off progress messages
@@ -120,7 +118,6 @@ if (-r $personal_defs) {
 }
 
 $known_strips = join('|', sort keys %defs);
-$known_groups = join('|', sort keys %groups);
 
 if ($options{'random'}) {
 	my @known_strips_array = keys %defs;
@@ -129,7 +126,7 @@ if ($options{'random'}) {
 
 	undef @known_strips_array;
 } else {
-	# Only strips/groups to download remain in @ARGV
+	# Only strips to download remain in @ARGV
 	# Unconfigured options were already trapped by Getopts with an 'unknown option'
 	# error
 	for (@ARGV) {
@@ -138,12 +135,6 @@ if ($options{'random'}) {
 				push (@get, split(/\|/, $known_strips));
 			} else {
 				push(@get, $_);
-			}
-		} elsif (/^@/) {
-			if (/^@($known_groups)$/io) {
-				push(@get, split(/;/, $groups{$1}{'strips'}));
-			} else {
-				die "Error: unknown group: $_\n";
 			}
 		} else {
 			die "Error: unknown strip: $_\n";
@@ -159,12 +150,6 @@ $_, $val
 	print "Available strips:\n";
 	for (split(/\|/, $known_strips)) {
 		$val = $defs{$_}{'name'};
-		write;
-	}
-
-	print "\nAvailable groups:\n";
-	for (split(/\|/, $known_groups)) {
-		$val = $groups{$_}{'desc'};
 		write;
 	}
 	exit;
@@ -207,7 +192,7 @@ if ($options{'verbose'} and $options{'quiet'}) {
 
 
 # Un-needed vars
-undef $known_strips; undef $known_groups; undef $val;
+undef $known_strips; undef $val;
 
 
 # Go
@@ -747,7 +732,7 @@ sub get_strip {
 
 sub get_defs {
 	my $defs_file = shift;
-	my ($strip, $class, $sectype, $group);
+	my ($strip, $class, $sectype);
 	my $line;
 
 	unless(open(DEFS, "<$defs_file")) {
@@ -789,16 +774,6 @@ sub get_defs {
 
 				$class = $1;
 				$sectype = "class";
-			}
-			elsif (/^group\s+(.*)$/i)
-			{
-				if (defined ($groups{$1}))
-				{
-					undef $groups{$1};
-				}
-
-				$group = $1;
-				$sectype = "group";
 			}
 			elsif (/^(.*)/)
 			{
@@ -906,16 +881,6 @@ sub get_defs {
 				#}
 
 				undef $strip;
-			}
-			elsif ($sectype eq "group")
-			{
-				chop $groups{$group}{'strips'};
-
-				unless ($groups{$group}{'desc'}) {
-					$groups{$group}{'desc'} = "[No description]";
-				}
-
-				undef $group;
 			}
 
 			undef $sectype;
@@ -1065,51 +1030,8 @@ sub get_defs {
 			{
 				die "Error: Unknown keyword '$1' at $defs_file line $line, in strip $strip\n";
 			}
-		} elsif ($sectype eq  "group") {
-			if (/^desc\s+(.+)$/i)
-			{
-				$groups{$group}{'desc'} = $1;
-			}
-			elsif (/^include\s+(.+)$/i)
-			{
-				$groups{$group}{'strips'} .= join(';', split(/\s+/, $1)) . ";";
-			}
-			elsif (/^exclude\s+(.+)$/i)
-			{
-				$groups{$group}{'nostrips'} .= join(';', split(/\s+/, $1)) . ";";
-			}
-			elsif (/^(.+)\s+?/)
-			{
-				die "Error: Unknown keyword '$1' at $defs_file line $line, in group $group\n";
-			}
 		}
 	}
-
-	# Post-processing validation
-	for $group (keys %groups) {
-		my (@strips, %nostrips, @okstrips);
-
-		if (defined($groups{$group}{'nostrips'})) {
-			@strips = sort(keys(%defs));
-			foreach (split (/;/,$groups{$group}{'nostrips'})) {
-				$nostrips{$_} = 1;
-			}
-		} else {
-			@strips = split(/;/, $groups{$group}{'strips'});
-			%nostrips = ();   #empty
-		}
-
-		foreach (@strips) {
-			unless ($defs{$_}) {
-				warn "Warning: group $group references non-existant strip $_\n";
-			}
-
-			next if ($nostrips{$_});
-			push (@okstrips,$_);
-		}
-		$groups{$group}{'strips'} = join(';',@okstrips);
-	}
-
 }
 
 sub get_homedir
