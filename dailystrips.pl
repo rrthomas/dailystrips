@@ -38,7 +38,7 @@ GetOptions(\%options, 'quiet|q','verbose','output=s','lite','local|l','noindex',
 	'archive|a','dailydir|d','stripdir','save|s','nostale','date=s',
 	'new|n','defs=s','nopersonal','basedir=s','list',
 	'nospaces','useragent=s','version|v','help|h',
-	'random','nosystem','stripnav','nosymlinks','titles=s',
+	'random','nosystem','stripnav','titles=s',
 	'retries=s','clean=s','updates=s','noupdates') or exit 1;
 
 # Process options:
@@ -85,7 +85,6 @@ Options:
                              (local mode only)
       --nostale              If a new strip is not available, displays an error
                              in the HTML output instead of showing the old image
-      --nosymlinks           Do not use symlinks for day-to-day duplicates
       --date DATE            Use value DATE instead of local time
                              (DATE is parsed by Date::Parse function)
       --basedir DIR          Work in specified directory instead of current
@@ -600,17 +599,7 @@ for (@strips) {
 				
 					if (system("diff \"$local_name_yesterday\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
 						# same strip as yesterday
-						if ($options{'nosymlinks'}) {
-							system("mv","$local_name.tmp","$local_name");
-						} else {
-							unlink("$local_name.tmp");
-							if ($options{'stripdir'} or $options{'dailydir'}) {
-								system("ln -s \"../$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
-							} else {
-								system("ln -s \"$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
-							}
-							
-						}
+						system("mv","$local_name.tmp","$local_name");
 						
 						if ($options{'nostale'}) {
 							$img_line = "[Error - new strip not available]";
