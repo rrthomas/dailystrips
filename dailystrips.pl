@@ -603,22 +603,111 @@ print
 </html>
 ";
 
+# dir: scalar, scalar -> list
+# gets the contents (except . and ..) of the given directory
+# if mode is 1, doesn't die on directory-open failure
+sub dir {
+	my $path = shift;
+	my $mode = shift;
+
+	$path =~ s/\/+$//;
+	$path .= "/";
+
+	(opendir(DIR,$path) or $mode)
+		or die "Error: failed to open directory $path: $!";
+	my @files;
+	for (readdir(DIR)) {
+		next if ($_ eq "." or $_ eq "..");
+		push(@files, $path . $_);
+	}
+	return @files;
+}
+
 # Clean out old files, if requested
 if ($options{'clean'}) {
 	unless ($options{'quiet'}) {
-		print STDERR "Cleaning files older than $options{'clean'} days...";
+		warn "Cleaning files older than $options{'clean'} days...";
 	}
-	
-	unless (system("perl -S dailystrips-clean --quiet $options{'clean'}")) {
-		unless ($options{'quiet'}) {
-			print STDERR "done\n";
+
+	# get list of existing files
+	my @files;
+	for (&dir(".")) {
+		if (/\d{4}\.\d{2}\.\d{2}/) {
+			push(@files, $_);
+		} else {
+			for my $sub (grep(/\d{4}\.\d{2}\.\d{2}/, &dir($_,1))) {
+				push(@files, $sub);
+			}
 		}
 	}
-	else {
-		warn "failed\nWarning: could not run dailystrips-clean script\n";
+
+	if ($options{'verbose'}) {
+		for (@files) {
+			warn "Existing file: $_\n";
+		}
 	}
-	
-	
+
+	# filter out files to keep
+	for (0 .. $options{'clean'} - 1) {
+		my $save_day = strftime("\%Y.\%m.\%d", localtime ($time_today - (86400 * $_)));
+
+		unless ($options{'quiet'}) {
+			warn "Keeping files for: $save_day\n";
+		}
+
+		@files = grep(!/$save_day/, @files);
+	}
+
+	# remove anything that's still on the list
+	for (@files) {
+		if ($options{'verbose'}) {
+			warn "Removing file/directory: $_\n";
+		}
+
+		if (-d $_) {
+			my $dir_not_empty;
+
+			foreach my $sub (glob("$_/*")) {
+				unless (unlink("$sub")) {
+					warn "Could not remove file $sub: $!\n";
+					$dir_not_empty = 1;
+				}
+			}
+
+			if ($dir_not_empty) {
+				warn "Directory $_ not empty, cannot remove\n";
+			} else {
+				rmdir($_) or warn "Could not remove directory $_: $!\n";
+			}
+		} else {
+			unlink($_) or warn "Could not remove file $_: $!\n";
+		}
+	}
+
+	if ($options{'archive'}) {
+		if (open(ARCHIVE,"<$options{'dir'}archive.html")) {
+			my $oldest = strftime("\%Y.\%m.\%d", localtime ($time_today - (86400 * ($options{'days'}-1))));
+			my $out;
+
+			while (<ARCHIVE>) {
+				if (/(\d{4}\.\d{2}\.\d{2})/) {
+					if ($1 lt $oldest) {
+						$_ = "";
+					}
+				}
+				$out .= $_;
+			}
+
+			close(ARCHIVE);
+			if (open(ARCHIVE,">$options{'dir'}archive.html")) {
+				print ARCHIVE $out;
+			} else {
+				warn "Error: cannot update archive.html - could not write file: $!\n";
+			}
+		} else {
+			warn "Error: cannot update archive.html - could not read file: $!\n";
+		}
+	}
 }
 
 sub http_get {
