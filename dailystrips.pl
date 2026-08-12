@@ -15,12 +15,11 @@
 use strict;
 no strict qw(refs);
 
-use LWP::UserAgent;
-use HTTP::Request;
 use POSIX qw(strftime);
 use Getopt::Long;
 
 use Date::Parse;
+use File::Slurp qw(slurp);
 
 
 # Variables
@@ -36,9 +35,8 @@ $time_today = time;
 # Get options
 GetOptions(\%options, 'quiet|q','verbose','noindex',
 	'archive|a','dailydir|d','stripdir','nostale','date=s',
-	'defs=s','basedir=s','list',
-	'useragent=s','version|v','help|h',
-	'random','retries=s','clean=s') or exit 1;
+	'defs=s','basedir=s','list','fetcher=s',
+	'version|v','help|h','random','retries=s','clean=s') or exit 1;
 
 # Process options:
 
@@ -65,7 +63,7 @@ Options:
       --basedir DIR          Work in specified directory instead of current
 			     directory (program will look here for previous HTML
 			     file and save new files here, etc.)
-      --useragent STRING     Set User-Agent: header to STRING (default is none)
+      --fetcher STRING       Curl program to use for downloading (default is 'curl')
       --retries NUM          When downloading items, retry NUM times instead of
 			     default 3 times
       --clean NUM            Keep only the latest NUM days of files; remove all
@@ -104,6 +102,10 @@ $short_date_tomorrow = strftime("\%Y.\%m.\%d", @localtime_tomorrow);
 # Get strip definitions now - info used below
 unless ($options{'defs'}) {
 	$options{'defs'} = '/usr/share/dailystrips/strips.def';
+}
+
+unless ($options{'fetcher'}) {
+	$options{'fetcher'} = 'curl';
 }
 
 &get_defs($options{'defs'});
@@ -642,26 +644,11 @@ sub http_get {
 
 	if ($referer eq "") {$referer = $url;}
 
-	my $headers = new HTTP::Headers;
-	$headers->referer($referer);
-
-	my $ua = LWP::UserAgent->new;
-	$ua->agent($options{'useragent'});
-
 	for (1 .. $options{'retries'}) {
-		# main request
-		$request = HTTP::Request->new('GET', $url, $headers);
-		$response = $ua->request($request);
-		($status = $response->status_line()) =~ s/^(\d+)/$1:/;
-		if ($response->is_error()) {
-			# FIXME: Need better error handling with the LWP::UserAgent module (if there's a
-			# problem, report exactly *what* went wrong - proxy, etc..)
-			if ($options{'verbose'}) {
-				warn "Warning: could not download $url: $status (attempt $_ of $options{'retries'})\n";
-			}
-		} else {
-			return $response->content;
-		}
+		open(READER, "-|", $options{'fetcher'}, "--silent", "--referer", $referer, $url) or next;
+		my $output = slurp \*READER;
+		close READER or next;
+		return $output;
 	}
 
 	# if we get here, URL retrieval completely failed

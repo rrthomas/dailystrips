@@ -34,9 +34,8 @@ aren't all available at one time.
 
 # Requirements
 
-dailystrips requires the `HTTP::Request`, `Date::Time`, `LWP::UserAgent`,
-and `POSIX` modules. See www.cpan.org if you don't have them installed
-already.
+dailystrips requires the `File::Slurp`, `Date::Time` and `POSIX`
+modules. See www.cpan.org if you don't have them installed already. The `curl` program is also required.
 
 # Installation
 
