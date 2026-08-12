@@ -49,28 +49,6 @@ end
 
 
 # Class definitions
-class ucomics-srch
-	homepage http://www.ucomics.com/$strip/
-	type search
-	searchpattern <img.+?src=".+?(/$1/(\d+)/$1(\d+).+?)"
-	baseurl http://images.ucomics.com/comics
-	provides latest
-end
-
-class ucomics-gen
-	homepage http://www.ucomics.com/$strip/
-	type generate
-	imageurl http://images.ucomics.com/comics/$1/%Y/$1%y%m%d.gif
-	provides any
-end
-
-class ucomics-gen-sun-jpg
-	homepage http://www.ucomics.com/$strip/
-	type generate
-	imageurl http://images.ucomics.com/comics/$1/%Y/$1%y%m%d.<code:"gif" if %w!=0><code:"jpg" if %w==0>
-	provides any
-end
-
 class gocomics-srch
         homepage http://www.gocomics.com/$strip/
         type search
@@ -225,13 +203,6 @@ class washpost-king
         imageurl http://est.rbma.com/content/$1
         type generate
         provides latest
-end
-
-class washpost-uclick
-	homepage http://www2.uclick.com/client/wpc/$1/
-	type search
-	searchpattern <IMG.+?SRC="(http://images\.ucomics\.com/comics/$1/\d+/$1\d+.gif)">
-	provides latest
 end
 
 class slate-cagle
@@ -1072,187 +1043,6 @@ strip achewood
 	provides any
 end
 
-# ucomics.com strips
-strip adamathome
-	name Adam@home
-	useclass ucomics-gen
-	$1 ad
-end
-
-strip baldo
-	name Baldo
-	useclass ucomics-gen
-	$1 ba
-end
-
-strip thebigpicture
-	name The Big Picture
-	useclass ucomics-gen
-	$1 bi
-end
-
-strip boondocks
-	name The Boondocks
-	useclass ucomics-gen
-	$1 bo
-end
-
-strip calvinandhobbes
-	name Calvin and Hobbes
-	useclass gocomics-srch
-	# $1 ch
-end
-
-strip cathy
-	name Cathy
-	useclass ucomics-gen
-	$1 ca
-end
-
-strip closetohome
-	name Close to Home
-	useclass ucomics-gen
-	$1 cl
-end
-
-strip cornered
-	name Cornered
-	useclass ucomics-gen
-	$1 co
-end
-
-strip doonesbury
-	name Doonesbury
-	useclass ucomics-gen-sun-jpg
-	$1 db
-end
-
-strip thefifthwave
-	name The 5th Wave
-	useclass gocomics-srch
-	# $1 fw
-end
-
-strip bensargent
-	name Ben Sargent
-	useclass gocomics-srch
-	# $1 bs
-end
-
-strip patoliphant
-	name Pat Oliphant
-	useclass gocomics-srch
-	# $1 po
-end
-
-strip foxtrot
-	name FoxTrot
-	useclass ucomics-gen
-	$1 ft
-end
-
-strip thefuscobrothers
-	name The Fusco Brothers
-	useclass ucomics-gen
-	$1 fu
-end
-
-strip garfield
-	name Garfield
-	useclass ucomics-gen
-	$1 ga
-end
-
-strip heartofthecity
-	name Heart of the City
-	useclass ucomics-gen
-	$1 hc
-end
-
-strip inthebleachers
-	name In the Bleachers
-	useclass ucomics-gen
-	$1 bl
-end
-
-strip james
-	name James
-	useclass ucomics-gen
-	$1 jm
-end
-
-strip mrpotatohead
-        name Mr. Potato Head
-        useclass ucomics-gen
-        $1 mrp
-end
-
-strip nonsequitur
-	name Non Sequitur
-	useclass ucomics-gen
-	$1 nq
-end
-
-strip oddlyenough
-	name Oddly Enough
-	useclass ucomics-gen
-	$1 oe
-end
-
-strip overboard
-	name Overboard
-	useclass ucomics-gen
-	$1 ob
-end
-
-strip reallifeadventures
-	name Real Life Adventures
-	useclass ucomics-gen
-	$1 rl
-end
-
-strip reynoldsunwrapped
-	name Reynolds Unwrapped
-	useclass ucomics-gen
-	$1 rw
-end
-
-strip stonesoup
-	name Stone Soup
-	useclass ucomics-gen
-	$1 ss
-end
-
-strip tankmcnamara
-	name Tank McNamara
-	useclass ucomics-gen
-	$1 tm
-end
-
-strip tomthedancingbug
-	name Tom the Dancing Bug
-	useclass gocomics-srch
-	# $1 td
-end
-
-strip ziggy
-	name Ziggy
-	useclass ucomics-gen
-	$1 zi
-end
-
-strip theduplex
-        name The Duplex
-        useclass ucomics-gen
-        $1 dp
-end
-
-strip psmueller
-	name P. S. Mueller
-	useclass ucomics-gen
-	$1 psm
-end
-
 strip misterboffo
 	name Mister Boffo
 	homepage http://www.mrboffo.com/daily.html
@@ -1260,20 +1050,6 @@ strip misterboffo
 	searchpattern <img.+?src="(images/daily/[^"]*)
 	baseurl http://www.mrboffo.com/
 	provides latest
-end
-
-strip bottomliners
-	name Bottom Liners
-	artist	Eric and Bill Teitelbaum
-        useclass ucomics-gen
-        $1 tmbot
-end
-
-strip luckycow
-	name Lucky Cow
-	artist Mark Pett
-        useclass ucomics-gen
-        $1 luc
 end
 
 # unitedmedia.com strips
@@ -1349,12 +1125,6 @@ strip forbetter
 	searchpattern <img.+?src="(/strip_fix[^"]*)"
 	baseurl http://www.fborfw.com
 	provides latest
-end
-
-strip forbetterorforworse
-	name For Better or For Worse
-	useclass ucomics-gen
-	$1 fb
 end
 
 strip frank&ernest
@@ -2620,42 +2390,6 @@ strip wolvertoon
         type generate
         imageurl http://www.pacificnet.net/toons/wolvertoon.gif
         provides latest
-end
-
-strip toles
-	name Tom Toles
-	useclass washpost-uclick
-	$1 tt
-end
-
-strip auth
-	name Tony Auth
-	useclass washpost-uclick
-	$1 ta
-end
-
-strip carlson
-	name Stuart Carlson
-	useclass washpost-uclick
-	$1 sc
-end
-
-strip deore
-	name Bill Deore
-	useclass washpost-uclick
-	$1 bd
-end
-
-strip oliphant
-	Name Pat Oliphant
-	useclass washpost-uclick
-	$1 po
-end
-
-strip rall
-	name Ted Rall
-	useclass washpost-uclick
-	$1 tr
 end
 
 #cagle strips
