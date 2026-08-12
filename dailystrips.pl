@@ -38,8 +38,7 @@ GetOptions(\%options, 'quiet|q','verbose','noindex',
 	'archive|a','dailydir|d','stripdir','nostale','date=s',
 	'defs=s','basedir=s','list',
 	'useragent=s','version|v','help|h',
-	'random','titles=s',
-	'retries=s','clean=s') or exit 1;
+	'random','retries=s','clean=s') or exit 1;
 
 # Process options:
 #  Note: Blocks have been ordered so that we only do as much as absolutely
@@ -61,7 +60,6 @@ Options:
       --list                 List available strips
       --random               Download a random strip
       --defs FILE            Use alternate strips definition file
-      --titles STRING        Customize HTML output
       --noindex              Disable symlinking current page to index.html
   -a  --archive              Generate archive.html as a list of all days
   -d  --dailydir             Create a separate directory for each day's images
@@ -197,10 +195,6 @@ if ($options{'basedir'}) {
 	}
 }
 
-if ($options{'titles'}) {
-	$options{'titles'} .= " ";
-}
-
 unless (@get) {
 	die "Error: no strip specified (--list to list available strips)\n";
 }
@@ -254,14 +248,14 @@ if ($options{'archive'}) {
 		  "<html>
 
 <head>
-	<title>$options{'titles'}dailystrips archive</title>
+	<title>dailystrips archive</title>
 </head>
 
 <body bgcolor=\"#ffffff\" text=\"#000000\" link=\"#0000ff\" vlink=\"#ff00ff\" alink=\"#ff0000\">
 
 <p align=\"center\">\n
 
-<font face=\"helvetica,arial\" size=\"14pt\">$options{'titles'}dailystrips archive</font>
+<font face=\"helvetica,arial\" size=\"14pt\">dailystrips archive</font>
 
 </p>
 
@@ -357,12 +351,12 @@ print PAGE
 "<html>
 
 <head>
-	<title>$options{'titles'}dailystrips for $long_date</title>
+	<title>dailystrips for $long_date</title>
 </head>
 
 <body bgcolor=\"#ffffff\" text=\"#000000\" link=\"#ff00ff\">
 <center>
-	<font face=\"helvetica\" size=\"+2\"><b><u>$options{'titles'}dailystrips for $long_date</u></b></font>
+	<font face=\"helvetica\" size=\"+2\"><b><u>dailystrips for $long_date</u></b></font>
 </center>
 
 <p><font face=\"helvetica\">
