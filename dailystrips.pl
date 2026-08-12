@@ -54,7 +54,7 @@ STRIPS can be a mix of strip names and group names
 or use option --list to list available strips and groups
 
 Options:
-  -q  --quiet                Turn off progress messages		
+  -q  --quiet                Turn off progress messages
       --verbose              Turn on extra progress information, overrides -q
       --list                 List available strips
       --random               Download a random strip
@@ -65,19 +65,19 @@ Options:
   -a  --archive              Generate archive.html as a list of all days,
   -d  --dailydir             Create a separate directory for each day's images
       --stripdir             Create a separate directory for each strip's
-                             images
+			     images
       --nostale              If a new strip is not available, displays an error
-                             in the HTML output instead of showing the old image
+			     in the HTML output instead of showing the old image
       --date DATE            Use value DATE instead of local time
-                             (DATE is parsed by Date::Parse function)
+			     (DATE is parsed by Date::Parse function)
       --basedir DIR          Work in specified directory instead of current
-                             directory (program will look here for previous HTML
-                             file and save new files here, etc.)
+			     directory (program will look here for previous HTML
+			     file and save new files here, etc.)
       --useragent STRING     Set User-Agent: header to STRING (default is none)
       --retries NUM          When downloading items, retry NUM times instead of
-                             default 3 times
+			     default 3 times
       --clean NUM            Keep only the latest NUM days of files; remove all
-                             older files
+			     older files
   -v  --version              Print version number
 ";
 
@@ -162,7 +162,7 @@ if ($options{'random'}) {
 
 if ($options{'list'}) {
 format =
-@<<<<<<<<<<<<<<<<<<<<<<<< 	@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+@<<<<<<<<<<<<<<<<<<<<<<<<	@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 $_, $val
 .
 	print "Available strips:\n";
@@ -170,7 +170,7 @@ $_, $val
 		$val = $defs{$_}{'name'};
 		write;
 	}
-	
+
 	print "\nAvailable groups:\n";
 	for (split(/\|/, $known_groups)) {
 		$val = $groups{$_}{'desc'};
@@ -233,14 +233,14 @@ if ($options{'dailydir'}) {
 	unless ($options{'quiet'}) {
 		warn "Operating in daily directory mode\n";
 	}
-		
+
 	unless (-d $short_date) {
 		unless (mkdir ($short_date, 0755)) {
 			die "Error: could not create today's directory ($short_date/)\n";
 		}
 	}
 }
-	
+
 unless (open(STDOUT, ">dailystrips-$short_date.html")) {
 	die "Error: could not open HTML file (dailystrips-$short_date.html) for writing\n";
 }
@@ -253,7 +253,7 @@ unless ($options{'date'}) {
 }
 
 if ($options{'archive'}) {
-	
+
 	unless (-e "archive.html") {
 		# Doesn't exist.. create
 		open(ARCHIVE, ">archive.html") or die "Error: could not create archive.html\n";
@@ -302,12 +302,12 @@ if ($options{'archive'}) {
 		}
 	}
 }
-	
+
 # Update previous day's file with a "Next Day" link to today's file
 if (open(PREVIOUS, "<dailystrips-$short_date_yesterday.html")) {
 	my @previous_page = <PREVIOUS>;
 	close(PREVIOUS);
-	
+
 	# Don't bother if no tag exists in the file (because it has already been updated)
 	if (grep(/<!--nextday-->/, @previous_page)) {
 		my $match_count;
@@ -318,7 +318,7 @@ if (open(PREVIOUS, "<dailystrips-$short_date_yesterday.html")) {
 				last if ($match_count == 2);
 			}
 		}
-		
+
 		if (open(PREVIOUS, ">dailystrips-$short_date_yesterday.html")) {
 			print PREVIOUS @previous_page;
 			close(PREVIOUS);
@@ -380,7 +380,7 @@ $topanchor
 
 <p><font face=\"helvetica\">
 &lt; <a href=\"dailystrips-$short_date_yesterday.html\">Previous day</a>$link_tomorrow";
-	
+
 if ($options{'archive'}) {
 	print " | <a href=\"archive.html\">Archives</a>";
 }
@@ -413,11 +413,11 @@ for (@strips) {
 	my ($strip, $name, $homepage, $img_addr, $referer, $prefetch, $artist) = split(/;/, $_);
 	my ($img_line, $local_name, $local_name_dir, $local_name_file, $local_name_ext, $image, $ext,
 	   $local_name_yesterday, $local_name_yesterday_dir, $local_name_yesterday_file, $local_name_yesterday_ext);
-	
+
 	if ($options{'verbose'}) {
 		warn "Downloading strip file for " . lc((split(/;/, $_))[0]) . "\n";
 	}
-	
+
 	if ($img_addr =~ "^unavail") {
 		if ($options{'verbose'}) {
 			warn "Error: $strip: could not retrieve URL\n";
@@ -437,7 +437,7 @@ for (@strips) {
 			$local_name_yesterday_dir = "$name/";
 			$local_name_yesterday_file = $short_date_yesterday;
 			$local_name_yesterday_ext = $ext;
- 				
+
 			$local_name = "$name/$short_date$ext";
 			$local_name_dir = "$name/";
 			$local_name_file = "$short_date";
@@ -447,7 +447,7 @@ for (@strips) {
 			$local_name_yesterday_dir = "$short_date_yesterday/";
 			$local_name_yesterday_file = "$name-$short_date_yesterday";
 			$local_name_yesterday_ext = "$ext";
-				
+
 			$local_name = "$short_date/$name-$short_date$ext";
 			$local_name_dir = "$short_date/";
 			$local_name_file = "$name-$short_date";
@@ -457,20 +457,20 @@ for (@strips) {
 			$local_name_yesterday_dir = "./";
 			$local_name_yesterday_file = "$name-$short_date_yesterday";
 			$local_name_yesterday_ext = "$ext";
-				
+
 			$local_name = "$name-$short_date$ext";
 			$local_name_dir = "./";
 			$local_name_file = "$name-$short_date";
 			$local_name_ext = "$ext";
 		}
-			
+
 		# do ops that depend on file name
 		if ($options{'stripdir'}) {
 			unless (-d $local_name_dir) {
 				mkdir $local_name_dir, 0755;
 			}
 		}
-									
+
 		# need to download
 		if ($prefetch) {
 			if (&http_get($prefetch, $referer) =~ m/^ERROR/) {
@@ -482,7 +482,7 @@ for (@strips) {
 		} else {
 			$image = &http_get($img_addr, $referer);
 		}
-				
+
 		if ($image =~ /^ERROR/) {
 			# couldn't get the image
 			if (-e $local_name) {
@@ -494,7 +494,7 @@ for (@strips) {
 					warn "Error: $strip: could not download strip\n";
 				}
 			}
-				
+
 			$img_line = "[Error - unable to download image]";
 		} else {
 		      HAVE_IMAGE:
@@ -503,11 +503,11 @@ for (@strips) {
 			binmode(IMAGE);
 			print IMAGE $image;
 			close(IMAGE);
-				
+
 			if (system("diff \"$local_name_yesterday\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
 				# same strip as yesterday
 				system("mv","$local_name.tmp","$local_name");
-						
+
 				if ($options{'nostale'}) {
 					$img_line = "[Error - new strip not available]";
 				} else {
@@ -537,7 +537,7 @@ for (@strips) {
 				#   -downloading an updated strip that replaces an old one downloaded at
 				#    an earlier time on the same day
 				system("mv","$local_name.tmp","$local_name");
-						
+
 				$img_addr = $local_name;
 				$img_addr =~ s/ /\%20/go;
 				if ($options{'stripnav'}) {
@@ -548,11 +548,11 @@ for (@strips) {
 			}
 		}
 	}
-		
+
 	if ($artist) {
 		$artist = " by $artist";
 	}
-	
+
 	my $stripanchor;
 	if ($options{'stripnav'}) {
 		$stripanchor = "<a name=\"$strip\">";
@@ -717,13 +717,13 @@ sub http_get {
 
 	my $headers = new HTTP::Headers;
 	$headers->referer($referer);
-	
+
 	my $ua = LWP::UserAgent->new;
 	$ua->agent($options{'useragent'});
-	
+
 	for (1 .. $options{'retries'}) {
 		# main request
-		$request = HTTP::Request->new('GET', $url, $headers);				
+		$request = HTTP::Request->new('GET', $url, $headers);
 		$response = $ua->request($request);
 		($status = $response->status_line()) =~ s/^(\d+)/$1:/;
 		if ($response->is_error()) {
@@ -745,15 +745,15 @@ sub http_get {
 sub get_strip {
 	my ($strip) = @_;
 	my ($page, $addr);
-	
+
 	if ($options{'date'} and $defs{$strip}{'provides'} eq "latest") {
 		if ($options{'verbose'}) {
 			warn "Warning: strip $strip not compatible with --date, skipping\n";
 		}
-		
+
 		next;
 	}
-	
+
 	if ($defs{$strip}{'type'} eq "search") {
 		$page = &http_get($defs{$strip}{'searchpage'});
 
@@ -761,21 +761,21 @@ sub get_strip {
 			if ($options{'verbose'}) {
 				warn "Error: $strip: could not download searchpage $defs{$strip}{'searchpage'}\n";
 			}
-			
+
 			$addr = "unavail-server";
 		} else {
 			$page =~ /$defs{$strip}{'searchpattern'}/si;
 			my @regexmatch;
 			for (1..9) {
 				$regexmatch[$_] = ${$_};
-				#warn "regex match #$_: ${$_}\n";	
+				#warn "regex match #$_: ${$_}\n";
 			}
 
 			unless (${$defs{$strip}{'matchpart'}}) {
 				if ($options{'verbose'}) {
 					warn "Error: $strip: searchpattern $defs{$strip}{'searchpattern'} did not match anything in searchpage $defs{$strip}{'searchpage'}\n";
 				}
-				
+
 				$addr = "unavail-nomatch";
 			} else {
 				my $match = ${$defs{$strip}{'matchpart'}};
@@ -789,13 +789,13 @@ sub get_strip {
 				}
 			}
 		}
-		
+
 	} elsif ($defs{$strip}{'type'} eq "generate") {
 		$addr = $defs{$strip}{'baseurl'} . $defs{$strip}{'imageurl'};
 	}
-	
+
 	unless ($addr =~ /^(https?:\/\/|unavail)/io) { $addr = "http://" . $addr }
-	
+
 	push(@strips,"$strip;$defs{$strip}{'name'};$defs{$strip}{'homepage'};$addr;$defs{$strip}{'referer'};$defs{$strip}{'prefetch'};$defs{$strip}{'artist'}");
 }
 
@@ -803,21 +803,21 @@ sub get_defs {
 	my $defs_file = shift;
 	my ($strip, $class, $sectype, $group);
 	my $line;
-	
+
 	unless(open(DEFS, "<$defs_file")) {
 		die "Error: could not open strip definitions file $defs_file\n";
 	}
-	
+
 	my @defs_file = <DEFS>;
 	close(DEFS);
-	
+
 	if ($options{'verbose'}) {
 		warn "Loading definitions from file $defs_file\n";
 	}
-	
+
 	for (@defs_file) {
 		$line++;
-		
+
 		chomp;
 		s/#(.*)//; s/^\s*//; s/\s*$//;
 
@@ -830,7 +830,7 @@ sub get_defs {
 				{
 					undef $defs{$1};
 				}
-				
+
 				$strip = $1;
 				$sectype = "strip";
 			}
@@ -840,7 +840,7 @@ sub get_defs {
 				{
 					undef $classes{$1};
 				}
-							
+
 				$class = $1;
 				$sectype = "class";
 			}
@@ -850,7 +850,7 @@ sub get_defs {
 				{
 					undef $groups{$1};
 				}
-			
+
 				$group = $1;
 				$sectype = "group";
 			}
@@ -864,12 +864,12 @@ sub get_defs {
 			if ($sectype eq "class")
 			{
 				undef $class
-			}		
+			}
 			elsif ($sectype eq "strip")
 			{
 				if ($defs{$strip}{'useclass'}) {
 					my $using_class = $defs{$strip}{'useclass'};
-					
+
 					# import vars from class
 					for (qw(homepage searchpage searchpattern baseurl imageurl urlsuffix referer prefetch artist)) {
 						if ($classes{$using_class}{$_} and !$defs{$strip}{$_}) {
@@ -879,14 +879,14 @@ sub get_defs {
 							$defs{$strip}{$_} = $classvar;
 						}
 					}
-				
+
 					for (qw(type matchpart provides)) {
 						if ($classes{$using_class}{$_} and !$defs{$strip}{$_}) {
 							$defs{$strip}{$_} = $classes{$using_class}{$_};
 						}
-					}	
-				}	
-						
+					}
+				}
+
 				#substitute auto vars for real vals here/set defaults
 				unless ($defs{$strip}{'searchpage'}) {$defs{$strip}{'searchpage'} = $defs{$strip}{'homepage'}}
 				unless ($defs{$strip}{'referer'})    {
@@ -896,48 +896,48 @@ sub get_defs {
 						$defs{$strip}{'referer'} = $defs{$strip}{'homepage'}
 					}
 				}
-				
+
 				#other vars in definition
 				for (qw(homepage searchpage searchpattern imageurl baseurl urlsuffix referer prefetch)) {
 					if ($defs{$strip}{$_}) {
 						$defs{$strip}{$_} =~ s/\$(name|homepage|searchpage|searchpattern|imageurl|baseurl|referer|prefetch)/$defs{$strip}{$1}/g;
 					}
-				}			
-		
-				#dates		
+				}
+
+				#dates
 				for (qw(homepage searchpage searchpattern imageurl baseurl urlsuffix referer prefetch)) {
 					if ($defs{$strip}{$_}) {
 						$defs{$strip}{$_} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge;
 					}
 				}
-				
+
 				#sanity check vars
 				for (qw(name homepage type)) {
 					unless ($defs{$strip}{$_}) {
 						die "Error: strip $strip has no '$_' value\n";
 					}
 				}
-				
-				for (qw(homepage searchpage baseurl imageurl)){	
+
+				for (qw(homepage searchpage baseurl imageurl)){
 					if ($defs{$strip}{$_} and $defs{$strip}{$_} !~ /^https?:\/\//io) {
 						die "Error: strip $strip has invalid $_\n"
 					}
 				}
-				
+
 				if ($defs{$strip}{'type'} eq "search") {
 					unless ($defs{$strip}{'searchpattern'}) {
 						die "Error: strip $strip has no 'searchpattern' value in $defs_file\n";
 					}
-					
+
 					unless ($defs{$strip}{'searchpattern'} =~ /\(.+\)/) {
 						die "Error: strip $strip has no parentheses in searchpattern\n";
 					}
-					
+
 					unless ($defs{$strip}{'matchpart'}) {
 						#die "Error: strip $strip has no 'matchpart' value in $defs_file\n";
 						$defs{$strip}{'matchpart'} = 1;
 					}
-					
+
 					if ($defs{$strip}{'imageurl'} and ($defs{$strip}{'baseurl'} or $defs{$strip}{'urlsuffix'})) {
 						die "Error: strip $strip: cannot use both 'imageurl' at the same time as 'baseurl'\nor 'urlsuffix'\n";
 					}
@@ -946,11 +946,11 @@ sub get_defs {
 						die "Error: strip $strip has no 'imageurl' value in $defs_file\n";
 					}
 				}
-				
+
 				unless ($defs{$strip}{'provides'}) {
 					die "Error: strip $strip has no 'provides' value in $defs_file\n";
 				}
-				
+
 				#debugger
 				#foreach my $strip (keys %defs) {
 				#	foreach my $key (qw(homepage searchpage searchpattern imageurl baseurl referer prefetch)) {
@@ -958,20 +958,20 @@ sub get_defs {
 				#	}
 				#	#warn "DEBUG: $strip:name=$defs{$strip}{'name'}\n";
 				#}
-			
+
 				undef $strip;
 			}
 			elsif ($sectype eq "group")
 			{
 				chop $groups{$group}{'strips'};
-				
+
 				unless ($groups{$group}{'desc'}) {
 					$groups{$group}{'desc'} = "[No description]";
 				}
-				
+
 				undef $group;
 			}
-			
+
 			undef $sectype;
 		}
 		elsif ($sectype eq "class") {
@@ -983,7 +983,7 @@ sub get_defs {
 				unless ($1 =~ /^(search|generate)$/io) {
 					die "Error: invalid type at $defs_file line $line\n";
 				}
-				
+
 				$classes{$class}{'type'} = $1;
 			}
 			elsif (/^searchpage\s+(.+)$/i)
@@ -999,7 +999,7 @@ sub get_defs {
 				unless ($1 =~ /^(\d)$/) {
 					die "Error: invalid 'matchpart' at $defs_file line $line\n";
 				}
-				
+
 				$classes{$class}{'matchpart'} = $1;
 			}
 			elsif (/^baseurl\s+(.+)$/i)
@@ -1060,7 +1060,7 @@ sub get_defs {
 				unless ($1 =~ /^(search|generate)$/i) {
 					die "Error: invalid 'type' at $defs_file line $line\n";
 				}
-				
+
 				$defs{$strip}{'type'} = $1;
 			}
 			elsif (/^searchpage\s+(.+)$/i)
@@ -1076,7 +1076,7 @@ sub get_defs {
 				unless ($1 =~ /^(\d+)$/) {
 					die "Error: invalid 'matchpart' at $defs_file line $line\n";
 				}
-				
+
 				$defs{$strip}{'matchpart'} = $1;
 			}
 			elsif (/^baseurl\s+(.+)$/i)
@@ -1108,7 +1108,7 @@ sub get_defs {
 				unless ($1 =~ /^(any|latest)$/i) {
 					die "Error: invalid 'provides' at $defs_file line $line\n";
 				}
-				
+
 				$defs{$strip}{'provides'} = $1;
 			}
 			elsif (/^artist\s+(.+)$/i)
@@ -1138,11 +1138,11 @@ sub get_defs {
 			}
 		}
 	}
-	
+
 	# Post-processing validation
 	for $group (keys %groups) {
 		my (@strips, %nostrips, @okstrips);
-		
+
 		if (defined($groups{$group}{'nostrips'})) {
 			@strips = sort(keys(%defs));
 			foreach (split (/;/,$groups{$group}{'nostrips'})) {
@@ -1157,13 +1157,13 @@ sub get_defs {
 			unless ($defs{$_}) {
 				warn "Warning: group $group references non-existant strip $_\n";
 			}
-			
+
 			next if ($nostrips{$_});
 			push (@okstrips,$_);
 		}
 		$groups{$group}{'strips'} = join(';',@okstrips);
 	}
-	
+
 }
 
 sub get_homedir
