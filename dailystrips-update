@@ -30,8 +30,8 @@ $version = "1.0.0";
 $dailystrips_version = "1.0.28";
 
 # Get options
-GetOptions(\%options, 'quiet|q','verbose','proxy=s',
-	'proxyauth=s','noenvproxy','version|v','help|h',
+GetOptions(\%options, 'quiet|q','verbose',
+	'version|v','help|h',
 	'retries=s','updates=s','minage=s') or exit 1;
 
 # Process options:
@@ -49,10 +49,6 @@ the information to ~/.dailystrips-updates.def
 Options:
   -q  --quiet                Turn off progress messages		
       --verbose              Turn on extra progress information, overrides -q
-      --proxy host:port      Use specified HTTP proxy server (overrides
-                             environment proxy, if set)
-      --proxyauth user:pass  Set username and password for proxy server
-      --noenvproxy           Ignore the http_proxy environment variable, if set
       --retries NUM          When downloading items, make NUM attempts instead
                              of only once
       --updates FILE         Save updates to FILE instead of
@@ -79,33 +75,6 @@ if ($options{'retries'} =~ m/\D/) {
 
 unless ($options{'retries'}) {
         $options{'retries'} = 3;
-}
-
-
-#Set proxy
-if ($options{'proxy'})
-{
-	$options{'proxy'} =~ /^(http:\/\/)?(.*?):(.+?)\/?$/i;
-	unless ($2 and $3) {
-		die "Error: incorrectly formatted proxy server ('http://server:port' expected)\n";
-	}
-				
-	$options{'proxy'} = "http://$2:$3";
-}
-
-if (!$options{'noenvproxy'} and !$options{'proxy'} and $ENV{'http_proxy'} ) {
-	$ENV{'http_proxy'} =~ /(http:\/\/)?(.*?):(.+?)\/?$/i;
-	unless ($2 and $3) {
-		die "Error: incorrectly formatted proxy server environment variable\n('http://server:port' expected)\n";
-	}
-			
-	$options{'proxy'} = "http://$2:$3";
-}
-
-if ($options{'proxyauth'}) {
-	unless ($options{'proxyauth'} =~ /^.+?:.+?$/) {
-		die "Error: incorrectly formatted proxy credentials ('user:pass' expected)\n";
-	}
 }
 
 
@@ -156,12 +125,10 @@ sub http_get {
 	my ($request, $response, $status);
 	
 	my $headers = new HTTP::Headers;
-	$headers->proxy_authorization_basic(split(/:/, $options{'proxyauth'}));
 	$headers->referer($referer);
 	
 	my $ua = LWP::UserAgent->new;
 	$ua->agent($options{'useragent'});
-	$ua->proxy('http', $options{'proxy'});
 	
 	for (1 .. $options{'retries'}) {
 		# main request
