@@ -253,21 +253,31 @@ if ($options{'dailydir'} and $options{'stripdir'}) {
 
 #Set proxy
 if ($options{'proxy'}) {
-		$options{'proxy'} =~ /^(http:\/\/)?(.*?):(.+?)\/?$/i;
+		$options{'proxy'} =~ /^(https?:\/\/)?(.*?):(.+?)\/?$/i;
 		unless ($2 and $3) {
-			die "Error: incorrectly formatted proxy server ('http://server:port' expected)\n";
+			die "Error: incorrectly formatted proxy server ('http://server:port' expected (or https...))\n";
 		}
 				
-		$options{'proxy'} = "http://$2:$3";
+		if ( defined($1) ) {
+			$options{'proxy'} = "$1";
+		} else {
+			$options{'proxy'} = "http://";
+		}
+		$options{'proxy'} .= "$2:$3";
 }
 
 if (!$options{'noenvproxy'} and !$options{'proxy'} and $ENV{'http_proxy'} ) {
-	$ENV{'http_proxy'} =~ /(http:\/\/)?(.*?):(.+?)\/?$/i;
+	$ENV{'http_proxy'} =~ /(https?:\/\/)?(.*?):(.+?)\/?$/i;
 	unless ($2 and $3) {
 		die "Error: incorrectly formatted proxy server environment variable\n('http://server:port' expected)\n";
 	}
 			
-	$options{'proxy'} = "http://$2:$3";
+	if ( defined($1) ) {
+		$options{'proxy'} = "$1";
+	} else {
+		$options{'proxy'} = "http://";
+	}
+	$options{'proxy'} .= "$2:$3";
 }
 
 if ($options{'proxyauth'}) {
@@ -557,7 +567,7 @@ for (@strips) {
 	} else {
 		if ($options{'local'}) {
 			# local mode - download strips
-			$img_addr =~ /http:\/\/(.*)\/(.*)\.(.*?)([?&].+)?$/;
+			$img_addr =~ /https?:\/\/(.*)\/(.*)\.(.*?)([?&].+)?$/;
 			if (defined $3) { $ext = ".$3" }
 
 			# prepare file names
@@ -682,22 +692,7 @@ for (@strips) {
 						print IMAGE $image;
 						close(IMAGE);
 				
-						if (-e $local_name and system("diff \"$local_name\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
-							# already downloaded the same strip earlier today
-							unlink("$local_name.tmp");
-						
-							if ($options{'avantgo'}) {
-								$img_line = &make_avantgo_table($local_name, $ext);
-							} else {
-								$img_addr = $local_name;
-								$img_addr =~ s/ /\%20/go;
-								if ($options{'stripnav'}) {
-									$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-								} else {
-									$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-								}
-							}
-						} elsif (system("diff \"$local_name_yesterday\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
+						if (system("diff \"$local_name_yesterday\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
 							# same strip as yesterday
 							if ($options{'nosymlinks'}) {
 								system("mv","$local_name.tmp","$local_name");
@@ -722,6 +717,21 @@ for (@strips) {
 									$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 								}
 							}								
+						} elsif (-e $local_name and system("diff \"$local_name\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
+							# already downloaded the same strip earlier today
+							unlink("$local_name.tmp");
+
+							if ($options{'avantgo'}) {
+								$img_line = &make_avantgo_table($local_name, $ext);
+							} else {
+								$img_addr = $local_name;
+								$img_addr =~ s/ /\%20/go;
+								if ($options{'stripnav'}) {
+									$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
+								} else {
+									$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+								}
+							}
 						} else {
 							# completely new strip
 							#  possible to get here by:
@@ -862,7 +872,7 @@ sub http_get {
 	
 	my $ua = LWP::UserAgent->new;
 	$ua->agent($options{'useragent'});
-	$ua->proxy('http', $options{'proxy'});
+	$ua->proxy(['http', 'https'], $options{'proxy'});
 	
 	for (1 .. $options{'retries'}) {
 		# main request
@@ -936,7 +946,7 @@ sub get_strip {
 		$addr = $defs{$strip}{'baseurl'} . $defs{$strip}{'imageurl'};
 	}
 	
-	unless ($addr =~ /^(http:\/\/|unavail)/io) { $addr = "http://" . $addr }
+	unless ($addr =~ /^(https?:\/\/|unavail)/io) { $addr = "http://" . $addr }
 	
 	push(@strips,"$strip;$defs{$strip}{'name'};$defs{$strip}{'homepage'};$addr;$defs{$strip}{'referer'};$defs{$strip}{'prefetch'};$defs{$strip}{'artist'}");
 }
@@ -966,7 +976,7 @@ sub get_defs {
 		next if $_ eq "";
 
 		if (!$sectype) {
-			if (/^strip\s+(\w+)$/i)
+			if (/^strip\s+(\S+)$/i)
 			{
 				if (defined ($defs{$1}))
 				{
@@ -1068,7 +1078,7 @@ sub get_defs {
 				}
 				
 				for (qw(homepage searchpage baseurl imageurl)){	
-					if ($defs{$strip}{$_} and $defs{$strip}{$_} !~ /^http:\/\//io) {
+					if ($defs{$strip}{$_} and $defs{$strip}{$_} !~ /^https?:\/\//io) {
 						die "Error: strip $strip has invalid $_\n"
 					}
 				}
