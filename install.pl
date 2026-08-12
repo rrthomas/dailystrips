@@ -115,7 +115,7 @@ if (system("install -d $options{'scriptdir'}")) {
 	die "Error creating scripts directory. See above for reason.\n";
 }
 
-if (system("install dailystrips dailystrips-clean dailystrips-update $options{'scriptdir'}")) {
+if (system("install dailystrips dailystrips-clean $options{'scriptdir'}")) {
 	die "Error installing script. See above for reason.\n";
 }
 

@@ -60,15 +60,6 @@ all users on a system. This may be done by creating a file /etc/dailystrips.defs
 and placing the definitions there. This file is loaded after the default
 definition file and so may be use to override provided definitions, if desired.
 
-# Definition upgrades
-
-Since full releases are not made available every time the definitions file
-changes, the current CVS copy of the definitions file is available through a
-link at http://dailystrips.sourceforge.net/download.html. Users may either
-replace /usr/share/dailystrips/strips.def with this updated copy, or if a
-package management system is used (Debian dpkg, RPM, etc.) placing the updated
-definitions in /etc/dailystrips.defs is recommended.
-
 # *Notice*
 
 Keep in mind that this program is for personal use only, as making

@@ -37,7 +37,7 @@ GetOptions(\%options, 'quiet|q','verbose','noindex',
 	'new|n','defs=s','nopersonal','basedir=s','list',
 	'useragent=s','version|v','help|h',
 	'random','stripnav','titles=s',
-	'retries=s','clean=s','updates=s','noupdates') or exit 1;
+	'retries=s','clean=s') or exit 1;
 
 # Process options:
 #  Note: Blocks have been ordered so that we only do as much as absolutely
@@ -60,9 +60,6 @@ Options:
       --random               Download a random strip
       --defs FILE            Use alternate strips definition file
       --nopersonal           Ignore ~/.dailystrips.defs
-      --updates              Read updated defs from FILE instead of
-                             ~/.dailystrips-updates.def
-      --noupdates            Ignore updated defs file 
       --stripnav             Add links for navigation within the page
       --titles STRING        Customize HTML output
       --noindex              Disable symlinking current page to index.html
@@ -129,20 +126,6 @@ unless ($options{'defs'}) {
 
 &get_defs($options{'defs'});
 
-
-# Load updated defs file
-unless (defined $options{'updates'})
-{
-        $options{'updates'} = &get_homedir() . "/.dailystrips-updates.def";
-}
-
-
-unless($options{'noupdates'})
-{
-	if (-r $options{'updates'}) {
-		&get_defs($options{'updates'});
-	}
-}
 
 # Get system configurable strip definitions now
 unless (! -r '/etc/dailystrips.defs') {
