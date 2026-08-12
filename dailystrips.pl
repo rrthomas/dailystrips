@@ -101,21 +101,7 @@ Options:
   -v  --version              Print version number
 ";
 
-
-	if ($^O =~ /Win32/ ) {
-		print
-"Additional Win32 Notes:
-
-Windows lacks a number of features and programs found on *NIX, so a number of
-changes must be made to the program's operation:
-
-1. --date is not available
-2. Personal and update definition files may or may not work
-3. System-wide definition files are not supported
-";
-	} # ' please emacs perlmode
-
-print "\nBugs and comments to dailystrips\@amedico.dhs.org\n";
+	print "\nBugs and comments to dailystrips\@amedico.dhs.org\n";
 
 	exit;
 }
@@ -152,11 +138,7 @@ $short_date_tomorrow = strftime("\%Y.\%m.\%d", @localtime_tomorrow);
 
 # Get strip definitions now - info used below
 unless ($options{'defs'}) {
-	if ($^O =~ /Win32/ ) {
-		$options{'defs'} = 'strips.def';
-	} else {
-		$options{'defs'} = '/usr/share/dailystrips/strips.def';
-	}
+	$options{'defs'} = '/usr/share/dailystrips/strips.def';
 }
 
 &get_defs($options{'defs'});
@@ -178,7 +160,7 @@ unless($options{'noupdates'})
 
 # Get system configurable strip definitions now
 unless ($options{'nosystem'}) {
-	unless (($^O =~ /Win32/) or (! -r '/etc/dailystrips.defs')) {
+	unless (! -r '/etc/dailystrips.defs') {
 		&get_defs('/etc/dailystrips.defs');
 	}
 }
@@ -302,7 +284,6 @@ if ($options{'local'}) {
 		}
 		
 		unless (-d $short_date) {
-			# any issues with masks and Win32?
 			unless(mkdir ($short_date, 0755)) {
 				die "Error: could not create today's directory ($short_date/)\n";
 			}
@@ -315,10 +296,8 @@ if ($options{'local'}) {
 
 	unless ($options{'date'}) {
 		unless ($options{'noindex'}) {
-			unless ($^O =~ /Win32/) {
-				unlink("index.html");
-				system("ln -s dailystrips-$short_date.html index.html");
-			}
+			unlink("index.html");
+			system("ln -s dailystrips-$short_date.html index.html");
 		}
 	}
 
@@ -566,7 +545,6 @@ for (@strips) {
 			# do ops that depend on file name
 			if ($options{'stripdir'}) {
  				unless (-d $local_name_dir) {
-	 				# any issues with masks and Win32?
  					mkdir $local_name_dir, 0755;
  				}
  			}
@@ -614,13 +592,41 @@ for (@strips) {
 				} else {
 					HAVE_IMAGE:
 					# got the image
-					if ($^O =~ /Win32/) {
-						# can't do any diff checking on windows (easily, that is - it is doable)
-						open(IMAGE, ">$local_name");
-						binmode(IMAGE);
-						print IMAGE $image;
-						close(IMAGE);
-					
+					# FIXME: only download to .tmp if earlier file exists
+					open(IMAGE, ">$local_name.tmp");
+					binmode(IMAGE);
+					print IMAGE $image;
+					close(IMAGE);
+				
+					if (system("diff \"$local_name_yesterday\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
+						# same strip as yesterday
+						if ($options{'nosymlinks'}) {
+							system("mv","$local_name.tmp","$local_name");
+						} else {
+							unlink("$local_name.tmp");
+							if ($options{'stripdir'} or $options{'dailydir'}) {
+								system("ln -s \"../$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
+							} else {
+								system("ln -s \"$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
+							}
+							
+						}
+						
+						if ($options{'nostale'}) {
+							$img_line = "[Error - new strip not available]";
+						} else {
+							$img_addr = $local_name;
+							$img_addr =~ s/ /\%20/go;
+							if ($options{'stripnav'}) {
+								$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
+							} else {
+								$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+							}
+						}								
+					} elsif (-e $local_name and system("diff \"$local_name\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
+						# already downloaded the same strip earlier today
+						unlink("$local_name.tmp");
+						
 						$img_addr = $local_name;
 						$img_addr =~ s/ /\%20/go;
 						if ($options{'stripnav'}) {
@@ -629,63 +635,19 @@ for (@strips) {
 							$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 						}
 					} else {
-						# FIXME: only download to .tmp if earlier file exists
-						open(IMAGE, ">$local_name.tmp");
-						binmode(IMAGE);
-						print IMAGE $image;
-						close(IMAGE);
-				
-						if (system("diff \"$local_name_yesterday\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
-							# same strip as yesterday
-							if ($options{'nosymlinks'}) {
-								system("mv","$local_name.tmp","$local_name");
-							} else {
-								unlink("$local_name.tmp");
-								if ($options{'stripdir'} or $options{'dailydir'}) {
-									system("ln -s \"../$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
-								} else {
-									system("ln -s \"$local_name_yesterday\" \"$local_name\" >/dev/null 2>&1");
-								}
-
-							}
-							
-							if ($options{'nostale'}) {
-								$img_line = "[Error - new strip not available]";
-							} else {
-								$img_addr = $local_name;
-								$img_addr =~ s/ /\%20/go;
-								if ($options{'stripnav'}) {
-									$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-								} else {
-									$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-								}
-							}								
-						} elsif (-e $local_name and system("diff \"$local_name\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
-							# already downloaded the same strip earlier today
-							unlink("$local_name.tmp");
-
-							$img_addr = $local_name;
-							$img_addr =~ s/ /\%20/go;
-							if ($options{'stripnav'}) {
-								$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-							} else {
-								$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-							}
-						} else {
-							# completely new strip
-							#  possible to get here by:
-							#   -downloading a strip for the first time in a day
-							#   -downloading an updated strip that replaces an old one downloaded at
-							#    an earlier time on the same day
-							system("mv","$local_name.tmp","$local_name");
+						# completely new strip
+						#  possible to get here by:
+						#   -downloading a strip for the first time in a day
+						#   -downloading an updated strip that replaces an old one downloaded at
+						#    an earlier time on the same day
+						system("mv","$local_name.tmp","$local_name");
 						
-							$img_addr = $local_name;
-							$img_addr =~ s/ /\%20/go;
-							if ($options{'stripnav'}) {
-								$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-							} else {
-								$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-							}
+						$img_addr = $local_name;
+						$img_addr =~ s/ /\%20/go;
+						if ($options{'stripnav'}) {
+							$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
+						} else {
+							$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 						}
 					}
 				}
@@ -763,13 +725,6 @@ unless ($options{'lite'}) {
 </html>
 ";
 }
-
-if (!$options{'date'} and !$options{'noindex'} and $^O =~ /Win32/) {
-	# no symlinks on windows.. just make a copy of the file
-	close(STDOUT);
-	copy("dailystrips-$short_date.html","index.html");
-}
-
 
 # Clean out old files, if requested
 if ($options{'clean'}) {
@@ -1268,15 +1223,5 @@ sub my_eval {
 
 sub get_homedir
 {
-	if ($^O =~ /Win32/ )
-	{
-		my $dir = $ENV{'USERPROFILE'};
-		if ($dir eq "") {$dir = $ENV{'WINDIR'};}
-		$dir =~ s|\\|/|g;
-		return $dir; 
-        }
-	else
-	{
-		return (getpwuid($>))[7];
-        }
+	return (getpwuid($>))[7];
 }

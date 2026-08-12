@@ -21,12 +21,6 @@ my (%options, $prog_version);
 $prog_version = "1.0.29pre1";
 
 
-# Not for Win32
-if ($^O =~ /Win32/ ) {
-	die "install.pl is not for use on Win32 systems. Please see INSTALL file.\n";
-}
-
-
 # Editable paths
 $options{'sharedir'} = "/usr/share/dailystrips";
 $options{'docdir'} = "/usr/share/doc/dailystrips-$prog_version";

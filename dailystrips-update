@@ -286,15 +286,5 @@ sub get_updated_defs
 
 sub get_homedir
 {
-        if ($^O =~ /Win32/ )
-        {
-                my $dir = $ENV{'USERPROFILE'};
-                if ($dir eq "") {$dir = $ENV{'WINDIR'};}
-                $dir =~ s|\\|/|g;
-                return $dir;
-        }
-        else
-        {
-                return (getpwuid($>))[7];
-        }
+	return (getpwuid($>))[7];
 }

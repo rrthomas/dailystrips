@@ -19,7 +19,11 @@ www.cpan.org if you don't have them installed already. dailystrips was
 developed on Linux but should be able to run on any *nix with that has the
 necessary Perl modules installed. Running on Win32 is also possible.
 
-For the AvantGo mode, ImageMagick is required.
+dailystrips requires the `HTTP::Request`, `LWP::UserAgent` and `POSIX`
+modules. If you want to use `--date`, you will need `Date::Time` from the
+`TimeDate` package. See www.cpan.org if you don't have them installed
+already. dailystrips was developed on Linux but should be able to run on any
+*nix with that has the necessary Perl modules installed.
 
 Installation:
 See the INSTALL file.
