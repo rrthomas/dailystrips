@@ -10,6 +10,3 @@
   20 Feb 2001
   Need better error handling with the LWP::UserAgent module (if there's a
   problem, report exactly *what* went wrong - proxy, etc..)
-
-  The definition file parsing code needs to be re-thought and re-done. It works,
-  but gets weird in places and is generally hard to maintain.
