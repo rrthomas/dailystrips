@@ -588,19 +588,6 @@ strip btaf
         baseurl http://angryflower.com/
 end
 
-# Alternate, possibly better definition for btaf, but requires you have curl
-# installed.  If you do, and you want to use this, put the below in your
-# ~/.dailystrips.defs
-# strip btaf
-#         name Bob, The Angry Flower
-#         homepage http://angryflower.com/
-#         type search
-#         searchpage http://angryflower.com/<code:my $firstpage = `curl -s http://angryflower.com/archive.html`;if ($firstpage =~ /<a href="(.+?\.html)"/) {"$1"} else {print "$firstpage\n"; "BROKEN_CONFIG!"}>
-#         searchpattern <img src="([^\"]+?)".*?>
-#         imageurl http://angryflower.com/$match
-#         provides latest
-# end
-
 strip boasas
 	name Boy on a Stick and Slither
 	homepage http://www.boasas.com/
@@ -767,18 +754,6 @@ strip sexylosers
         imageurl http://sexylosers.com/comics/sl$match_1.jpg
         provides latest
 end
-
-# This definition for sexylosers requires you to have curl installed.  If you
-# do, and you want to use this, put the below in your ~/.dailystrips.defs
-# strip sexylosers
-#         name Sexy Losers
-#         homepage http://www.sexylosers.com/
-#         type search
-#         searchpage <code:my $firstpage = `curl -s $homepage`;if ($firstpage =~ /<A HREF="(\/\d.+?\.html)"/) {"$homepage$1"} else {print "$firstpage\n"; "BROKEN_CONFIG!"}>
-#         searchpattern <IMG.+?SRC.+?=.+?"(comics/.+?.jpg)"
-#         baseurl $homepage
-#         provides latest
-# end
 
 # weekly
 strip youdamnkid
@@ -3607,16 +3582,6 @@ strip pondus
         provides latest
 end 
 
-strip dela
-	name Dela the Hooda
-	homepage http://www.delathehooda.com/
-	type search
-	searchpage http://www.delathehooda.com
-	searchpattern <img SRC="(<code:"Delac" if %w==0><code:"dela" if %w!=0>~[^"]+)"
-	baseurl http://www.delathehooda.com/
-	provides latest
-end
-
 strip extralife
 	name Extra Life
 	homepage http://myextralife.com/
@@ -4399,19 +4364,6 @@ strip oots
 	baseurl http://www.giantitp.com/
 	provides latest
 end
-
-# This definition for orderofthestick requires you to have curl installed.
-# If you do, and you want to use this, put the below in your
-# ~/.dailystrips.defs
-# strip orderofthestick
-#         name Order Of The Stick
-#         homepage http://www.giantitp.com/
-#         type search
-#         searchpage <code:my $firstpage = `curl -s $homepage`;if ($firstpage =~ /<A href="(\/comics\/oots.+\.html)"/) {"$homepage$1"} else {print "$firstpage\n"; "BROKEN_CONFIG!"}>
-#         searchpattern <IMG.+?src.+?=.+?"(/comics/images/.+?.gif)">
-#         baseurl $homepage
-#         provides latest
-# end
 
 strip phd
         name Piled Higher and Deeper

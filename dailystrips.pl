@@ -830,13 +830,6 @@ sub get_defs {
 					}
 				}
 				
-				# <code:> stuff
-				for (qw(homepage searchpage searchpattern imageurl baseurl urlsuffix referer)) {
-					if ($defs{$strip}{$_}) {
-						$defs{$strip}{$_} =~ s/<code:(.*?)(?<!\\)>/&my_eval($1)/ge;
-					}
-				}
-				
 				#sanity check vars
 				for (qw(name homepage type)) {
 					unless ($defs{$strip}{$_}) {
@@ -1090,15 +1083,6 @@ sub get_defs {
 		$groups{$group}{'strips'} = join(';',@okstrips);
 	}
 	
-}
-
-sub my_eval {
-	my ($code) = @_;
-	
-	$code =~ s/\\\>/\>/g;
-	
-	return eval $code;
-	#print STDERR "DEBUG: eval returned: " . scalar(eval $code) . ", errors: $!\n";
 }
 
 sub get_homedir
