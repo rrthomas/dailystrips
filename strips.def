@@ -1,10 +1,28 @@
 # Class definitions
 class gocomics-srch
-        homepage http://www.gocomics.com/$strip/
+	homepage https://www.gocomics.com/$strip/
+	searchpage https://www.gocomics.com/$strip/%Y/%m/%d
         type search
-        searchpattern <img.+?alt="[^"]*" (height=[^ ]+ )?id="comic_[0-9]+" src="(http:\/\/imgsrv\.gocomics\.com\/dim\/\?fh=[0-9a-f]+)"
-        matchpart 2
-        provides latest
+	searchpattern (https://featureassets\.gocomics\.com/assets/[0-9a-f]+)
+	provides any # Really only works on the last week or so
+end
+
+strip doonesbury
+	name Doonesbury
+	artist Garry Trudeau
+	useclass gocomics-srch
+end
+
+strip nancy
+	name Nancy
+	artist Caroline Cash
+	useclass gocomics-srch
+end
+
+strip haircut-practice
+	name Haircut Practice
+	artist Adam Koford
+	useclass gocomics-srch
 end
 
 class dilbert-unitedmedia-srch-comics
@@ -1908,12 +1926,21 @@ strip catandgirl
         provides latest
 end
 
+strip allison
+	name Bad Machinery
+	homepage https://badmachinery.com
+	artist John Allison
+	type search
+	searchpattern <img[^>]+src="(https://.*/badmachinery.com/wp-content/uploads/\d+/\d+/[\d-]+\.(png|jpg))\?
+	provides latest
+end
+
 strip scarygoround
         name Scary Go Round
         artist John Allison
-        homepage http://scarygoround.com/
+        homepage https://scarygoround.com/
         type search
-        searchpattern <img src="(strips/\d+.+?)"
+        searchpattern <img[^>]+src="(strips/\d+.+?)"
         baseurl $homepage
         provides latest
 end
@@ -4386,11 +4413,11 @@ end
 
 strip xkcd
         name xkcd
-        homepage http://xkcd.com/
+	artist Randall Munroe
+        homepage https://xkcd.com/
         type search
-        baseurl http://imgs.xkcd.com
-        searchpage http://xkcd.com/
-        searchpattern <img src="http://imgs.xkcd.com(/comics/.+?\.(png|jpg))"
+        baseurl https://imgs.xkcd.com
+        searchpattern <img src=".+?//imgs.xkcd.com(/comics/.+?\.(png|jpg))"
         provides latest
 end
 
@@ -4625,11 +4652,13 @@ strip weakendwarriors
 end
 
 strip smbc
-        name Saturday Morning Breakfast Cereal
-        homepage http://www.smbc-comics.com/
-        type generate
-        imageurl http://www.smbc-comics.com/comics/%Y%m%d.gif
-        provides any
+	name Saturday Morning Breakfast Cereal
+	artist Zach Weinersmith
+	homepage https://www.smbc-comics.com/
+	type search
+	searchpattern <img[^>]+src="[^>]*(comics/[^>]+\.(png|jpg|webp))"
+	baseurl $homepage
+	provides latest
 end
 
 strip goose
@@ -4640,4 +4669,33 @@ strip goose
         searchpattern <img.+?src="http://abstrusegoose.com/strips/(.+?\.PNG)"
         baseurl http://abstrusegoose.com/strips/
         provides latest
+end
+
+strip deadphilosophers
+	name Dead Philosophers in Heaven
+	artist Matt Russell & Nick Gibb
+	homepage http://dead-philosophers.com/
+	type search
+	searchpattern <img src="http://www\.dead-philosophers\.com/(comics/.+?\.jpg)"
+	baseurl $homepage
+	provides latest
+end
+
+strip dinosaurcomics
+	name Dinosaur Comics
+	artist Ryan North
+	homepage https://www.qwantz.com/
+	type search
+	searchpattern <meta property="og:image" content="https://www\.qwantz\.com/(comics/.+?\.(?:png|gif))"
+	baseurl https://qwantz.com/
+	provides latest
+end
+
+strip existentialcomics
+	name Existential Comics
+	homepage https://existentialcomics.com/
+	type search
+	searchpattern <meta property="og:image" content="https://static\.existentialcomics\.com/(comics/.+?\.(?:jpg|png))"
+	baseurl https://static.existentialcomics.com/
+	provides latest
 end
