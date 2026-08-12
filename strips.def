@@ -532,10 +532,9 @@ strip btaf
         homepage http://angryflower.com/
         type search
         searchpage http://angryflower.com/archive.html
-        searchpattern <a href="([^.]+).html"
-        urlsuffix .gif
+        searchpattern <a href="http://angryflower.com/([^.]+).html"
+        imageurl $homepage/$match_1.gif
         provides latest
-        baseurl http://angryflower.com/
 end
 
 strip boasas
@@ -4642,4 +4641,3 @@ strip goose
         baseurl http://abstrusegoose.com/strips/
         provides latest
 end
-

@@ -716,7 +716,7 @@ sub get_strip {
 					$addr =~ s/\$match_(\d)/$regexmatch[$1]/ge;
 					$addr =~ s/\$match/$match/ge;
 				} else {
-					$addr = $defs{$strip}{'baseurl'} . $match . $defs{$strip}{'urlsuffix'};
+					$addr = $defs{$strip}{'baseurl'} . $match;
 				}
 			}
 		}
@@ -792,7 +792,7 @@ sub get_defs {
 					my $using_class = $defs{$strip}{'useclass'};
 
 					# import vars from class
-					for (qw(homepage searchpage searchpattern baseurl imageurl urlsuffix referer prefetch artist)) {
+					for (qw(homepage searchpage searchpattern baseurl imageurl referer prefetch artist)) {
 						if ($classes{$using_class}{$_} and !$defs{$strip}{$_}) {
 							my $classvar = $classes{$using_class}{$_};
 							$classvar =~ s/(\$[0-9])/$defs{$strip}{$1}/g;
@@ -819,14 +819,14 @@ sub get_defs {
 				}
 
 				#other vars in definition
-				for (qw(homepage searchpage searchpattern imageurl baseurl urlsuffix referer prefetch)) {
+				for (qw(homepage searchpage searchpattern imageurl baseurl referer prefetch)) {
 					if ($defs{$strip}{$_}) {
 						$defs{$strip}{$_} =~ s/\$(name|homepage|searchpage|searchpattern|imageurl|baseurl|referer|prefetch)/$defs{$strip}{$1}/g;
 					}
 				}
 
 				#dates
-				for (qw(homepage searchpage searchpattern imageurl baseurl urlsuffix referer prefetch)) {
+				for (qw(homepage searchpage searchpattern imageurl baseurl referer prefetch)) {
 					if ($defs{$strip}{$_}) {
 						$defs{$strip}{$_} =~ s/(\%(-?)[a-zA-Z])/strftime("$1", @localtime_today)/ge;
 					}
@@ -859,8 +859,8 @@ sub get_defs {
 						$defs{$strip}{'matchpart'} = 1;
 					}
 
-					if ($defs{$strip}{'imageurl'} and ($defs{$strip}{'baseurl'} or $defs{$strip}{'urlsuffix'})) {
-						die "Error: strip $strip: cannot use both 'imageurl' at the same time as 'baseurl'\nor 'urlsuffix'\n";
+					if ($defs{$strip}{'imageurl'} and $defs{$strip}{'baseurl'}) {
+						die "Error: strip $strip: cannot use both 'imageurl' at the same time as 'baseurl'";
 					}
 				} elsif ($defs{$strip}{'type'} eq "generate") {
 					unless ($defs{$strip}{'imageurl'}) {
@@ -916,10 +916,6 @@ sub get_defs {
 			elsif (/^baseurl\s+(.+)$/i)
 			{
 				$classes{$class}{'baseurl'} = $1;
-			}
-			elsif (/^urlsuffix\s+(.+)$/i)
-			{
-				$classes{$class}{'urlsufix'} = $1;
 			}
 			elsif (/^imageurl\s+(.+)$/i)
 			{
@@ -993,10 +989,6 @@ sub get_defs {
 			elsif (/^baseurl\s+(.+)$/i)
 			{
 				$defs{$strip}{'baseurl'} = $1;
-			}
-			elsif (/^urlsuffix\s+(.+)$/i)
-			{
-				$defs{$strip}{'urlsuffix'} = $1;
 			}
 			elsif (/^imageurl\s+(.+)$/i)
 			{
