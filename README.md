@@ -1,4 +1,5 @@
-Description:
+# Description
+
 This Perl script downloads the URL for the current comic of various strips that
 are available online, and outputs these URLs to an HTML file. This enables you
 to view all of your favorite strips at once, instead of visiting several
@@ -11,13 +12,7 @@ not have to wait for each image to download - it's already on your hard drive.
 This is most useful when dailystrips is run from a cron script. (See file
 README.LOCAL for more information and examples)
 
-Requirements:
-dailystrips requires a reasonably current version of Perl - it was developed
-with 5.6.0. The HTTP::Request, LWP::UserAgent, and POSIX modules are needed. If
-you want to use --date, you will need Date::Time from the TimeDate package. See
-www.cpan.org if you don't have them installed already. dailystrips was
-developed on Linux but should be able to run on any *nix with that has the
-necessary Perl modules installed. Running on Win32 is also possible.
+# Requirements
 
 dailystrips requires the `HTTP::Request`, `LWP::UserAgent` and `POSIX`
 modules. If you want to use `--date`, you will need `Date::Time` from the
@@ -25,27 +20,31 @@ modules. If you want to use `--date`, you will need `Date::Time` from the
 already. dailystrips was developed on Linux but should be able to run on any
 *nix with that has the necessary Perl modules installed.
 
-Installation:
+# Installation
+
 See the INSTALL file.
 	
-Usage:
+# Usage
+
 'dailystrips [stripname(s)]' will print to STDOUT an HTML page with image links
 to the latest strip. These links are to the strip's webserver.
 'dailystrips --help' lists all available options. --list shows the available
 strips and groups. Strip names can specified as listed. Groups must be preceeded
 with an '@' symbol.
 
-Adding new strips:
+# Adding new strips
+
 The strips.def file should be relatively self-explanatory. (see README.DEFS for
 detailed information). If you are adding several strips from the same site that
 share a common format, please create a class for that site. In addition, please
 try to pick a method of determining the most current URL possible (i.e. don't
 search if it's possible to predict - we don't want to get old strips if running
 early in the morning and a site hasn't updated the static page yet) Also, when
-you add a new strip, I'd appreciate it if you could email the defintion to me at
-amedico@amedico.dhs.org so I can add it to the distribution.
+you add a new strip, I'd appreciate it if you could send me the definition so
+I can add it to the distribution.
 
-Personal definition file:
+# Personal definition file
+
 Users may create a file called ".dailystrips.defs" in their home directory.
 Syntax is exactly the same as the main strips.def file. Personal files will be
 processed after the main file. This means that classes set in the main file are
@@ -54,14 +53,16 @@ and groups) in users' files with the same name as entries in the main will take
 precedence. Personal definition files can be ignored with the '--nopersonal'
 option.
 
-System-wide definitions file:
+# System-wide definitions file
+
 Administrators may wish to create definitions, classes, or groups available to
 all users on a system. This may be done by creating a file /etc/dailystrips.defs
 and placing the definitions there. This file is loaded after the default
 definition file and so may be use to override provided definitions, if desired.
 The system-wide definitions file can be ignored with the --nosystem option.
 
-Definition upgrades:
+# Definition upgrades
+
 Since full releases are not made available every time the definitions file
 changes, the current CVS copy of the definitions file is available through a
 link at http://dailystrips.sourceforge.net/download.html. Users may either
@@ -69,7 +70,8 @@ replace /usr/share/dailystrips/strips.def with this updated copy, or if a
 package management system is used (Debian dpkg, RPM, etc.) placing the updated
 definitions in /etc/dailystrips.defs is recommended.
 
-*Notice*:
+# *Notice*
+
 Keep in mind that this program is for personal use only, as making
 the output publicly available on the internet constitutes copyright infringement
 without permission from the strips' authors. If you're running it on a personal
@@ -79,7 +81,9 @@ some publishers (Keenspot, Exclusive Content) seem to be checking their
 webserver logs for dailystrips users and will come after you in a rather nasty
 fashion if it even looks like you're using dailystrips to make a public website.
 
-Copyright info:
-This program Copyright (C) 2001 Andrew Medico <amedico@amedico.dhs.org>.
-All rights reserved. This program is free software; you may redistribute it
-and/or modify it under the terms of the GNU GPL, Version 2.
+# Copyright info
+
+This program Copyright (C) 2001 Andrew Medico <amedico@amedico.dhs.org>, and
+(C) 2026 Reuben Thomas <rrt@sc3d.org>. All rights reserved. This program is
+free software; you may redistribute it and/or modify it under the terms of
+the GNU GPL, Version 2.

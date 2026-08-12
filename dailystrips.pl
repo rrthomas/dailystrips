@@ -6,9 +6,8 @@
 # Name:             dailystrips
 # Description:      creates an HTML page containing a number of online comics, with an easily exensible framework
 # Author:           Andrew Medico <amedico@amedico.dhs.org>
+# Maintainer:       Reuben Thomas <rrt@sc3d.org>
 # Created:          23 Nov 2000, 23:33 EST
-# Last Modified:    24 Aug 2003, 16:55 
-# Current Revision: 1.0.29pre1
 #
 
 
@@ -100,7 +99,7 @@ Options:
   -v  --version              Print version number
 ";
 
-	print "\nBugs and comments to dailystrips\@amedico.dhs.org\n";
+	print "\nBugs and comments to rrt\@sc3d.org\n";
 
 	exit;
 }
