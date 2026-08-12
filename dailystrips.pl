@@ -61,7 +61,7 @@ Options:
       --defs FILE            Use alternate strips definition file
       --titles STRING        Customize HTML output
       --noindex              Disable symlinking current page to index.html
-  -a  --archive              Generate archive.html as a list of all days,
+  -a  --archive              Generate archive.html as a list of all days
   -d  --dailydir             Create a separate directory for each day's images
       --stripdir             Create a separate directory for each strip's
 			     images
