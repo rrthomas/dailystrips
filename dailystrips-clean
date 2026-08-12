@@ -18,7 +18,7 @@ use strict;
 no strict qw(refs);
 
 use POSIX qw(strftime);
-use Getopt::Long;
+use Getopt::Long qw(:config no_ignore_case);
 
 
 # Variables
@@ -28,7 +28,7 @@ my $time_today = time;
 
 # Get options
 my %options;
-GetOptions(\%options, 'quiet|q','verbose|v','test|t','dir=s','archive|a','version|v','help|h')
+GetOptions(\%options, 'quiet|q','verbose|v','test|t','dir=s','archive|a','version|V','help|h')
 	or exit 1;
 
 
