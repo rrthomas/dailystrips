@@ -34,9 +34,9 @@ $time_today = time;
 
 # Get options
 GetOptions(\%options, 'quiet|q','verbose','noindex',
-	'archive|a','dailydir|d','stripdir','nostale','date=s',
-	'defs=s','basedir=s','list','fetcher=s',
-	'version|v','help|h','random','retries=s','clean=s') or exit 1;
+	   'archive|a','dailydir|d','stripdir','nostale','ignorestale',
+	   'date=s','defs=s','basedir=s','list','fetcher=s',
+	   'version|v','help|h','random','retries=s','clean=s') or exit 1;
 
 # Process options:
 
@@ -58,6 +58,7 @@ Options:
   -d  --dailydir             Create a separate directory for each day's images
       --stripdir             Create a separate directory for each strip's images
       --nostale              If a new strip is not available, displays an error
+      --ignorestale          If a new strip is not available, skip the comic
 			     in the HTML output instead of showing the old image
       --date DATE            Use DATE instead of local time
       --basedir DIR          Work in specified directory instead of current
@@ -452,7 +453,9 @@ for (@strips) {
 				# same strip as yesterday
 				system("mv","$local_name.tmp","$local_name");
 
-				if ($options{'nostale'}) {
+				if ($options{'ignorestale'}) {
+					$img_line = "";
+				} elsif ($options{'nostale'}) {
 					$img_line = "[Error - new strip not available]";
 				} else {
 					$img_addr = $local_name;
@@ -489,8 +492,7 @@ for (@strips) {
 "	<h2><a href=\"$homepage\">$name</a>$artist</h2>
 
 	$img_line
-	<p>&nbsp;</p>
-";
+" if $img_line ne "";
 }
 
 if (!$options{'quiet'}) {
