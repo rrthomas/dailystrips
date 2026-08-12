@@ -34,7 +34,7 @@ $time_today = time;
 # Get options
 GetOptions(\%options, 'quiet|q','verbose','noindex',
 	'archive|a','dailydir|d','stripdir','nostale','date=s',
-	'new|n','defs=s','basedir=s','list',
+	'defs=s','basedir=s','list',
 	'useragent=s','version|v','help|h',
 	'random','stripnav','titles=s',
 	'retries=s','clean=s') or exit 1;
