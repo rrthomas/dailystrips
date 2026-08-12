@@ -38,7 +38,7 @@ GetOptions(\%options, 'quiet|q','verbose','output=s','lite','local|l','noindex',
 	'archive|a','dailydir|d','stripdir','save|s','nostale','date=s',
 	'new|n','defs=s','nopersonal','basedir=s','list',
 	'nospaces','useragent=s','version|v','help|h',
-	'avantgo', 'random','nosystem','stripnav','nosymlinks','titles=s',
+	'random','nosystem','stripnav','nosymlinks','titles=s',
 	'retries=s','clean=s','updates=s','noupdates') or exit 1;
 
 # Process options:
@@ -88,8 +88,6 @@ Options:
       --nosymlinks           Do not use symlinks for day-to-day duplicates
       --date DATE            Use value DATE instead of local time
                              (DATE is parsed by Date::Parse function)
-      --avantgo              Format images for viewing with Avantgo on PDAs
-                             (local mode only)
       --basedir DIR          Work in specified directory instead of current
                              directory (program will look here for previous HTML
                              file and save new files here, etc.)
@@ -111,7 +109,7 @@ Options:
 Windows lacks a number of features and programs found on *NIX, so a number of
 changes must be made to the program's operation:
 
-1. --date and --avantgo are not available
+1. --date is not available
 2. Personal and update definition files may or may not work
 3. System-wide definition files are not supported
 ";
@@ -575,16 +573,12 @@ for (@strips) {
 									
 			if ($options{'save'} and  -e $local_name) {
 				# already have a suitable local file - skip downloading
-				if ($options{'avantgo'}) {
-					$img_line = &make_avantgo_table($local_name, $ext);
+				$img_addr = $local_name;
+				$img_addr =~ s/ /\%20/go;
+				if ($options{'stripnav'}) {
+					$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
 				} else {
-					$img_addr = $local_name;
-					$img_addr =~ s/ /\%20/go;
-					if ($options{'stripnav'}) {
-						$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-					} else {
-						$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-					}
+					$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 				}
 			} else {			
 				# need to download
@@ -670,16 +664,12 @@ for (@strips) {
 							# already downloaded the same strip earlier today
 							unlink("$local_name.tmp");
 
-							if ($options{'avantgo'}) {
-								$img_line = &make_avantgo_table($local_name, $ext);
+							$img_addr = $local_name;
+							$img_addr =~ s/ /\%20/go;
+							if ($options{'stripnav'}) {
+								$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
 							} else {
-								$img_addr = $local_name;
-								$img_addr =~ s/ /\%20/go;
-								if ($options{'stripnav'}) {
-									$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-								} else {
-									$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-								}
+								$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 							}
 						} else {
 							# completely new strip
@@ -689,17 +679,12 @@ for (@strips) {
 							#    an earlier time on the same day
 							system("mv","$local_name.tmp","$local_name");
 						
-							if ($options{'avantgo'}) {
-								&make_avantgo_files($local_name, $local_name_ext);
-								$img_line = &make_avantgo_table($local_name, $ext);
+							$img_addr = $local_name;
+							$img_addr =~ s/ /\%20/go;
+							if ($options{'stripnav'}) {
+								$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
 							} else {
-								$img_addr = $local_name;
-								$img_addr =~ s/ /\%20/go;
-								if ($options{'stripnav'}) {
-									$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-								} else {
-									$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-								}
+								$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 							}
 						}
 					}
@@ -1279,53 +1264,6 @@ sub my_eval {
 	
 	return eval $code;
 	#print STDERR "DEBUG: eval returned: " . scalar(eval $code) . ", errors: $!\n";
-}
-
-sub make_avantgo_table {
-	my ($file, $file_ext) = @_;
-	my ($rows, $cols, $table);
-	
-	my $dimensions = `identify \"$file\"`;
-	
-	$dimensions =~ m/^$file (\d+)x(\d+)/;
-	my $width = $1; my $height = $2;
-	
-	if (int($width/160) != ($width/160)) {
-		$cols = int($width/160) + 1;
-	} else {
-		$cols = $width/160;
-	}
-	
-	if (int($height/160) != ($height/160)) {
-		$rows = int($height/160) + 1;
-	} else {
-		$rows = $height/160;
-	}
-	
-	my $file_base = $file; $file_base =~ s/$file_ext$//;
-
-	$file_base =~ s/ /\%20/g;
-	
-	$table = "<table border=0 cellspacing=0 cellpadding=0>";
-	foreach my $row (0 .. ($rows-1)) {
-		$table .= "<tr>";
-		foreach my $col (0 .. ($cols-1)) {
-			$table .= "<td><img src=$file_base-" . (($row * $cols) + $col) . "$file_ext></td>";
-		
-		}
-		$table .= "</tr>";
-	}
-	$table .= "</table>";
-	
-	return $table;
-}
-
-sub make_avantgo_files {
-	my ($file, $file_ext) = @_;
-
-	my $file_base = $file; $file_base =~ s/$file_ext$//;
-
-	system("convert -crop 160x160 \"$file\" \"$file_base-\%d$file_ext\"");
 }
 
 sub get_homedir
