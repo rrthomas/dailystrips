@@ -238,15 +238,6 @@ class creatorspolitical
 	provides latest
 end
 
-class drive-in-cartoons
-        homepage http://www.drive-in-cartoons.de/$strip
-        type search
-        searchpage http://www.drive-in-cartoons.de/$strip
-        searchpattern <img src="(http://www.lappan.de/galerien/.+?)"
-        matchpart 1
-        provides latest
-end
-
 # Non-standard strips
 
 strip goats
@@ -900,52 +891,6 @@ strip underpower
         type generate
         imageurl http://underpower.non-essential.com/comics/%Y%m%d.jpg
         provides any
-end
-
-strip perscheid
-        name Perscheids Abgruende
-        artist Martin Perscheid -> www.martin-perscheid.de
-        homepage http://magazine.web.de/de/themen/unterhaltung/comic/perscheid/index.html
-        type search
-        searchpattern <img.+?src="(http:)?(//)?(magazine.web.de/images/\d.+?)"
-        matchpart 3
-        provides latest
-end
-
-strip harmbengen
-	name Harm Bengen's Alltagsskizzen
-	artist Harm Bergen -> www.harmbengen.de
-	homepage http://portale.web.de/Boulevard/Comics/Bengen/
-	type search
-	searchpattern <img.+?src="(http:)?(//)?(img.web.de/c/00.+?)"
-	matchpart 3
-	provides latest
-end
-
-strip weyershausenwelt
-	name Weyershausen - Wunderbare Welt
-	artist Karsten Weyershausen -> www.weyershausen.de
-	homepage http://portale.web.de/Boulevard/Comics/Weyershausen/
-	type search
-	searchpattern <img.+?src="(http:)?(//)?(img.web.de/c/00.+?)"
-	matchpart 3
-	provides latest
-end
-
-strip quirit
-	name Quirit - alltaegliches auf den Punkt gebracht
-	artist Quirit -> www.quirit.com
-	homepage http://portale.web.de/Boulevard/Comics/Quirit/
-	type search
-	searchpattern <img.+?src="(http:)?(//)?(img.web.de/c/00.+?)"
-	matchpart 3
-	provides latest
-end
-
-strip touche
-        name Touche
-        artist Tom
-        useclass drive-in-cartoons
 end
 
 strip achewood
@@ -3438,12 +3383,6 @@ strip saraanddavid
 	provides latest
 end
 
-strip haiopeis
-        name Haiopeis
-        artist Thomas Siemensen
-        useclass drive-in-cartoons
-end
-
 strip grimmy
 	name Mother Goose and Grimm
 	homepage http://www.grimmy.com/comics.php
@@ -4462,32 +4401,6 @@ strip afterlifeblues
         type search
         searchpattern <img.+src="(manga/ab[0-9]+?\.jpg)".+>
         provides latest
-end
-
-strip gruftschlampe
-        name Die kleine Gruftschlampe
-        artist Tikwa
-        useclass drive-in-cartoons
-end
-
-strip promis
-       name Promi-Strips
-       artist Gabriel
-       useclass drive-in-cartoons
-end
-
-strip taztouche
-        name Touche (TAZ)
-        artist Tom
-        homepage http://www.taz.de/index.php?id=2264
-        type search
-        searchpage http://www.taz.de/digitaz/.tom/tomdestages?day=%Y/%m/%d
-        # http://www.taz.de/digitaz/.tom/gif.t,tom.d,1227222000
-        # <img src="/dx/.1/gif.t,tom.d,1227913200" alt="TOM" width="560" />
-        searchpattern <img.*src="(/dx/\.1/gif\.t,tom\.d,[0-9]+)"
-        baseurl http://www.taz.de
-        matchpart 1
-        provides any
 end
 
 # Discontinued comics that still keep the archives around.

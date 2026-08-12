@@ -39,29 +39,28 @@ strip joyoftech
 	homepage http://www.joyoftech.com/joyoftech/
 	type search
 	searchpattern <IMG.+?src="(joyimages/\d+\.gif)\"
-	matchpart 1
 	baseurl http://www.joyoftech.com/joyoftech/
 	provides latest
 end
 
 "strip", "name", and "homepage" all function as above. The difference is the
-"type search" line and the lines that follow. "searchpattern" is a Perl regular
-expression that must be written to match the strip's URL. Not shown is
-"searchpage", which would ordinarily go above "searchpattern". This is a URL to
-a web page and is only needed if the URL to the strip image is not found on the
-homepage. The same special variables listed above for "imageurl" may also be
-used here. "matchpart" tells the script which parenthetical section (there must
-be at least one) will contain the desired URL (see man perlre on $n variables
-for more). Note that this line is only mandatory for values other than 1.
-"baseurl" only needs to be specified if the "searchpattern" regular expression
-does not match a full URL (that is, it does not start with "http://" and contain
-the host). If specified, it is prepended to whatever "searchpattern" matched.
-Finally, "imageurl" can also be used here in place of "baseurl".
-It is useful when addresses to the strip image must be constructed
-from a known portion and a variable portion that is searched for. Simply specify
-the URL template and insert "$match" wherever you wish the result of the search
-to be put. To access multiple matches, use the $match[1..9] variables. See the
-strips "btaf" and "sexylosers" for examples of how this works.
+"type search" line and the lines that follow. "searchpattern" is a Perl
+regular expression that must be written to match the strip's URL. Not shown
+is "searchpage", which would ordinarily go above "searchpattern". This is a
+URL to a web page and is only needed if the URL to the strip image is not
+found on the homepage. The same special variables listed above for
+"imageurl" may also be used here. The script assumes the first parenthetical
+section (there must be at least one) will contain the desired URL (see man
+perlre on $n variables for more). "baseurl" only needs to be specified if
+the "searchpattern" regular expression does not match a full URL (that is,
+it does not start with "http://" and contain the host). If specified, it is
+prepended to whatever "searchpattern" matched. Finally, "imageurl" can also
+be used here in place of "baseurl". It is useful when addresses to the strip
+image must be constructed from a known portion and a variable portion that
+is searched for. Simply specify the URL template and insert "$match"
+wherever you wish the result of the search to be put. To access multiple
+matches, use the $match[1..9] variables. See the strips "btaf" and
+"sexylosers" for examples of how this works.
 
 The "provides" line indicates which type of strips the definition can provide:
 either "any" for a definition that can provide the strip for any given date
@@ -91,11 +90,11 @@ identical definition, except for some strip-specific elements. Classes work as
 follows:
 
 First, the class is declared:
+
 class ucomics-srch
 	homepage http://www.ucomics.com/$strip/view$1.htm
 	type search
 	searchpattern (/$1/(\d+)/$1(\d+)\.(gif|jpg))
-	matchpart 1
 	baseurl http://images.ucomics.com/comics
 	provides latest
 end

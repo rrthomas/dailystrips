@@ -685,22 +685,13 @@ sub get_strip {
 				#warn "regex match #$_: ${$_}\n";
 			}
 
-			unless (${$defs{$strip}{'matchpart'}}) {
-				if ($options{'verbose'}) {
-					warn "Error: $strip: searchpattern $defs{$strip}{'searchpattern'} did not match anything in searchpage $defs{$strip}{'searchpage'}\n";
-				}
-
-				$addr = "unavail-nomatch";
+			my $match = $1;
+			if ($defs{$strip}{'imageurl'}) {
+				$addr = $defs{$strip}{'imageurl'};
+				$addr =~ s/\$match_(\d)/$regexmatch[$1]/ge;
+				$addr =~ s/\$match/$match/ge;
 			} else {
-				my $match = ${$defs{$strip}{'matchpart'}};
-
-				if ($defs{$strip}{'imageurl'}) {
-					$addr = $defs{$strip}{'imageurl'};
-					$addr =~ s/\$match_(\d)/$regexmatch[$1]/ge;
-					$addr =~ s/\$match/$match/ge;
-				} else {
-					$addr = $defs{$strip}{'baseurl'} . $match;
-				}
+				$addr = $defs{$strip}{'baseurl'} . $match;
 			}
 		}
 
@@ -784,7 +775,7 @@ sub get_defs {
 						}
 					}
 
-					for (qw(type matchpart provides)) {
+					for (qw(type provides)) {
 						if ($classes{$using_class}{$_} and !$defs{$strip}{$_}) {
 							$defs{$strip}{$_} = $classes{$using_class}{$_};
 						}
@@ -837,11 +828,6 @@ sub get_defs {
 						die "Error: strip $strip has no parentheses in searchpattern\n";
 					}
 
-					unless ($defs{$strip}{'matchpart'}) {
-						#die "Error: strip $strip has no 'matchpart' value in $defs_file\n";
-						$defs{$strip}{'matchpart'} = 1;
-					}
-
 					if ($defs{$strip}{'imageurl'} and $defs{$strip}{'baseurl'}) {
 						die "Error: strip $strip: cannot use both 'imageurl' at the same time as 'baseurl'";
 					}
@@ -887,14 +873,6 @@ sub get_defs {
 			elsif (/^searchpattern\s+(.+)$/i)
 			{
 				$classes{$class}{'searchpattern'} = $1;
-			}
-			elsif (/^matchpart\s+(.+)$/i)
-			{
-				unless ($1 =~ /^(\d)$/) {
-					die "Error: invalid 'matchpart' at $defs_file line $line\n";
-				}
-
-				$classes{$class}{'matchpart'} = $1;
 			}
 			elsif (/^baseurl\s+(.+)$/i)
 			{
@@ -960,14 +938,6 @@ sub get_defs {
 			elsif (/^searchpattern\s+(.+)$/i)
 			{
 				$defs{$strip}{'searchpattern'} = $1;
-			}
-			elsif (/^matchpart\s+(.+)$/i)
-			{
-				unless ($1 =~ /^(\d+)$/) {
-					die "Error: invalid 'matchpart' at $defs_file line $line\n";
-				}
-
-				$defs{$strip}{'matchpart'} = $1;
 			}
 			elsif (/^baseurl\s+(.+)$/i)
 			{
