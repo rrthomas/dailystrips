@@ -36,7 +36,7 @@ $time_today = time;
 GetOptions(\%options, 'quiet|q','verbose','noindex',
 	'archive|a','dailydir|d','stripdir','save|s','nostale','date=s',
 	'new|n','defs=s','nopersonal','basedir=s','list',
-	'nospaces','useragent=s','version|v','help|h',
+	'useragent=s','version|v','help|h',
 	'random','stripnav','titles=s',
 	'retries=s','clean=s','updates=s','noupdates') or exit 1;
 
@@ -80,7 +80,6 @@ Options:
       --basedir DIR          Work in specified directory instead of current
                              directory (program will look here for previous HTML
                              file and save new files here, etc.)
-      --nospaces             Remove spaces from image filenames
       --useragent STRING     Set User-Agent: header to STRING (default is none)
       --retries NUM          When downloading items, retry NUM times instead of
                              default 3 times
@@ -492,19 +491,6 @@ for (@strips) {
 			$local_name_dir = "./";
 			$local_name_file = "$name-$short_date";
 			$local_name_ext = "$ext";
-		}
-			
-		if ($options{'nospaces'}) {
-				# impossible to tell for sure if previous day's file
-				# used --nospaces or not, but this should work more
-				# often
-			$local_name_yesterday =~ s/\s+//g;
-			$local_name_yesterday_dir =~ s/\s+//g;
-			$local_name_yesterday_file =~ s/\s+//g;
-				
-			$local_name =~ s/\s+//g;
-			$local_name_dir =~ s/\s+//g;
-			$local_name_file =~ s/\s+//g;
 		}
 			
 		# do ops that depend on file name
