@@ -36,7 +36,7 @@ GetOptions(\%options, 'quiet|q','verbose','noindex',
 	'archive|a','dailydir|d','stripdir','nostale','date=s',
 	'defs=s','basedir=s','list',
 	'useragent=s','version|v','help|h',
-	'random','stripnav','titles=s',
+	'random','titles=s',
 	'retries=s','clean=s') or exit 1;
 
 # Process options:
@@ -59,7 +59,6 @@ Options:
       --list                 List available strips
       --random               Download a random strip
       --defs FILE            Use alternate strips definition file
-      --stripnav             Add links for navigation within the page
       --titles STRING        Customize HTML output
       --noindex              Disable symlinking current page to index.html
   -a  --archive              Generate archive.html as a list of all days,
@@ -241,7 +240,7 @@ if ($options{'dailydir'}) {
 	}
 }
 
-unless (open(STDOUT, ">dailystrips-$short_date.html")) {
+unless (open(PAGE, ">dailystrips-$short_date.html")) {
 	die "Error: could not open HTML file (dailystrips-$short_date.html) for writing\n";
 }
 
@@ -360,12 +359,7 @@ if (-e "dailystrips-$short_date_tomorrow.html") {
 
 
 # Generate HTML page
-my $topanchor;
-if ($options{'stripnav'}) {
-	$topanchor = "\n<a name=\"top\">\n";
-}
-
-print
+print PAGE
 "<html>
 
 <head>
@@ -373,7 +367,6 @@ print
 </head>
 
 <body bgcolor=\"#ffffff\" text=\"#000000\" link=\"#ff00ff\">
-$topanchor
 <center>
 	<font face=\"helvetica\" size=\"+2\"><b><u>$options{'titles'}dailystrips for $long_date</u></b></font>
 </center>
@@ -382,24 +375,15 @@ $topanchor
 &lt; <a href=\"dailystrips-$short_date_yesterday.html\">Previous day</a>$link_tomorrow";
 
 if ($options{'archive'}) {
-	print " | <a href=\"archive.html\">Archives</a>";
+	print PAGE " | <a href=\"archive.html\">Archives</a>";
 }
 
-print
+print PAGE
 " &gt;
 </font></p>
 ";
 
-if ($options{'stripnav'}) {
-	print "<font face=\"helvetica\">Strips:</font><br>\n";
-	for (@strips) {
-		my ($strip, $name) = (split(/;/, $_))[0,1];
-		print "<a href=\"#$strip\">$name</A>&nbsp;&nbsp;";
-	}
-	print "\n<br><br>";
-}
-
-print "\n\n<table border=\"0\">\n";
+print PAGE "\n\n<table border=\"0\">\n";
 
 if (!$options{'quiet'}) {
 	if ($options{'verbose'}) {
@@ -513,11 +497,7 @@ for (@strips) {
 				} else {
 					$img_addr = $local_name;
 					$img_addr =~ s/ /\%20/go;
-					if ($options{'stripnav'}) {
-						$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-					} else {
-						$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-					}
+					$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 				}
 			} elsif (-e $local_name and system("diff \"$local_name\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
 				# already downloaded the same strip earlier today
@@ -525,11 +505,7 @@ for (@strips) {
 
 				$img_addr = $local_name;
 				$img_addr =~ s/ /\%20/go;
-				if ($options{'stripnav'}) {
-					$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-				} else {
-					$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-				}
+				$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 			} else {
 				# completely new strip
 				#  possible to get here by:
@@ -540,11 +516,7 @@ for (@strips) {
 
 				$img_addr = $local_name;
 				$img_addr =~ s/ /\%20/go;
-				if ($options{'stripnav'}) {
-					$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-				} else {
-					$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-				}
+				$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 			}
 		}
 	}
@@ -553,15 +525,10 @@ for (@strips) {
 		$artist = " by $artist";
 	}
 
-	my $stripanchor;
-	if ($options{'stripnav'}) {
-		$stripanchor = "<a name=\"$strip\">";
-	}
-
-	print
+	print PAGE
 "	<tr>
 		<td>
-			<font face=\"helvetica\" size=\"+1\"><b>$stripanchor<a href=\"$homepage\">$name</a>$artist</b></font>
+			<font face=\"helvetica\" size=\"+1\"><b><a href=\"$homepage\">$name</a>$artist</b></font>
 		</td>
 	</tr>
 	<tr>
@@ -581,17 +548,17 @@ if (!$options{'quiet'}) {
 	}
 }
 
-print
+print PAGE
 "</table>
 
 <p><font face=\"helvetica\">
 &lt; <a href=\"dailystrips-$short_date_yesterday.html\">Previous day</a>$link_tomorrow";
 
 if ($options{'archive'}) {
-	print " | <a href=\"archive.html\">Archives</a>";
+	print PAGE " | <a href=\"archive.html\">Archives</a>";
 }
 
-print
+print PAGE
 " &gt;
 </font></p>
 
