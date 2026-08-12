@@ -33,7 +33,7 @@ $time_today = time;
 
 # Get options
 GetOptions(\%options, 'quiet|q','verbose','noindex',
-	'archive|a','dailydir|d','stripdir','save|s','nostale','date=s',
+	'archive|a','dailydir|d','stripdir','nostale','date=s',
 	'new|n','defs=s','nopersonal','basedir=s','list',
 	'useragent=s','version|v','help|h',
 	'random','stripnav','titles=s',
@@ -67,8 +67,6 @@ Options:
   -d  --dailydir             Create a separate directory for each day's images
       --stripdir             Create a separate directory for each strip's
                              images
-  -s  --save                 If it appears that a particular strip has been
-                             downloaded, does not attempt to re-download it
       --nostale              If a new strip is not available, displays an error
                              in the HTML output instead of showing the old image
       --date DATE            Use value DATE instead of local time
@@ -476,96 +474,80 @@ for (@strips) {
 			}
 		}
 									
-		if ($options{'save'} and  -e $local_name) {
-				# already have a suitable local file - skip downloading
-			$img_addr = $local_name;
-			$img_addr =~ s/ /\%20/go;
-			if ($options{'stripnav'}) {
-				$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-			} else {
-				$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-			}
-		} else {
-			# need to download
-			if ($prefetch) {
-				if (&http_get($prefetch, $referer) =~ m/^ERROR/) {
-					warn "Error: $strip: could not download prefetch URL\n";
-					$image = "ERROR";
-				} else {
-					$image = &http_get($img_addr, $referer);
-				}
+		# need to download
+		if ($prefetch) {
+			if (&http_get($prefetch, $referer) =~ m/^ERROR/) {
+				warn "Error: $strip: could not download prefetch URL\n";
+				$image = "ERROR";
 			} else {
 				$image = &http_get($img_addr, $referer);
-				#$image = &http_get($img_addr, "");
+			}
+		} else {
+			$image = &http_get($img_addr, $referer);
+		}
+				
+		if ($image =~ /^ERROR/) {
+			# couldn't get the image
+			if (-e $local_name) {
+				# an image file for today already exists. Jump to outputting code
+				#warn "DEBUG: couldn't download strip, but we already have it\n";
+				goto HAVE_IMAGE;
+			} else {
+				if ($options{'verbose'}) {
+					warn "Error: $strip: could not download strip\n";
+				}
 			}
 				
-			if ($image =~ /^ERROR/) {
-				# couldn't get the image
-				# FIXME: what to do if a file for the day has already been
-				# downloaded, but downloading fails when script is run again
-				# that day? maybe reuse existing file instead of throwing
-				# error?
-				if (-e $local_name) {
-					# an image file for today already exists.. jump to outputting code
-					#warn "DEBUG: couldn't download strip, but we already have it\n";
-					goto HAVE_IMAGE;
+			$img_line = "[Error - unable to download image]";
+		} else {
+		      HAVE_IMAGE:
+			# got the image
+			# FIXME: only download to .tmp if earlier file exists
+			open(IMAGE, ">$local_name.tmp");
+			binmode(IMAGE);
+			print IMAGE $image;
+			close(IMAGE);
+				
+			if (system("diff \"$local_name_yesterday\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
+				# same strip as yesterday
+				system("mv","$local_name.tmp","$local_name");
+						
+				if ($options{'nostale'}) {
+					$img_line = "[Error - new strip not available]";
 				} else {
-					if ($options{'verbose'}) {
-						warn "Error: $strip: could not download strip\n";
+					$img_addr = $local_name;
+					$img_addr =~ s/ /\%20/go;
+					if ($options{'stripnav'}) {
+						$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
+					} else {
+						$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 					}
 				}
-				
-				$img_line = "[Error - unable to download image]";
-			} else {
-			      HAVE_IMAGE:
-				# got the image
-				# FIXME: only download to .tmp if earlier file exists
-				open(IMAGE, ">$local_name.tmp");
-				binmode(IMAGE);
-				print IMAGE $image;
-				close(IMAGE);
-				
-				if (system("diff \"$local_name_yesterday\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
-					# same strip as yesterday
-					system("mv","$local_name.tmp","$local_name");
-						
-					if ($options{'nostale'}) {
-						$img_line = "[Error - new strip not available]";
-					} else {
-						$img_addr = $local_name;
-						$img_addr =~ s/ /\%20/go;
-						if ($options{'stripnav'}) {
-							$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-						} else {
-							$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-						}
-					}
-				} elsif (-e $local_name and system("diff \"$local_name\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
-					# already downloaded the same strip earlier today
-					unlink("$local_name.tmp");
+			} elsif (-e $local_name and system("diff \"$local_name\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
+				# already downloaded the same strip earlier today
+				unlink("$local_name.tmp");
 
-					$img_addr = $local_name;
-					$img_addr =~ s/ /\%20/go;
-					if ($options{'stripnav'}) {
-						$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-					} else {
-						$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-					}
+				$img_addr = $local_name;
+				$img_addr =~ s/ /\%20/go;
+				if ($options{'stripnav'}) {
+					$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
 				} else {
-					# completely new strip
-					#  possible to get here by:
-					#   -downloading a strip for the first time in a day
-					#   -downloading an updated strip that replaces an old one downloaded at
-					#    an earlier time on the same day
-					system("mv","$local_name.tmp","$local_name");
+					$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+				}
+			} else {
+				# completely new strip
+				#  possible to get here by:
+				#   -downloading a strip for the first time in a day
+				#   -downloading an updated strip that replaces an old one downloaded at
+				#    an earlier time on the same day
+				system("mv","$local_name.tmp","$local_name");
 						
-					$img_addr = $local_name;
-					$img_addr =~ s/ /\%20/go;
-					if ($options{'stripnav'}) {
-						$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-					} else {
-						$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-					}
+				$img_addr = $local_name;
+				$img_addr =~ s/ /\%20/go;
+				if ($options{'stripnav'}) {
+					$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
+				} else {
+					$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
 				}
 			}
 		}
