@@ -345,8 +345,6 @@ print PAGE
 </p>
 ";
 
-print PAGE "\n\n<table border=\"0\">\n";
-
 if (!$options{'quiet'}) {
 	if ($options{'verbose'}) {
 		warn "\nDownloading strip files:\n"
@@ -488,17 +486,10 @@ for (@strips) {
 	}
 
 	print PAGE
-"	<tr>
-		<td>
-			<h2><a href=\"$homepage\">$name</a>$artist</h2>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			$img_line
-			<p>&nbsp;</p>
-		</td>
-	</tr>
+"	<h2><a href=\"$homepage\">$name</a>$artist</h2>
+
+	$img_line
+	<p>&nbsp;</p>
 ";
 }
 
@@ -511,9 +502,7 @@ if (!$options{'quiet'}) {
 }
 
 print PAGE
-"</table>
-
-<p>
+"<p>
 &lt; <a href=\"dailystrips-$short_date_yesterday.html\">Previous day</a>$link_tomorrow";
 
 if ($options{'archive'}) {
