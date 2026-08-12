@@ -91,7 +91,7 @@ if (system("install -d $options{'sharedir'}")) {
 	die "Error creating install directory. See above for reason.\n";
 }
 
-if (system("install strips.def archive.def $options{'sharedir'}/")) {
+if (system("install strips.def $options{'sharedir'}/")) {
 	die "Error installing definition files. See above for reason.\n";
 }
 
