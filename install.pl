@@ -103,7 +103,7 @@ if (system("install -d $options{'docdir'}")) {
 	die "Error creating documentation directory. See above for reason.\n";
 }
 
-if (system("install BUGS CONTRIBUTORS COPYING INSTALL README README.DEFS README.LOCAL $options{'docdir'}")) {
+if (system("install BUGS CONTRIBUTORS COPYING INSTALL README README.DEFS $options{'docdir'}")) {
 	die "Error installing documentation files. See above for reason.\n";
 }
 

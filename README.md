@@ -5,12 +5,32 @@ are available online, and outputs these URLs to an HTML file. This enables you
 to view all of your favorite strips at once, instead of visiting several
 different websites.
 
-One feature that sets this program apart from the rest is the ability to operate
-in 'local' mode. This mode, instead of writing the addresses to images in the
-HTML file, actually downloads the image and saves it locally. This way, you do
-not have to wait for each image to download - it's already on your hard drive.
-This is most useful when dailystrips is run from a cron script. (See file
-README.LOCAL for more information and examples)
+Dailystrips downloads each image and save a copy of it locally.
+
+How to use it:
+
+Create a directory (such as /home/user/dailystrips/) in which to store
+the downloaded images and output files.
+
+Add a line like the following to your user’s crontab:
+
+dailystrips --basedir /home/user/dailystrips all
+
+Of course, change /home/user/dailystrips to the exact directory that you
+created. You should change the "all" to reflect just the strips you want to
+see.
+
+By default, the program calls the output file 'dailystrips-YYYY.MM.DD' and
+creates 'index.html' as a symlink to this, so that you can make a bookmark
+to index.html in your web browser that will always take you to the latest
+page.  If you need to change this, you'll have to edit the script.
+
+For scheduling the time that dailystrips runs, you'll have to consider your
+time zone.  I have found that running at 0600 EST (-0500) works well for my
+strips (see the contents of group 'andrew').  You may have to experiment a
+little to find the best time for the specific strips you download. One idea
+is to create a crontab entry to run dailystrips early in the morning and
+then a few hours later if the strips aren't all available at one time.
 
 # Requirements
 
