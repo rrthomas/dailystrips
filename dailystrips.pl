@@ -33,7 +33,7 @@ $time_today = time;
 
 
 # Get options
-GetOptions(\%options, 'quiet|q','verbose','output=s','lite','local|l','noindex',
+GetOptions(\%options, 'quiet|q','verbose','lite','noindex',
 	'archive|a','dailydir|d','stripdir','save|s','nostale','date=s',
 	'new|n','defs=s','nopersonal','basedir=s','list',
 	'nospaces','useragent=s','version|v','help|h',
@@ -65,23 +65,16 @@ Options:
       --updates              Read updated defs from FILE instead of
                              ~/.dailystrips-updates.def
       --noupdates            Ignore updated defs file 
-      --output FILE          Output HTML to FILE instead of STDOUT
-                             (does not apply to local mode)
       --lite                 Output a reduced HTML page
       --stripnav             Add links for navigation within the page
       --titles STRING        Customize HTML output
-  -l  --local                Output HTML to file and save strips locally
       --noindex              Disable symlinking current page to index.html
-                             (local mode only)
   -a  --archive              Generate archive.html as a list of all days,
-                             (local mode only)
   -d  --dailydir             Create a separate directory for each day's images
-                             (local mode only)
       --stripdir             Create a separate directory for each strip's
-                             images (local mode only)
+                             images
   -s  --save                 If it appears that a particular strip has been
                              downloaded, does not attempt to re-download it
-                             (local mode only)
       --nostale              If a new strip is not available, displays an error
                              in the HTML output instead of showing the old image
       --date DATE            Use value DATE instead of local time
@@ -89,8 +82,7 @@ Options:
       --basedir DIR          Work in specified directory instead of current
                              directory (program will look here for previous HTML
                              file and save new files here, etc.)
-      --nospaces             Remove spaces from image filenames (local mode
-                             only)
+      --nospaces             Remove spaces from image filenames
       --useragent STRING     Set User-Agent: header to STRING (default is none)
       --retries NUM          When downloading items, retry NUM times instead of
                              default 3 times
@@ -271,41 +263,36 @@ unless ($options{'quiet'}) {
 }
 
 
-if ($options{'local'}) {
+if ($options{'dailydir'}) {
 	unless ($options{'quiet'}) {
-		warn "Operating in local mode\n";
+		warn "Operating in daily directory mode\n";
 	}
-	
-	if ($options{'dailydir'}) {
-		unless ($options{'quiet'}) {
-			warn "Operating in daily directory mode\n";
-		}
 		
-		unless (-d $short_date) {
-			unless(mkdir ($short_date, 0755)) {
-				die "Error: could not create today's directory ($short_date/)\n";
-			}
+	unless (-d $short_date) {
+		unless (mkdir ($short_date, 0755)) {
+			die "Error: could not create today's directory ($short_date/)\n";
 		}
 	}
+}
 	
-	unless(open(STDOUT, ">dailystrips-$short_date.html")) {
-		die "Error: could not open HTML file (dailystrips-$short_date.html) for writing\n";
-	}
+unless (open(STDOUT, ">dailystrips-$short_date.html")) {
+	die "Error: could not open HTML file (dailystrips-$short_date.html) for writing\n";
+}
 
-	unless ($options{'date'}) {
-		unless ($options{'noindex'}) {
-			unlink("index.html");
-			system("ln -s dailystrips-$short_date.html index.html");
-		}
+unless ($options{'date'}) {
+	unless ($options{'noindex'}) {
+		unlink("index.html");
+		system("ln -s dailystrips-$short_date.html index.html");
 	}
+}
 
-	if ($options{'archive'}) {
+if ($options{'archive'}) {
 	
-		unless (-e "archive.html") {
-			# Doesn't exist.. create
-			open(ARCHIVE, ">archive.html") or die "Error: could not create archive.html\n";
-			print ARCHIVE
-"<html>
+	unless (-e "archive.html") {
+		# Doesn't exist.. create
+		open(ARCHIVE, ">archive.html") or die "Error: could not create archive.html\n";
+		print ARCHIVE
+		  "<html>
 
 <head>
 	<title>$options{'titles'}dailystrips archive</title>
@@ -328,68 +315,56 @@ if ($options{'local'}) {
 </body>
 
 </html>";
-			close(ARCHIVE);
-		}
-		
-		open(ARCHIVE, "<archive.html") or die "Error: could not open archive.html for reading\n";
-		my @archive = <ARCHIVE>;
 		close(ARCHIVE);
+	}
 
-		unless (grep(/<a href="dailystrips-$short_date.html">/, @archive)) {
-			for (@archive) {
-				if (s/(<!--insert below-->)/$1\n<a href="dailystrips-$short_date.html">$long_date<\/a><br>/) {
-					unless(open(ARCHIVE, ">archive.html")) {
-						die "Error: could not open archive.html for writing\n";
-					}
-					
-					print ARCHIVE @archive;
-					close(ARCHIVE);
-					last;
+	open(ARCHIVE, "<archive.html") or die "Error: could not open archive.html for reading\n";
+	my @archive = <ARCHIVE>;
+	close(ARCHIVE);
+
+	unless (grep(/<a href="dailystrips-$short_date.html">/, @archive)) {
+		for (@archive) {
+			if (s/(<!--insert below-->)/$1\n<a href="dailystrips-$short_date.html">$long_date<\/a><br>/) {
+				unless (open(ARCHIVE, ">archive.html")) {
+					die "Error: could not open archive.html for writing\n";
 				}
+
+				print ARCHIVE @archive;
+				close(ARCHIVE);
+				last;
 			}
 		}
-	}
-	
-	# Update previous day's file with a "Next Day" link to today's file
-	if (open(PREVIOUS, "<dailystrips-$short_date_yesterday.html")) {
-		my @previous_page = <PREVIOUS>;
-		close(PREVIOUS);
-	
-		# Don't bother if no tag exists in the file (because it has already been updated)
-		if (grep(/<!--nextday-->/, @previous_page)) {
-			my $match_count;
-
-			for (@previous_page) {
-				if (s/<!--nextday-->/ | <a href="dailystrips-$short_date.html">Next day<\/a>/) {
-					$match_count++;
-					last if ($match_count == 2);
-				}
-			}
-		
-			if (open(PREVIOUS, ">dailystrips-$short_date_yesterday.html")) {
-				print PREVIOUS @previous_page;
-				close(PREVIOUS);
-			} else {
-				 warn "Warning: could not open dailystrips-$short_date_yesterday.html for writing\n";
-			}
-		} else {
-			warn "Warning: did not find any tag in previous day's file to make today's link\n";
-		}
-	} else {
-		warn "Warning: could not open dailystrips-$short_date_yesterday.html for reading\n";
-	}
-
-
-} elsif ($options{'output'}) {
-	unless ($options{'quiet'}) {
-		warn "Writing to file $options{'output'}\n";
-	}
-	
-	unless (open(STDOUT, ">$options{'output'}")) {
-		die "Error: Could not open output file ($options{'output'}) for writing\n";
 	}
 }
+	
+# Update previous day's file with a "Next Day" link to today's file
+if (open(PREVIOUS, "<dailystrips-$short_date_yesterday.html")) {
+	my @previous_page = <PREVIOUS>;
+	close(PREVIOUS);
+	
+	# Don't bother if no tag exists in the file (because it has already been updated)
+	if (grep(/<!--nextday-->/, @previous_page)) {
+		my $match_count;
 
+		for (@previous_page) {
+			if (s/<!--nextday-->/ | <a href="dailystrips-$short_date.html">Next day<\/a>/) {
+				$match_count++;
+				last if ($match_count == 2);
+			}
+		}
+		
+		if (open(PREVIOUS, ">dailystrips-$short_date_yesterday.html")) {
+			print PREVIOUS @previous_page;
+			close(PREVIOUS);
+		} else {
+			warn "Warning: could not open dailystrips-$short_date_yesterday.html for writing\n";
+		}
+	} else {
+		warn "Warning: did not find any tag in previous day's file to make today's link\n";
+	}
+} else {
+	warn "Warning: could not open dailystrips-$short_date_yesterday.html for reading\n";
+}
 
 # Download image URLs
 unless ($options{'quiet'}) {
@@ -465,7 +440,7 @@ $topanchor
 }
 
 
-if ($options{'local'} and !$options{'quiet'}) {
+if (!$options{'quiet'}) {
 	if ($options{'verbose'}) {
 		warn "\nDownloading strip files:\n"
 	} else {
@@ -478,7 +453,7 @@ for (@strips) {
 	my ($img_line, $local_name, $local_name_dir, $local_name_file, $local_name_ext, $image, $ext,
 	   $local_name_yesterday, $local_name_yesterday_dir, $local_name_yesterday_file, $local_name_yesterday_ext);
 	
-	if ($options{'verbose'} and $options{'local'}) {
+	if ($options{'verbose'}) {
 		warn "Downloading strip file for " . lc((split(/;/, $_))[0]) . "\n";
 	}
 	
@@ -489,164 +464,156 @@ for (@strips) {
 
 		$img_line = "[Error - unable to retrieve URL]";
 	} else {
-		if ($options{'local'}) {
-			# local mode - download strips
-			$img_addr =~ /https?:\/\/(.*)\/(.*)\.(.*?)([?&].+)?$/;
-			if (defined $3) { $ext = ".$3" }
+		# download strips
+		$img_addr =~ /https?:\/\/(.*)\/(.*)\.(.*?)([?&].+)?$/;
+		if (defined $3) {
+			$ext = ".$3";
+		}
 
-			# prepare file names
-			if ($options{'stripdir'}) {
- 				$local_name_yesterday = "$name/$short_date_yesterday$ext";
- 				$local_name_yesterday_dir = "$name/";
- 				$local_name_yesterday_file = $short_date_yesterday;
- 				$local_name_yesterday_ext = $ext;
+		# prepare file names
+		if ($options{'stripdir'}) {
+			$local_name_yesterday = "$name/$short_date_yesterday$ext";
+			$local_name_yesterday_dir = "$name/";
+			$local_name_yesterday_file = $short_date_yesterday;
+			$local_name_yesterday_ext = $ext;
  				
- 				$local_name = "$name/$short_date$ext";
- 				$local_name_dir = "$name/";
- 				$local_name_file = "$short_date";
- 				$local_name_ext = "$ext";
- 			} elsif ($options{'dailydir'}) {
-				$local_name_yesterday = "$short_date_yesterday/$name-$short_date_yesterday$ext";
-				$local_name_yesterday_dir = "$short_date_yesterday/";	
-				$local_name_yesterday_file = "$name-$short_date_yesterday";
-				$local_name_yesterday_ext = "$ext";
+			$local_name = "$name/$short_date$ext";
+			$local_name_dir = "$name/";
+			$local_name_file = "$short_date";
+			$local_name_ext = "$ext";
+		} elsif ($options{'dailydir'}) {
+			$local_name_yesterday = "$short_date_yesterday/$name-$short_date_yesterday$ext";
+			$local_name_yesterday_dir = "$short_date_yesterday/";
+			$local_name_yesterday_file = "$name-$short_date_yesterday";
+			$local_name_yesterday_ext = "$ext";
 				
-				$local_name = "$short_date/$name-$short_date$ext";
-				$local_name_dir = "$short_date/";
-				$local_name_file = "$name-$short_date";
-				$local_name_ext = "$ext";
-			} else {
-				$local_name_yesterday = "$name-$short_date_yesterday$ext";				
-				$local_name_yesterday_dir = "./";
-				$local_name_yesterday_file = "$name-$short_date_yesterday";
-				$local_name_yesterday_ext = "$ext";
+			$local_name = "$short_date/$name-$short_date$ext";
+			$local_name_dir = "$short_date/";
+			$local_name_file = "$name-$short_date";
+			$local_name_ext = "$ext";
+		} else {
+			$local_name_yesterday = "$name-$short_date_yesterday$ext";
+			$local_name_yesterday_dir = "./";
+			$local_name_yesterday_file = "$name-$short_date_yesterday";
+			$local_name_yesterday_ext = "$ext";
 				
-				$local_name = "$name-$short_date$ext";
-				$local_name_dir = "./";
-				$local_name_file = "$name-$short_date";
-				$local_name_ext = "$ext";
-			}
+			$local_name = "$name-$short_date$ext";
+			$local_name_dir = "./";
+			$local_name_file = "$name-$short_date";
+			$local_name_ext = "$ext";
+		}
 			
-			if ($options{'nospaces'}) {
+		if ($options{'nospaces'}) {
 				# impossible to tell for sure if previous day's file
 				# used --nospaces or not, but this should work more
 				# often
-				$local_name_yesterday =~ s/\s+//g;
-				$local_name_yesterday_dir =~ s/\s+//g;
-				$local_name_yesterday_file =~ s/\s+//g;
+			$local_name_yesterday =~ s/\s+//g;
+			$local_name_yesterday_dir =~ s/\s+//g;
+			$local_name_yesterday_file =~ s/\s+//g;
 				
-				$local_name =~ s/\s+//g;
-				$local_name_dir =~ s/\s+//g;
-				$local_name_file =~ s/\s+//g;
- 			}
+			$local_name =~ s/\s+//g;
+			$local_name_dir =~ s/\s+//g;
+			$local_name_file =~ s/\s+//g;
+		}
 			
-			# do ops that depend on file name
-			if ($options{'stripdir'}) {
- 				unless (-d $local_name_dir) {
- 					mkdir $local_name_dir, 0755;
- 				}
- 			}
-									
-			if ($options{'save'} and  -e $local_name) {
-				# already have a suitable local file - skip downloading
-				$img_addr = $local_name;
-				$img_addr =~ s/ /\%20/go;
-				if ($options{'stripnav'}) {
-					$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-				} else {
-					$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-				}
-			} else {			
-				# need to download
-				if ($prefetch) {
-					if (&http_get($prefetch, $referer) =~ m/^ERROR/) {
-						warn "Error: $strip: could not download prefetch URL\n";
-						$image = "ERROR";
-					} else {
-						$image = &http_get($img_addr, $referer);
-					}
-				} else {
-					$image = &http_get($img_addr, $referer);
-					#$image = &http_get($img_addr, "");
-				}
-				
-				if ($image =~ /^ERROR/) {
-					# couldn't get the image
-					# FIXME: what to do if a file for the day has already been
-					# downloaded, but downloading fails when script is run again
-					# that day? maybe reuse existing file instead of throwing
-					# error?
-					if (-e $local_name) {
-						# an image file for today already exists.. jump to outputting code
-						#warn "DEBUG: couldn't download strip, but we already have it\n";
-						goto HAVE_IMAGE;
-					} else {
-						if ($options{'verbose'}) {
-							warn "Error: $strip: could not download strip\n";
-						}
-					}
-				
-					$img_line = "[Error - unable to download image]";
-				} else {
-					HAVE_IMAGE:
-					# got the image
-					# FIXME: only download to .tmp if earlier file exists
-					open(IMAGE, ">$local_name.tmp");
-					binmode(IMAGE);
-					print IMAGE $image;
-					close(IMAGE);
-				
-					if (system("diff \"$local_name_yesterday\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
-						# same strip as yesterday
-						system("mv","$local_name.tmp","$local_name");
-						
-						if ($options{'nostale'}) {
-							$img_line = "[Error - new strip not available]";
-						} else {
-							$img_addr = $local_name;
-							$img_addr =~ s/ /\%20/go;
-							if ($options{'stripnav'}) {
-								$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-							} else {
-								$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-							}
-						}								
-					} elsif (-e $local_name and system("diff \"$local_name\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
-						# already downloaded the same strip earlier today
-						unlink("$local_name.tmp");
-						
-						$img_addr = $local_name;
-						$img_addr =~ s/ /\%20/go;
-						if ($options{'stripnav'}) {
-							$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-						} else {
-							$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-						}
-					} else {
-						# completely new strip
-						#  possible to get here by:
-						#   -downloading a strip for the first time in a day
-						#   -downloading an updated strip that replaces an old one downloaded at
-						#    an earlier time on the same day
-						system("mv","$local_name.tmp","$local_name");
-						
-						$img_addr = $local_name;
-						$img_addr =~ s/ /\%20/go;
-						if ($options{'stripnav'}) {
-							$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
-						} else {
-							$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
-						}
-					}
-				}
+		# do ops that depend on file name
+		if ($options{'stripdir'}) {
+			unless (-d $local_name_dir) {
+				mkdir $local_name_dir, 0755;
 			}
-
-		} else {
-			# regular mode - just give addresses to strips on their webserver
+		}
+									
+		if ($options{'save'} and  -e $local_name) {
+				# already have a suitable local file - skip downloading
+			$img_addr = $local_name;
+			$img_addr =~ s/ /\%20/go;
 			if ($options{'stripnav'}) {
 				$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
 			} else {
 				$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+			}
+		} else {
+			# need to download
+			if ($prefetch) {
+				if (&http_get($prefetch, $referer) =~ m/^ERROR/) {
+					warn "Error: $strip: could not download prefetch URL\n";
+					$image = "ERROR";
+				} else {
+					$image = &http_get($img_addr, $referer);
+				}
+			} else {
+				$image = &http_get($img_addr, $referer);
+				#$image = &http_get($img_addr, "");
+			}
+				
+			if ($image =~ /^ERROR/) {
+				# couldn't get the image
+				# FIXME: what to do if a file for the day has already been
+				# downloaded, but downloading fails when script is run again
+				# that day? maybe reuse existing file instead of throwing
+				# error?
+				if (-e $local_name) {
+					# an image file for today already exists.. jump to outputting code
+					#warn "DEBUG: couldn't download strip, but we already have it\n";
+					goto HAVE_IMAGE;
+				} else {
+					if ($options{'verbose'}) {
+						warn "Error: $strip: could not download strip\n";
+					}
+				}
+				
+				$img_line = "[Error - unable to download image]";
+			} else {
+			      HAVE_IMAGE:
+				# got the image
+				# FIXME: only download to .tmp if earlier file exists
+				open(IMAGE, ">$local_name.tmp");
+				binmode(IMAGE);
+				print IMAGE $image;
+				close(IMAGE);
+				
+				if (system("diff \"$local_name_yesterday\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
+					# same strip as yesterday
+					system("mv","$local_name.tmp","$local_name");
+						
+					if ($options{'nostale'}) {
+						$img_line = "[Error - new strip not available]";
+					} else {
+						$img_addr = $local_name;
+						$img_addr =~ s/ /\%20/go;
+						if ($options{'stripnav'}) {
+							$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
+						} else {
+							$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+						}
+					}
+				} elsif (-e $local_name and system("diff \"$local_name\" \"$local_name.tmp\" >/dev/null 2>&1") == 0) {
+					# already downloaded the same strip earlier today
+					unlink("$local_name.tmp");
+
+					$img_addr = $local_name;
+					$img_addr =~ s/ /\%20/go;
+					if ($options{'stripnav'}) {
+						$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
+					} else {
+						$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+					}
+				} else {
+					# completely new strip
+					#  possible to get here by:
+					#   -downloading a strip for the first time in a day
+					#   -downloading an updated strip that replaces an old one downloaded at
+					#    an earlier time on the same day
+					system("mv","$local_name.tmp","$local_name");
+						
+					$img_addr = $local_name;
+					$img_addr =~ s/ /\%20/go;
+					if ($options{'stripnav'}) {
+						$img_line = "<img src=\"$img_addr\" alt=\"$name\"><br><a href=\"#top\">Return to top</a>";
+					} else {
+						$img_line = "<img src=\"$img_addr\" alt=\"$name\">";
+					}
+				}
 			}
 		}
 	}
@@ -683,7 +650,7 @@ $img_line<br>
 	}
 }
 
-if ($options{'local'} and !$options{'quiet'}) {
+if (!$options{'quiet'}) {
 	if ($options{'verbose'}) {
 		warn "Downloading strip files: done\n"
 	} else {
