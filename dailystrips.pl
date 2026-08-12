@@ -499,7 +499,6 @@ for (@strips) {
 		} else {
 		      HAVE_IMAGE:
 			# got the image
-			# FIXME: only download to .tmp if earlier file exists
 			open(IMAGE, ">$local_name.tmp");
 			binmode(IMAGE);
 			print IMAGE $image;
@@ -713,11 +712,6 @@ if ($options{'clean'}) {
 sub http_get {
 	my ($url, $referer) = @_;
 	my ($request, $response, $status);
-
-	# default value
-	#unless ($retries) {
-	#	$retries = 3;
-	#}
 
 	if ($referer eq "") {$referer = $url;}
 
