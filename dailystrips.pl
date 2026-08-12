@@ -49,7 +49,7 @@ if ($options{'help'}) {
 	print
 "Usage: $0 [OPTION] STRIPS
 STRIPS can be a mix of strip names and group names
-(group names must be preceeded by an '\@' symbol)
+(group names must be preceded by an '\@' symbol)
 'all' may be used to retrieve all known strips,
 or use option --list to list available strips and groups
 
