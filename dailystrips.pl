@@ -36,8 +36,8 @@ $time_today = time;
 # Get options
 GetOptions(\%options, 'quiet|q','verbose','output=s','lite','local|l','noindex',
 	'archive|a','dailydir|d','stripdir','save|s','nostale','date=s',
-	'new|n','defs=s','nopersonal','basedir=s','list','proxy=s',
-	'proxyauth=s','noenvproxy','nospaces','useragent=s','version|v','help|h',
+	'new|n','defs=s','nopersonal','basedir=s','list',
+	'nospaces','useragent=s','version|v','help|h',
 	'avantgo', 'random','nosystem','stripnav','nosymlinks','titles=s',
 	'retries=s','clean=s','updates=s','noupdates') or exit 1;
 
@@ -93,10 +93,6 @@ Options:
       --basedir DIR          Work in specified directory instead of current
                              directory (program will look here for previous HTML
                              file and save new files here, etc.)
-      --proxy host:port      Use specified HTTP proxy server (overrides
-                             environment proxy, if set)
-      --proxyauth user:pass  Set username and password for proxy server
-      --noenvproxy           Ignore the http_proxy environment variable, if set
       --nospaces             Remove spaces from image filenames (local mode
                              only)
       --useragent STRING     Set User-Agent: header to STRING (default is none)
@@ -251,41 +247,6 @@ if ($options{'dailydir'} and $options{'stripdir'}) {
 		die "Error: --dailydir and --stripdir cannot be used together\n";
 }
 
-#Set proxy
-if ($options{'proxy'}) {
-		$options{'proxy'} =~ /^(https?:\/\/)?(.*?):(.+?)\/?$/i;
-		unless ($2 and $3) {
-			die "Error: incorrectly formatted proxy server ('http://server:port' expected (or https...))\n";
-		}
-				
-		if ( defined($1) ) {
-			$options{'proxy'} = "$1";
-		} else {
-			$options{'proxy'} = "http://";
-		}
-		$options{'proxy'} .= "$2:$3";
-}
-
-if (!$options{'noenvproxy'} and !$options{'proxy'} and $ENV{'http_proxy'} ) {
-	$ENV{'http_proxy'} =~ /(https?:\/\/)?(.*?):(.+?)\/?$/i;
-	unless ($2 and $3) {
-		die "Error: incorrectly formatted proxy server environment variable\n('http://server:port' expected)\n";
-	}
-			
-	if ( defined($1) ) {
-		$options{'proxy'} = "$1";
-	} else {
-		$options{'proxy'} = "http://";
-	}
-	$options{'proxy'} .= "$2:$3";
-}
-
-if ($options{'proxyauth'}) {
-	unless ($options{'proxyauth'} =~ /^.+?:.+?$/) {
-			die "Error: incorrectly formatted proxy credentials ('user:pass' expected)\n";
-	}
-}
-
 
 # Handle/validate other options
 if ($options{'clean'} =~ m/\D/) {
@@ -329,18 +290,6 @@ undef $known_strips; undef $known_groups; undef $val;
 # Go
 unless ($options{'quiet'}) {
 	warn "dailystrips $version starting:\n";
-}
-
-
-# Report proxy settings
-if ($options{'proxy'}) {
-	if ($options{'verbose'}) {
-		warn "Using proxy server $options{'proxy'}\n";
-	}
-	
-	if ($options{'verbose'} and $options{'proxy_auth'}) {
-		warn "Using proxy server authentication\n";
-	}
 }
 
 
@@ -867,12 +816,10 @@ sub http_get {
 	if ($referer eq "") {$referer = $url;}
 
 	my $headers = new HTTP::Headers;
-	$headers->proxy_authorization_basic(split(/:/, $options{'proxyauth'}));
 	$headers->referer($referer);
 	
 	my $ua = LWP::UserAgent->new;
 	$ua->agent($options{'useragent'});
-	$ua->proxy(['http', 'https'], $options{'proxy'});
 	
 	for (1 .. $options{'retries'}) {
 		# main request
