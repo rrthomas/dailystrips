@@ -719,39 +719,27 @@ sub get_defs {
 		next if $_ eq "";
 
 		if (!$sectype) {
-			if (/^strip\s+(\S+)$/i)
-			{
-				if (defined ($defs{$1}))
-				{
+			if (/^strip\s+(\S+)$/i) {
+				if (defined ($defs{$1})) {
 					undef $defs{$1};
 				}
 
 				$strip = $1;
 				$sectype = "strip";
-			}
-			elsif (/^class\s+(.*)$/i)
-			{
-				if (defined ($classes{$1}))
-				{
+			} elsif (/^class\s+(.*)$/i) {
+				if (defined ($classes{$1})) {
 					undef $classes{$1};
 				}
 
 				$class = $1;
 				$sectype = "class";
-			}
-			elsif (/^(.*)/)
-			{
+			} elsif (/^(.*)/) {
 				die "Error: Unknown keyword '$1' at $defs_file line $line\n";
 			}
-		}
-		elsif (/^end$/i)
-		{
-			if ($sectype eq "class")
-			{
+		} elsif (/^end$/i) {
+			if ($sectype eq "class") {
 				undef $class
-			}
-			elsif ($sectype eq "strip")
-			{
+			} elsif ($sectype eq "strip") {
 				if ($defs{$strip}{'useclass'}) {
 					my $using_class = $defs{$strip}{'useclass'};
 
@@ -843,126 +831,79 @@ sub get_defs {
 			}
 
 			undef $sectype;
-		}
-		elsif ($sectype eq "class") {
+		} elsif ($sectype eq "class") {
 			if (/^homepage\s+(.+)$/i) {
 				$classes{$class}{'homepage'} = $1;
-			}
-			elsif (/^type\s+(.+)$/i)
-			{
+			} elsif (/^type\s+(.+)$/i) {
 				unless ($1 =~ /^(search|generate)$/io) {
 					die "Error: invalid type at $defs_file line $line\n";
 				}
 
 				$classes{$class}{'type'} = $1;
-			}
-			elsif (/^searchpage\s+(.+)$/i)
-			{
+			} elsif (/^searchpage\s+(.+)$/i) {
 				$classes{$class}{'searchpage'} = $1;
-			}
-			elsif (/^searchpattern\s+(.+)$/i)
-			{
+			} elsif (/^searchpattern\s+(.+)$/i) {
 				$classes{$class}{'searchpattern'} = $1;
-			}
-			elsif (/^baseurl\s+(.+)$/i)
-			{
+			} elsif (/^baseurl\s+(.+)$/i) {
 				$classes{$class}{'baseurl'} = $1;
-			}
-			elsif (/^imageurl\s+(.+)$/i)
-			{
+			} elsif (/^imageurl\s+(.+)$/i) {
 				$classes{$class}{'imageurl'} = $1;
-			}
-			elsif (/^referer\s+(.+)$/i)
-			{
+			} elsif (/^referer\s+(.+)$/i) {
 				$classes{$class}{'referer'} = $1;
-			}
-			elsif (/^prefetch\s+(.+)$/i)
-			{
+			} elsif (/^prefetch\s+(.+)$/i) {
 				$classes{$class}{'prefetch'} = $1;
-			}
-			elsif (/^provides\s+(.+)$/i)
-			{
+			} elsif (/^provides\s+(.+)$/i) {
 				unless ($1 =~ /^(any|latest)$/i) {
 					die "Error: invalid 'provides' at $defs_file line $line\n";
 				}
 
 				$classes{$class}{'provides'} = $1;
-			}
-			elsif (/^artist\s+(.+)$/i)
-			{
+			} elsif (/^artist\s+(.+)$/i) {
 				$classes{$class}{'artist'} = $1;
-			}
-			elsif (/^(.+)\s+?/)
-			{
+			} elsif (/^(.+)\s+?/) {
 				die "Unknown keyword '$1' at $defs_file line $line\n";
 			}
 		}
 		elsif ($sectype eq "strip") {
-			if (/^name\s+(.+)$/i)
-			{
+			if (/^name\s+(.+)$/i) {
 				$defs{$strip}{'name'} = $1;
-			}
-			elsif (/^useclass\s+(.+)$/i)
-			{
+			} elsif (/^useclass\s+(.+)$/i) {
 				unless (defined $classes{$1}) {
 					die "Error: strip $strip references invalid class $1 at $defs_file line $line\n";
 				}
 
 				$defs{$strip}{'useclass'} = $1;
-			}
-			elsif (/^homepage\s+(.+)$/i) {
+			} elsif (/^homepage\s+(.+)$/i) {
 				$defs{$strip}{'homepage'} = $1;
-			}
-			elsif (/^type\s+(.+)$/i)
-			{
+			} elsif (/^type\s+(.+)$/i) {
 				unless ($1 =~ /^(search|generate)$/i) {
 					die "Error: invalid 'type' at $defs_file line $line\n";
 				}
 
 				$defs{$strip}{'type'} = $1;
-			}
-			elsif (/^searchpage\s+(.+)$/i)
-			{
+			} elsif (/^searchpage\s+(.+)$/i) {
 				$defs{$strip}{'searchpage'} = $1;
-			}
-			elsif (/^searchpattern\s+(.+)$/i)
-			{
+			} elsif (/^searchpattern\s+(.+)$/i) {
 				$defs{$strip}{'searchpattern'} = $1;
-			}
-			elsif (/^baseurl\s+(.+)$/i)
-			{
+			} elsif (/^baseurl\s+(.+)$/i) {
 				$defs{$strip}{'baseurl'} = $1;
-			}
-			elsif (/^imageurl\s+(.+)$/i)
-			{
+			} elsif (/^imageurl\s+(.+)$/i) {
 				$defs{$strip}{'imageurl'} = $1;
-			}
-			elsif (/^referer\s+(.+)$/i)
-			{
+			} elsif (/^referer\s+(.+)$/i) {
 				$defs{$strip}{'referer'} = $1;
-			}
-			elsif (/^prefetch\s+(.+)$/i)
-			{
+			} elsif (/^prefetch\s+(.+)$/i) {
 				$defs{$strip}{'prefetch'} = $1;
-			}
-			elsif (/^(\$\d)\s+(.+)$/)
-			{
+			} elsif (/^(\$\d)\s+(.+)$/) {
 				$defs{$strip}{$1} = $2;
-			}
-			elsif (/^provides\s+(.+)$/i)
-			{
+			} elsif (/^provides\s+(.+)$/i) {
 				unless ($1 =~ /^(any|latest)$/i) {
 					die "Error: invalid 'provides' at $defs_file line $line\n";
 				}
 
 				$defs{$strip}{'provides'} = $1;
-			}
-			elsif (/^artist\s+(.+)$/i)
-			{
+			} elsif (/^artist\s+(.+)$/i) {
 				$defs{$strip}{'artist'} = $1;
-			}
-			elsif (/^(.+)\s+?/)
-			{
+			} elsif (/^(.+)\s+?/) {
 				die "Error: Unknown keyword '$1' at $defs_file line $line, in strip $strip\n";
 			}
 		}
