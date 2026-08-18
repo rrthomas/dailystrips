@@ -635,10 +635,9 @@ sub http_get {
 
 	if ($referer eq "") {$referer = $url;}
 
-	for (1 .. $options{'retries'}) {
-		open(READER, "-|", $options{'fetcher'}, "--silent", "--referer", $referer, $url) or next;
-		my $output = slurp \*READER;
-		close READER or next;
+	open(READER, "-|", $options{'fetcher'}, "--silent", "--fail", "--retry", $retries, "--referer", $referer, $url) or next;
+	my $output = slurp \*READER;
+	if (close READER) {
 		return $output;
 	}
 
